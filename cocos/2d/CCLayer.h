@@ -63,13 +63,21 @@ All features from Node are valid, plus the following new features:
 - It can receive iPhone Touches
 - It can receive Accelerometer input
 */
+/** @brief Layer 是Node的一个子类，它实现了TouchEventsDelegate协议。
+
+ 从Node类继承的所有特性是可用的,并且它还添加了以下这些特性：
+-它可以接收 iPhone触摸事件
+- 它可以接收重力感应输入
+*/
 class CC_DLL Layer : public Node
 {
 public:    
     /** creates a fullscreen black layer */
+    /**创建一个全屏的黑色图层 */
     static Layer *create();
 
     // Deprecated touch callbacks.
+//弃用触摸回调
     CC_DEPRECATED_ATTRIBUTE virtual bool ccTouchBegan(Touch *pTouch, Event *pEvent) final {CC_UNUSED_PARAM(pTouch); CC_UNUSED_PARAM(pEvent); return false;};
     CC_DEPRECATED_ATTRIBUTE virtual void ccTouchMoved(Touch *pTouch, Event *pEvent) final {CC_UNUSED_PARAM(pTouch); CC_UNUSED_PARAM(pEvent);}
     CC_DEPRECATED_ATTRIBUTE virtual void ccTouchEnded(Touch *pTouch, Event *pEvent) final {CC_UNUSED_PARAM(pTouch); CC_UNUSED_PARAM(pEvent);}
@@ -83,6 +91,9 @@ public:
     /* Callback function should not be deprecated, it will generate lots of warnings.
        Since 'setTouchEnabled' was deprecated, it will make warnings if developer overrides onTouchXXX and invokes setTouchEnabled(true) instead of using EventDispatcher::addEventListenerWithXXX.
     */
+    /* 回调函数不能被弃用。这将生成很多警告。
+       由于 'setTouchEnabled' 被弃用, 如果开发者覆盖 onTouchXXX方法并且调用setTouchEnabled(true)来代替使用EventDispatcher::addEventListenerWithXXX将导致警告.
+    */
     virtual bool onTouchBegan(Touch *touch, Event *unused_event); 
     virtual void onTouchMoved(Touch *touch, Event *unused_event); 
     virtual void onTouchEnded(Touch *touch, Event *unused_event); 
@@ -93,15 +104,20 @@ public:
     virtual void onTouchesEnded(const std::vector<Touch*>& touches, Event *unused_event);
     virtual void onTouchesCancelled(const std::vector<Touch*>&touches, Event *unused_event);
     /** @deprecated Please override onAcceleration */
+    /** @deprecated 请覆盖onAcceleration方法 */
     CC_DEPRECATED_ATTRIBUTE virtual void didAccelerate(Acceleration* accelerationValue) final {};
 
 	/* Callback function should not be deprecated, it will generate lots of warnings.
 	Since 'setAccelerometerEnabled' was deprecated, it will make warnings if developer overrides onAcceleration and invokes setAccelerometerEnabled(true) instead of using EventDispatcher::addEventListenerWithXXX.
     */
+    /* 回调函数不能被弃用。这将生成很多警告。
+       由于 'setAccelerometerEnabled'被弃用, 如果开发者覆盖  onAcceleration方法并且调用setAccelerometerEnabled(true)来代替使用EventDispatcher::addEventListenerWithXXX将导致警告.
+    */
     virtual void onAcceleration(Acceleration* acc, Event* unused_event);
 
     /** If isTouchEnabled, this method is called onEnter. Override it to change the
     way Layer receives touch events.
+如果isTouchEnabled，这个方法可以叫做onEnter.覆盖它来改变Layer接收触摸事件的方式。
     ( Default: TouchDispatcher::sharedDispatcher()->addStandardDelegate(this,0); )
     Example:
     void Layer::registerWithTouchDispatcher()
@@ -117,6 +133,11 @@ public:
     Only the touches of this node will be affected. This "method" is not propagated to it's children.
     @since v0.8.1
     */
+    /** 它是否将接收触摸事件。
+你可以通过这个属性来使它支持或者不支持触摸事件。
+只有这个结点的触摸事件被影响。这个“方法”不会传播给它的孩子结点。
+    @since v0.8.1
+    */
     CC_DEPRECATED_ATTRIBUTE bool isTouchEnabled() const;
     CC_DEPRECATED_ATTRIBUTE void setTouchEnabled(bool value);
     
@@ -124,11 +145,16 @@ public:
     CC_DEPRECATED_ATTRIBUTE virtual Touch::DispatchMode getTouchMode() const;
 
     /** swallowsTouches of the touch events. Default is true */
+    /**触摸事件中的  swallowsTouches 事件。默认是true.*/
     CC_DEPRECATED_ATTRIBUTE virtual void setSwallowsTouches(bool swallowsTouches);
     CC_DEPRECATED_ATTRIBUTE virtual bool isSwallowsTouches() const;
 
     /** whether or not it will receive Accelerometer events
     You can enable / disable accelerometer events with this property.
+    @since v0.8.1
+    */
+    /**它是否接收重力感应事件。
+   你可以通过这个属性来开启或者关闭重力感应事件。
     @since v0.8.1
     */
     CC_DEPRECATED_ATTRIBUTE virtual bool isAccelerometerEnabled() const;
@@ -139,18 +165,27 @@ public:
     You can enable / disable accelerometer events with this property.
     it's new in cocos2d-x
     */
-
+/**
+它是否接收键盘或者平板的键盘事件。
+你可以通过这个属性来开启或者关闭重力感应事件。
+这是cocos2d-x中的新特性。
+    */
     CC_DEPRECATED_ATTRIBUTE virtual bool isKeyboardEnabled() const;
     CC_DEPRECATED_ATTRIBUTE virtual void setKeyboardEnabled(bool value);
 
     /** Please use onKeyPressed instead. */
-    CC_DEPRECATED_ATTRIBUTE virtual void keyPressed(int keyCode) final {};
+    /** 请用 onKeyPressed 来代替. */
+CC_DEPRECATED_ATTRIBUTE virtual void keyPressed(int keyCode) final {};
     
     /** Please use onKeyReleased instead. */
+    /**请用onKeyReleased 来代替. */
     CC_DEPRECATED_ATTRIBUTE virtual void keyReleased(int keyCode) final {};
 
 	/* Callback function should not be deprecated, it will generate lots of warnings.
 	Since 'setKeyboardEnabled' was deprecated, it will make warnings if developer overrides onKeyXXX and invokes setKeyboardEnabled(true) instead of using EventDispatcher::addEventListenerWithXXX.
+    */
+    /* 回调函数不能被弃用。这将生成很多警告。
+       由于 'setKeyboardEnabled' 被弃用, 如果开发者覆盖  onKeyXXX方法并且调用setKeyboardEnabled(true)来代替使用EventDispatcher::addEventListenerWithXXX将导致警告.
     */
     virtual void onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event);
     virtual void onKeyReleased(EventKeyboard::KeyCode keyCode, Event* event);
@@ -159,6 +194,7 @@ public:
     CC_DEPRECATED_ATTRIBUTE virtual void setKeypadEnabled(bool value);
 
     /** @deprecated Please override onKeyReleased and check the keycode of KeyboardEvent::KeyCode::Menu(KEY_BACKSPACE) instead. */
+    /** @deprecated 请覆盖onKeyReleased并且检查 KeyboardEvent::KeyCode::Menu(KEY_BACKSPACE) 的键盘码来代替. */
     CC_DEPRECATED_ATTRIBUTE virtual void keyBackClicked() final {};
     CC_DEPRECATED_ATTRIBUTE virtual void keyMenuClicked() final {};
 
@@ -173,6 +209,7 @@ CC_CONSTRUCTOR_ACCESS:
 
 protected:
     //add the api for avoid use deprecated api
+添加api来避免使用弃用的api
     void _addTouchListener();
 
     CC_DEPRECATED_ATTRIBUTE void addTouchListener() { _addTouchListener();};
@@ -198,6 +235,11 @@ private:
 /** LayerRGBA is a subclass of Layer that implements the RGBAProtocol protocol using a solid color as the background.
  
  All features from Layer are valid, plus the following new features that propagate into children that conform to the RGBAProtocol:
+ - opacity
+ - RGB colors
+ @since 2.1
+ *//** LayerRGBA 是Layer的一个子类，它通过使用一个单色背景实现了 RGBAProtocol 协议。
+ 所有Layer类的特性都是可用的，再加上以下这些遵守RGBAProtocol协议并且传播到子类的新特性：
  - opacity
  - RGB colors
  @since 2.1
@@ -245,6 +287,12 @@ All features from Layer are valid, plus the following new features:
 - opacity
 - RGB colors
 */
+/** @brief 
+LayerColor是Layer的一个子类，它实现了RGBAProtocol协议。
+从Layer继承的所有特性都是可用的，再加上以下这些新特性：
+- opacity
+- RGB colors
+*/
 class CC_DLL LayerColor : public Layer, public BlendProtocol
 #ifdef EMSCRIPTEN
 , public GLBufferedNode
@@ -252,17 +300,25 @@ class CC_DLL LayerColor : public Layer, public BlendProtocol
 {
 public:
     /** creates a fullscreen black layer */
+    /** 创建一个全屏的黑色图层*/
     static LayerColor* create();
     /** creates a Layer with color, width and height in Points */
+    /**  通过颜色，宽度和高度来创建一个图层 */
     static LayerColor * create(const Color4B& color, GLfloat width, GLfloat height);
     /** creates a Layer with color. Width and height are the window size. */
+    /** 通过颜色来创建一个图层。宽度和高度设置为窗口的大小 */
     static LayerColor * create(const Color4B& color);
 
-    /** change width in Points*/
+   * change width in Points*/
+/** 改变宽度*/
     void changeWidth(GLfloat w);
     /** change height in Points*/
+/**改变高度*/ /*
     void changeHeight(GLfloat h);
     /** change width and height in Points
+    @since v0.8
+    */
+    /** 改变宽度和高度
     @since v0.8
     */
     void changeWidthAndHeight(GLfloat w ,GLfloat h);
@@ -274,6 +330,8 @@ public:
 
     virtual void setContentSize(const Size & var) override;
     /** BlendFunction. Conforms to BlendProtocol protocol */
+    /** BlendFunction.遵守BlendProtocol协议。 */
+
     /**
     * @js NA
     * @lua NA
@@ -282,6 +340,7 @@ public:
     /**
     *@code
     *When this function bound into js or lua,the parameter will be changed
+当这个函数绑定到js或者lua,参数将改变。
     *In js: var setBlendFunc(var src, var dst)
     *In lua: local setBlendFunc(local src, local dst)
     *@endcode
@@ -317,11 +376,16 @@ private:
 // LayerGradient
 //
 /** @brief LayerGradient is a subclass of LayerColor that draws gradients across the background.
-
 All features from LayerColor are valid, plus the following new features:
 - direction
 - final color
 - interpolation mode
+
+LayerGradient是LayerColor的一个子类，它在背景上画渐变效果。
+从LayerColor继承的所有特性都是可用的，再加上以下这些新特性：
+- 渐变方向
+- 渐变最终颜色
+- 插值模式
 
 Color is interpolated between the startColor and endColor along the given
 vector (starting at the origin, ending at the terminus).  If no vector is
@@ -453,6 +517,8 @@ public:
     static LayerMultiplex* create(M m1, M m2, M m3, M m4, M m5, M m6, M m7, M m8, M m9, M m10, std::nullptr_t listEnd) { return createVariadic(m1, m2, m3, m4, m5, m6, m7, m8, m9, m10,  NULL); }
 
     // On WP8 for variable argument lists longer than 10 items, use createWithArray or createVariadic with NULL as the last argument
+
+
     static LayerMultiplex* createVariadic(Layer* item, ...) CC_REQUIRES_NULL_TERMINATION;
 #else
     static LayerMultiplex * create(Layer* layer, ... );
@@ -461,6 +527,8 @@ public:
     /**
      * lua script can not init with undetermined number of variables
      * so add these functions to be used with lua.
+*lua脚本不能通过未确定数目的变量来初始化。
+*所以用lua来加这些函数。
      * @js NA
      * @lua NA
      */
@@ -472,9 +540,16 @@ public:
     /** switches to a certain layer indexed by n.
      The current (old) layer will be removed from it's parent with 'cleanup=true'.
      */
+/**
+通过索引n切换到某个图层。
+当前图层（旧的）将从它的父级图层用“cleanup=true"来删除。
+*/
     void switchTo(int n);
     /** release the current layer and switches to another layer indexed by n.
     The current (old) layer will be removed from it's parent with 'cleanup=true'.
+    */
+  /** 
+发布当前图层并且通过索引n来切换到另一个图层。当前图层（旧的）将从它的父级图层用“cleanup=true"来删除。
     */
     void switchToAndReleaseMe(int n);
 
@@ -496,9 +571,16 @@ CC_CONSTRUCTOR_ACCESS:
      * @js NA
      * @lua NA
      */
+    /** 用不少于一个通过使用一个变量参数列表的层来初始化一个MultiplexLayer.
+     * @js NA
+     * @lua NA
+     */
     bool initWithLayers(Layer* layer, va_list params);
     
     /** initializes a MultiplexLayer with an array of layers
+     @since v2.1
+     */  
+    /** 通过layers数组来初始化MultiplexLayer
      @since v2.1
      */
     bool initWithArray(const Vector<Layer*>& arrayOfLayers);
