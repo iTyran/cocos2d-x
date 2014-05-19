@@ -42,6 +42,7 @@ Use any of these editors to generate BMFonts:
 NS_CC_BEGIN
 
 /** @brief LabelBMFont is a subclass of SpriteBatchNode.
+＃＃＃＃＃＃@摘要   LabelBMFont 是SpriteBatchNode的一个子类。
 
 Features:
 - Treats each character like a Sprite. This means that each individual character can be:
@@ -53,14 +54,29 @@ Features:
 - It can be used as part of a menu item.
 - anchorPoint can be used to align the "label"
 - Supports AngelCode text format
+＃＃＃＃＃＃特征：
+＃＃＃＃＃＃－每一个字符都被和精灵一样同等看待。这就意味着对每一个单独的字符都可以被如下操作：
+＃＃＃＃＃＃－旋转
+＃＃＃＃＃＃－缩放
+＃＃＃＃＃＃－翻译
+＃＃＃＃＃＃－着色
+＃＃＃＃＃＃－改变透明度
+＃＃＃＃＃＃－它可以被用来作为菜单项的一部分。
+＃＃＃＃＃＃－anchorPoint可用于对齐“label”
+＃＃＃＃＃＃－支持AngelCode文本格式
 
 Limitations:
 - All inner characters are using an anchorPoint of (0.5f, 0.5f) and it is not recommend to change it
 because it might affect the rendering
+＃＃＃＃＃＃限制：
+＃＃＃＃＃＃－所有的内部字符都以点(0.5f, 0.5f)作为锚点，而且不建议去修改锚点位置，因为这样会影响渲染。
 
 LabelBMFont implements the protocol LabelProtocol, like Label and LabelAtlas.
 LabelBMFont has the flexibility of Label, the speed of LabelAtlas and all the features of Sprite.
 If in doubt, use LabelBMFont instead of LabelAtlas / Label.
+＃＃＃＃＃＃LabelBMFont实现了协议LabelProtocol，就像Label和LabelAtlas一样。
+＃＃＃＃＃＃LabelBMFont有Label的灵活性，LabelAtlas的速度以及Sprite的所有特性。
+＃＃＃＃＃＃ 如有疑问，请使用LabelBMFont来代替LabelAtlas / Label。
 
 Supported editors:
 http://glyphdesigner.71squared.com/ (Commercial, Mac OS X)
@@ -85,16 +101,18 @@ public:
     virtual ~LabelBMFont();
 
     /** creates a bitmap font atlas with an initial string and the FNT file */
+    /** 使用一个初始化字符串和FNT文件创建一个“atlas”字体的位图*/
     static LabelBMFont * create(const std::string& str, const std::string& fntFile, float width = 0, TextHAlignment alignment = TextHAlignment::LEFT,const Vec2& imageOffset = Vec2::ZERO);
 
-    /** Creates an label.
+    /** Creates an label.  创建一个label
      */
     static LabelBMFont * create();
 
     /** init a bitmap font atlas with an initial string and the FNT file */
+    /** 使用一个初始化字符串和FNT文件初始化一个“atlas”字体的位图*/
     bool initWithString(const std::string& str, const std::string& fntFile, float width = 0, TextHAlignment alignment = TextHAlignment::LEFT,const Vec2& imageOffset = Vec2::ZERO);
 
-    // super method
+    // super method  －－ 父类方法
     virtual void setString(const std::string& newString) override;
 
     virtual const std::string& getString() const override;
@@ -103,7 +121,7 @@ public:
     virtual void setWidth(float width);
     virtual void setLineBreakWithoutSpace(bool breakWithoutSpace);
     
-    // RGBAProtocol 
+    // RGBAProtocol  －－ RGBA协议
     virtual bool isOpacityModifyRGB() const;
     virtual void setOpacityModifyRGB(bool isOpacityModifyRGB);
 
@@ -133,7 +151,7 @@ private:
     void drawDebugData(const Mat4& transform, bool transformUpdated);
 #endif
     
-    // name of fntFile
+    // name of fntFile －－ FNT 文件名
     std::string _fntFile;
 
     Label*      _label;
