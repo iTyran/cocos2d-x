@@ -42,23 +42,22 @@ NS_CC_BEGIN
 
 class TextureAtlas;
 
-/** @brief AtlasNode is a subclass of Node that implements the RGBAProtocol and TextureProtocol protocol
-
-It knows how to render a TextureAtlas object.
-If you are going to render a TextureAtlas consider subclassing AtlasNode (or a subclass of AtlasNode)
-
-All features from Node are valid, plus the following features:
-- opacity and RGB colors
-*/
+/** 简要说明 AtlasNode 是 Node 的子类，实现了 RGBAProtocol 、 TextureProtocol 协议 
+ *  如果你要 实现一个 AtlasNode 的子类 TextureAtlas (or AtlasNode 的子类) 
+ *  它知道如何实现 TextureAtlas 对象. 
+ *  这个类包含所有Note的属性，还包含不透明度和RGB颜色属性 
+*/  
 class CC_DLL AtlasNode : public Node, public TextureProtocol
 {    
 public:
-	/** creates a AtlasNode  with an Atlas file the width and height of each item and the quantity of items to render*/
-	static AtlasNode * create(const std::string& filename, int tileWidth, int tileHeight, int itemsToRender);
+    /** 使用 一个 Atlas 文件，创建一个 AtlasNode
+     *  参数：每个 item（组成Atlas 的 tile（瓷砖）） 的宽度、高度 要显示的 items 数量  
+     */  
+    static AtlasNode * create(const std::string& filename, int tileWidth, int tileHeight, int itemsToRender);
 
-    /** updates the Atlas (indexed vertex array).
-    * Shall be overridden in subclasses
-    */
+    /** 更新Atlas （索引顶点数组）
+     *  需要重载它的子类
+     */
     virtual void updateAtlasValues();
 
     void setTextureAtlas(TextureAtlas* textureAtlas);
@@ -68,7 +67,7 @@ public:
     ssize_t getQuadsToDraw() const;
 
     
-    // Overrides
+    // 重载方法
     virtual void draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated) override;
     virtual Texture2D* getTexture() const override;
     virtual void setTexture(Texture2D *texture) override;
@@ -77,13 +76,12 @@ public:
     virtual const Color3B& getColor(void) const override;
     virtual void setColor(const Color3B& color) override;
     virtual void setOpacity(GLubyte opacity) override;
-    /**
-    * @code
-    * When this function bound into js or lua,the parameter will be changed
-    * In js: var setBlendFunc(var src, var dst)
-    * @endcode
-    * @lua NA
-    */
+
+    /** 当这个方法扩展到js或者lua的时候，参数会改变
+     * 在js中：setBlendFunc(var src, var dst)
+     * @endcode
+     * @lua NA
+     */
     virtual void setBlendFunc(const BlendFunc& blendFunc) override;
     /**
     * @js NA
@@ -95,10 +93,14 @@ CC_CONSTRUCTOR_ACCESS:
     AtlasNode();
     virtual ~AtlasNode();
 
-    /** initializes an AtlasNode  with an Atlas file the width and height of each item and the quantity of items to render*/
+   /**  使用 一个 Atlas 文件，初始化一个 AtlasNode 
+    *   参数：每个 item（组成Atlas 的 tile（瓷砖）） 的宽度、高度 要显示的 items 数量 
+   */  
     bool initWithTileFile(const std::string& tile, int tileWidth, int tileHeight, int itemsToRender);
     
-    /** initializes an AtlasNode  with a texture the width and height of each item measured in points and the quantity of items to render*/
+    /** 使用 texture，初始化一个 AtlasNode 
+     * 参数：每个 item（组成Atlas 的 tile（瓷砖）） 的宽度、高度 要显示的 items 数量 
+     */  
     bool initWithTexture(Texture2D* texture, int tileWidth, int tileHeight, int itemsToRender);
 
 protected:
@@ -109,30 +111,31 @@ protected:
     friend class Director;
     void setIgnoreContentScaleFactor(bool bIgnoreContentScaleFactor);
 
-    //! chars per row
+    //每行字符
     int    _itemsPerRow;
-    //! chars per column
+    //每列字符
     int    _itemsPerColumn;
 
-    //! width of each char
+    //每个字符宽度
     int    _itemWidth;
-    //! height of each char
+    //每个字符高度
     int    _itemHeight;
     
     Color3B    _colorUnmodified;
     
     TextureAtlas* _textureAtlas;
-    // protocol variables
+    //协议变量
     bool _isOpacityModifyRGB;
     BlendFunc _blendFunc;
 
-    // quads to draw
+    //绘制四边形
     ssize_t _quadsToDraw;
-    // color uniform
+    // 均匀的颜色
     GLint    _uniformColor;
-    // This varible is only used for LabelAtlas FPS display. So plz don't modify its value.
+    
+    //这个变量只需要用于LabelAtlas FPS的展示，所以建议不要修改它的值
     bool _ignoreContentScaleFactor;
-    // quad command
+    // quad 命令
     QuadCommand _quadCommand;
 
 private:
