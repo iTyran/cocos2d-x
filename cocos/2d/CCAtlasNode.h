@@ -53,11 +53,13 @@ All features from Node are valid, plus the following features:
 class CC_DLL AtlasNode : public Node, public TextureProtocol
 {    
 public:
-	/** creates a AtlasNode  with an Atlas file the width and height of each item and the quantity of items to render*/
-	static AtlasNode * create(const std::string& filename, int tileWidth, int tileHeight, int itemsToRender);
+    /**根据Altas文件，创建一个AltasNode
+     * 参数：组成Atlas 的 tile的宽度，高度，和item的个数
+    */
+    static AtlasNode * create(const std::string& filename, int tileWidth, int tileHeight, int itemsToRender);
 
-    /** updates the Atlas (indexed vertex array).
-    * Shall be overridden in subclasses
+    /**更新Atlas类（索引顶点数组）
+     * 子类需要重载这个方法
     */
     virtual void updateAtlasValues();
 
@@ -79,7 +81,7 @@ public:
     virtual void setOpacity(GLubyte opacity) override;
     /**
     * @code
-    * When this function bound into js or lua,the parameter will be changed
+    * 当这个方法扩展到js和lua，参数会改变
     * In js: var setBlendFunc(var src, var dst)
     * @endcode
     * @lua NA
@@ -95,10 +97,14 @@ CC_CONSTRUCTOR_ACCESS:
     AtlasNode();
     virtual ~AtlasNode();
 
-    /** initializes an AtlasNode  with an Atlas file the width and height of each item and the quantity of items to render*/
+    /** 使用Atlas file初始化一个AtlasNode，
+     * 参数：组成每个item的width，height，item的个数
+    */
     bool initWithTileFile(const std::string& tile, int tileWidth, int tileHeight, int itemsToRender);
     
-    /** initializes an AtlasNode  with a texture the width and height of each item measured in points and the quantity of items to render*/
+    /** 使用texture初始化AtlasNode
+     *  参数：组成item的width，height，要显示的item的数量
+    */
     bool initWithTexture(Texture2D* texture, int tileWidth, int tileHeight, int itemsToRender);
 
 protected:
@@ -109,30 +115,30 @@ protected:
     friend class Director;
     void setIgnoreContentScaleFactor(bool bIgnoreContentScaleFactor);
 
-    //! chars per row
+    // 每行字符
     int    _itemsPerRow;
-    //! chars per column
+    // 每列字符
     int    _itemsPerColumn;
 
-    //! width of each char
+    // 每个字符宽度
     int    _itemWidth;
-    //! height of each char
+    // 每个字符高度
     int    _itemHeight;
     
     Color3B    _colorUnmodified;
     
     TextureAtlas* _textureAtlas;
-    // protocol variables
+    // 协议变量
     bool _isOpacityModifyRGB;
     BlendFunc _blendFunc;
 
-    // quads to draw
+    // 绘制四边形
     ssize_t _quadsToDraw;
-    // color uniform
+    // 均匀颜色
     GLint    _uniformColor;
-    // This varible is only used for LabelAtlas FPS display. So plz don't modify its value.
+    // 这个变量仅用于LabelAtlas FPS的展示，所以建议不要修改它的值
     bool _ignoreContentScaleFactor;
-    // quad command
+    // quad 命令
     QuadCommand _quadCommand;
 
 private:
