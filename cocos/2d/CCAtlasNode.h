@@ -50,14 +50,14 @@ class TextureAtlas;
 class CC_DLL AtlasNode : public Node, public TextureProtocol
 {    
 public:
-	/** 使用 一个 Atlas 文件，创建一个 AtlasNode
-	参数：每个 item（组成Atlas 的 tile（瓷砖）） 的宽度、高度 要显示的 items 数量  
-	*/  
-	static AtlasNode * create(const std::string& filename, int tileWidth, int tileHeight, int itemsToRender);
+    /** 使用 一个 Atlas 文件，创建一个 AtlasNode
+     *  参数：每个 item（组成Atlas 的 tile（瓷砖）） 的宽度、高度 要显示的 items 数量  
+     */  
+    static AtlasNode * create(const std::string& filename, int tileWidth, int tileHeight, int itemsToRender);
 
     /** 更新Atlas （索引顶点数组）
-    需要重载它的子类
-    */
+     *  需要重载它的子类
+     */
     virtual void updateAtlasValues();
 
     void setTextureAtlas(TextureAtlas* textureAtlas);
@@ -67,7 +67,7 @@ public:
     ssize_t getQuadsToDraw() const;
 
     
-    // Overrides
+    // 重载方法
     virtual void draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated) override;
     virtual Texture2D* getTexture() const override;
     virtual void setTexture(Texture2D *texture) override;
@@ -79,7 +79,9 @@ public:
 
     /** 当这个方法扩展到js或者lua的时候，参数会改变
      * 在js中：setBlendFunc(var src, var dst)
-    */
+     * @endcode
+     * @lua NA
+     */
     virtual void setBlendFunc(const BlendFunc& blendFunc) override;
     /**
     * @js NA
@@ -131,9 +133,9 @@ protected:
     // 均匀的颜色
     GLint    _uniformColor;
     
-    //这个变量只需要用于LabelAtlas FPS的展示，所以plz不需要修改它的值
+    //这个变量只需要用于LabelAtlas FPS的展示，所以建议不要修改它的值
     bool _ignoreContentScaleFactor;
-    // QuadCommand命令
+    // quad 命令
     QuadCommand _quadCommand;
 
 private:
