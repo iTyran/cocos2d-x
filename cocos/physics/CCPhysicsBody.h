@@ -53,32 +53,40 @@ const PhysicsMaterial PHYSICSBODY_MATERIAL_DEFAULT(0.1f, 0.5f, 0.5f);
  * if you create body with createEdgeXXX, the mass and moment will be PHYSICS_INFINITY by default. and it's a static body.
  * you can change mass and moment with setMass() and setMoment(). and you can change the body to be dynamic or static by use function setDynamic().
  */
+ /**
+ * 一个具有物理属性的body.
+ * 可以附加一个或多个shape.
+ * 如果使用createXXX创建body，将根据你自定义的密度（默认值定义在PHYSICSBODY_MATERIAL_DEFAULT中，默认的密度值为0.1f）自动计算出质量和力矩，所依据的公式为：质量=密度＊面积。
+ * 如果使用createEdgeXXX创建body，质量和力矩将采用PHYSICS_INFINITY中定义的默认值，并且该body是静态(无质量无速度)的。
+ * 使用setMass()改变mass的值，使用setMoment()改变moment的值。body是静态的还是动态，可以用setDynamic()来改变.
+ */
 class PhysicsBody : public Ref
 {
 public:
     /** create a body with defult mass and moment. */
+    /** 创建一个有默认质量和力矩值的body */
     static PhysicsBody* create();
-    /** create a body with mass and defult moment. */
+    /** 创建一个自定义质量，默认力矩的body */
     static PhysicsBody* create(float mass);
-    /** create a body with mass and moment. */
+    /** 创建一个自定义质量及力矩的body*/
     static PhysicsBody* create(float mass, float moment);
-    /** Create a body contains a circle shape. */
+    /** 创建一个包含了一个圆形shape的body */
     static PhysicsBody* createCircle(float radius, const PhysicsMaterial& material = PHYSICSBODY_MATERIAL_DEFAULT, const Vec2& offset = Vec2::ZERO);
-    /** Create a body contains a box shape. */
+    /** 创建一个包含了一个矩形shape的body */
     static PhysicsBody* createBox(const Size& size, const PhysicsMaterial& material = PHYSICSBODY_MATERIAL_DEFAULT, const Vec2& offset = Vec2::ZERO);
     /**
-     * @brief Create a body contains a polygon shape.
-     * points is an array of Vec2 structs defining a convex hull with a clockwise winding.
+     * @brief 创建一个包含了一个多边形shape的body.
+     * 顶点值保存在Vec2结构的array中，所有顶点值顺时针方向定义了一个凸多边形。
      */
     static PhysicsBody* createPolygon(const Vec2* points, int count, const PhysicsMaterial& material = PHYSICSBODY_MATERIAL_DEFAULT, const Vec2& offset = Vec2::ZERO);
     
-    /** Create a body contains a EdgeSegment shape. */
+    /** 创建一个包含了一个直线边界的body，该边界为由向量a指向向量b的一条直线 */
     static PhysicsBody* createEdgeSegment(const Vec2& a, const Vec2& b, const PhysicsMaterial& material = PHYSICSBODY_MATERIAL_DEFAULT, float border = 1);
-    /** Create a body contains a EdgeBox shape. */
+    /** 创建一个包含了一个矩形边界的body，该边界为size定义的一个矩形 */
     static PhysicsBody* createEdgeBox(const Size& size, const PhysicsMaterial& material = PHYSICSBODY_MATERIAL_DEFAULT, float border = 1, const Vec2& offset = Vec2::ZERO);
-    /** Create a body contains a EdgePolygon shape. */
+    /** 创建一个包含了一个多边形边界的body,该边界的顶点值保存在points中，按顺时针方向形成一个闭合凸多边形*/
     static PhysicsBody* createEdgePolygon(const Vec2* points, int count, const PhysicsMaterial& material = PHYSICSBODY_MATERIAL_DEFAULT, float border = 1);
-    /** Create a body contains a EdgeChain shape. */
+    /** 创建一个包含了一个链状边界的body,该边界的顶点值保存在points，按顺时针方向形成首尾不相连的锯齿状边界 */
     static PhysicsBody* createEdgeChain(const Vec2* points, int count, const PhysicsMaterial& material = PHYSICSBODY_MATERIAL_DEFAULT, float border = 1);
     
     /*
