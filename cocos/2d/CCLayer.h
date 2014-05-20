@@ -47,6 +47,10 @@ NS_CC_BEGIN
  * @{
  */
 
+/**
+ * @addtogroup 布景层
+ * @{
+ */
 class __Set;
 class TouchScriptHandlerEntry;
 
@@ -63,21 +67,22 @@ All features from Node are valid, plus the following new features:
 - It can receive iPhone Touches
 - It can receive Accelerometer input
 */
-/** @brief Layer 是Node的一个子类，它实现了TouchEventsDelegate协议。
+/** @brief 
+Layer类是Node类的一个子类，它实现了触屏事件代理（TouchEventsDelegate）协议。
 
- 从Node类继承的所有特性是可用的,并且它还添加了以下这些特性：
--它可以接收 iPhone触摸事件
-- 它可以接收重力感应输入
+ 它可以实现Node类的所有功能,并且它还添加了以下这些新功能：
+-它可以接收 iPhone触屏事件
+- 它可以接收加速度传感器输入
 */
 class CC_DLL Layer : public Node
 {
 public:    
     /** creates a fullscreen black layer */
-    /**创建一个全屏的黑色图层 */
+    /**创建一个全屏的黑色布景层 */
     static Layer *create();
 
     // Deprecated touch callbacks.
-//弃用触摸回调
+    //不建议使用触屏回调
     CC_DEPRECATED_ATTRIBUTE virtual bool ccTouchBegan(Touch *pTouch, Event *pEvent) final {CC_UNUSED_PARAM(pTouch); CC_UNUSED_PARAM(pEvent); return false;};
     CC_DEPRECATED_ATTRIBUTE virtual void ccTouchMoved(Touch *pTouch, Event *pEvent) final {CC_UNUSED_PARAM(pTouch); CC_UNUSED_PARAM(pEvent);}
     CC_DEPRECATED_ATTRIBUTE virtual void ccTouchEnded(Touch *pTouch, Event *pEvent) final {CC_UNUSED_PARAM(pTouch); CC_UNUSED_PARAM(pEvent);}
@@ -91,8 +96,8 @@ public:
     /* Callback function should not be deprecated, it will generate lots of warnings.
        Since 'setTouchEnabled' was deprecated, it will make warnings if developer overrides onTouchXXX and invokes setTouchEnabled(true) instead of using EventDispatcher::addEventListenerWithXXX.
     */
-    /* 回调函数不能被弃用。这将生成很多警告。
-       由于 'setTouchEnabled' 被弃用, 如果开发者覆盖 onTouchXXX方法并且调用setTouchEnabled(true)来代替使用EventDispatcher::addEventListenerWithXXX将导致警告.
+    /* 回调函数不能被废弃。这将生成很多警告。
+       由于 'setTouchEnabled' 被废弃, 如果开发者重写 onTouchXXX方法并且调用setTouchEnabled(true)来代替使用EventDispatcher::addEventListenerWithXXX将导致警告.
     */
     virtual bool onTouchBegan(Touch *touch, Event *unused_event); 
     virtual void onTouchMoved(Touch *touch, Event *unused_event); 
@@ -104,7 +109,7 @@ public:
     virtual void onTouchesEnded(const std::vector<Touch*>& touches, Event *unused_event);
     virtual void onTouchesCancelled(const std::vector<Touch*>&touches, Event *unused_event);
     /** @deprecated Please override onAcceleration */
-    /** @deprecated 请覆盖onAcceleration方法 */
+    /** @deprecated 请重写onAcceleration方法 */
     CC_DEPRECATED_ATTRIBUTE virtual void didAccelerate(Acceleration* accelerationValue) final {};
 
 	/* Callback function should not be deprecated, it will generate lots of warnings.
@@ -117,7 +122,7 @@ public:
 
     /** If isTouchEnabled, this method is called onEnter. Override it to change the
     way Layer receives touch events.
-如果isTouchEnabled，这个方法可以叫做onEnter.覆盖它来改变Layer接收触摸事件的方式。
+如果isTouchEnabled，这个方法可以叫做onEnter.覆盖它来改变Layer接收触屏事件的方式。
     ( Default: TouchDispatcher::sharedDispatcher()->addStandardDelegate(this,0); )
     Example:
     void Layer::registerWithTouchDispatcher()
@@ -133,9 +138,9 @@ public:
     Only the touches of this node will be affected. This "method" is not propagated to it's children.
     @since v0.8.1
     */
-    /** 它是否将接收触摸事件。
-你可以通过这个属性来使它支持或者不支持触摸事件。
-只有这个结点的触摸事件被影响。这个“方法”不会传播给它的孩子结点。
+    /** 它是否将接收触屏事件。
+你可以通过这个属性来开启或关闭触屏事件。
+只有这个节点的触屏事件被影响。这个“方法”不会传播给它的孩子节点。
     @since v0.8.1
     */
     CC_DEPRECATED_ATTRIBUTE bool isTouchEnabled() const;
@@ -145,7 +150,7 @@ public:
     CC_DEPRECATED_ATTRIBUTE virtual Touch::DispatchMode getTouchMode() const;
 
     /** swallowsTouches of the touch events. Default is true */
-    /**触摸事件中的  swallowsTouches 事件。默认是true.*/
+    /**触屏事件中的  swallowsTouches 事件。默认是true.*/
     CC_DEPRECATED_ATTRIBUTE virtual void setSwallowsTouches(bool swallowsTouches);
     CC_DEPRECATED_ATTRIBUTE virtual bool isSwallowsTouches() const;
 
@@ -153,8 +158,8 @@ public:
     You can enable / disable accelerometer events with this property.
     @since v0.8.1
     */
-    /**它是否接收重力感应事件。
-   你可以通过这个属性来开启或者关闭重力感应事件。
+    /**它是否接收加速度传感器事件。
+   你可以通过这个属性来开启或者关闭加速度传感器事件。
     @since v0.8.1
     */
     CC_DEPRECATED_ATTRIBUTE virtual bool isAccelerometerEnabled() const;
@@ -167,7 +172,7 @@ public:
     */
 /**
 它是否接收键盘或者平板的键盘事件。
-你可以通过这个属性来开启或者关闭重力感应事件。
+你可以通过这个属性来开启或者关闭加速度传感器事件。
 这是cocos2d-x中的新特性。
     */
     CC_DEPRECATED_ATTRIBUTE virtual bool isKeyboardEnabled() const;
@@ -209,7 +214,7 @@ CC_CONSTRUCTOR_ACCESS:
 
 protected:
     //add the api for avoid use deprecated api
-添加api来避免使用弃用的api
+//添加api来避免使用弃用的api
     void _addTouchListener();
 
     CC_DEPRECATED_ATTRIBUTE void addTouchListener() { _addTouchListener();};
@@ -390,7 +395,7 @@ LayerGradient是LayerColor的一个子类，它在背景上画渐变效果。
 Color is interpolated between the startColor and endColor along the given
 vector (starting at the origin, ending at the terminus).  If no vector is
 supplied, it defaults to (0, -1) -- a fade from top to bottom.
-
+颜色沿着给定的向量插在起始颜色和终止颜色之间（从起点开始，到终点结束）。如果没有提供向量，它默认到（0，-1）点-一个从顶部到底部的淡入淡出。
 If 'compressedInterpolation' is disabled, you will not see either the start or end color for
 non-cardinal vectors; a smooth gradient implying both end points will be still
 be drawn, however.
@@ -403,12 +408,15 @@ class CC_DLL LayerGradient : public LayerColor
 {
 public:
     /** Creates a fullscreen black layer */
+/**创建一个全屏的黑色图层*/
     static LayerGradient* create();
 
     /** Creates a full-screen Layer with a gradient between start and end. */
+/**创建从起始到末尾渐变的一个全屏的图层。*/
     static LayerGradient* create(const Color4B& start, const Color4B& end);
 
     /** Creates a full-screen Layer with a gradient between start and end in the direction of v. */
+/**创建以参数v为方向的从起始到末尾渐变的一个全屏的图层。*/
     static LayerGradient* create(const Color4B& start, const Color4B& end, const Vec2& v);
     
     /** Whether or not the interpolation will be compressed in order to display all the colors of the gradient both in canonical and non canonical vectors
@@ -418,30 +426,42 @@ public:
     bool isCompressedInterpolation() const;
 
     /** Sets the start color of the gradient */
+    /**设置渐变的起始颜色*/
     void setStartColor( const Color3B& startColor );
     /** Returns the start color of the gradient */
+    /**返回渐变的起始颜色*/
     const Color3B& getStartColor() const;
 
     /** Sets the end color of the gradient */
+    /** 设置渐变的终止颜色*/
     void setEndColor( const Color3B& endColor );
     /** Returns the end color of the gradient */
+    /** 返回渐变的终止颜色 */
     const Color3B& getEndColor() const;
 
     /** Returns the start opacity of the gradient */
+    /** 返回渐变的起始透明度*/
     void setStartOpacity( GLubyte startOpacity );
     /** Returns the start opacity of the gradient */
+    /** 返回渐变的起始透明度*/
     GLubyte getStartOpacity() const;
 
     /** Returns the end opacity of the gradient */
+    /** 返回渐变的终止透明度*/
     void setEndOpacity( GLubyte endOpacity );
     /** Returns the end opacity of the gradient */
+    /** 返回渐变的终止透明度*/
     GLubyte getEndOpacity() const;
 
     /** Sets the directional vector that will be used for the gradient.
     The default value is vertical direction (0,-1). 
      */
+    /** 
+      设置将用于渐变的方向向量。默认值是垂直方向（0，-1）。
+     */
     void setVector(const Vec2& alongVector);
     /** Returns the directional vector used for the gradient */
+    /**返回用于渐变的方向向量。*/
     const Vec2& getVector() const;
 
     virtual std::string getDescription() const override;
@@ -455,9 +475,17 @@ CC_CONSTRUCTOR_ACCESS:
      * @js init
      * @lua init
      */
+    /** 通过从起始到终止的渐变来初始化图层。
+     * @js init
+     * @lua init
+     */
     bool initWithColor(const Color4B& start, const Color4B& end);
     
     /** Initializes the Layer with a gradient between start and end in the direction of v.
+     * @js init
+     * @lua init
+     */
+    /**通过沿着方向v的从起始到终止的渐变来初始化图层。
      * @js init
      * @lua init
      */
@@ -479,6 +507,9 @@ protected:
 Features:
 - It supports one or more children
 - Only one children will be active a time
+*/
+/** @brief 
+
 */
 class CC_DLL LayerMultiplex : public Layer
 {
@@ -516,8 +547,8 @@ public:
     static LayerMultiplex* create(M m1, M m2, M m3, M m4, M m5, M m6, M m7, M m8, M m9, std::nullptr_t listEnd) { return createVariadic(m1, m2, m3, m4, m5, m6, m7, m8, m9, NULL); }
     static LayerMultiplex* create(M m1, M m2, M m3, M m4, M m5, M m6, M m7, M m8, M m9, M m10, std::nullptr_t listEnd) { return createVariadic(m1, m2, m3, m4, m5, m6, m7, m8, m9, m10,  NULL); }
 
-    // On WP8 for variable argument lists longer than 10 items, use createWithArray or createVariadic with NULL as the last argument
-
+    // On WP8 for variable argument lists longer than 10 items, use //createWithArray or createVariadic with NULL as the last argument
+//
 
     static LayerMultiplex* createVariadic(Layer* item, ...) CC_REQUIRES_NULL_TERMINATION;
 #else
