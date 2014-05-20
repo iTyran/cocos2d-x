@@ -42,13 +42,6 @@ class Animation;
  * @{
  */
 
-/** Singleton that manages the Animations.
-It saves in a cache the animations. You should use this class if you want to save your animations in a cache.
-
-Before v0.99.5, the recommend way was to save them on the Sprite. Since v0.99.5, you should use this class instead.
-
-@since v0.99.5
-*/
 /** 管理动画的单例
  * 用于保存动画缓存
  * 在V0.99.5版本之前，推荐的方法是保存Sprite，在这之后的版本，用这个类代替。
