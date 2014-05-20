@@ -75,49 +75,49 @@ bool nodeComparisonLess(Node* n1, Node* n2);
 
 class EventListener;
 
-/** @brief Node is the base element of the Scene Graph. Elements of the Scene Graph must be Node objects or subclasses of it.
- The most common Node objects are: Scene, Layer, Sprite, Menu, Label.
+/** @brief Node是Scene Graph里最基本的元素，所有Scene Graph里的元素必须是Node对象或者它的子类。
+常见的Node对象如下：Scene，Layer,Sprite,Menu,Label.
 
- The main features of a Node are:
- - They can contain other Node objects (`addChild`, `getChildByTag`, `removeChild`, etc)
- - They can schedule periodic callback (`schedule`, `unschedule`, etc)
- - They can execute actions (`runAction`, `stopAction`, etc)
+一个Node对象的主要特征如下：
+-可以包含其他Node对象(通过`addChild`, `getChildByTag`, `removeChild`, 等等方法)
+-可以计划周期性的回调(通过（`schedule`, `unschedule`, 等方法)
+-可以执行动作(通过`runAction`, `stopAction`, 等方法)
 
- Subclassing a Node usually means (one/all) of:
- - overriding init to initialize resources and schedule callbacks
- - create callbacks to handle the advancement of time
- - overriding `draw` to render the node
+继承Node生成它的一个子类意味着（满足一条或者多条）：
+-重写init方法，初始化资源和周期性回调
+-创建控制时间的回调
+-重写`draw` 方法，渲染这个节点
 
- Properties of Node:
- - position (default: x=0, y=0)
- - scale (default: x=1, y=1)
- - rotation (in degrees, clockwise) (default: 0)
- - anchor point (default: x=0, y=0)
- - contentSize (default: width=0, height=0)
- - visible (default: true)
+Node的属性：
+- position (默认: x=0, y=0)
+ - scale (默认: x=1, y=1)
+ - rotation (角度值描述, 顺时针方向) (默认: 0)
+ - anchor point (默认: x=0, y=0)
+ - contentSize (默认: width=0, height=0)
+ - visible (默认: true)
 
- Limitations:
- - A Node is a "void" object. If you want to draw something on the screen, you should use a Sprite instead. Or subclass Node and override `draw`.
+ 限制:
+-一个Node是"空"对象，如果需要在屏幕上进行实际绘制，需要使用Sprite或者自定义Node的子类并重写`draw`方法。
 
  */
 
 class CC_DLL Node : public Ref
 {
 public:
-    /// Default tag used for all the nodes
+    /// 默认全部节点的tag
     static const int INVALID_TAG = -1;
 
     /// @{
     /// @name Constructor, Destructor and Initializers
 
     /**
-     * Allocates and initializes a node.
-     * @return A initialized node which is marked as "autorelease".
+     *分配空间并初始化一个node.
+     * @return 一个标记“autorelease”的完成初始化工作的node
      */
     static Node * create(void);
 
     /**
-     * Gets the description string. It makes debugging easier.
+     * 得到描述node的字符串，对debug工作有很大帮忙
      * @return A string
      * @js NA
      * @lua NA
@@ -132,14 +132,12 @@ public:
     /// @name Setters & Getters for Graphic Peroperties
 
     /**
-     LocalZOrder is the 'key' used to sort the node relative to its siblings.
+     LocalZOrder 是父节点对子节点绘制进行排序的关键。
+     一个Node对象的父亲根据LocalZOrder的值对全部孩子的绘制进行排序
+     如果两个孩子拥有相同的LocalZOrder值，那么先加入孩子队列的先绘制。
 
-     The Node's parent will sort all its children based ont the LocalZOrder value.
-     If two nodes have the same LocalZOrder, then the node that was added first to the children's array will be in front of the other node in the array.
-     
-     Also, the Scene Graph is traversed using the "In-Order" tree traversal algorithm ( http://en.wikipedia.org/wiki/Tree_traversal#In-order )
-     And Nodes that have LocalZOder values < 0 are the "left" subtree
-     While Nodes with LocalZOder >=0 are the "right" subtree.
+     场景绘制节点的访问使用有序树的访问算法，参考（http://en.wikipedia.org/wiki/Tree_traversal#In-order）
+     任何LocalZOder值小于0的Node将放在左子树上，其余将放在右子树上。
      
      @see `setGlobalZOrder`
      @see `setVertexZ`
@@ -147,15 +145,16 @@ public:
     virtual void setLocalZOrder(int localZOrder);
 
     CC_DEPRECATED_ATTRIBUTE virtual void setZOrder(int localZOrder) { setLocalZOrder(localZOrder); }
-    /* Helper function used by `setLocalZOrder`. Don't use it unless you know what you are doing.
+    /*
+      `setLocalZOrder`的辅助函数，除非你很清楚自己做什么否则不要用.
      */
     virtual void _setLocalZOrder(int z);
     /**
-     * Gets the local Z order of this node.
+     * 得到当前node的local Z order值
      *
      * @see `setLocalZOrder(int)`
      *
-     * @return The local (relative to its siblings) Z order.
+     * @return local Z order值.
      */
     virtual int getLocalZOrder() const { return _localZOrder; }
     CC_DEPRECATED_ATTRIBUTE virtual int getZOrder() const { return getLocalZOrder(); }
