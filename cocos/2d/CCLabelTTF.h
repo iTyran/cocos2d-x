@@ -39,12 +39,6 @@ class Label;
  * @{
  */
 
-/**
- * @addtogroup GUI
- * @{
- * @addtogroup 标签
- * @{
- */
 /** @brief LabelTTF is a subclass of TextureNode that knows how to render text labels
  *
  * All features from TextureNode are valid in LabelTTF
@@ -57,7 +51,7 @@ class Label;
 *
 *在LabelTTF中，从TextureNode继承的所有特性都是可用的。
 *
-*LabelTTF类实例化的对象比较慢。可以考虑用LabelAtlas或者LabelBMFont类来*代替。
+*LabelTTF类实例化的对象比较慢。可以考虑用LabelAtlas或者LabelBMFont类来代替。
 *
 *自定义的ttf文件要被放到"assets/"目录下或者外部存储以便应用程序可以访问
 *到。
@@ -133,11 +127,11 @@ public:
     void enableStroke(const Color3B &strokeColor, float strokeSize, bool mustUpdateTexture = true);
     
     /** disable stroke */
-/**取消空心效果*/
+    /**取消空心效果*/
     void disableStroke(bool mustUpdateTexture = true);
     
     /** set text tinting */
-/**给文本着色*/
+    /**给文本着色*/
     void setFontFillColor(const Color3B &tintColor, bool mustUpdateTexture = true);
 
     /** Creates an label.
