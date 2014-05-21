@@ -1,4 +1,4 @@
-﻿/****************************************************************************
+/****************************************************************************
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
@@ -54,41 +54,41 @@ class SpriteFrame;
 
 /** @brief MenuItem base class
  *
- *  可以继承MenuItem创建自定义MenuItem
+ *  Subclass MenuItem (or any subclass) to create your custom MenuItem objects.
  */
 class CC_DLL MenuItem : public Node
 {
 public:
-    /** 创建一个空MenuItem */
+    /** Creates a MenuItem with no target/selector */
     static MenuItem* create();
-    /** 创建一个具有target/selector的MenuItem */
+    /** Creates a MenuItem with a target/selector */
     CC_DEPRECATED_ATTRIBUTE static MenuItem* create(Ref *rec, SEL_MenuHandler selector);
-    /** 创建一个具有target/selector的MenuItem */
+    /** Creates a MenuItem with a target/selector */
     static MenuItem* create(const ccMenuCallback& callback);
 
-    /** 返回外边框 */
+    /** Returns the outside box */
     Rect rect() const;
-    /** 激活item */
+    /** Activate the item */
     virtual void activate();
-    /** 选中item(注:未激活), 类似于鼠标点击完毕状态 */
+    /** The item was selected (not activated), similar to "mouse-over" */
     virtual void selected();
-    /** 取消选中的item */
+    /** The item was unselected */
     virtual void unselected();
-    /** 返回item是否可用 */
+    /** returns whether or not the item is enabled */
     virtual bool isEnabled() const;
-    /** 设置item是否可用 */
+    /** enables or disables the item */
     virtual void setEnabled(bool value);
-    /** 返回item是否选中 */
+    /** returns whether or not the item is selected */
     virtual bool isSelected() const;
 
-    /** 设置menu item的回调
+    /** set the callback to the menu item
     * @code
-    * js中，包含两个参数，其中第二个参数为jsptr
+    * In js,can contain two params,the second param is jsptr
     * @endcode
     * @lua NA
     */
     void setCallback(const ccMenuCallback& callback);
-    /** 设置menu item的target/selector
+    /** set the target/selector of the menu item
     * @js NA
     * @lua NA
     */
@@ -113,12 +113,12 @@ CC_CONSTRUCTOR_ACCESS:
      */
     virtual ~MenuItem();
     
-    /** 初始化具有target/selector的MenuItem
+    /** Initializes a MenuItem with a target/selector
      * @js NA
      * @lua NA
      */
     bool initWithCallback(const ccMenuCallback& callback);
-    /** 初始化具有target/selector的MenuItem
+    /** Initializes a MenuItem with a target/selector
      * @js NA
      * @lua NA
      */
@@ -127,9 +127,9 @@ CC_CONSTRUCTOR_ACCESS:
 protected:
     bool            _selected;
     bool            _enabled;
-	// 回调
+	// callback
 	ccMenuCallback _callback;
-	// 如果使用的是旧的API，那么_target需要retained / released
+	// If using the old API, the _target needs to be retained / released
 	Ref		*_target;
 
 private:
@@ -137,8 +137,8 @@ private:
 };
 
 /** @brief An abstract class for "label" MenuItemLabel items 
-	任何支持LabelProtocol协议都可以被加入
-	支持的Nodes如下：
+ Any Node that supports the LabelProtocol protocol can be added.
+ Supported nodes:
  - BitmapFontAtlas
  - LabelAtlas
  - LabelTTF
@@ -147,28 +147,28 @@ private:
 class CC_DLL MenuItemLabel : public MenuItem
 {
 public:
-    /** 创建一个具有Label,target和selector的MenuItemLabel */
+    /** creates a MenuItemLabel with a Label, target and selector */
     CC_DEPRECATED_ATTRIBUTE static MenuItemLabel * create(Node*label, Ref* target, SEL_MenuHandler selector);
 
-	  /** 创建一个具有Label和callback的MenuItemLabel */
+	/** creates a MenuItemLabel with a Label and a callback */
     static MenuItemLabel * create(Node*label, const ccMenuCallback& callback);
 
-    /** 创建一个具有Label,Target和selector为nil的MenuItemLabel */
+    /** creates a MenuItemLabel with a Label. Target and selector will be nil */
     static MenuItemLabel* create(Node *label);
 
-    /** 设置inner label的新string */
+    /** sets a new string to the inner label */
     void setString(const std::string& label);
 
-    /** 获取item禁用状态时的颜色值 */
+    /** Gets the color that will be used to disable the item */
     inline const Color3B& getDisabledColor() const { return _disabledColor; };
 
-    /** 设置item禁用状态时的颜色值 */
+    /** Sets the color that will be used to disable the item */
     inline void setDisabledColor(const Color3B& color) { _disabledColor = color; };
     
-    /** 获取被渲染的label. */
+    /** Gets the label that is rendered. */
     inline Node* getLabel() const { return _label; };
     
-    /** 设置需要渲染的label. */
+    /** Sets the label that is rendered. */
     void setLabel(Node* node);
     
     // Overrides
@@ -191,19 +191,19 @@ CC_CONSTRUCTOR_ACCESS:
      */
     virtual ~MenuItemLabel();
     
-	  /** 初始化一个具有Label,target和selector的MenuItemLabel */
+	/** initializes a MenuItemLabel with a Label, target and selector */
     bool initWithLabel(Node* label, const ccMenuCallback& callback);
     
-    /** 初始化一个具有Label,target和selector的MenuItemLabel */
+    /** initializes a MenuItemLabel with a Label, target and selector */
     CC_DEPRECATED_ATTRIBUTE bool initWithLabel(Node* label, Ref* target, SEL_MenuHandler selector);
     
 protected:
     Color3B    _colorBackup;
     float      _originalScale;
 
-    /** item处于禁用状态时的颜色值 */
+    /** the color that will be used to disable the item */
     Color3B _disabledColor;
-    /** 需要渲染的Label. 可以是任何实现了LabelProtocol的Node */
+    /** Label that is rendered. It can be any Node that implements the LabelProtocol */
     Node* _label;
 
 private:
@@ -212,16 +212,16 @@ private:
 
 
 /** @brief A MenuItemAtlasFont
- 用于创建带LabelAtlas的MenuItemLabel的类
+ Helper class that creates a MenuItemLabel class with a LabelAtlas
  */
 class CC_DLL MenuItemAtlasFont : public MenuItemLabel
 {
 public:
-    /** 从参数string,atlas创建一个具有target/selector的menu item */
+    /** creates a menu item from a string and atlas with a target/selector */
     static MenuItemAtlasFont* create(const std::string& value, const std::string& charMapFile, int itemWidth, int itemHeight, char startCharMap);
-    /** 从参数string,atlas创建一个用于MenuItemToggle的menu item */
+    /** creates a menu item from a string and atlas. Use it with MenuItemToggle */
     CC_DEPRECATED_ATTRIBUTE static MenuItemAtlasFont* create(const std::string& value, const std::string& charMapFile, int itemWidth, int itemHeight, char startCharMap, Ref* target, SEL_MenuHandler selector);
-    /** 从参数string,atlas创建一个用于MenuItemToggle的menu item */
+    /** creates a menu item from a string and atlas. Use it with MenuItemToggle */
     static MenuItemAtlasFont* create(const std::string& value, const std::string& charMapFile, int itemWidth, int itemHeight, char startCharMap, const ccMenuCallback& callback);
     
 CC_CONSTRUCTOR_ACCESS:
@@ -235,10 +235,10 @@ CC_CONSTRUCTOR_ACCESS:
      */
     virtual ~MenuItemAtlasFont(){}
     
-    /** 从参数string,atlas初始化一个具有target/selector的menu item */
+    /** initializes a menu item from a string and atlas with a target/selector */
     CC_DEPRECATED_ATTRIBUTE bool initWithString(const std::string& value, const std::string& charMapFile, int itemWidth, int itemHeight, char startCharMap, Ref* target, SEL_MenuHandler selector);
     
-    /** 从参数string,atlas初始化一个具有target/selector的menu item */
+    /** initializes a menu item from a string and atlas with a target/selector */
     bool initWithString(const std::string& value, const std::string& charMapFile, int itemWidth, int itemHeight, char startCharMap, const ccMenuCallback& callback);
 
 private:
@@ -252,50 +252,50 @@ private:
 class CC_DLL MenuItemFont : public MenuItemLabel
 {
 public:
-    /** 从参数string创建一个用于MenuItemToggle的并不具有target/selector的menu item */
+    /** creates a menu item from a string without target/selector. To be used with MenuItemToggle */
     static MenuItemFont * create(const std::string& value = "");
-    /** 从参数string创建一个具有target/selector的menu item */
+    /** creates a menu item from a string with a target/selector */
     CC_DEPRECATED_ATTRIBUTE static MenuItemFont * create(const std::string& value, Ref* target, SEL_MenuHandler selector);
-    /** 从参数string创建一个具有target/selector的menu item */
+    /** creates a menu item from a string with a target/selector */
     static MenuItemFont * create(const std::string& value, const ccMenuCallback& callback);
 
-    /** 设置默认字体大小 */
+    /** set default font size */
     static void setFontSize(int size);
-    /** 获取默认字体大小 */
+    /** get default font size */
     static int getFontSize();
     CC_DEPRECATED_ATTRIBUTE static int fontSize() { return MenuItemFont::getFontSize(); };
-    /** 设置默认字体名字 */
+    /** set the default font name */
     static void setFontName(const std::string& name);
-    /** 获取默认字体名字 */
+    /** get the default font name */
     static const std::string& getFontName();
     CC_DEPRECATED_ATTRIBUTE static const std::string& fontName() { return MenuItemFont::getFontName(); };
 
-    /** 设置字体大小
-     * c++不能重载静态函数和具有相同参数类型的非静态函数
-     * 因此setFontSize函数不能重载，改名为setFontSizeObj来实现设置字体大小
+    /** set font size
+     * c++ can not overload static and non-static member functions with the same parameter types
+     * so change the name to setFontSizeObj
      * @js setFontSize
      */
     void setFontSizeObj(int size);
     
-    /** 获取字体大小
+    /** get font size 
      * @js getFontSize
      */
     int getFontSizeObj() const;
     CC_DEPRECATED_ATTRIBUTE int fontSizeObj() const { return getFontSizeObj(); };
     
     /** set the font name 
-     *  c++不能重载静态函数和具有相同参数类型的非静态函数
-     * 因此setFontName函数不能重载，改名为setFontNameObj来实现设置字体名称
+     * c++ can not overload static and non-static member functions with the same parameter types
+     * so change the name to setFontNameObj
      * @js setFontName
      */
     void setFontNameObj(const std::string& name);
 
-    /** 获取字体名称
+    /** returns the name of the Font 
      * @js getFontNameObj
      */
     const std::string& getFontNameObj() const;
 
-    /** 已经被剥离,请使用getFontNameObj()来代替 */
+    /** deprecated Use getFontNameObj() instead */
     CC_DEPRECATED_ATTRIBUTE const std::string& fontNameObj() const { return getFontNameObj(); }
     
 CC_CONSTRUCTOR_ACCESS:
@@ -309,10 +309,10 @@ CC_CONSTRUCTOR_ACCESS:
      */
     virtual ~MenuItemFont();
     
-    /** 从参数string初始化一个具有target/selector的menu item */
+    /** initializes a menu item from a string with a target/selector */
     CC_DEPRECATED_ATTRIBUTE bool initWithString(const std::string& value, Ref* target, SEL_MenuHandler selector);
     
-    /** 从参数string初始化一个具有target/selector的menu item */
+    /** initializes a menu item from a string with a target/selector */
     bool initWithString(const std::string& value, const ccMenuCallback& callback);
     
 protected:
@@ -325,43 +325,43 @@ private:
 
 
 /** @brief MenuItemSprite accepts Node<RGBAProtocol> objects as items.
- 有三种不同状态的图片:
- - 未选中图片(unselected image)
- - 选中状态图片(selected image)
- - 禁用状态图片(disabled image)
+ The images has 3 different states:
+ - unselected image
+ - selected image
+ - disabled image
  
  @since v0.8.0
  */
 class CC_DLL MenuItemSprite : public MenuItem
 {
 public:
-    /** 创建一个具有常用、选中和禁用状态图片的menu item*/
+    /** creates a menu item with a normal, selected and disabled image*/
     static MenuItemSprite * create(Node* normalSprite, Node* selectedSprite, Node* disabledSprite = nullptr);
-    /** 创建一个具有常用和选中状态图片并具有target/selector的menu item */
+    /** creates a menu item with a normal and selected image with target/selector */
     CC_DEPRECATED_ATTRIBUTE static MenuItemSprite * create(Node* normalSprite, Node* selectedSprite, Ref* target, SEL_MenuHandler selector);
-    /** 创建一个具有常用、选中和禁用状态图片并具有target/selector的menu item */
+    /** creates a menu item with a normal,selected  and disabled image with target/selector */
     CC_DEPRECATED_ATTRIBUTE static MenuItemSprite * create(Node* normalSprite, Node* selectedSprite, Node* disabledSprite, Ref* target, SEL_MenuHandler selector);
-    /** 创建一个具有常用和选中状态图片并具有回调(callback)的menu item */
+    /** creates a menu item with a normal and selected image with a callable object */
     static MenuItemSprite * create(Node* normalSprite, Node* selectedSprite, const ccMenuCallback& callback);
-    /** 创建一个具有常用、选中和禁用状态图片并具有target/selector的menu item */
+    /** creates a menu item with a normal,selected  and disabled image with target/selector */
     static MenuItemSprite * create(Node* normalSprite, Node* selectedSprite, Node* disabledSprite, const ccMenuCallback& callback);
 
-    /** 获取item常用状态(未选中状态)的图片 */
+    /** Gets the image used when the item is not selected */
     inline Node* getNormalImage() const { return _normalImage; };
     
-    /** 设置item常用状态(未选中状态)时的图片 */
+    /** Sets the image used when the item is not selected */
     void setNormalImage(Node* image);
     
-    /** 获取item选中状态时的图片 */
+    /** Gets the image used when the item is selected */
     inline Node* getSelectedImage() const { return _selectedImage; };
     
-    /** 设置item选中状态时的图片 */
+    /** Sets the image used when the item is selected */
     void setSelectedImage(Node* image);
     
-    /** 获取item禁用状态时的图片 */
+    /** Gets the image used when the item is disabled */
     inline Node* getDisabledImage() const { return _disabledImage; };
     
-    /** 设置item禁用状态时的图片 */
+    /** Sets the image used when the item is disabled */
     void setDisabledImage(Node* image);
     
     /**
@@ -378,20 +378,20 @@ CC_CONSTRUCTOR_ACCESS:
     ,_disabledImage(nullptr)
     {}
     
-    /** 初始化一个具有常用、选中和禁用状态图片并具有target/selector的menu item */
+    /** initializes a menu item with a normal, selected  and disabled image with target/selector */
     CC_DEPRECATED_ATTRIBUTE bool initWithNormalSprite(Node* normalSprite, Node* selectedSprite, Node* disabledSprite, Ref* target, SEL_MenuHandler selector);
     
-    /** 一个具有常用、选中和禁用状态图片并具有回调(callback)的menu item */
+    /** initializes a menu item with a normal, selected  and disabled image with a callable object */
     bool initWithNormalSprite(Node* normalSprite, Node* selectedSprite, Node* disabledSprite, const ccMenuCallback& callback);
     
 protected:
     virtual void updateImagesVisibility();
 
-    /** 常用状态(未选中)时的图片 */
+    /** the image used when the item is not selected */
     Node* _normalImage;
-    /** 选中状态时的图片 */
+    /** the image used when the item is selected */
     Node* _selectedImage;
-    /** 禁用状态时的图片 */
+    /** the image used when the item is disabled */
     Node* _disabledImage;
 
 private:
@@ -400,37 +400,37 @@ private:
 
 
 /** @brief MenuItemImage accepts images as items.
- 有三种不同状态的图片:
- - 未选中图片(unselected image)
- - 选中状态图片(selected image)
- - 禁用状态图片(disabled image)
+ The images has 3 different states:
+ - unselected image
+ - selected image
+ - disabled image
  
- 最佳方案是所有的图片具有相同尺寸
+ For best results try that all images are of the same size
  */
 class CC_DLL MenuItemImage : public MenuItemSprite
 {
 public:
-    /** 创建一个MenuItemImage. */
+    /** Creates an MenuItemImage. */
     static MenuItemImage* create();
-    /** 创建一个具有常用和选中状态图片的menu item*/
+    /** creates a menu item with a normal and selected image*/
     static MenuItemImage* create(const std::string& normalImage, const std::string& selectedImage);
-    /** 创建一个具有常用、选中和禁用状态图片的menu item*/
+    /** creates a menu item with a normal,selected  and disabled image*/
     static MenuItemImage* create(const std::string& normalImage, const std::string& selectedImage, const std::string& disabledImage);
-    /** 创建一个具有常用和选中状态图片并具有target/selector的menu item */
+    /** creates a menu item with a normal and selected image with target/selector */
     CC_DEPRECATED_ATTRIBUTE static MenuItemImage* create(const std::string& normalImage, const std::string& selectedImage, Ref* target, SEL_MenuHandler selector);
-    /** 创建一个具有常用和选中状态图片并具有回调(callback)的menu item */
+    /** creates a menu item with a normal and selected image with a callable object */
     static MenuItemImage* create(const std::string&normalImage, const std::string&selectedImage, const ccMenuCallback& callback);
 
-    /** 创建一个具有常用、选中和禁用状态图片并具有target/selector的menu item */
+    /** creates a menu item with a normal,selected  and disabled image with target/selector */
     CC_DEPRECATED_ATTRIBUTE static MenuItemImage* create(const std::string& normalImage, const std::string& selectedImage, const std::string& disabledImage, Ref* target, SEL_MenuHandler selector);
-    /** 创建一个具有常用、选中和禁用状态图片并具有回调(callback)的menu item */
+    /** creates a menu item with a normal,selected  and disabled image with a callable object */
     static MenuItemImage* create(const std::string&normalImage, const std::string&selectedImage, const std::string&disabledImage, const ccMenuCallback& callback);
 
-    /** 设置图片常用状态时的sprite frame */
+    /** sets the sprite frame for the normal image */
     void setNormalSpriteFrame(SpriteFrame* frame);
-    /** 设置图片选中状态时的sprite frame */
+    /** sets the sprite frame for the selected image */
     void setSelectedSpriteFrame(SpriteFrame* frame);
-    /** 设置图片禁用状态时的sprite frame */
+    /** sets the sprite frame for the disabled image */
     void setDisabledSpriteFrame(SpriteFrame* frame);
     
 CC_CONSTRUCTOR_ACCESS:
@@ -446,10 +446,10 @@ CC_CONSTRUCTOR_ACCESS:
     
     bool init();
     
-    /** 初始化一个具有常用、选中和禁用状态图片并具有target/selector的menu item */
+    /** initializes a menu item with a normal, selected  and disabled image with target/selector */
     CC_DEPRECATED_ATTRIBUTE bool initWithNormalImage(const std::string& normalImage, const std::string& selectedImage, const std::string& disabledImage, Ref* target, SEL_MenuHandler selector);
     
-    /** 初始化一个具有常用、选中和禁用状态图片并具有回调(callback)的menu item */
+    /** initializes a menu item with a normal, selected  and disabled image with a callable object */
     bool initWithNormalImage(const std::string& normalImage, const std::string& selectedImage, const std::string& disabledImage, const ccMenuCallback& callback);
 
 private:
@@ -458,47 +458,47 @@ private:
 
 
 /** @brief A MenuItemToggle
- 一个简单的包含内部items的容器类
- 内部items可以是任何MenuItem
+ A simple container class that "toggles" it's inner items
+ The inner items can be any MenuItem
  */
 class CC_DLL MenuItemToggle : public MenuItem
 {
 public:
-    /** 从包含item的Array参数创建一个具有target/selector的menu item
+    /** creates a menu item from a Array with a target selector
      * @js NA
      * @lua NA
      */
     CC_DEPRECATED_ATTRIBUTE static MenuItemToggle * createWithTarget(Ref* target, SEL_MenuHandler selector, const Vector<MenuItem*>& menuItems);
-    /** 从包含item的list参数创建一个具有target/selector的menu item
+    /** creates a menu item from a list of items with a target/selector
      * @js NA
      * @lua NA
      */
     CC_DEPRECATED_ATTRIBUTE static MenuItemToggle* createWithTarget(Ref* target, SEL_MenuHandler selector, MenuItem* item, ...)CC_REQUIRES_NULL_TERMINATION;
     
-    /** 从包含item的Array参数创建一个具有回调(callback)的menu item */
+    /** creates a menu item from a Array with a callable object */
     static MenuItemToggle * createWithCallback(const ccMenuCallback& callback, const Vector<MenuItem*>& menuItems);
-    /** 从包含item的list参数创建一个具有回调(callback)的menu item */
+    /** creates a menu item from a list of items with a callable object */
     static MenuItemToggle* createWithCallback(const ccMenuCallback& callback, MenuItem* item, ...) CC_REQUIRES_NULL_TERMINATION;
-    /** 创建一个空menu item(没有target/selector,且不包含items) */
+    /** creates a menu item with no target/selector and no items */
     static MenuItemToggle* create();
-    /** 创建包含一个item的menu item */
+    /** creates a menu item with a item */
     static MenuItemToggle* create(MenuItem *item);
-    /** 创建包含多个item的menu item */
+    /** add more menu item */
     void addSubItem(MenuItem *item);
     
-    /** 返回选中的item */
+    /** return the selected item */
     MenuItem* getSelectedItem();
-    /** 已剥离,请使用getSelectedItem()代替 */
+    /** @deprecated Use getSelectedItem() instead */
     CC_DEPRECATED_ATTRIBUTE MenuItem* selectedItem() { return getSelectedItem(); }
 
-    /** 获取选中item的索引(index) */
+    /** Gets the index of the selected item */
     inline unsigned int getSelectedIndex() const { return _selectedIndex; };
     
-    /** 设置选中item的索引 */
+    /** Sets the index of the selected item */
     void setSelectedIndex(unsigned int index);
     
-    /** 获取包含subitems的array
-     你可以在运行时添加或删除items,也可用一个新的array替换.
+    /** Gets the array that contains the subitems.
+     You can add/remove items in runtime, and you can replace the array with a new one.
      @since v0.7.2
      * @js NA
      * @lua NA
@@ -506,7 +506,7 @@ public:
     inline const Vector<MenuItem*>& getSubItems() const { return _subItems; };
     inline Vector<MenuItem*>& getSubItems() { return _subItems; };
 
-    /** 设置包含subitems的array */
+    /** Sets the array that contains the subitems. */
     inline void setSubItems(const Vector<MenuItem*>& items) {
         _subItems = items;
     }
@@ -530,22 +530,22 @@ CC_CONSTRUCTOR_ACCESS:
      */
     virtual ~MenuItemToggle();
     
-    /** 从包含item的list参数初始化一个具有target/selector的menu item
+    /** initializes a menu item from a list of items with a target selector
      * @js NA
      * @lua NA
      */
     CC_DEPRECATED_ATTRIBUTE bool initWithTarget(Ref* target, SEL_MenuHandler selector, MenuItem* item, va_list args);
     
-    /** 从包含item的list参数初始化一个具有回调(callback)的menu item */
+    /** initializes a menu item from a list of items with a callable object */
     bool initWithCallback(const ccMenuCallback& callback, MenuItem* item, va_list args);
     
-    /** 初始化一个menu item,使之具有一个item */
+    /** initializes a menu item with a item */
     bool initWithItem(MenuItem *item);
 
 protected:
-    /** 选中的item索引 */
+    /** returns the selected item */
     unsigned int _selectedIndex;
-    /** 包含subitems的array,你可以在运行时添加或删除items,也可用一个新的array替换.
+    /** Array that contains the subitems. You can add/remove items in runtime, and you can replace the array with a new one.
      @since v0.7.2
      */
     Vector<MenuItem*> _subItems;
