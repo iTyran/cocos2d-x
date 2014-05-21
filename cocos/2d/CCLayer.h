@@ -399,7 +399,7 @@ supplied, it defaults to (0, -1) -- a fade from top to bottom.
 If 'compressedInterpolation' is disabled, you will not see either the start or end color for
 non-cardinal vectors; a smooth gradient implying both end points will be still
 be drawn, however.
-如果'compressedInterpolation'不可用，你将看到非基本向量的起始颜色或者终止颜色；不过无论如何，一个平滑的渐变（包括终点）最终还是会呈现出来。
+如果'compressedInterpolation'不可用，你将看不到非基本向量的起始颜色或者终止颜色；不过无论如何，一个平滑的渐变（包括终点）最终还是会呈现出来。
 If ' compressedInterpolation' is enabled (default mode) you will see both the start and end colors of the gradient.
 如果'compressedInterpolation'是可用的(默认模式)，你将看到渐变的起始颜色和终止颜色。
 @since v0.99.5
