@@ -45,9 +45,9 @@ NS_CC_BEGIN
 
 /** @brief A Menu
 * 
-* Features and Limitation:
-*  - You can add MenuItem objects in runtime using addChild:
-*  - But the only accepted children are MenuItem objects
+* 特征与限制:
+*  - 你可以在运行的时候通过addChild函数添加MenuItem对象：
+*  - 但是可以接受的子节点必须是MenuItem对象
 */
 class CC_DLL Menu : public Layer
 {
@@ -58,11 +58,11 @@ public:
         TRACKING_TOUCH,
     };
     
-    /** creates an empty Menu */
+    /** 创建空的菜单 */
     static Menu* create();
     
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
-    // WP8 in VS2012 does not support nullptr in variable args lists and variadic templates are also not supported
+    //WP8在VS2012中，不支持在可变参数列表中使用nullptr，也不支持可变参数模板
     typedef MenuItem* M;
     static Menu* create(M m1, std::nullptr_t listEnd) { return variadicCreate(m1, NULL); }
     static Menu* create(M m1, M m2, std::nullptr_t listEnd) { return variadicCreate(m1, m2, NULL); }
@@ -75,45 +75,51 @@ public:
     static Menu* create(M m1, M m2, M m3, M m4, M m5, M m6, M m7, M m8, M m9, std::nullptr_t listEnd) { return variadicCreate(m1, m2, m3, m4, m5, m6, m7, m8, m9, NULL); }
     static Menu* create(M m1, M m2, M m3, M m4, M m5, M m6, M m7, M m8, M m9, M m10, std::nullptr_t listEnd) { return variadicCreate(m1, m2, m3, m4, m5, m6, m7, m8, m9, m10,  NULL); }
 
-    // On WP8 for lists longer than 10 items, use createWithArray or variadicCreate with NULL as the last argument
+    //在WP8平台上，当参数列表大于10项时，可以使用createWithArray或者以NULL作为最后一个参数的variadicCreate来创建菜单
     static Menu* variadicCreate(MenuItem* item, ...);
 #else
-    /** creates a Menu with MenuItem objects */
+    /** 用菜单项对象创建菜单 */
     static Menu* create(MenuItem* item, ...) CC_REQUIRES_NULL_TERMINATION;
 #endif
 
-    /** creates a Menu with a Array of MenuItem objects */
+    /** 用一组菜单项对象创建菜单*/
     static Menu* createWithArray(const Vector<MenuItem*>& arrayOfItems);
 
     /** creates a Menu with it's item, then use addChild() to add 
       * other items. It is used for script, it can't init with undetermined
       * number of variables.
     */
+    /**用菜单项创建一个菜单，然后使用addChild()函数来添加其他的菜单项。
+     * 对于脚本语言，不能使用不确定数量的变量来初始化
+    */
     static Menu* createWithItem(MenuItem* item);
     
-    /** creates a Menu with MenuItem objects */
+    /** 用菜单项对象来创建菜单 */
     static Menu* createWithItems(MenuItem *firstItem, va_list args);
 
-    /** align items vertically */
+    /** 使菜单项垂直排列 */
     void alignItemsVertically();
-    /** align items vertically with padding
+    /** 
+     * 通过填补空白来调整菜单项垂直排列
     @since v0.7.2
     */
     void alignItemsVerticallyWithPadding(float padding);
 
-    /** align items horizontally */
+    /** 使菜单项水平排列*/
     void alignItemsHorizontally();
-    /** align items horizontally with padding
+    /**通过填补空白来调整菜单项水平排列
     @since v0.7.2
     */
     void alignItemsHorizontallyWithPadding(float padding);
 
     /** align items in rows of columns */
+    /**使各列中的菜单项按指定的个数排列*/
     void alignItemsInColumns(int columns, ...) CC_REQUIRES_NULL_TERMINATION;
     void alignItemsInColumns(int columns, va_list args);
     void alignItemsInColumnsWithArray(const ValueVector& rows);
 
     /** align items in columns of rows */
+    /**使各行中的菜单项按指定的个数排列*/
     void alignItemsInRows(int rows, ...) CC_REQUIRES_NULL_TERMINATION;
     void alignItemsInRows(int rows, va_list args);
     void alignItemsInRowsWithArray(const ValueVector& columns);
@@ -126,7 +132,7 @@ public:
     virtual void onTouchCancelled(Touch* touch, Event* event);
     virtual void onTouchMoved(Touch* touch, Event* event);
     
-    // overrides
+    // 重载
     virtual void removeChild(Node* child, bool cleanup) override;
     
     virtual void addChild(Node * child) override;
@@ -147,17 +153,17 @@ CC_CONSTRUCTOR_ACCESS:
     Menu() : _selectedItem(nullptr) {}
     virtual ~Menu();
 
-    /** initializes an empty Menu */
+    /** 初始化一个空的菜单 */
     bool init();
 
-    /** initializes a Menu with a NSArray of MenuItem objects */
+    /**用以MenuItem对象为成员的Vecotor初始化菜单*/
     bool initWithArray(const Vector<MenuItem*>& arrayOfItems);
 
 protected:
 
 
 
-    /** whether or not the menu will receive events */
+    /** 决定菜单能否接收时间的变量 */
     bool _enabled;
 
     MenuItem* getItemForTouch(Touch * touch);
