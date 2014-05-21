@@ -71,8 +71,8 @@ All features from Node are valid, plus the following new features:
 Layer类是Node类的一个子类，它实现了触屏事件代理（TouchEventsDelegate）协议。
 
  它可以实现Node类的所有功能,并且它还添加了以下这些新功能：
--它可以接收 iPhone触屏事件
-- 它可以接收加速度传感器输入
+-它可以接收iPhone触屏事件
+-它可以接收加速度传感器输入
 */
 class CC_DLL Layer : public Node
 {
@@ -96,7 +96,7 @@ public:
     /* Callback function should not be deprecated, it will generate lots of warnings.
        Since 'setTouchEnabled' was deprecated, it will make warnings if developer overrides onTouchXXX and invokes setTouchEnabled(true) instead of using EventDispatcher::addEventListenerWithXXX.
     */
-    /* 回调函数不能被废弃。这将生成很多警告。
+    /* 回调函数不能被弃用。这将生成很多警告。
        由于 'setTouchEnabled' 被废弃, 如果开发者重写 onTouchXXX方法并且调用setTouchEnabled(true)来代替使用EventDispatcher::addEventListenerWithXXX将导致警告.
     */
     virtual bool onTouchBegan(Touch *touch, Event *unused_event); 
@@ -116,13 +116,13 @@ public:
 	Since 'setAccelerometerEnabled' was deprecated, it will make warnings if developer overrides onAcceleration and invokes setAccelerometerEnabled(true) instead of using EventDispatcher::addEventListenerWithXXX.
     */
     /* 回调函数不能被弃用。这将生成很多警告。
-       由于 'setAccelerometerEnabled'被弃用, 如果开发者覆盖  onAcceleration方法并且调用setAccelerometerEnabled(true)来代替使用EventDispatcher::addEventListenerWithXXX将导致警告.
+       由于 'setAccelerometerEnabled'被弃用, 如果开发者重写onAcceleration方法并且调用setAccelerometerEnabled(true)来代替使用EventDispatcher::addEventListenerWithXXX将导致警告.
     */
     virtual void onAcceleration(Acceleration* acc, Event* unused_event);
 
     /** If isTouchEnabled, this method is called onEnter. Override it to change the
     way Layer receives touch events.
-如果isTouchEnabled，这个方法可以叫做onEnter.覆盖它来改变Layer接收触屏事件的方式。
+如果isTouchEnabled，这个方法可以叫做onEnter.重写它来改变Layer接收触屏事件的方式。
     ( Default: TouchDispatcher::sharedDispatcher()->addStandardDelegate(this,0); )
     Example:
     void Layer::registerWithTouchDispatcher()
@@ -518,9 +518,17 @@ public:
      * @js NA
      * @lua NA
      */
+    /** 创建并且初始化一个LayerMultiplex对象 
+     * @js NA
+     * @lua NA
+     */
     static LayerMultiplex* create();
 
     /** creates a LayerMultiplex with an array of layers.
+     @since v2.1
+     * @js NA
+     */
+    /** 用一个layers数组创建一个 LayerMultiplex .
      @since v2.1
      * @js NA
      */
@@ -532,7 +540,14 @@ public:
      * In js:var create(...)
      * In lua:local create(...)
      * @endcode
-     */
+     */ 
+    /** 用不少于一个通过使用一个变量参数列表的层来创建一个LayerMultiplex.
+     * @code
+     * 当这个函数绑定到 lua或者 js,输入参数产生了变化.
+     * In js:var create(...)
+     * In lua:local create(...)
+     * @endcode
+     */ 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
     // WP8 in VS2012 does not support nullptr in variable args lists and variadic templates are also not supported
     typedef Layer* M;
@@ -631,4 +646,3 @@ private:
 NS_CC_END
 
 #endif // __CCLAYER_H__
-
