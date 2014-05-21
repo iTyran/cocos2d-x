@@ -39,6 +39,12 @@ class Label;
  * @{
  */
 
+/**
+ * @addtogroup GUI
+ * @{
+ * @addtogroup 标签
+ * @{
+ */
 /** @brief LabelTTF is a subclass of TextureNode that knows how to render text labels
  *
  * All features from TextureNode are valid in LabelTTF
