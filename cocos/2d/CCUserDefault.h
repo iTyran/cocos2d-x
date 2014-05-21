@@ -37,21 +37,20 @@ NS_CC_BEGIN
  */
 
 /**
- * UserDefault acts as a tiny database. You can save and get base type values by it.
- * For example, setBoolForKey("played", true) will add a bool value true into the database.
- * Its key is "played". You can get the value of the key by getBoolForKey("played").
- * 
- * It supports the following base types:
+ * UserDefault是一种小型数据库，可以利用它来存储或者读取基本类型的值。
+ * 例如，调用setBoolForKey("played", true)，就会在数据库中增加一条布尔类型的记录，键为"played"，值为"true"。
+ * 调用getBoolForKey("played")，则会得到键"played"所对应的值。
+ * 支持以下几种基本类型：
  * bool, int, float, double, string
  */
 class CC_DLL UserDefault
 {
 public:
-    // get value methods
+	// 获取值的各种方法
 
     /**
-    @brief Get bool value by key, if the key doesn't exist, a default value will return.
-     You can set the default value, or it is false.
+	@brief 根据键获取bool类型值。如果键不存在，则返回默认值。
+	 用户可以预设这个默认值，如果没有预设，则默认为false
     * @js NA
     */
     bool    getBoolForKey(const char* pKey);
@@ -60,8 +59,8 @@ public:
      */
     bool    getBoolForKey(const char* pKey, bool defaultValue);
     /**
-    @brief Get integer value by key, if the key doesn't exist, a default value will return.
-     You can set the default value, or it is 0.
+	@brief 根据键获取int类型值。如果键不存在，则返回默认值。
+	 用户可以预设这个默认值，如果没有预设，则默认为0。
     * @js NA
     */
     int     getIntegerForKey(const char* pKey);
@@ -70,8 +69,8 @@ public:
      */
     int     getIntegerForKey(const char* pKey, int defaultValue);
     /**
-    @brief Get float value by key, if the key doesn't exist, a default value will return.
-     You can set the default value, or it is 0.0f.
+	@brief 根据键获取float类型值，如果键不存在，则返回默认值。
+	用户可以预设这个默认值，如果没有预设，则默认为0.0f。
     * @js NA
     */
     float    getFloatForKey(const char* pKey);
@@ -80,8 +79,8 @@ public:
      */
     float    getFloatForKey(const char* pKey, float defaultValue);
     /**
-    @brief Get double value by key, if the key doesn't exist, a default value will return.
-     You can set the default value, or it is 0.0.
+	@brief 根据键获取double类型值。如果键不存在，则返回默认值。
+	用户可以预设这个默认值，如果没有预设，则默认为0.0。
     * @js NA
     */
     double  getDoubleForKey(const char* pKey);
@@ -90,8 +89,8 @@ public:
      */
     double  getDoubleForKey(const char* pKey, double defaultValue);
     /**
-    @brief Get string value by key, if the key doesn't exist, a default value will return.
-    You can set the default value, or it is "".
+	@brief 根据键获取string类型值，如果键不存在，则返回默认值。
+	用户可以预设这个默认值，如果没有预设，则默认为空字符串("")。
     * @js NA
     */
     std::string getStringForKey(const char* pKey);
@@ -100,8 +99,8 @@ public:
      */
     std::string getStringForKey(const char* pKey, const std::string & defaultValue);
     /**
-     @brief Get binary data value by key, if the key doesn't exist, a default value will return.
-     You can set the default value, or it is null.
+	 @brief 根据键获取binary类型值。如果键不存在，则返回默认值。
+	 用户可以预设这个默认值，如果没有预设，则默认为空指针(null)。
      * @js NA
      * @lua NA
      */
@@ -115,43 +114,43 @@ public:
     // set value methods
 
     /**
-     @brief Set bool value by key.
+	 @brief 根据键设置其对应的bool类型值。（译者注：如果键不存在，则增加一条记录）
      * @js NA
      */
     void    setBoolForKey(const char* pKey, bool value);
     /**
-     @brief Set integer value by key.
+	 @brief 根据键设置其对应的int类型值。（译者注：如果键不存在，则增加一条记录）
      * @js NA
      */
     void    setIntegerForKey(const char* pKey, int value);
     /**
-     @brief Set float value by key.
+	 @brief 根据键设置其对应的float类型值。（译者注：如果键不存在，则增加一条记录）
      * @js NA
      */
     void    setFloatForKey(const char* pKey, float value);
     /**
-     @brief Set double value by key.
+	 @brief 根据键设置其对应的double类型值。（译者注：如果键不存在，则增加一条记录）
      * @js NA
      */
     void    setDoubleForKey(const char* pKey, double value);
     /**
-     @brief Set string value by key.
+	 @breif 根据键设置其对应的string类型值。（译者注：如果键不存在，则增加一条记录）
      * @js NA
      */
     void    setStringForKey(const char* pKey, const std::string & value);
     /**
-     @brief Set binary data value by key.
+	 @brief 根据键设置其对应的binary类型值。（译者注：如果键不存在，则增加一条记录）
      * @js NA
      * @lua NA
      */
     void    setDataForKey(const char* pKey, const Data& value);
     /**
-     @brief Save content to xml file
+	 @brief 将数据写入XML文件。
      * @js NA
      */
     void    flush();
 
-    /** returns the singleton 
+    /** 获取UserDefault的单例
      * @js NA
      * @lua NA
      */
@@ -161,7 +160,7 @@ public:
      */
     static void destroyInstance();
 
-    /** deprecated. Use getInstace() instead 
+    /** @deprecated. 请使用getInstance()方法。 
      * @js NA
      * @lua NA
      */
