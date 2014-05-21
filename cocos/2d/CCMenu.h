@@ -163,7 +163,7 @@ protected:
 
 
 
-    /** 决定菜单能否接收时间的变量 */
+    /** 决定菜单能否接收事件的变量 */
     bool _enabled;
 
     MenuItem* getItemForTouch(Touch * touch);
