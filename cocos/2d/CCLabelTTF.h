@@ -88,7 +88,7 @@ public:
     /** creates a Label from a fontname, alignment, dimension in points and font size in points
      @since v2.0.1
      */
-    /**通过字体名称，对齐方式，点的维度和点的字体大小来创建标签。
+    /**通过字体名称，对齐方式，维度(以点为单位)和字体大小（以点为单位）来创建标签。
      @since v2.0.1
      */
     static LabelTTF * create(const std::string& string, const std::string& fontName, float fontSize,
@@ -97,7 +97,7 @@ public:
     
     
     /** Create a lable with string and a font definition*/
-    /** 通过一个字符串和字体定义来创建标签。*/
+    /** 通过字符串和一个字体定义来创建标签。*/
     static LabelTTF * createWithFontDefinition(const std::string& string, FontDefinition &textDefinition);
     
     /** initializes the LabelTTF with a font name, alignment, dimension and font size */ 
