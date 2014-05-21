@@ -31,7 +31,7 @@ and to alter it and redistribute it freely, subject to the following restriction
 
 class CWin32InputBox;
 
-// Structure used to orient the inputbox behavior
+//指定输入框行为的结构体
 struct WIN32INPUTBOX_PARAM
 {
   friend class CWin32InputBox;
@@ -39,29 +39,28 @@ struct WIN32INPUTBOX_PARAM
   //
   IN OPTIONAL bool bMultiline;
 
-  // Pass this as none zero so to use this memory dlg template
+  //给这个变量传递非零参数，来使用给定内存对话窗模板
   IN OPTIONAL LPVOID DlgTemplateData;
 
-  // Pass this as none ZERO so to load DLGTEMPLATE from resources
+  //给这个变量传递非零参数，来从资源文件中加载对话框模板
   IN OPTIONAL LPCSTR DlgTemplateName;
 
-  // passing both "DlgTemplateName" and "DlgTemplateData" ZERO will cause
-  // the dialog to use his default embedded resource
+  //如果给"DlgTemplateName"和"DlgTemplateData"传递零，那么这个对话框就会使用默认的内置资源
 
-  // Center on monitor or owner window?
+  //控制显示在显示器或者所有者窗口中间的变量
   IN OPTIONAL bool bCenter;
 
-  // Want to add more styles to the dialog?
+  // 用于给对话框窗口添加更多的类型
   IN OPTIONAL DWORD dwStylesPlus, dwStylesMinus;
   IN OPTIONAL DWORD dwExStylesPlus, dwExStylesMinus;
 
   IN LPCSTR szTitle, szPrompt;
 
-  // Return buffer
+  // 返回缓冲区
   OUT LPSTR szResult;
   IN DWORD nResultSize;
 
-  // Owner window
+  // 所有者窗口句柄
   HWND hwndOwner;
   HINSTANCE hInstance;
 
