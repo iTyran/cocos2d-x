@@ -122,7 +122,7 @@ public:
 
     /** If isTouchEnabled, this method is called onEnter. Override it to change the
     way Layer receives touch events.
-如果isTouchEnabled，这个方法可以叫做onEnter.重写它来改变Layer接收触屏事件的方式。
+如果触屏事件可用，这个方法可以叫做onEnter.重写它来改变Layer接收触屏事件的方式。
     ( Default: TouchDispatcher::sharedDispatcher()->addStandardDelegate(this,0); )
     Example:
     void Layer::registerWithTouchDispatcher()
