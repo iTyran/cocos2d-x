@@ -162,16 +162,23 @@ public:
     /**
      Defines the oder in which the nodes are renderer.
      Nodes that have a Global Z Order lower, are renderer first.
+     定义全部节点的绘制顺序。
+     Global Z Order值越小的节点，越先绘制。
      
      In case two or more nodes have the same Global Z Order, the oder is not guaranteed.
      The only exception if the Nodes have a Global Z Order == 0. In that case, the Scene Graph order is used.
+     如果两个节点有相同的Global Z Order值，则绘制的先后顺序不定。
+     当节点的Global Z Order值为0时，绘制依照Scene Graph的顺序进行
      
      By default, all nodes have a Global Z Order = 0. That means that by default, the Scene Graph order is used to render the nodes.
+     所有节点的Global Z Order默认值为0，在默认状态下，这些节点的绘制顺序依照Scene Graph的顺序进行
      
      Global Z Order is useful when you need to render nodes in an order different than the Scene Graph order.
+     Global Z Order 在你不想按照Scene Graph的顺序进行绘制时是很有用的
      
      Limitations: Global Z Order can't be used used by Nodes that have SpriteBatchNode as one of their acenstors.
      And if ClippingNode is one of the ancestors, then "global Z order" will be relative to the ClippingNode.
+     Global Z Order 不能被有SpriteBatchNode做为祖先之一的节点使用。如果ClippingNode是祖先之一，Global Z Order将与ClippingNode有关联。
 
      @see `setLocalZOrder()`
      @see `setVertexZ()`
@@ -189,15 +196,16 @@ public:
     virtual float getGlobalZOrder() const { return _globalZOrder; }
 
     /**
-     * Sets the scale (x) of the node.
+     * Sets the scale (x) of the node      设置节点的scale (x) 值
      *
      * It is a scaling factor that multiplies the width of the node and its children.
+     *用放缩因子乘以节点及其子节点的宽进行横向的放缩变化
      *
      * @param scaleX   The scale factor on X axis.
      */
     virtual void setScaleX(float scaleX);
     /**
-     * Returns the scale factor on X axis of this node
+     * Returns 返回节点x轴方向上的放缩因子
      *
      * @see setScaleX(float)
      *
@@ -207,15 +215,17 @@ public:
 
 
     /**
-     * Sets the scale (y) of the node.
+     * Sets the scale (y) of the node. 设置节点的scale (y) 值
      *
      * It is a scaling factor that multiplies the height of the node and its children.
+     * 用放缩因子乘以节点及其子节点的高进行纵向的放缩变化
+
      *
-     * @param scaleY   The scale factor on Y axis.
+     * @param scaleY   The scale factor on Y axis. 节点y轴方向上的放缩因子
      */
     virtual void setScaleY(float scaleY);
     /**
-     * Returns the scale factor on Y axis of this node
+     * Returns 返回节点y轴方向上的放缩因子
      *
      * @see `setScaleY(float)`
      *
@@ -224,15 +234,15 @@ public:
     virtual float getScaleY() const;
 
     /**
-     * Changes the scale factor on Z axis of this node
+     * Changes the scale factor on Z axis of this node 设置节点z轴的放缩因子
      *
-     * The Default value is 1.0 if you haven't changed it before.
+     * The Default value is 1.0 if you haven't changed it before. 默认值为1.0
      *
-     * @param scaleY   The scale factor on Y axis.
+     * @param scaleY   The scale factor on Y axis. 
      */
     virtual void setScaleZ(float scaleZ);
     /**
-     * Returns the scale factor on Z axis of this node
+     * Returns 返回节点z轴方向上的放缩因子
      *
      * @see `setScaleZ(float)`
      *
@@ -245,14 +255,15 @@ public:
      * Sets the scale (x,y,z) of the node.
      *
      * It is a scaling factor that multiplies the width, height and depth of the node and its children.
+     * 设置节点x，y，z轴方向的放缩因子，用放缩因子乘以节点及其子节点的长宽深进行放缩变化。
      *
      * @param scale     The scale factor for both X and Y axis.
      */
     virtual void setScale(float scale);
     /**
-     * Gets the scale factor of the node,  when X and Y have the same scale factor.
+     * 得到x轴和y轴的等比例放缩因子
      *
-     * @warning Assert when `_scaleX != _scaleY`
+     * @warning Assert when `_scaleX != _scaleY` 如果`_scaleX != _scaleY`会报错
      * @see setScale(float)
      *
      * @return The scale factor of the node.
@@ -263,6 +274,7 @@ public:
      * Sets the scale (x,y) of the node.
      *
      * It is a scaling factor that multiplies the width and height of the node and its children.
+     * 分别设置x轴和y轴各自的放缩因子，用scaleX乘以宽得到节点及其孩子在x方向的放缩值,用scaleY乘以高得到节点及其孩子在y方向的放缩值。
      *
      * @param scaleX     The scale factor on X axis.
      * @param scaleY     The scale factor on Y axis.
@@ -271,35 +283,43 @@ public:
 
     /**
      * Sets the position (x,y) of the node in its parent's coordinate system.
-     *
+     *传递Vec2参数，设置节点在父坐标系（OpenGL坐标系）的位置。
+     * 
      * Usually we use `Vec2(x,y)` to compose Vec2 object.
      * This code snippet sets the node in the center of screen.
+     * 我们通常用`Vec2(x,y)`来表示Vec2对象
+     * 下面的代码段将节点设置在屏幕中央
      @code
      Size size = Director::getInstance()->getWinSize();
      node->setPosition( Vec2(size.width/2, size.height/2) )
      @endcode
      *
-     * @param position  The position (x,y) of the node in OpenGL coordinates
+     * @param position  节点在OpenGL坐标系下的位置
      */
     virtual void setPosition(const Vec2 &position);
     /**
-     * Gets the position (x,y) of the node in its parent's coordinate system.
+     * 得到节点在父坐标系（OpenGL坐标系）的位置。
      *
      * @see setPosition(const Vec2&)
      *
-     * @return The position (x,y) of the node in OpenGL coordinates
+     * @return 节点在父坐标系（OpenGL坐标系）的位置，返回类型为Vec2
      * @code
      * In js and lua return value is table which contains x,y
+     * 在js和lua中返回值为一个包含了x,y值的表
      * @endcode
      */
     virtual const Vec2& getPosition() const;
     /**
      * Sets the position (x,y) of the node in its parent's coordinate system.
-     *
+     *参数x,y设置节点在父坐标系（OpenGL坐标系）的位置。
+     * 
      * Passing two numbers (x,y) is much efficient than passing Vec2 object.
      * This method is bound to Lua and JavaScript.
      * Passing a number is 10 times faster than passing a object from Lua to c++
-     *
+     *传递两个数字（x,y）比传递Vec2对象高效。
+     * 这个方法有绑定到Lua和JavaScript.
+     * 从Lua传递数字到c++中比直接传递对象要快10倍。
+     * 
      @code
      // sample code in Lua
      local pos  = node::getPosition()  -- returns Vec2 object from C++
@@ -312,6 +332,7 @@ public:
     virtual void setPosition(float x, float y);
     /**
      * Gets position in a more efficient way, returns two number instead of a Vec2 object
+     * 用更加高效的方式得到节点位置，返回两个数字而不是Vec2对象
      *
      * @see `setPosition(float, float)`
      * In js,out value not return
@@ -320,6 +341,8 @@ public:
     /**
      * Gets/Sets x or y coordinate individually for position.
      * These methods are used in Lua and Javascript Bindings
+     * 单独设置/获取x或y的坐标值
+     * 这些方法都作用于Lua和Javascript 的绑定
      */
     virtual void  setPositionX(float x);
     virtual float getPositionX(void) const;
@@ -328,34 +351,40 @@ public:
 
     /**
      * Sets the position (X, Y, and Z) in its parent's coordinate system
+     * 传递Vec3参数，设置节点在父坐标系（OpenGL坐标系）的位置
      */
     virtual void setPosition3D(const Vec3& position);
     /**
-     * returns the position (X,Y,Z) in its parent's coordinate system
+     * 返回Vec3类型，得到节点在父坐标系（OpenGL坐标系）的位置
      */
     virtual Vec3 getPosition3D() const;
 
     /**
      * Sets the 'z' coordinate in the position. It is the OpenGL Z vertex value.
+     * 设置'z'方向上的坐标值。
      *
      * The OpenGL depth buffer and depth testing are disabled by default. You need to turn them on
      * in order to use this property correctly.
+     * OpenGL的深度缓冲和深度检测默认情况下是关闭的，你需要开启它们以便正常使用这个方法。
+     * 
      *
      * `setPositionZ()` also sets the `setGlobalZValue()` with the positionZ as value.
+     * `setPositionZ()` 方法同时也调用`setGlobalZValue()` 方法设置positionZ为GlobalZValue值。
      *
      * @see `setGlobalZValue()`
      *
-     * @param vertexZ  OpenGL Z vertex of this node.
+     * @param vertexZ  这个节点的OpenGL z轴坐标值
      */
     virtual void setPositionZ(float positionZ);
     CC_DEPRECATED_ATTRIBUTE virtual void setVertexZ(float vertexZ) { setPositionZ(vertexZ); }
 
     /**
      * Gets position Z coordinate of this node.
+     * 得到节点z轴的坐标值
      *
      * @see setPositionZ(float)
      *
-     * @return the position Z coordinate of this node.
+     * @return 节点z轴的坐标值
      */
     virtual float getPositionZ() const;
     CC_DEPRECATED_ATTRIBUTE virtual float getVertexZ() const { return getPositionZ(); }
