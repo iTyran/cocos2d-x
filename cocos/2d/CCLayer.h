@@ -172,7 +172,7 @@ public:
     */
 /**
 它是否接收键盘或者平板的键盘事件。
-你可以通过这个属性来开启或者关闭加速度传感器事件。
+你可以通过这个属性来开启或者关闭键盘或者平板的键盘事件。
 这是cocos2d-x中的新特性。
     */
     CC_DEPRECATED_ATTRIBUTE virtual bool isKeyboardEnabled() const;
@@ -199,7 +199,7 @@ CC_DEPRECATED_ATTRIBUTE virtual void keyPressed(int keyCode) final {};
     CC_DEPRECATED_ATTRIBUTE virtual void setKeypadEnabled(bool value);
 
     /** @deprecated Please override onKeyReleased and check the keycode of KeyboardEvent::KeyCode::Menu(KEY_BACKSPACE) instead. */
-    /** @deprecated 请覆盖onKeyReleased并且检查 KeyboardEvent::KeyCode::Menu(KEY_BACKSPACE) 的键盘码来代替. */
+    /** @deprecated 请重写onKeyReleased并且检查 KeyboardEvent::KeyCode::Menu(KEY_BACKSPACE) 的键盘码来代替. */
     CC_DEPRECATED_ATTRIBUTE virtual void keyBackClicked() final {};
     CC_DEPRECATED_ATTRIBUTE virtual void keyMenuClicked() final {};
 
@@ -214,7 +214,7 @@ CC_CONSTRUCTOR_ACCESS:
 
 protected:
     //add the api for avoid use deprecated api
-//添加api来避免使用弃用的api
+    //添加api来避免使用废弃的api
     void _addTouchListener();
 
     CC_DEPRECATED_ATTRIBUTE void addTouchListener() { _addTouchListener();};
@@ -244,9 +244,9 @@ private:
  - RGB colors
  @since 2.1
  *//** LayerRGBA 是Layer的一个子类，它通过使用一个单色背景实现了 RGBAProtocol 协议。
- 所有Layer类的特性都是可用的，再加上以下这些遵守RGBAProtocol协议并且传播到子类的新特性：
- - opacity
- - RGB colors
+ 它实现了Layer类的所有功能，并且添加了以下这些遵守RGBAProtocol协议并且传播到子类的新特性：
+ - 透明度
+ - RGB颜色
  @since 2.1
  */
 class CC_DLL __LayerRGBA : public Layer, public __RGBAProtocol
@@ -294,9 +294,9 @@ All features from Layer are valid, plus the following new features:
 */
 /** @brief 
 LayerColor是Layer的一个子类，它实现了RGBAProtocol协议。
-从Layer继承的所有特性都是可用的，再加上以下这些新特性：
-- opacity
-- RGB colors
+它实现了Layer类的所有功能，还添加了以下这些新功能：
+- 透明度
+- RGB颜色
 */
 class CC_DLL LayerColor : public Layer, public BlendProtocol
 #ifdef EMSCRIPTEN
@@ -305,25 +305,25 @@ class CC_DLL LayerColor : public Layer, public BlendProtocol
 {
 public:
     /** creates a fullscreen black layer */
-    /** 创建一个全屏的黑色图层*/
+    /** 创建一个全屏的黑色布景层*/
     static LayerColor* create();
     /** creates a Layer with color, width and height in Points */
-    /**  通过颜色，宽度和高度来创建一个图层 */
+    /**  通过颜色，宽度和高度（以点为单位）来创建一个布景层 */
     static LayerColor * create(const Color4B& color, GLfloat width, GLfloat height);
     /** creates a Layer with color. Width and height are the window size. */
-    /** 通过颜色来创建一个图层。宽度和高度设置为窗口的大小 */
+    /** 通过颜色来创建一个布景层。宽度和高度设置为窗口的大小 */
     static LayerColor * create(const Color4B& color);
 
    * change width in Points*/
-/** 改变宽度*/
+/** 改变宽度（以点为单位）*/
     void changeWidth(GLfloat w);
     /** change height in Points*/
-/**改变高度*/ /*
+/**改变高度（以点为单位）*/ /*
     void changeHeight(GLfloat h);
     /** change width and height in Points
     @since v0.8
     */
-    /** 改变宽度和高度
+    /** 改变宽度和高度（以点为单位）
     @since v0.8
     */
     void changeWidthAndHeight(GLfloat w ,GLfloat h);
@@ -387,7 +387,7 @@ All features from LayerColor are valid, plus the following new features:
 - interpolation mode
 
 LayerGradient是LayerColor的一个子类，它在背景上画渐变效果。
-从LayerColor继承的所有特性都是可用的，再加上以下这些新特性：
+它实现了LayerColor类的所有功能，还添加了以下这些新功能：
 - 渐变方向
 - 渐变最终颜色
 - 插值模式
@@ -395,32 +395,36 @@ LayerGradient是LayerColor的一个子类，它在背景上画渐变效果。
 Color is interpolated between the startColor and endColor along the given
 vector (starting at the origin, ending at the terminus).  If no vector is
 supplied, it defaults to (0, -1) -- a fade from top to bottom.
-颜色沿着给定的向量插在起始颜色和终止颜色之间（从起点开始，到终点结束）。如果没有提供向量，它默认到（0，-1）点-一个从顶部到底部的淡入淡出。
+颜色沿着给定的向量插在起始颜色和终止颜色之间（从起点开始，到终点结束）。如果没有提供向量，则默认到（0，-1）点-一个从顶部到底部的淡入淡出。
 If 'compressedInterpolation' is disabled, you will not see either the start or end color for
 non-cardinal vectors; a smooth gradient implying both end points will be still
 be drawn, however.
-
+如果'compressedInterpolation'不可用，你将看到非基本向量的起始颜色或者终止颜色；不过无论如何，一个平滑的渐变（包括终点）最终还是会呈现出来。
 If ' compressedInterpolation' is enabled (default mode) you will see both the start and end colors of the gradient.
-
+如果'compressedInterpolation'是可用的(默认模式)，你将看到渐变的起始颜色和终止颜色。
 @since v0.99.5
 */
 class CC_DLL LayerGradient : public LayerColor
 {
 public:
     /** Creates a fullscreen black layer */
-/**创建一个全屏的黑色图层*/
+/**创建一个全屏的黑色布景层*/
     static LayerGradient* create();
 
     /** Creates a full-screen Layer with a gradient between start and end. */
-/**创建从起始到末尾渐变的一个全屏的图层。*/
+/**创建从起始到末尾渐变的一个全屏的布景层。*/
     static LayerGradient* create(const Color4B& start, const Color4B& end);
 
     /** Creates a full-screen Layer with a gradient between start and end in the direction of v. */
-/**创建以参数v为方向的从起始到末尾渐变的一个全屏的图层。*/
+/**创建以参数v为方向的从起始到末尾渐变的一个全屏的布景层。*/
     static LayerGradient* create(const Color4B& start, const Color4B& end, const Vec2& v);
     
     /** Whether or not the interpolation will be compressed in order to display all the colors of the gradient both in canonical and non canonical vectors
      Default: true
+     */
+    /** 
+不管插值是否被压缩，最终都为了呈现包括规范向量和不规范向量渐变的所有颜色。
+默认：true
      */
     void setCompressedInterpolation(bool compressedInterpolation);
     bool isCompressedInterpolation() const;
@@ -447,7 +451,7 @@ public:
     GLubyte getStartOpacity() const;
 
     /** Returns the end opacity of the gradient */
-    /** 返回渐变的终止透明度*/
+    /** 设置渐变的终止透明度*/
     void setEndOpacity( GLubyte endOpacity );
     /** Returns the end opacity of the gradient */
     /** 返回渐变的终止透明度*/
@@ -475,7 +479,7 @@ CC_CONSTRUCTOR_ACCESS:
      * @js init
      * @lua init
      */
-    /** 通过从起始到终止的渐变来初始化图层。
+    /** 通过从起始到终止的渐变来初始化布景层。
      * @js init
      * @lua init
      */
