@@ -70,7 +70,7 @@ public:
     /**
      * 返回指定状态对应的标题文本
      *
-     * @param state 用于指定标题文本的状态，取值范围见"CCControlState"。
+     * @param state 用于指定标题文本的状态，取值范围见"Control::State"。
      *
      * @return 指定状态对应的标题文本
      */
@@ -81,14 +81,14 @@ public:
      * 如果某状态没有被赋值，则默认使用ButtonStateNormal对应的值
      *
      * @param title 用于所给状态的标题文本
-     * @param state 标题文本对应的状态，取值范围见"CCControlState"
+     * @param state 标题文本对应的状态，取值范围见"Control::State"
      */
     virtual void setTitleForState(const std::string& title, State state);
 
     /**
      * 返回指定状态对应的标题文本颜色
      *
-     * @param state 用于指定标题文本颜色的状态，取值范围见"CCControlState"。
+     * @param state 用于指定标题文本颜色的状态，取值范围见"Control::State"。
      *
      * @return 指定状态对应的标题文本颜色
      */
@@ -99,14 +99,14 @@ public:
      * 设置指定状态对应的标题文本颜色
      *
      * @param color 用于所给状态的标题文本颜色
-     * @param state 标题文本颜色对应的状态，取值范围见"CCControlState"
+     * @param state 标题文本颜色对应的状态，取值范围见"Control::State"
      */
     virtual void setTitleColorForState(const Color3B& color, State state);
 
     /**
      * 返回指定状态对应的标题Label
      *
-     * @param state 用于指定标题Label的状态，取值范围见"CCControlState"。
+     * @param state 用于指定标题Label的状态，取值范围见"Control::State"。
      */
     virtual Node* getTitleLabelForState(State state);
 
@@ -115,7 +115,7 @@ public:
      * 如果某状态没有被赋值，则默认使用ButtonStateNormal对应的值
      *
      * @param label 用于所给状态的标题Label
-     * @param state 标题Label对应的状态，取值范围见"CCControlState"
+     * @param state 标题Label对应的状态，取值范围见"Control::State"
      */
     virtual void setTitleLabelForState(Node* label, State state);
 
@@ -128,7 +128,7 @@ public:
     /**
      * 设置Label的字体，如果情况需要则改用BMFont。
      * @param fntFile 用于所给状态的目标字体名称
-     * @param state 字体对应的状态，取值范围见"CCControlState"
+     * @param state 字体对应的状态，取值范围见"Control::State"
      */
     virtual void setTitleBMFontForState(const std::string& fntFile, State state);
     virtual const std::string& getTitleBMFontForState(State state);
@@ -136,7 +136,7 @@ public:
     /**
      * 返回指定状态对应的背景精灵
      *
-     * @param state 用于指定背景精灵的状态，取值范围见"CCControlState"。
+     * @param state 用于指定背景精灵的状态，取值范围见"Control::State"。
      */
     virtual Scale9Sprite* getBackgroundSpriteForState(State state);
 
@@ -144,7 +144,7 @@ public:
      * 设置用于指定状态的背景精灵
      *
      * @param sprite 用于所给状态的背景精灵
-     * @param state 背景精灵对应的状态，取值范围见"CCControlState"
+     * @param state 背景精灵对应的状态，取值范围见"Control::State"
      */
     virtual void setBackgroundSpriteForState(Scale9Sprite* sprite, State state);
 
@@ -152,7 +152,7 @@ public:
      * 设置用于指定状态的spriteFrame
      *
      * @param spriteFrame 用于所给状态的spriteFrame
-     * @param state spriteFrame对应的状态，取值范围见"CCControlState"
+     * @param state spriteFrame对应的状态，取值范围见"Control::State"
      */
     virtual void setBackgroundSpriteFrameForState(SpriteFrame * spriteFrame, State state);
 
