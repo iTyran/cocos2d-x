@@ -47,11 +47,11 @@ namespace experimental{
 
             CREATE_FUNC(VideoPlayer);
 
-            //Sets local file[support assets' file on android] as a video source for VideoPlayer
+            //将本地文件（在安卓平台下支持asset文件）设置为VideoPlayer的视频源
             virtual void setFileName(const std::string& videoPath);
             virtual const std::string& getFileName() const { return _videoURL;}
 
-            //Sets network link as a video source for VideoPlayer 
+            //将网络链接设置为VideoPlayer的视频源
             virtual void setURL(const std::string& _videoURL);
             virtual const std::string& getURL() const { return _videoURL;}
 
