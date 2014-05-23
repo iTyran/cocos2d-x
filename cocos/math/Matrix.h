@@ -29,6 +29,39 @@ NS_CC_MATH_BEGIN
 //class Plane;
 
 /**
+ * 定义一个4*4的浮点矩阵来表示一个3D转换。
+ *
+ * 用向量作为列，结果一个矩阵表示如下，x,y,z作为矩阵的转换部件。
+ *
+ * 1  0  0  x
+ * 0  1  0  y
+ * 0  0  1  z
+ * 0  0  0  1
+ *
+ * 由于这个矩阵类(Mat4)的元素是在内存的形式正如OpenGL盼望的一样，所以这个矩阵类(Mat4)是直接兼容OpenGL的。
+ * 该矩阵使用列为主(column-major)的格式，以致数组下标优先往下增长。
+ * 由于矩阵乘法是不可交换的，所以乘法必须在合并时进行正序转换。
+ * 假设我们有一个转换
+ * matrix T and a rotation matrix R. To first rotate an object around the origin
+ * and then translate it, you would multiply the two matrices as TR.
+ * 矩阵T和一个旋转矩阵R。首先把对象围绕原点旋转然后再转换它，你可以使两个矩阵相乘得到TR。
+ *
+ * Likewise, to first translate the object and then rotate it, you would do RT.
+ * 同样，首先转换那对象然后再旋转它，你会得到一个RT。
+ * So generally, matrices must be multiplied in the reverse order in which you
+ * want the transformations to take place (this also applies to
+ * the scale, rotate, and translate methods below; these methods are convenience
+ * methods for post-multiplying by a matrix representing a scale, rotation, or translation).
+ *
+ * 所以通常，矩阵转换发生时必须进行倒序转换。(这也适用于缩放，旋转和平移方法；这些方法都是处理矩阵缩放，旋转和转换的便利方法)
+ * In the case of repeated local transformations (i.e. rotate around the Z-axis by 0.76 radians,
+ * then translate by 2.1 along the X-axis, then ...), it is better to use the Transform class
+ * (which is optimized for that kind of usage).
+ * 在多次局部转换的情况下（围绕z轴旋转0.76弧度，然后没x轴平移2.1,然后...）,这比使用转换类处理更好（这是对那种用法的优化）。
+ *
+ * @see Transform
+ */
+ /**
  * Defines a 4 x 4 floating point matrix representing a 3D transformation.
  *
  * Vectors are treated as columns, resulting in a matrix that is represented as follows,
@@ -76,11 +109,13 @@ public:
     // }
     /**
      * Stores the columns of this 4x4 matrix.
+	 * 储存这个4*4的矩阵
      * */
     float m[16];
 
     /**
      * Constructs a matrix initialized to the identity matrix:
+	 * 构造一个矩阵并初始化为单位矩阵
      *
      * 1  0  0  0
      * 0  1  0  0
@@ -91,76 +126,83 @@ public:
 
     /**
      * Constructs a matrix initialized to the specified value.
+	 * 构造一个矩阵并使用给定的值初始化
      *
-     * @param m11 The first element of the first row.
-     * @param m12 The second element of the first row.
-     * @param m13 The third element of the first row.
-     * @param m14 The fourth element of the first row.
-     * @param m21 The first element of the second row.
-     * @param m22 The second element of the second row.
-     * @param m23 The third element of the second row.
-     * @param m24 The fourth element of the second row.
-     * @param m31 The first element of the third row.
-     * @param m32 The second element of the third row.
-     * @param m33 The third element of the third row.
-     * @param m34 The fourth element of the third row.
-     * @param m41 The first element of the fourth row.
-     * @param m42 The second element of the fourth row.
-     * @param m43 The third element of the fourth row.
-     * @param m44 The fourth element of the fourth row.
+     * @param m11 第一行的第一个元素.
+     * @param m12 第一行的第二个元素.
+     * @param m13 第一行的第三个元素.
+     * @param m14 第一行的第四个元素.
+     * @param m21 第二行的第一个元素.
+     * @param m22 第二行的第二个元素.
+     * @param m23 第二行的第三个元素.
+     * @param m24 第二行的第四个元素.
+     * @param m31 第三行的第一个元素.
+     * @param m32 第三行的第二个元素.
+     * @param m33 第三行的第三个元素.
+     * @param m34 第三行的第四个元素.
+     * @param m41 第四行的第一个元素.
+     * @param m42 第四行的第二个元素.
+     * @param m43 第四行的第三个元素.
+     * @param m44 第四行的第四个元素.
      */
     Mat4(float m11, float m12, float m13, float m14, float m21, float m22, float m23, float m24,
            float m31, float m32, float m33, float m34, float m41, float m42, float m43, float m44);
 
     /**
      * Creates a matrix initialized to the specified column-major array.
+	 * 创建一个矩阵并使用指定的列优先数组时行初始化。
      *
      * The passed-in array is in column-major order, so the memory layout of the array is as follows:
+	 * 传入的​​数组是列优先的顺序，所以数组的储存布局如下所示：
      *
      *     0   4   8   12
      *     1   5   9   13
      *     2   6   10  14
      *     3   7   11  15
      *
-     * @param mat An array containing 16 elements in column-major order.
+     * @param mat An array containing 16 elements in column-major order.一个含有16个元素并且以列优先的数组。
      */
     Mat4(const float* mat);
 
     /**
      * Constructs a new matrix by copying the values from the specified matrix.
+	 * 复制指定的矩阵构造一个新的矩阵。
      *
-     * @param copy The matrix to copy.
+     * @param copy The matrix to copy.要复制的矩阵。
      */
     Mat4(const Mat4& copy);
 
     /**
      * Destructor.
+	 * 析构函数
      */
     ~Mat4();
 
     /**
      * Creates a view matrix based on the specified input parameters.
+	 * 根据输入参数的创建一个视图矩阵。
      *
-     * @param eyePosition The eye position.
-     * @param targetPosition The target's center position.
-     * @param up The up vector.
-     * @param dst A matrix to store the result in.
+     * @param eyePosition The eye position.视点
+     * @param targetPosition The target's center position.目标的中心点。
+     * @param up The up vector.向上向量。
+     * @param dst A matrix to store the result in.储存结果的矩阵。
      */
     static void createLookAt(const Vec3& eyePosition, const Vec3& targetPosition, const Vec3& up, Mat4* dst);
 
     /**
      * Creates a view matrix based on the specified input parameters.
+	 * 根据输入参数的创建一个视图矩阵。
      *
-     * @param eyePositionX The eye x-coordinate position.
-     * @param eyePositionY The eye y-coordinate position.
-     * @param eyePositionZ The eye z-coordinate position.
-     * @param targetCenterX The target's center x-coordinate position.
-     * @param targetCenterY The target's center y-coordinate position.
-     * @param targetCenterZ The target's center z-coordinate position.
-     * @param upX The up vector x-coordinate value.
-     * @param upY The up vector y-coordinate value.
-     * @param upZ The up vector z-coordinate value.
-     * @param dst A matrix to store the result in.
+     * @param eyePositionX The eye x-coordinate position.x坐标视点。
+     * @param eyePositionY The eye y-coordinate position.y坐标视点。
+     * @param eyePositionZ The eye z-coordinate position.z坐标视点。
+     * @param targetCenterX The target's center x-coordinate position.目标在x坐标的中心点。
+     * @param targetCenterY The target's center y-coordinate position.目标在y坐标的中心点。
+     * @param targetCenterZ The target's center z-coordinate position.目标在z坐标的中心点。
+     * @param upX The up vector x-coordinate value.向上向量在x坐标的值。
+     * @param upY The up vector y-coordinate value.向上向量在y坐标的值。
+     * @param upZ The up vector z-coordinate value.向上向量在z坐标的值。
+     * @param dst A matrix to store the result in.储存结果的矩阵。
      */
     static void createLookAt(float eyePositionX, float eyePositionY, float eyePositionZ,
                              float targetCenterX, float targetCenterY, float targetCenterZ,
