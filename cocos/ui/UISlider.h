@@ -55,17 +55,17 @@ public:
     };
     typedef std::function<void(Ref*,EventType)> ccSliderCallback;
     /**
-     * 默认构造函数（constructor）
+     * 默认构造函数
      */
     Slider();
     
     /**
-     * 默认析构函数（destructor）
+     * 默认析构函数
      */
     virtual ~Slider();
     
     /**
-     * 分配（allocates）并初始化（initializes）
+     * 分配并初始化
      */
     static Slider* create();
     
@@ -165,7 +165,7 @@ public:
     void loadProgressBarTexture(const std::string& fileName, TextureResType texType = TextureResType::LOCAL);
     
     /**
-     * 改变滑动条目前的进度（译者注：原文使用“progress”，用于表示当前滑动条中滑块所处位置相对于原始点的位置，类比于进度条的进度，下文中如没有特殊说明，“进度”沿用此处的意思）
+     * 改变滑动条目前的进度
      *
      * @param percent    1到100的任意整数，用于表示百分比
      */

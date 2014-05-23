@@ -86,22 +86,22 @@ public:
     };
     typedef std::function<void(Ref*, EventType)> ccScrollViewCallback;
     /**
-     * 默认构造函数 (constructor)
+     * 默认构造函数
      */
     ScrollView();
     
     /**
-     * 默认析构函数（destructor
+     * 默认析构函数
      */
     virtual ~ScrollView();
     
     /**
-     * 分配（allocates）并初始化（initializes
+     * 分配并初始化
      */
     static ScrollView* create();
     
     /**
-     * 改变滚动视图(scrollview)的滚动(scroll)方向
+     * 改变滚动视图的滚动方向
      *
      * @see SCROLLVIEW_DIR      SCROLLVIEW_DIR_VERTICAL 表示滚动视图沿垂直方向滚动, SCROLLVIEW_DIR_HORIZONTAL 表示滚动视图沿水平方向滚动
      *
@@ -129,133 +129,111 @@ public:
     
     /**
      * 将滚动视图的内部容器(inner container)滚动至滚动视图的底部边界(bottom boundary)
-     *（译者注：即是将包含该滚动视图内子节点的容器滚动至相应位置）
      */
     void scrollToBottom(float time, bool attenuated);
     
     /**
      * 将滚动视图的内部容器(inner container)滚动至滚动视图的顶部边界(top boundary)
-     *（译者注：即是将包含该滚动视图内子节点的容器滚动至相应位置）
      */
     void scrollToTop(float time, bool attenuated);
     
     /**
      * 将滚动视图的内部容器(inner container)滚动至滚动视图的左边界(left boundary)
-     *（译者注：即是将包含该滚动视图内子节点的容器滚动至相应位置）
      */
     void scrollToLeft(float time, bool attenuated);
     
     /**
      * 将滚动视图的内部容器(inner container)滚动至滚动视图的右边界(right boundary)
-     *（译者注：即是将包含该滚动视图内子节点的容器滚动至相应位置）
      */
     void scrollToRight(float time, bool attenuated);
     
     /**
      * 将滚动视图的内部容器(inner container)滚动至滚动视图的左上边界(top and left boundary)
-     *（译者注：即是将包含该滚动视图内子节点的容器滚动至相应位置）
      */
     void scrollToTopLeft(float time, bool attenuated);
     
     /**
      * 将滚动视图的内部容器(inner container)滚动至滚动视图的右上边界(top and right boundary)
-     *（译者注：即是将包含该滚动视图内子节点的容器滚动至相应位置）
      */
     void scrollToTopRight(float time, bool attenuated);
     
     /**
      * 将滚动视图的内部容器(inner container)滚动至滚动视图的左下边界(bottom and left boundary)
-     *（译者注：即是将包含该滚动视图内子节点的容器滚动至相应位置）
      */
     void scrollToBottomLeft(float time, bool attenuated);
     
     /**
      * 将滚动视图的内部容器(inner container)滚动至滚动视图的右下边界(bottom and right boundary)
-     *（译者注：即是将包含该滚动视图内子节点的容器滚动至相应位置）
      */
     void scrollToBottomRight(float time, bool attenuated);
     
     /**
      * 将滚动视图的内部容器(inner container)滚动至滚动视图上沿垂直方向一定比例的位置(vertical percent position)
-     *（译者注：即是将包含该滚动视图内子节点的容器滚动至相应位置）
      */
     void scrollToPercentVertical(float percent, float time, bool attenuated);
     
     /**
      * 将滚动视图的内部容器(inner container)滚动至滚动视图上沿水平方向一定比例的位置(horizontal percent position)
-     *（译者注：即是将包含该滚动视图内子节点的容器滚动至相应位置）
      */
     void scrollToPercentHorizontal(float percent, float time, bool attenuated);
     
     /**
      * 将滚动视图的内部容器(inner container)滚动至滚动视图上沿水平方向一定比例且沿垂直方向一定比例的位置(both direction percent position)
-     *（译者注：即是将包含该滚动视图内子节点的容器滚动至相应位置）
      */
     void scrollToPercentBothDirection(const Vec2& percent, float time, bool attenuated);
     
     /**
      * 将滚动视图的内部容器(inner container)直接移动（move）至滚动视图的底部边界(bottom boundary)
-     *（译者注：即是将包含该滚动视图内子节点的容器直接移动至相应位置，不同于之前的滚动方法，该方法为直接移动）
      */
     void jumpToBottom();
     
     /**
      * 将滚动视图的内部容器(inner container)直接移动（move）至滚动视图的顶部边界(top boundary)
-     *（译者注：即是将包含该滚动视图内子节点的容器直接移动至相应位置，不同于之前的滚动方法，该方法为直接移动）
      */
     void jumpToTop();
     
     /**
      * 将滚动视图的内部容器(inner container)直接移动（move）至滚动视图的左边界(left boundary)
-     *（译者注：即是将包含该滚动视图内子节点的容器直接移动至相应位置，不同于之前的滚动方法，该方法为直接移动）
      */
     void jumpToLeft();
     
     /**
      * 将滚动视图的内部容器(inner container)直接移动（move）至滚动视图的右边界(right boundary)
-     *（译者注：即是将包含该滚动视图内子节点的容器直接移动至相应位置，不同于之前的滚动方法，该方法为直接移动）
      */
     void jumpToRight();
     
     /**
      * 将滚动视图的内部容器(inner container)直接移动（move）至滚动视图的左上边界(top and left boundary)
-     *（译者注：即是将包含该滚动视图内子节点的容器直接移动至相应位置，不同于之前的滚动方法，该方法为直接移动）
      */
     void jumpToTopLeft();
     
     /**
      * 将滚动视图的内部容器(inner container)直接移动（move）至滚动视图的右上边界(top and right boundary)
-     *（译者注：即是将包含该滚动视图内子节点的容器直接移动至相应位置，不同于之前的滚动方法，该方法为直接移动）
      */
     void jumpToTopRight();
     
     /**
      * 将滚动视图的内部容器(inner container)直接移动（move）至滚动视图的左下边界(bottom and left boundary)
-     *（译者注：即是将包含该滚动视图内子节点的容器直接移动至相应位置，不同于之前的滚动方法，该方法为直接移动）
      */
     void jumpToBottomLeft();
     
     /**
      * 将滚动视图的内部容器(inner container)直接移动（move）至滚动视图的右下边界(bottom and right boundary)
-     *（译者注：即是将包含该滚动视图内子节点的容器直接移动至相应位置，不同于之前的滚动方法，该方法为直接移动）
      */
     void jumpToBottomRight();
     
     /**
      * 将滚动视图的内部容器(inner container)直接移动（move）至滚动视图上沿垂直方向一定比例的位置(vertical percent position)
-     *（译者注：即是将包含该滚动视图内子节点的容器直接移动至相应位置，不同于之前的滚动方法，该方法为直接移动）
      */
     void jumpToPercentVertical(float percent);
     
     /**
      * 将滚动视图的内部容器(inner container)直接移动（move）至滚动视图上沿水平方向一定比例的位置(horizontal percent position)
-     *（译者注：即是将包含该滚动视图内子节点的容器直接移动至相应位置，不同于之前的滚动方法，该方法为直接移动）
      */
     void jumpToPercentHorizontal(float percent);
     
     /**
      * 将滚动视图的内部容器(inner container)直接移动（move）至滚动视图上沿水平方向一定比例且沿垂直方向一定比例的位置(both direction percent position)
-     *（译者注：即是将包含该滚动视图内子节点的容器直接移动至相应位置，不同于之前的滚动方法，该方法为直接移动）
      */
     void jumpToPercentBothDirection(const Vec2& percent);
     
