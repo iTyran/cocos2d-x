@@ -132,7 +132,7 @@ public:
      * 在内部派发表中，为指定事件（或事件们）移除一个目标及动作。
      *
      * @param target 目标对象，即动作消息的接收者
-     * 传入空则移除所有与动作、控件事件对相匹配的目标
+     * 传入空则移除所有与动作-控件事件对相匹配的目标
      * @param action 用于标示动作消息的selector
      * 传入空则移除所有与目标对象相匹配的动作消息
      * @param controlEvents 用于标明与目标及动作关联的控件事件的位掩码
@@ -180,57 +180,50 @@ CC_CONSTRUCTOR_ACCESS:
 
 protected:
     /**
-     * Returns an Invocation object able to construct messages using a given 
-     * target-action pair. (The invocation may optionnaly include the sender and
-     * the event as parameters, in that order)
+     * 返回一个Invocation对象，能根据所给目标-动作对构建消息
+     * （Invocation对象可能依次包含发送者和事件作为参数）
      *
-     * @param target The target object.
-     * @param action A selector identifying an action message.
-     * @param controlEvent A control events for which the action message is sent.
-     * See "CCControlEvent" for constants.
+     * @param target 目标对象
+     * @param action 用于标示动作消息的selector
+     * @param controlEvent 用于标示动作消息发送时机的控件事件
+     * 常量取值参见"EventType"
      *
-     * @return an Invocation object able to construct messages using a given 
-     * target-action pair.
+     * @return 一个Invocation对象，能根据所给目标-动作对构建消息
      */
     Invocation* invocationWithTargetAndActionForControlEvent(Ref* target, Handler action, EventType controlEvent);
 
     /**
-    * Returns the Invocation list for the given control event. If the list does
-    * not exist, it'll create an empty array before returning it.
+    * 根据所给控件事件，返回对应Invocation的vector
+    * 如果这个list不存在，则创建一个空序列返回
     *
-    * @param controlEvent A control events for which the action message is sent.
-    * See "CCControlEvent" for constants.
+    * @param controlEvent 用于标示动作消息发送时机的控件事件
+    * 常量取值参见"EventType"
     *
-    * @return the Invocation list for the given control event.
+    * @return 对应所给控件事件的Invocation vector
     */
     Vector<Invocation*>& dispatchListforControlEvent(EventType controlEvent);
 
     /**
-     * Adds a target and action for a particular event to an internal dispatch 
-     * table.
-     * The action message may optionnaly include the sender and the event as 
-     * parameters, in that order.
-     * When you call this method, target is not retained.
+     * 在内部派发表中，为指定事件增加目标与动作。
+     * 动作消息中，可能会依次加入发送者以及事件类型作为参数。
+     * 调用此方法时，目标不会被retain。
      *
-     * @param target The target object��that is, the object to which the action 
-     * message is sent. It cannot be nil. The target is not retained.
-     * @param action A selector identifying an action message. It cannot be NULL.
-     * @param controlEvent A control event for which the action message is sent.
-     * See "CCControlEvent" for constants.
+     * @param target 派发动作消息的目标对象，不能为空且不会被retain。
+     * @param action 用于标示动作消息的selector，不能为空
+     * @param controlEvent 用于标示动作消息发送时机的控件事件
+     * 常量取值参见"EventType"
      */
     void addTargetWithActionForControlEvent(Ref* target, Handler action, EventType controlEvent);
     
     /**
-     * Removes a target and action for a particular event from an internal dispatch
-     * table.
+     * 在内部派发表中，为指定事件移除一个目标及动作。
      *
-     * @param target The target object��that is, the object to which the action 
-     * message is sent. Pass nil to remove all targets paired with action and the
-     * specified control events.
-     * @param action A selector identifying an action message. Pass NULL to remove
-     * all action messages paired with target.
-     * @param controlEvent A control event for which the action message is sent.
-     * See "CCControlEvent" for constants.
+     * @param target 目标对象，即动作消息的接收者
+     * 传入空则移除所有与动作-控件事件对相匹配的目标
+     * @param action 用于标示动作消息的selector
+     * 传入空则移除所有与目标对象相匹配的动作消息
+     * @param controlEvent 用于标示动作消息发送时机的控件事件
+     * 常量取值参见"EventType"
      */
     void removeTargetWithActionForControlEvent(Ref* target, Handler action, EventType controlEvent);
 
@@ -238,20 +231,19 @@ protected:
     bool _selected;
     bool _highlighted;
 
-    /** True if all of the controls parents are visible */
+    /** 控件所有父亲节点为可见时值为真 */
     bool _hasVisibleParents;
 
     /**
-     * Table of connection between the ControlEvents and their associated
-     * target-actions pairs. For each ButtonEvents a list of NSInvocation
-     * (which contains the target-action pair) is linked.
+     * 存放控件事件及对应目标-动作对之间联系的表格
+     * 每一个按钮事件均对应指向一个Invocation的vector(存放目标-动作对)。
      */
     std::unordered_map<int, Vector<Invocation*>*> _dispatchTable;
 
     //CCRGBAProtocol
     bool _isOpacityModifyRGB;
 
-    /** The current control state constant. */
+    /** 当前控件状态 */
     CC_SYNTHESIZE_READONLY(State, _state, State);
 
 private:
