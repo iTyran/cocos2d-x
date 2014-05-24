@@ -1,7 +1,7 @@
 /****************************************************************************
-Copyright (c) 2013-2014 Chukong Technologies Inc.
+Copyright (c) 2013-2014 Chukong Technologies Inc。
 
-http://www.cocos2d-x.org
+http://www。cocos2d-x。org
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -11,21 +11,21 @@ copies of the Software, and to permit persons to whom the Software is
 furnished to do so, subject to the following conditions:
 
 The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
+all copies or substantial portions of the Software。
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT。 IN NO EVENT SHALL THE
 AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-THE SOFTWARE.
+THE SOFTWARE。
 ****************************************************************************/
 
 #ifndef __LAYOUT_H__
 #define __LAYOUT_H__
 
-#include "ui/UIWidget.h"
+#include "ui/UIWidget。h"
 
 NS_CC_BEGIN
 
@@ -75,7 +75,7 @@ public:
     virtual ~Layout();
     
     /**
-     * 分配（Allocates）并初始化（initializes）一个layout.
+     * 分配（Allocates）并初始化（initializes）一个布局（layout）。
      */
     static Layout* create();
     
@@ -83,16 +83,16 @@ public:
     /**
      * 为layout设置一个背景图片
      *
-     * @param 图片路径及文件名.
+     * @param 图片路径及文件名。
      *
-     * @param texType @see TextureResType. UI_TEX_TYPE_LOCAL 意为本地文件, UI_TEX_TYPE_PLIST 意为精灵帧（sprite frame）.
+     * @param texType @see TextureResType。 UI_TEX_TYPE_LOCAL 意为本地文件, UI_TEX_TYPE_PLIST 意为精灵帧（sprite frame）。
      */
     void setBackGroundImage(const std::string& fileName,TextureResType texType = TextureResType::LOCAL);
     
     /**
-     * 如果背景图使用九宫（scale9）渲染（render）,为layout的背景图片设置一个capinsets.
+     * 如果背景图使用九宫（scale9）渲染（render）,为layout的背景图片设置一个capinsets。
      *
-     * @param 背景图片的capinsets.
+     * @param 背景图片的capinsets。
      *
      */
     void setBackGroundImageCapInsets(const Rect& capInsets);
@@ -100,18 +100,18 @@ public:
     const Rect& getBackGroundImageCapInsets();
     
     /**
-     * 为layout设置颜色类型（Color Type）.
+     * 为layout设置颜色类型（Color Type）。
      *
-     * @param type   @see LayoutBackGroundColorType.
+     * @param type   @see LayoutBackGroundColorType。
      */
     void setBackGroundColorType(BackGroundColorType type);
     
     BackGroundColorType getBackGroundColorType();
     
     /**
-     * 使用九宫渲染器（scale9 renderer）设置背景图片.
+     * 使用九宫渲染器（scale9 renderer）设置背景图片。
      *
-     * @param enabled   true 为使用九宫渲染器（scale9 renderer）, false 为不使用.
+     * @param enabled   true 为使用九宫渲染器（scale9 renderer）, false 为不使用。
      */
     void setBackGroundImageScale9Enabled(bool enabled);
     
@@ -140,7 +140,7 @@ public:
     const Color3B& getBackGroundEndColor();
     
     /**
-     * 为layout的背景设置不透明度（opacity）.
+     * 为layout的背景设置不透明度（opacity）。
      *
      * @param opacity
      */
@@ -166,14 +166,14 @@ public:
     GLubyte getBackGroundImageOpacity();
     
     /**
-     * 删除layout的背景图片.
+     * 删除layout的背景图片。
      */
     void removeBackGroundImage();
     
     /**
-     * 获取背景纹理（texture）贴图的尺寸.
+     * 获取背景纹理（texture）贴图的尺寸。
      *
-     * @return 背景纹理（texture）贴图尺寸.
+     * @return 背景纹理（texture）贴图尺寸。
      */
     const Size& getBackGroundImageTextureSize() const;
     
@@ -182,7 +182,7 @@ public:
      *
      * 如果真的需要此方法，请使其为可用（enable）。但此方法会影响渲染效率（rendering efficiency）。
      *
-     * @param  使裁剪（clipping）可用.
+     * @param  使裁剪（clipping）可用。
      */
     virtual void setClippingEnabled(bool enabled);
     
@@ -191,9 +191,9 @@ public:
     ClippingType getClippingType();
     
     /**
-     * 获取layout的裁剪（clipping）是否为可用.
+     * 获取layout的裁剪（clipping）是否为可用。
      *
-     * @return layout的裁剪（clipping）是否为可用.
+     * @return layout的裁剪（clipping）是否为可用。
      */
     virtual bool isClippingEnabled();
     
@@ -214,7 +214,7 @@ public:
      * 如果child被添加到一个“运行中（running）”的节点（node），则'onEnter'和'onEnterTransitionDidFinish'方法将被立即调用。
      *
      * @param child     一个子节点（child node）
-     * @param zOrder    z轴次序（Z order）决定绘制优先级 . 请参照setLocalZOrder(int)
+     * @param zOrder    z轴次序（Z order）决定绘制优先级。 请参照setLocalZOrder(int)
      */
     virtual void addChild(Node * child, int zOrder) override;
     /**
@@ -223,8 +223,8 @@ public:
      * 如果child被添加到一个“运行中（running）”的节点（node），则'onEnter'和'onEnterTransitionDidFinish'方法将被立即调用。
      *
      * @param child     一个子节点（child node）
-     * @param zOrder   z轴次序（Z order）决定绘制优先级. 请参照setLocalZOrder(int)
-     * @param tag       tag指定node的id，一般为整数. 请参照setTag(int)
+     * @param zOrder   z轴次序（Z order）决定绘制优先级。 请参照setLocalZOrder(int)
+     * @param tag       tag指定node的id，一般为整数。 请参照setTag(int)
      */
     virtual void addChild(Node* child, int zOrder, int tag) override;
     
@@ -241,7 +241,7 @@ public:
     /**
     * 清空容器（container）中的所有子节点（children），同时也清空所有运行中的动作（取决于cleanup的参数）。
      *
-     * @param cleanup   为 true 时所有运行中的动作及容器中的子节点都将被清空, 为 false 则不会.
+     * @param cleanup   为 true 时所有运行中的动作及容器中的子节点都将被清空, 为 false 则不会。
      * @js removeAllChildren
      * @lua removeAllChildren
      */
@@ -255,8 +255,8 @@ public:
     virtual void onExit() override;
     
     /**
-     * 如果一个layout被循环聚焦（loop focused），则意味着此焦点（focus）在此layout内部运动。
-     *@param loop pass  为 true 时使焦点（focus）在layout内部循环运动（movement loop）
+     * 如果一个layout开启了循环集中（loop focused），则意味着此焦点（focus）将在此layout内部运动。
+     *@param loop pass  为 true 时使焦点（focus）在layout内部循环运动（movement loop）。
      */
     void setLoopFocus(bool loop);
     
@@ -293,14 +293,14 @@ public:
     std::function<int(FocusDirection, Widget*)> onPassFocusToChild;
 
 CC_CONSTRUCTOR_ACCESS:
-    //重写 widget 的 "init" 方法.
+    //重写 widget 的 "init" 方法。
     virtual bool init() override;
     
 protected:
-    //重写 widget 的 "onSizeChanged" 方法.
+    //重写 widget 的 "onSizeChanged" 方法。
     virtual void onSizeChanged() override;
     
-    //初始化背景图像渲染器.
+    //初始化背景图像渲染器。
     void addBackGroundImage();
     
     void supplyTheLayoutParameterLackToChild(Widget* child);
@@ -390,7 +390,7 @@ protected:
     
     /**
      * 这个方法将被nextFocusedWidget立即调用。 当方向为右/下（Right/Down）时, 此方法将被调用。
-     *@param dir  方向.
+     *@param dir  方向。
      *@param current  当前聚焦的widget
      *@return  下一个聚焦的widget
      */
@@ -398,7 +398,7 @@ protected:
     
     /**
      * 这个方法将被nextFocusedWidget立即调用。 当方向为左/上（Left/Up）时, 此方法将被调用。
-     *@param dir  方向.
+     *@param dir  方向。
      *@param current  当前聚焦的widget
      *@return  下一个聚焦的widget
      */
@@ -487,7 +487,7 @@ protected:
     CustomCommand _afterVisitCmdScissor;
     
     bool _loopFocus; //是否启用循环集中(loop focus)
-    bool _passFocusToChild;  //默认会传递焦点给下一个最近的widget
+    bool _passFocusToChild;  //默认会传递焦点(focus)给下一个最近的widget
 };
     
 }
