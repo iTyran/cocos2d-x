@@ -117,13 +117,13 @@ typedef struct {
 	spAtlasRegion* regions;
 } spAtlas;
 
-/* Image files referenced in the atlas file will be prefixed with dir. */
+/* 在atlas文件中使用的图片文件需要有路径名作为前缀. */
 spAtlas* spAtlas_readAtlas (const char* data, int length, const char* dir);
-/* Image files referenced in the atlas file will be prefixed with the directory containing the atlas file. */
+/* 在atlas文件中使用的图片文件需要以包含atlas文件的文件夹名字作为前缀. */
 spAtlas* spAtlas_readAtlasFile (const char* path);
 void spAtlas_dispose (spAtlas* atlas);
 
-/* Returns 0 if the region was not found. */
+/* 查找名字为name的部位（region）如果找不到则返回0. */
 spAtlasRegion* spAtlas_findRegion (const spAtlas* self, const char* name);
 
 #ifdef SPINE_SHORT_NAMES

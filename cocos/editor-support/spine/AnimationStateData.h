@@ -52,7 +52,7 @@ void spAnimationStateData_dispose (spAnimationStateData* self);
 
 void spAnimationStateData_setMixByName (spAnimationStateData* self, const char* fromName, const char* toName, float duration);
 void spAnimationStateData_setMix (spAnimationStateData* self, spAnimation* from, spAnimation* to, float duration);
-/* Returns 0 if there is no mixing between the animations. */
+/* 返回从动画from切换到to的混合效果， 如果没有则返回0. */
 float spAnimationStateData_getMix (spAnimationStateData* self, spAnimation* from, spAnimation* to);
 
 #ifdef SPINE_SHORT_NAMES
