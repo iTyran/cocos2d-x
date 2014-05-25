@@ -37,9 +37,9 @@
 
 NS_CC_EXT_BEGIN
 
-/* Define the button margin for Left/Right edge */
+/* 定义按钮左右边缘空出的尺寸 */
 #define ControlButtonMarginLR 8 // px
-/* Define the button margin for Top/Bottom edge */
+/* 定义按钮上下边缘空出的尺寸 */
 #define ControlButtonMarginTB 2 // px
 
 
@@ -50,7 +50,7 @@ NS_CC_EXT_BEGIN
  * @{
  */
 
-/** @class ControlButton Button control for Cocos2D. */
+/** @class ControlButton Cocos2d-x的按钮控件 */
 class ControlButton : public Control
 {        
 public:
@@ -68,62 +68,54 @@ public:
     bool isPushed() const { return _isPushed; }
 
     /**
-     * Returns the title used for a state.
+     * 返回指定状态对应的标题文本
      *
-     * @param state The state that uses the title. Possible values are described in
-     * "CCControlState".
+     * @param state 用于指定标题文本的状态，取值范围见"Control::State"。
      *
-     * @return The title for the specified state.
+     * @return 指定状态对应的标题文本
      */
     virtual std::string getTitleForState(State state);
 
     /**
-     * Sets the title string to use for the specified state.
-     * If a property is not specified for a state, the default is to use
-     * the ButtonStateNormal value.
+     * 设置用于指定状态的标题文本
+     * 如果某状态没有被赋值，则默认使用ButtonStateNormal对应的值
      *
-     * @param title The title string to use for the specified state.
-     * @param state The state that uses the specified title. The values are described
-     * in "CCControlState".
+     * @param title 用于所给状态的标题文本
+     * @param state 标题文本对应的状态，取值范围见"Control::State"
      */
     virtual void setTitleForState(const std::string& title, State state);
 
     /**
-     * Returns the title color used for a state.
+     * 返回指定状态对应的标题文本颜色
      *
-     * @param state The state that uses the specified color. The values are described
-     * in "CCControlState".
+     * @param state 用于指定标题文本颜色的状态，取值范围见"Control::State"。
      *
-     * @return The color of the title for the specified state.
+     * @return 指定状态对应的标题文本颜色
      */
 
     virtual Color3B getTitleColorForState(State state) const;
 
     /**
-     * Sets the color of the title to use for the specified state.
+     * 设置指定状态对应的标题文本颜色
      *
-     * @param color The color of the title to use for the specified state.
-     * @param state The state that uses the specified color. The values are described
-     * in "CCControlState".
+     * @param color 用于所给状态的标题文本颜色
+     * @param state 标题文本颜色对应的状态，取值范围见"Control::State"
      */
     virtual void setTitleColorForState(const Color3B& color, State state);
 
     /**
-     * Returns the title label used for a state.
+     * 返回指定状态对应的标题Label
      *
-     * @param state The state that uses the title label. Possible values are described
-     * in "CCControlState".
+     * @param state 用于指定标题Label的状态，取值范围见"Control::State"。
      */
     virtual Node* getTitleLabelForState(State state);
 
     /**
-     * Sets the title label to use for the specified state.
-     * If a property is not specified for a state, the default is to use
-     * the ButtonStateNormal value.
+     * 设置用于指定状态的标题Label
+     * 如果某状态没有被赋值，则默认使用ButtonStateNormal对应的值
      *
-     * @param label The title label to use for the specified state.
-     * @param state The state that uses the specified title. The values are described
-     * in "CCControlState".
+     * @param label 用于所给状态的标题Label
+     * @param state 标题Label对应的状态，取值范围见"Control::State"
      */
     virtual void setTitleLabelForState(Node* label, State state);
 
@@ -134,45 +126,41 @@ public:
     virtual float getTitleTTFSizeForState(State state);
 
     /**
-     * Sets the font of the label, changes the label to a BMFont if neccessary.
-     * @param fntFile The name of the font to change to
-     * @param state The state that uses the specified fntFile. The values are described
-     * in "CCControlState".
+     * 设置Label的字体，如果情况需要则改用BMFont。
+     * @param fntFile 用于所给状态的目标字体名称
+     * @param state 字体对应的状态，取值范围见"Control::State"
      */
     virtual void setTitleBMFontForState(const std::string& fntFile, State state);
     virtual const std::string& getTitleBMFontForState(State state);
 
     /**
-     * Returns the background sprite used for a state.
+     * 返回指定状态对应的背景精灵
      *
-     * @param state The state that uses the background sprite. Possible values are
-     * described in "CCControlState".
+     * @param state 用于指定背景精灵的状态，取值范围见"Control::State"。
      */
     virtual Scale9Sprite* getBackgroundSpriteForState(State state);
 
     /**
-     * Sets the background sprite to use for the specified button state.
+     * 设置用于指定状态的背景精灵
      *
-     * @param sprite The background sprite to use for the specified state.
-     * @param state The state that uses the specified image. The values are described
-     * in "CCControlState".
+     * @param sprite 用于所给状态的背景精灵
+     * @param state 背景精灵对应的状态，取值范围见"Control::State"
      */
     virtual void setBackgroundSpriteForState(Scale9Sprite* sprite, State state);
 
     /**
-     * Sets the background spriteFrame to use for the specified button state.
+     * 设置用于指定状态的spriteFrame
      *
-     * @param spriteFrame The background spriteFrame to use for the specified state.
-     * @param state The state that uses the specified image. The values are described
-     * in "CCControlState".
+     * @param spriteFrame 用于所给状态的spriteFrame
+     * @param state spriteFrame对应的状态，取值范围见"Control::State"
      */
     virtual void setBackgroundSpriteFrameForState(SpriteFrame * spriteFrame, State state);
 
-    //set the margins at once (so we only have to do one call of needsLayout)
+    //同时设置按钮水平与竖直方向的空白尺寸 (needsLayout只用调用一次)
     virtual void setMargins(int marginH, int marginV);
 
-    /** Adjust the background image. YES by default. If the property is set to NO, the
-     background will use the prefered size of the background image. */
+    /** 是否调整背景图，默认为是。
+     如果设为否，则背景图直接使用prefered size指定的尺寸 */
     bool doesAdjustBackgroundImage();
     void setAdjustBackgroundImage(bool adjustBackgroundImage);
 
@@ -211,24 +199,24 @@ protected:
     bool _parentInited;
     bool _doesAdjustBackgroundImage;
 
-    /** The current title that is displayed on the button. */
+    /** 按钮当前显示的标题文本 */
     std::string _currentTitle;
 
-    /** The current color used to display the title. */
+    /** 标题文本的当前颜色 */
     CC_SYNTHESIZE_READONLY_PASS_BY_REF(Color3B, _currentTitleColor, CurrentTitleColor);
 
-    /** The current title label. */
+    /** 当前标题Label */
     CC_SYNTHESIZE_RETAIN(Node*, _titleLabel, TitleLabel);
 
-    /** The current background sprite. */
+    /** 当前背景精灵 */
     CC_SYNTHESIZE_RETAIN(Scale9Sprite*, _backgroundSprite, BackgroundSprite);
 
-    /** The prefered size of the button, if label is larger it will be expanded. */
+    /** 按钮的期望尺寸，如果标题Label更大则扩充尺寸 */
     CC_PROPERTY_PASS_BY_REF(Size, _preferredSize, PreferredSize);
 
-    /** Adjust the button zooming on touchdown. Default value is YES. */
+    /** 设置按钮是否需要在按下时进行缩放，默认为是 */
     CC_PROPERTY(bool, _zoomOnTouchDown, ZoomOnTouchDown);
-    /** Scale ratio button on touchdown. Default value 1.1f */
+    /** 设置按钮在按下时的放大比例，默认为 1.1f */
     CC_SYNTHESIZE(float, _scaleRatio, ScaleRatio);
 
     CC_PROPERTY_PASS_BY_REF(Vec2, _labelAnchorPoint, LabelAnchorPoint);
@@ -239,9 +227,9 @@ protected:
     Map<int, Node*> _titleLabelDispatchTable;
     Map<int, Scale9Sprite*> _backgroundSpriteDispatchTable;
 
-    /* Define the button margin for Top/Bottom edge */
+    /* 定义按钮上下边缘的空白尺寸 */
     CC_SYNTHESIZE_READONLY(int, _marginV, VerticalMargin);
-    /* Define the button margin for Left/Right edge */
+    /* 定义按钮左右边缘的空白尺寸 */
     CC_SYNTHESIZE_READONLY(int, _marginH, HorizontalOrigin);
 
 private:
