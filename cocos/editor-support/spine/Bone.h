@@ -56,7 +56,7 @@ struct spBone {
 
 void spBone_setYDown (int/*bool*/yDown);
 
-/* @param parent May be 0. */
+/* @param parent 可以是0. */
 spBone* spBone_create (spBoneData* data, spBone* parent);
 void spBone_dispose (spBone* self);
 
