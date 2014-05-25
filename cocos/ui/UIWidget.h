@@ -535,7 +535,7 @@ public:
 
     void updateSizeAndPosition(const Size& parentSize);
     
-    /*temp action*/
+    /*临时动作*/
     void setActionTag(int tag);
 	int getActionTag();
     
@@ -571,7 +571,7 @@ public:
     virtual Widget* findNextFocusedWidget(FocusDirection direction, Widget* current);
     
     /**
-     *
+     *当一个widget调用了这个方法，这个widget会立刻被focus
      */
     void requestFocus();
     
