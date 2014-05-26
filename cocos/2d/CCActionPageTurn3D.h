@@ -36,10 +36,9 @@ NS_CC_BEGIN
  */
 
 /**
- @brief This action simulates a page turn from the bottom right hand corner of the screen.
- It's not much use by itself but is used by the PageTurnTransition.
+ @brief 3D翻页动画
  
- Based on an original paper by L Hong et al.
+ 机遇L Hong et al的论文.
  http://www.parc.com/publication/1638/turning-pages-of-3d-electronic-books.html
   
  @since v0.8.2

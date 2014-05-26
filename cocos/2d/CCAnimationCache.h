@@ -42,10 +42,10 @@ class Animation;
  * @{
  */
 
-/** Singleton that manages the Animations.
-It saves in a cache the animations. You should use this class if you want to save your animations in a cache.
+/** 动画缓存单例类。
+ 如何你想要保存动画，你需要使用这个缓存。
 
-Before v0.99.5, the recommend way was to save them on the Sprite. Since v0.99.5, you should use this class instead.
+v0.99.5之前, 建议在sprite中保存动画。v0.99.5之后，建议使用这个缓存类。
 
 @since v0.99.5
 */
@@ -61,57 +61,56 @@ public:
      * @lua NA
      */
     ~AnimationCache();
-    /** Returns the shared instance of the Animation cache */
+    /** 返回缓存单例实体 */
     static AnimationCache* getInstance();
 
-    /** Purges the cache. It releases all the Animation objects and the shared instance.
+    /** 清空缓存，所有动画对象都将被释放。
      */
     static void destroyInstance();
 
-    /** @deprecated Use getInstance() instead */
+    /** @deprecated 使用getInstance() 代替 */
     CC_DEPRECATED_ATTRIBUTE static AnimationCache* sharedAnimationCache() { return AnimationCache::getInstance(); }
 
-    /** @deprecated Use destroyInstance() instead */
+    /** @deprecated 使用 destroyInstance() 代替 */
     CC_DEPRECATED_ATTRIBUTE static void purgeSharedAnimationCache() { return AnimationCache::destroyInstance(); }
 
     bool init(void);
 
-    /** Adds a Animation with a name.
+    /** 添加入一个动画到缓存，并以name作为标示。
     */
     void addAnimation(Animation *animation, const std::string& name);
 
-    /** Deletes a Animation from the cache.
+    /** 从缓存中删除一个名为name的动画。
      
      */
     void removeAnimation(const std::string& name);
-    /** @deprecated. Use removeAnimation() instead
+    /** @deprecated. 使用 removeAnimation() 替代
      * @js NA
      * @lua NA
      */
     CC_DEPRECATED_ATTRIBUTE void removeAnimationByName(const std::string& name){ removeAnimation(name);}
 
-    /** Returns a Animation that was previously added.
-    If the name is not found it will return nil.
-    You should retain the returned copy if you are going to use it.
+    /** Returns 查找并返回名了name的动画。
+     * 如果找不到，返回NULL
     */
     Animation* getAnimation(const std::string& name);
     /**
-     @deprecated. Use getAnimation() instead
+     @deprecated. 使用getAnimation() 替代
      * @js NA
      * @lua NA
      */
     CC_DEPRECATED_ATTRIBUTE Animation* animationByName(const std::string& name){ return getAnimation(name); }
 
-    /** Adds an animation from an NSDictionary
-     Make sure that the frames were previously loaded in the SpriteFrameCache.
-     @param plist The path of the relative file,it use to find the plist path for load SpriteFrames.
+    /** 从字典添加一个动画
+     * 确保帧已经加载到了SpriteFrameCache中。
+     @param plist plist文件的相对路径，用来加载SpriteFrames。
      @since v1.1
      */
     void addAnimationsWithDictionary(const ValueMap& dictionary,const std::string& plist);
 
-    /** Adds an animation from a plist file.
-     Make sure that the frames were previously loaded in the SpriteFrameCache.
-     @since v1.1
+    /** 从plist添加一个动画。
+     * 确保帧已经加载到了SpriteFrameCache中。
+     * @since v1.1
      * @js addAnimations
      * @lua addAnimations
      */
