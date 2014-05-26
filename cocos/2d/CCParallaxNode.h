@@ -39,25 +39,23 @@ struct _ccArray;
  * @{
  */
 
-/** @brief ParallaxNode: A node that simulates a parallax scroller
-
-The children will be moved faster / slower than the parent according the the parallax ratio.
-
+/** @brief 模拟视差滚动的节点
+子节点根据视差比率做比父节点相对快/慢的移动。
 */
 class CC_DLL ParallaxNode : public Node
 {
 public:
-    // Create a Parallax node
+	// 创建一个视差节点。
     static ParallaxNode * create();
 
-    // prevents compiler warning: "Included function hides overloaded virtual functions"
+	// 屏蔽编译警告："Included function hides overloaded virtual functions"
     using Node::addChild;
 
     void addChild(Node * child, int z, const Vec2& parallaxRatio, const Vec2& positionOffset);
 
-    /** Sets an array of layers for the Parallax node */
+	/** 设置视差节点的layer数组 */
     void setParallaxArray( struct _ccArray *parallaxArray) { _parallaxArray = parallaxArray; }
-    /** Returns the array of layers of the Parallax node */
+	/** 获取视差节点的layer数组 */
     struct _ccArray* getParallaxArray() { return _parallaxArray; }
     const struct _ccArray* getParallaxArray() const { return _parallaxArray; }
 
@@ -70,8 +68,8 @@ public:
     virtual void visit(Renderer *renderer, const Mat4 &parentTransform, bool parentTransformUpdated) override;
 
 protected:
-    /** Adds a child to the container with a z-order, a parallax ratio and a position offset
-     It returns self, so you can chain several addChilds.
+    /** 往容器中添加一个子结点，并设置其z-order、视差比率以及位置偏移。
+
      @since v0.8
      * @js ctor
      */
