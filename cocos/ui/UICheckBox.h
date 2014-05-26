@@ -82,7 +82,7 @@ public:
      *
      * @param cross    交叉纹理贴图（cross texture）.
      *
-     * @param frontCrossDisabled    暗态交叉纹理贴图（cross dark state texture）（暗态（dark state）即为禁用状态（Disabled）  译者注）.
+     * @param frontCrossDisabled    暗态交叉纹理贴图（cross dark state texture）（暗态（dark state）即为禁用状态（Disabled） ）.
      *
      * @param texType    @see UI_TEX_TYPE_LOCAL
      */
