@@ -38,7 +38,7 @@ namespace cocostudio {
 class  SpriteFrameCacheHelper
 {
 public:
-	/** @deprecated Use getInstance() instead */
+	/** @deprecated 用getInstance()代替此函数 */
     CC_DEPRECATED_ATTRIBUTE static SpriteFrameCacheHelper *sharedSpriteFrameCacheHelper(){ return SpriteFrameCacheHelper::getInstance(); }
 
     static SpriteFrameCacheHelper *getInstance();
@@ -47,7 +47,7 @@ public:
 public:
 
     /**
-     *	@brief	Add sprite frame to CCSpriteFrameCache, it will save display name and it's relative image name
+     *	@brief	添加精灵帧（sprite frame）到CCSpriteFrameCache，它会保留显示名称和相关的图片名称
      */
     void addSpriteFrameFromFile(const std::string& plistPath, const std::string& imagePath);
 
