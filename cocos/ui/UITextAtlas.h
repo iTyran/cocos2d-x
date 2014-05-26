@@ -75,11 +75,11 @@ public:
                      int itemHeight,
                      const std::string& startCharMap);
     
-    //set string value for labelatlas.
+    //设置labelatlas的字符串值.
     CC_DEPRECATED_ATTRIBUTE void setStringValue(const std::string& value){this->setString(value);}
     void setString(const std::string& value);
     
-    //get string value for labelatlas.
+    //获取labelatlas的字串值.
     CC_DEPRECATED_ATTRIBUTE const std::string& getStringValue() const{return this->getString();}
     const std::string& getString() const;
     
@@ -92,10 +92,10 @@ public:
      */
     ssize_t getStringLength()const;
     
-    //override "getVirtualRendererSize" method of widget.
+    //重写widget的 "getVirtualRendererSize" 方法.
     virtual const Size& getVirtualRendererSize() const override;
     
-    //override "getVirtualRenderer" method of widget.
+    //重写widget的"getVirtualRenderer" 方法.
     virtual Node* getVirtualRenderer() override;
     
     /**
