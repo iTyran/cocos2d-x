@@ -186,7 +186,7 @@ CC_CONSTRUCTOR_ACCESS:
      */
     virtual ~TMXTiledMap();
     
-    /** 通过指定的TMX文件初始化一TMX Tiled */
+    /** 通过指定的TMX文件初始化一个TMX Tiled地图 */
     bool initWithTMXFile(const std::string& tmxFile);
     
     /** 通过一个指定的TMX格式的XML和TMX资源路径初始化一个TMX Tiled地图 */
