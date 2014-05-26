@@ -49,15 +49,15 @@ typedef struct {
 spSkin* spSkin_create (const char* name);
 void spSkin_dispose (spSkin* self);
 
-/* The Skin owns the attachment. */
+/* 向皮肤中添加附件The Skin owns the attachment. */
 void spSkin_addAttachment (spSkin* self, int slotIndex, const char* name, spAttachment* attachment);
-/* Returns 0 if the attachment was not found. */
+/* 查找指定附件，如果未找到返回0. */
 spAttachment* spSkin_getAttachment (const spSkin* self, int slotIndex, const char* name);
 
-/* Returns 0 if the slot or attachment was not found. */
+/* 查找指定附件，如果未找到槽（slot）或附件（attachment）返回0. */
 const char* spSkin_getAttachmentName (const spSkin* self, int slotIndex, int attachmentIndex);
 
-/** Attach each attachment in this skin if the corresponding attachment in oldSkin is currently attached. */
+/** 如果之前的皮肤加载了附件在将他添加到新的皮肤中来. */
 void spSkin_attachAll (const spSkin* self, struct spSkeleton* skeleton, const spSkin* oldspSkin);
 
 #ifdef SPINE_SHORT_NAMES

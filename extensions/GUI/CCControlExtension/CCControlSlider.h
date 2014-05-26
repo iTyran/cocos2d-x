@@ -46,29 +46,25 @@ class ControlSlider: public Control
 {
 public:
     /**
-     * Creates slider with a background filename, a progress filename and a
-     * thumb image filename.
+     * 根据背景文件名，进度条文件名以及滑块文件名创建滑动条
      */
     static ControlSlider* create(const char* bgFile, const char* progressFile, const char* thumbFile);
 
     /**
-     * Creates a slider with a given background sprite and a progress bar and a
-     * thumb item.
+     * 根据背景Sprite，进度条Sprite以及滑块Sprite创建滑动条
      *
      * @see initWithSprites
      */
     static ControlSlider* create(Sprite * backgroundSprite, Sprite* pogressSprite, Sprite* thumbSprite);
 
     /**
-     * Creates slider with a background filename, a progress filename, a thumb
-     * and a selected thumb image filename.
+     * 根据背景文件名，进度条文件名、滑块普通及选中状态文件名创建滑动条
      */
     static ControlSlider* create(const char* bgFile, const char* progressFile, const char* thumbFile,
             const char* selectedThumbSpriteFile);
 
     /**
-     * Creates a slider with a given background sprite and a progress bar, a thumb
-     * and a selected thumb .
+     * 根据背景Sprite，进度条Sprite、滑块普通及选中状态Sprite创建滑动条
      *
      * @see initWithSprites
      */
@@ -85,23 +81,21 @@ public:
     virtual ~ControlSlider();
 
     /**
-    * Initializes a slider with a background sprite, a progress bar and a thumb
-    * item.
+    * 根据背景Sprite，进度条Sprite以及滑块Sprite初始化滑动条
     *
-    * @param backgroundSprite          Sprite, that is used as a background.
-    * @param progressSprite            Sprite, that is used as a progress bar.
-    * @param thumbSprite               Sprite, that is used as a thumb.
+    * @param backgroundSprite          用作背景的Sprite
+    * @param progressSprite            用作进度条的Sprite
+    * @param thumbSprite               用作滑块的Sprite
     */
     virtual bool initWithSprites(Sprite * backgroundSprite, Sprite* progressSprite, Sprite* thumbSprite);
 
     /** 
-    * Initializes a slider with a background sprite, a progress bar and a thumb
-    * item.
+    * 根据背景Sprite，进度条Sprite、滑块普通及选中状态Sprite初始化滑动条
     *
-    * @param backgroundSprite          Sprite, that is used as a background.
-    * @param progressSprite            Sprite, that is used as a progress bar.
-    * @param thumbSprite               Sprite, that is used as a thumb.
-    * @param selectedThumbSprite       Sprite, that is used as a selected thumb.
+    * @param backgroundSprite          用作背景的Sprite
+    * @param progressSprite            用作进度条的Sprite
+    * @param thumbSprite               用作滑块的Sprite
+    * @param selectedThumbSprite       用作滑块选中状态的Sprite
     */
     virtual bool initWithSprites(Sprite * backgroundSprite, Sprite* progressSprite, Sprite* thumbSprite,
             Sprite* selectedThumbSprite);
@@ -124,19 +118,19 @@ protected:
     virtual void onTouchMoved(Touch *pTouch, Event *pEvent);
     virtual void onTouchEnded(Touch *pTouch, Event *pEvent);
 
-    /** Returns the value for the given location. */
+    /** 返回给定位置对应的值 */
     float valueForLocation(Vec2 location);
 
     //maunally put in the setters
-    /** Contains the receiver's current value. */
+    /** 存放接收者的当前值 */
     CC_SYNTHESIZE_READONLY(float, _value, Value);
 
-    /** Contains the minimum value of the receiver.
-     * The default value of this property is 0.0. */
+    /** 存放接收者的最小值
+     * 默认取值为0.0 */
     CC_SYNTHESIZE_READONLY(float, _minimumValue, MinimumValue);
 
-    /** Contains the maximum value of the receiver.
-     * The default value of this property is 1.0. */
+    /** 存放接收者的最大值
+     * 默认取值为1.0 */
     CC_SYNTHESIZE_READONLY(float, _maximumValue, MaximumValue);
 
     CC_SYNTHESIZE(float, _minimumAllowedValue, MinimumAllowedValue);

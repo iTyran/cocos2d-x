@@ -47,9 +47,9 @@ NS_CC_EXT_BEGIN
 
 class ControlSaturationBrightnessPicker : public Control
 {
-    /** Contains the receiver's current saturation value. */
+    /** 存放接收者当前饱和度值 */
     CC_SYNTHESIZE_READONLY(float, _saturation, Saturation);
-    /** Contains the receiver's current brightness value. */
+    /** 存放接收者当前亮度值 */
     CC_SYNTHESIZE_READONLY(float, _brightness, Brightness);
 
     //not sure if these need to be there actually. I suppose someone might want to access the sprite?

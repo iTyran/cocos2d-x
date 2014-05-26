@@ -37,24 +37,24 @@ class VBox : public Layout{
 public:
     
     /**
-     * Default constructor
+     * 默认构造函数（constructor）
      */
     VBox();
     
     /**
-     * Default destructor
+     * 默认析构函数（destructor）
      */
     virtual ~VBox();
     
     /**
-     * Allocates and initializes a VBox.
+     * 分配（allocates）并初始化（initializes）
      */
     static VBox* create();
     
     static VBox* create(const Size& size);
     
 CC_CONSTRUCTOR_ACCESS:
-    //initializes state of widget.
+    //初始化widget的状态
     virtual bool init() override;
     virtual bool initWithSize(const Size& size);
 };

@@ -72,7 +72,7 @@ struct spAnimationState {
 	spTrackEntry** tracks;
 };
 
-/* @param data May be 0 for no mixing. */
+/* @param data 值为0是表示没有混合（mixing）. */
 spAnimationState* spAnimationState_create (spAnimationStateData* data);
 void spAnimationState_dispose (spAnimationState* self);
 
@@ -82,12 +82,13 @@ void spAnimationState_apply (spAnimationState* self, struct spSkeleton* skeleton
 void spAnimationState_clearTracks (spAnimationState* self);
 void spAnimationState_clearTrack (spAnimationState* self, int trackIndex);
 
-/** Set the current animation. Any queued animations are cleared. */
+/** 设置当前动画. 队列中的动画会被清除. */
 spTrackEntry* spAnimationState_setAnimationByName (spAnimationState* self, int trackIndex, const char* animationName,
 		int/*bool*/loop);
 spTrackEntry* spAnimationState_setAnimation (spAnimationState* self, int trackIndex, spAnimation* animation, int/*bool*/loop);
 
-/** Adds an animation to be played delay seconds after the current or last queued animation, taking into account any mix
+/** 添加动画，动画会在当前的动画或动画队列中最后的动画结束delay时间后进行播放， delay为混合效果的时间按
+* Adds an animation to be played delay seconds after the current or last queued animation, taking into account any mix
  * duration. */
 spTrackEntry* spAnimationState_addAnimationByName (spAnimationState* self, int trackIndex, const char* animationName,
 		int/*bool*/loop, float delay);

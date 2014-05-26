@@ -70,29 +70,32 @@ void spSkeleton_setToSetupPose (const spSkeleton* self);
 void spSkeleton_setBonesToSetupPose (const spSkeleton* self);
 void spSkeleton_setSlotsToSetupPose (const spSkeleton* self);
 
-/* Returns 0 if the bone was not found. */
+/* 查找名字为boneName的骨骼，如果未找到返回0. */
 spBone* spSkeleton_findBone (const spSkeleton* self, const char* boneName);
-/* Returns -1 if the bone was not found. */
+/* 查找名字为boneName的骨骼的索引，如果未找到返回-1. */
 int spSkeleton_findBoneIndex (const spSkeleton* self, const char* boneName);
 
-/* Returns 0 if the slot was not found. */
+/* 查找名字为slotName的slot，如果未找到返回0. */
 spSlot* spSkeleton_findSlot (const spSkeleton* self, const char* slotName);
-/* Returns -1 if the slot was not found. */
+/* 查找名字为slotName的slot的索引，如果未找到返回-1. */
 int spSkeleton_findSlotIndex (const spSkeleton* self, const char* slotName);
 
-/* Sets the skin used to look up attachments not found in the SkeletonData defaultSkin. Attachments from the new skin are
+/* 设置皮肤（skin）用于查找在默认皮肤中的SkeletonData数据中找不到的附件（attachment），如果在新皮肤中的附件（attachment）
+ * 在之前的皮肤中已经存在，皮肤就会被加载（译者注：换言之如果原来的皮肤里不存在的话是不会自动加载的，你需要调用setSlotsToSetupPose.
+ * 更多详情请参考http://esotericsoftware.com/spine-using-runtimes#Skin-changes）
+ * Sets the skin used to look up attachments not found in the SkeletonData defaultSkin. Attachments from the new skin are
  * attached if the corresponding attachment from the old skin was attached.
- * @param skin May be 0.*/
+ * @param skin 可以是0.*/
 void spSkeleton_setSkin (spSkeleton* self, spSkin* skin);
-/* Returns 0 if the skin was not found. See spSkeleton_setSkin.
- * @param skinName May be 0. */
+/* 设置皮肤， 如果皮肤未找到返回0. 更多信息请参考spSkeleton_setSkin.
+ * @param skinName 可以是0. */
 int spSkeleton_setSkinByName (spSkeleton* self, const char* skinName);
 
-/* Returns 0 if the slot or attachment was not found. */
+/* 查找附件（attachment）如果slot或者attachment找不到返回0. */
 spAttachment* spSkeleton_getAttachmentForSlotName (const spSkeleton* self, const char* slotName, const char* attachmentName);
-/* Returns 0 if the slot or attachment was not found. */
+/* 查找附件（attachment）如果slot或者attachment找不到返回0. */
 spAttachment* spSkeleton_getAttachmentForSlotIndex (const spSkeleton* self, int slotIndex, const char* attachmentName);
-/* Returns 0 if the slot or attachment was not found. */
+/* 设置附件（attachment）如果slot或者attachment找不到返回0. */
 int spSkeleton_setAttachment (spSkeleton* self, const char* slotName, const char* attachmentName);
 
 void spSkeleton_update (spSkeleton* self, float deltaTime);

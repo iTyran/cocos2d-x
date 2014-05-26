@@ -54,16 +54,16 @@ typedef struct {
 spAnimation* spAnimation_create (const char* name, int timelineCount);
 void spAnimation_dispose (spAnimation* self);
 
-/** Poses the skeleton at the specified time for this animation.
- * @param lastTime The last time the animation was applied.
- * @param events Any triggered events are added. */
+/** 指定动画的时间摆放骨骼位置（姿势）
+ * @param lastTime 动画持续的时间.
+ * @param events 动画更新过程中触发的时间会添加到events数组里. */
 void spAnimation_apply (const spAnimation* self, struct spSkeleton* skeleton, float lastTime, float time, int loop,
 		spEvent** events, int* eventCount);
 
-/** Poses the skeleton at the specified time for this animation mixed with the current pose.
- * @param lastTime The last time the animation was applied.
- * @param events Any triggered events are added.
- * @param alpha The amount of this animation that affects the current pose. */
+/** 指定动画的时间摆放骨骼位置（姿势）和当前的姿势有混合效果
+ * @param lastTime 动画持续的时间.
+ * @param events 动画更新过程中触发的时间会添加到events数组里.
+ * @param alpha 动画对当前骨骼姿势的影响量alpha. */
 void spAnimation_mix (const spAnimation* self, struct spSkeleton* skeleton, float lastTime, float time, int loop,
 		spEvent** events, int* eventCount, float alpha);
 
@@ -107,9 +107,9 @@ typedef struct {
 void spCurveTimeline_setLinear (spCurveTimeline* self, int frameIndex);
 void spCurveTimeline_setStepped (spCurveTimeline* self, int frameIndex);
 
-/* Sets the control handle positions for an interpolation bezier curve used to transition from this keyframe to the next.
- * cx1 and cx2 are from 0 to 1, representing the percent of time between the two keyframes. cy1 and cy2 are the percent of
- * the difference between the keyframe's values. */
+/* 是指从当前关键帧倒下一关键帧进行插值时使用的贝塞尔曲线的控制点位置
+ * cx1和cx2的取值范围是[0,1], 表示两个关键帧之间时间的百分比 cx1 and cx2 are from 0 to 1, representing the percent of time between the two keyframes. 
+ * cy1和cy2是两个关键帧的值的差值的百分比。 */
 void spCurveTimeline_setCurve (spCurveTimeline* self, int frameIndex, float cx1, float cy1, float cx2, float cy2);
 float spCurveTimeline_getCurvePercent (const spCurveTimeline* self, int frameIndex, float percent);
 
@@ -199,7 +199,7 @@ typedef struct {
 
 spAttachmentTimeline* spAttachmentTimeline_create (int frameCount);
 
-/* @param attachmentName May be 0. */
+/* @param attachmentName 值可以为0. */
 void spAttachmentTimeline_setFrame (spAttachmentTimeline* self, int frameIndex, float time, const char* attachmentName);
 
 #ifdef SPINE_SHORT_NAMES

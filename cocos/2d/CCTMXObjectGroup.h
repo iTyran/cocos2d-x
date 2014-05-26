@@ -39,7 +39,7 @@ NS_CC_BEGIN
  * @{
  */
 
-/** @brief TMXObjectGroup represents the TMX object group.
+/** @brief TMXObjectGroup代表TMX对象组
 @since v0.99.0
 */
 class CC_DLL TMXObjectGroup : public Ref
@@ -58,50 +58,50 @@ public:
     inline const std::string& getGroupName(){ return _groupName; }
     inline void setGroupName(const std::string& groupName){ _groupName = groupName; }
 
-    /** return the value for the specific property name */
+    /** 获取指定属性名的值 */
     Value getProperty(const std::string& propertyName) const;
     
     CC_DEPRECATED_ATTRIBUTE Value propertyNamed(const std::string& propertyName) const { return getProperty(propertyName); };
 
-    /** return the dictionary for the specific object name.
-    It will return the 1st object found on the array for the given name.
+    /** 获取指定对象名的字典.
+    返回的是指定名字数组中第一个对象.
     */
     ValueMap getObject(const std::string& objectName) const;
     
     CC_DEPRECATED_ATTRIBUTE ValueMap objectNamed(const std::string& objectName) const { return getObject(objectName); };
     
-    /** Gets the offset position of child objects */
+    /** 获取子对象的偏移位置 */
     inline const Vec2& getPositionOffset() const { return _positionOffset; };
     
-    /** Sets the offset position of child objects */
+    /** 设置子对象的偏移位置 */
     inline void setPositionOffset(const Vec2& offset) { _positionOffset = offset; };
     
-    /** Gets the list of properties stored in a dictionary */
+    /** 获取存储在字典中的属性队列 */
     inline const ValueMap& getProperties() const { return _properties; };
     inline ValueMap& getProperties() { return _properties; };
     
-    /** Sets the list of properties */
+    /** 设置属性队列 */
     inline void setProperties(const ValueMap& properties) {
         _properties = properties;
     };
     
-    /** Gets the array of the objects */
+    /** 获取对象数组 */
     inline const ValueVector& getObjects() const { return _objects; };
     inline ValueVector& getObjects() { return _objects; };
     
-    /** Sets the array of the objects */
+    /** 设置对象数组 */
     inline void setObjects(const ValueVector& objects) {
         _objects = objects;
     };
     
 protected:
-    /** name of the group */
+    /** 组名 */
     std::string _groupName;
-    /** offset position of child objects */
+    /** 子对象偏移位置 */
     Vec2 _positionOffset;
-    /** list of properties stored in a dictionary */
+    /** 存储在字典中的属性队列 */
     ValueMap _properties;
-    /** array of the objects */
+    /** 对象数组 */
     ValueVector _objects;
 };
 

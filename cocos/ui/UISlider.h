@@ -55,71 +55,71 @@ public:
     };
     typedef std::function<void(Ref*,EventType)> ccSliderCallback;
     /**
-     * Default constructor
+     * 默认构造函数
      */
     Slider();
     
     /**
-     * Default destructor
+     * 默认析构函数
      */
     virtual ~Slider();
     
     /**
-     * Allocates and initializes.
+     * 分配并初始化
      */
     static Slider* create();
     
     /**
-     * Load texture for slider bar.
+     * 加载滑动条的纹理贴图（texture）
      *
-     * @param fileName   file name of texture.
+     * @param fileName   纹理贴图（texture）名.
      *
      * @param texType    @see UI_TEX_TYPE_LOCAL
      */
     void loadBarTexture(const std::string& fileName,TextureResType texType = TextureResType::LOCAL);
     
     /**
-     * Sets if slider is using scale9 renderer.
+     * 设置是否使用九宫（scale9）渲染器渲染滑动条
      *
-     * @param true that using scale9 renderer, false otherwise.
+     * @param 如果是true就使用九宫（scale9）渲染器进行渲染，如果是false则不是用九宫（scale9）渲染器进行渲染
      */
     void setScale9Enabled(bool able);
     
     bool isScale9Enabled();
     
     /**
-     * Sets capinsets for slider, if slider is using scale9 renderer.
+     * 如果滑动条使用九宫（scale9）渲染器进行渲染，设置滑动条的capinsets
      *
-     * @param capInsets    capinsets for slider
+     * @param capInsets    滑动条的capinsets
      */
     void setCapInsets(const Rect &capInsets);
     
     /**
-     * Sets capinsets for slider, if slider is using scale9 renderer.
+     * 如果滑动条使用九宫（scale9）渲染器进行渲染，设置滑动条的capinsets
      *
-     * @param capInsets    capinsets for slider
+     * @param capInsets    滑动条的capinsets
      */
     void setCapInsetsBarRenderer(const Rect &capInsets);
     
     const Rect& getCapInsetsBarRenderer();
     
     /**
-     * Sets capinsets for slider, if slider is using scale9 renderer.
+     * 如果滑动条使用九宫（scale9）渲染器进行渲染，设置滑动条的capinsets
      *
-     * @param capInsets    capinsets for slider
+     * @param capInsets    滑动条的capinsets
      */
     void setCapInsetProgressBarRebderer(const Rect &capInsets);
     
     const Rect& getCapInsetsProgressBarRebderer();
     
     /**
-     * Load textures for slider ball.
+     * Load textures for slider ball.加载滑动条的纹理贴图（texture）
      *
-     * @param slider ball normal    normal state texture.
+     * @param slider ball normal    正常状态下的纹理贴图（texture）
      *
-     * @param slider ball selected    selected state texture.
+     * @param slider ball selected    被选中状态下的纹理贴图（texture）.
      *
-     * @param slider ball disabled    dark state texture.
+     * @param slider ball disabled    禁用状态下的纹理贴图（texture）.
      *
      * @param texType    @see UI_TEX_TYPE_LOCAL
      */
@@ -129,57 +129,57 @@ public:
                               TextureResType texType = TextureResType::LOCAL);
     
     /**
-     * Load normal state texture for slider ball.
+     * 加载滑动条在正常状态下的纹理贴图（texture）
      *
-     * @param normal    normal state texture.
+     * @param normal    正常状态下的纹理贴图（texture）
      *
      * @param texType    @see UI_TEX_TYPE_LOCAL
      */
     void loadSlidBallTextureNormal(const std::string& normal,TextureResType texType = TextureResType::LOCAL);
     
     /**
-     * Load selected state texture for slider ball.
+     * 加载滑动条在被选中状态下的纹理贴图（texture）
      *
-     * @param selected    selected state texture.
+     * @param selected    被选中状态下的纹理贴图（texture）
      *
      * @param texType    @see UI_TEX_TYPE_LOCAL
      */
     void loadSlidBallTexturePressed(const std::string& pressed,TextureResType texType = TextureResType::LOCAL);
     
     /**
-     * Load dark state texture for slider ball.
+     * 加载滑动条禁用状态下的纹理贴图（texture）
      *
-     * @param disabled    dark state texture.
+     * @param disabled    禁用状态下的纹理贴图（texture）
      *
      * @param texType    @see UI_TEX_TYPE_LOCAL
      */
     void loadSlidBallTextureDisabled(const std::string& disabled,TextureResType texType = TextureResType::LOCAL);
     
     /**
-     * Load dark state texture for slider progress bar.
+     * 加载滑动进度条在禁用状态下的纹理贴图（texture）
      *
-     * @param fileName    file path of texture.
+     * @param fileName    纹理贴图（texture）的文件目录
      *
      * @param texType    @see UI_TEX_TYPE_LOCAL
      */
     void loadProgressBarTexture(const std::string& fileName, TextureResType texType = TextureResType::LOCAL);
     
     /**
-     * Changes the progress direction of slider.
+     * 改变滑动条目前的进度
      *
-     * @param percent    percent value from 1 to 100.
+     * @param percent    1到100的任意整数，用于表示百分比
      */
     void setPercent(int percent);
     
     /**
-     * Gets the progress direction of slider.
+     * 获取滑动条的当前进度
      *
-     * @return percent    percent value from 1 to 100.
+     * @return percent    1到100的任意整数，用于表示百分比
      */
     int getPercent();
     
     /**
-     * Add call back function called when slider's percent has changed to slider.
+     * 添加在改变滑动条当前进度时调用的回调函数
      */
     CC_DEPRECATED_ATTRIBUTE void addEventListenerSlider(Ref* target,SEL_SlidPercentChangedEvent selector);
     void addEventListener(const ccSliderCallback& callback);
@@ -189,19 +189,19 @@ public:
     virtual void onTouchEnded(Touch *touch, Event *unusedEvent) override;
     virtual void onTouchCancelled(Touch *touch, Event *unusedEvent) override;
     
-    //override "getVirtualRendererSize" method of widget.
+    //重写widget的 "getVirtualRendererSize" 方法
     virtual const Size& getVirtualRendererSize() const override;
     
-    //override "getVirtualRenderer" method of widget.
+    //重写widget的 "getVirtualRenderer" 方法
     virtual Node* getVirtualRenderer() override;
     
-    //override "ignoreContentAdaptWithSize" method of widget.
+    //重写widget的 "ignoreContentAdaptWithSize" 方法
     virtual void ignoreContentAdaptWithSize(bool ignore) override;
     
-    //override the widget's hitTest function to perfom its own
+    //重写widget的 hitTest 函数以用于展示其自身
     virtual bool hitTest(const Vec2 &pt) override;
     /**
-     * Returns the "class name" of widget.
+     * 返回widget的类名
      */
     virtual std::string getDescription() const override;
     
@@ -251,14 +251,14 @@ protected:
     Ref*       _sliderEventListener;
 #if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
 #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-#elif _MSC_VER >= 1400 //vs 2005 or higher
+#elif _MSC_VER >= 1400 //vs 2005 或者其更高版本
 #pragma warning (push)
 #pragma warning (disable: 4996)
 #endif
     SEL_SlidPercentChangedEvent    _sliderEventSelector;
 #if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
 #pragma GCC diagnostic warning "-Wdeprecated-declarations"
-#elif _MSC_VER >= 1400 //vs 2005 or higher
+#elif _MSC_VER >= 1400 //vs 2005 或者其更高版本
 #pragma warning (pop)
 #endif
     
