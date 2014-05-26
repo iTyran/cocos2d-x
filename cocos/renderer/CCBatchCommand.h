@@ -45,7 +45,7 @@ public:
     void execute();
 
 protected:
-    //Material
+    //材质
     int32_t _materialID;
     GLuint _textureID;
     GLProgram* _shader;
@@ -53,7 +53,7 @@ protected:
 
     TextureAtlas *_textureAtlas;
 
-    // ModelView transform
+    // 模型视图 转换
     Mat4 _mv;
 };
 NS_CC_END
