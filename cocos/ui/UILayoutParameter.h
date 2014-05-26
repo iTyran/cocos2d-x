@@ -77,7 +77,7 @@ public:
         RELATIVE
     };
     /**
-     * Default constructor
+     * 默认构造函数（constructor）
      */
     LayoutParameter() : _margin(Margin())
     {
@@ -85,27 +85,27 @@ public:
     };
     
     /**
-     * Default destructor
+     * 默认析构函数（destructor）
      */
     virtual ~LayoutParameter(){};
     
     /**
-     * Allocates and initializes.
-     * @return A initialized LayoutParameter which is marked as "autorelease".
+     * 分配（Allocates）并初始化（initializes）
+     * @return 一个已初始化的LayoutParameter，标记为 "autorelease"
      */
     static LayoutParameter* create();
     
     /**
-     * Sets Margin parameter for LayoutParameter.
+     * 为LayoutParameter设置外边距参数（Margin parameter）
      * 
      * @see Margin
      *
-     * @param margin
+     * @param 外边距
      */
     void setMargin(const Margin& margin);
     
     /**
-     * Gets Margin parameter of LayoutParameter.
+     * 获取LayoutParameter的外边距参数（Margin parameter）
      *
      * @see Margin
      *
@@ -114,7 +114,7 @@ public:
     const Margin& getMargin() const;
     
     /**
-     * Gets LayoutParameterType of LayoutParameter.
+     * 获取LayoutParameter的LayoutParameterType
      *
      * @see LayoutParameterType
      *
@@ -149,7 +149,7 @@ public:
         CENTER_HORIZONTAL
     };
     /**
-     * Default constructor
+     * 默认构造函数（constructor）
      */
     LinearLayoutParameter()
     : _linearGravity(LinearGravity::NONE)
@@ -158,18 +158,18 @@ public:
     };
     
     /**
-     * Default destructor
+     * 默认析构函数（destructor）
      */
     virtual ~LinearLayoutParameter(){};
     
     /**
-     * Allocates and initializes.
-     * @return A initialized LayoutParameter which is marked as "autorelease".
+     * 分配（Allocates）并初始化（initializes.）
+     * @return    一个已初始化的LayoutParameter， 标记为 "autorelease".
      */
     static LinearLayoutParameter* create();
     
     /**
-     * Sets LinearGravity parameter for LayoutParameter.
+     * 为LayoutParameter设置LinearGravity参数
      *
      * @see LinearGravity
      *
@@ -178,7 +178,7 @@ public:
     void setGravity(LinearGravity gravity);
     
     /**
-     * Gets LinearGravity parameter for LayoutParameter.
+     * 获取LayoutParameter的LinearGravity参数
      *
      * @see LinearGravity
      *
@@ -230,7 +230,7 @@ public:
         LOCATION_BELOW_RIGHTALIGN
     };
     /**
-     * Default constructor
+     * 默认构造函数（constructor）
      */
     RelativeLayoutParameter()
     : _relativeAlign(RelativeAlign::NONE),
@@ -242,18 +242,18 @@ public:
     };
     
     /**
-     * Default destructor
+     * 默认析构函数（destructor）
      */
     virtual ~RelativeLayoutParameter(){};
     
     /**
-     * Allocates and initializes.
-     * @return A initialized LayoutParameter which is marked as "autorelease".
+     * 分配（Allocates）并初始化（initializes）.
+     * @return 一个已初始化的 LayoutParameter ，标记为 "autorelease".
      */
     static RelativeLayoutParameter* create();
     
     /**
-     * Sets RelativeAlign parameter for LayoutParameter.
+     * 为LayoutParameter设置RelativeAlign参数
      *
      * @see RelativeAlign
      *
@@ -262,7 +262,7 @@ public:
     void setAlign(RelativeAlign align);
     
     /**
-     * Gets RelativeAlign parameter for LayoutParameter.
+     * 获取LayoutParameter的RelativeAlign参数
      *
      * @see RelativeAlign
      *
@@ -271,28 +271,28 @@ public:
     RelativeAlign getAlign() const;
     
     /**
-     * Sets a key for LayoutParameter. Witch widget named this is relative to.
+     * 设置LayoutParameter的值（key）. 相应的widget相对于此命名.
      *
      * @param name
      */
     void setRelativeToWidgetName(const std::string& name);
     
     /**
-     * Gets the key of LayoutParameter. Witch widget named this is relative to.
+     * 获取LayoutParameter的值（key). 相应的widget相对于此命名.
      *
      * @return name
      */
     const std::string& getRelativeToWidgetName() const;
     
     /**
-     * Sets a name in Relative Layout for LayoutParameter.
+     * 为LayoutParameter在相对布局（Relative Layout）中设置一个名字。
      *
      * @param name
      */
     void setRelativeName(const std::string& name);
     
     /**
-     * Gets a name in Relative Layout of LayoutParameter.
+     * 获取LayoutParameter在相对布局（Relative Layout）中的名字。
      *
      * @return name
      */
