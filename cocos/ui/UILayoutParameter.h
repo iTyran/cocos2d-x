@@ -271,28 +271,28 @@ public:
     RelativeAlign getAlign() const;
     
     /**
-     * 设置LayoutParameter的值（key）. 相应的widget相对于此命名.
+     * 设置LayoutParameter的key. 相应的widget相对于此命名.
      *
      * @param name
      */
     void setRelativeToWidgetName(const std::string& name);
     
     /**
-     * 获取LayoutParameter的值（key). 相应的widget相对于此命名.
+     * 获取LayoutParameter的key. 相应的widget相对于此命名.
      *
      * @return name
      */
     const std::string& getRelativeToWidgetName() const;
     
     /**
-     * 为LayoutParameter在相对布局（Relative Layout）中设置一个名字。
+     * 为LayoutParameter在相对布局（Relative Layout）中设置一个name。
      *
      * @param name
      */
     void setRelativeName(const std::string& name);
     
     /**
-     * 获取LayoutParameter在相对布局（Relative Layout）中的名字。
+     * 获取LayoutParameter在相对布局（Relative Layout）中的name。
      *
      * @return name
      */
