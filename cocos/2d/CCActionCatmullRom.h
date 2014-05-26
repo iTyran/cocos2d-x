@@ -275,7 +275,7 @@ public:
 
 };
 
-/** Returns the Cardinal Spline position for a given set of control points, tension and time */
+/** 给定控制点，张力，时间，返回Cardinal Spline 坐标。 */
 extern CC_DLL Vec2 ccCardinalSplineAt(Vec2 &p0, Vec2 &p1, Vec2 &p2, Vec2 &p3, float tension, float t);
 
 // end of actions group

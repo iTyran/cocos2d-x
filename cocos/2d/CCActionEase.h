@@ -37,7 +37,7 @@ NS_CC_BEGIN
  */
 
 /** 
- @brief Base class for Easing actions
+ @brief Easing actions的基类
  @ingroup Actions
  */
 class CC_DLL ActionEase : public ActionInterval
@@ -69,15 +69,15 @@ private:
 };
 
 /** 
- @brief Base class for Easing actions with rate parameters
+ @brief 带速率的Easing actions的基类
  @ingroup Actions
  */
 class CC_DLL EaseRateAction : public ActionEase
 {
 public:
-    /** 设置这个动作的频率值 */
+    /** 设置这个动作的速率 */
     inline void setRate(float rate) { _rate = rate; }
-    /** 获取这个动作频率值 */
+    /** 获取这个动作速率 */
     inline float getRate() const { return _rate; }
 
     //
@@ -89,7 +89,7 @@ public:
 CC_CONSTRUCTOR_ACCESS:
     EaseRateAction() {}
     virtual ~EaseRateAction();
-    /** 初始化这个延时动作并且设置频率参数值 */
+    /** 初始化这个延时动作并且设置速率 */
     bool initWithAction(ActionInterval *pAction, float fRate);
 
 protected:
@@ -100,13 +100,13 @@ private:
 };
 
 /** 
- @brief EaseIn action with a rate
+ @brief 可设置速率的EaseIn action
  @ingroup Actions
  */
 class CC_DLL EaseIn : public EaseRateAction
 {
 public:
-    /** 创建这个延时动作并且设置频率参数值 */
+    /** 创建这个延时动作并且设置速率 */
     static EaseIn* create(ActionInterval* action, float rate);
 
     // 可重载
@@ -123,13 +123,13 @@ private:
 };
 
 /** 
- @brief EaseOut action with a rate
+ @brief 可设置速率的EaseOut action
  @ingroup Actions
  */
 class CC_DLL EaseOut : public EaseRateAction
 {
 public:
-    /** 创建这个延时动作并且设置频率参数值 */
+    /** 创建这个延时动作并且设置速率 */
     static EaseOut* create(ActionInterval* action, float rate);
 
     // Overrides
@@ -146,7 +146,7 @@ private:
 };
 
 /** 
- @brief EaseInOut action with a rate
+ @brief 可设置速率的EaseInOut
  @ingroup Actions
  */
 class CC_DLL EaseInOut : public EaseRateAction
@@ -342,7 +342,7 @@ private:
 
 /** 
  @brief Ease Elastic In action.
- @warning This action doesn't use a bijective function. Actions like Sequence might have an unexpected result when used with this action.
+ @warning 不要把这个动作用在双射函数。像Sequence这样的动作可能产生不可预期的效果。
  @since v0.8.2
  @ingroup Actions
  */
@@ -368,7 +368,7 @@ private:
 
 /** 
  @brief Ease Elastic Out action.
- @warning This action doesn't use a bijective function. Actions like Sequence might have an unexpected result when used with this action.
+ @warning 不要把这个动作用在双射函数。像Sequence这样的动作可能产生不可预期的效果。
  @since v0.8.2
  @ingroup Actions
  */
@@ -394,7 +394,7 @@ private:
 
 /** 
  @brief Ease Elastic InOut action.
- @warning This action doesn't use a bijective function. Actions like Sequence might have an unexpected result when used with this action.
+ @warning 不要把这个动作用在双射函数。像Sequence这样的动作可能产生不可预期的效果。
  @since v0.8.2
  @ingroup Actions
  */
@@ -441,7 +441,7 @@ private:
 
 /** 
  @brief EaseBounceIn action.
- @warning This action doesn't use a bijective function. Actions like Sequence might have an unexpected result when used with this action.
+ @warning 不要把这个动作用在双射函数。像Sequence这样的动作可能产生不可预期的效果。
  @since v0.8.2
  @ingroup Actions
 */
@@ -466,7 +466,7 @@ private:
 
 /** 
  @brief EaseBounceOut action.
- @warning This action doesn't use a bijective function. Actions like Sequence might have an unexpected result when used with this action.
+ @warning 不要把这个动作用在双射函数。像Sequence这样的动作可能产生不可预期的效果。
  @since v0.8.2
  @ingroup Actions
  */
@@ -491,7 +491,7 @@ private:
 
 /** 
  @brief EaseBounceInOut action.
- @warning This action doesn't use a bijective function. Actions like Sequence might have an unexpected result when used with this action.
+ @warning 不要把这个动作用在双射函数。像Sequence这样的动作可能产生不可预期的效果。
  @since v0.8.2
  @ingroup Actions
  */
@@ -516,7 +516,7 @@ private:
 
 /** 
  @brief EaseBackIn action.
- @warning This action doesn't use a bijective function. Actions like Sequence might have an unexpected result when used with this action.
+ @warning 不要把这个动作用在双射函数。像Sequence这样的动作可能产生不可预期的效果。
  @since v0.8.2
  @ingroup Actions
  */
@@ -541,8 +541,7 @@ private:
 
 /** 
  @brief EaseBackOut action.
- @warning This action doesn't use a bijective function. Actions like Sequence might have an unexpected result when used with this action.
- @since v0.8.2
+ @warning 不要把这个动作用在双射函数。像Sequence这样的动作可能产生不可预期的效果。 @since v0.8.2
  @ingroup Actions
  */
 class CC_DLL EaseBackOut : public ActionEase
@@ -566,8 +565,7 @@ private:
 
 /** 
  @brief EaseBackInOut action.
- @warning This action doesn't use a bijective function. Actions like Sequence might have an unexpected result when used with this action.
- @since v0.8.2
+ @warning 不要把这个动作用在双射函数。像Sequence这样的动作可能产生不可预期的效果。 @since v0.8.2
  @ingroup Actions
  */
 class CC_DLL EaseBackInOut : public ActionEase
