@@ -31,15 +31,15 @@ Misc free functions
 
 namespace cocos2d {
 /*
-ccNextPOT function is licensed under the same license that is used in Texture2D.m.
+ 函数ccNextPOT基于与Texture2D.m相同的许可协议发布
 */
 
-/** returns the Next Power of Two value.
+/**  返回下个2的幂 returns the Next Power of Two value.
 
 Examples:
-- If "value" is 15, it will return 16.
-- If "value" is 16, it will return 16.
-- If "value" is 17, it will return 32.
+- 如果"value"是15，返回16 .
+- 如果"value"是16，返回16 .
+- 如果"value"是17，返回32 .
 
 @since v0.99.5
 */
