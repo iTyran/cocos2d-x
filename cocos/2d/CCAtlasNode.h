@@ -42,22 +42,21 @@ NS_CC_BEGIN
 
 class TextureAtlas;
 
-/** @brief AtlasNode is a subclass of Node that implements the RGBAProtocol and TextureProtocol protocol
+/** @brief AtlasNode是Node的扩展，实现了RGBAProtocol和TextureProtocol协议
 
-It knows how to render a TextureAtlas object.
-If you are going to render a TextureAtlas consider subclassing AtlasNode (or a subclass of AtlasNode)
+它知道如何渲染TextureAtlas对象
 
-All features from Node are valid, plus the following features:
+所有关于Node的特性都可能，并具有下面的特性:
 - opacity and RGB colors
 */
 class CC_DLL AtlasNode : public Node, public TextureProtocol
 {    
 public:
-	/** creates a AtlasNode  with an Atlas file the width and height of each item and the quantity of items to render*/
+	/** 从Atlas文件创建一个AtlasNode，并设置它的宽、高以及itme数量 */
 	static AtlasNode * create(const std::string& filename, int tileWidth, int tileHeight, int itemsToRender);
 
-    /** updates the Atlas (indexed vertex array).
-    * Shall be overridden in subclasses
+    /** 更新Atlas (定点索引数组).
+    * 需要被子类重写
     */
     virtual void updateAtlasValues();
 
@@ -79,8 +78,8 @@ public:
     virtual void setOpacity(GLubyte opacity) override;
     /**
     * @code
-    * When this function bound into js or lua,the parameter will be changed
-    * In js: var setBlendFunc(var src, var dst)
+    * 当绑定到js或lua，参数将发生变化
+    * js中: var setBlendFunc(var src, var dst)
     * @endcode
     * @lua NA
     */
@@ -95,10 +94,10 @@ CC_CONSTRUCTOR_ACCESS:
     AtlasNode();
     virtual ~AtlasNode();
 
-    /** initializes an AtlasNode  with an Atlas file the width and height of each item and the quantity of items to render*/
+    /** 用Atlas文件初始化AtlasNode，并设置宽、高、itme数量*/
     bool initWithTileFile(const std::string& tile, int tileWidth, int tileHeight, int itemsToRender);
     
-    /** initializes an AtlasNode  with a texture the width and height of each item measured in points and the quantity of items to render*/
+    /** 用纹理初始化AtlasNode，并设置宽、高、itme数量*/
     bool initWithTexture(Texture2D* texture, int tileWidth, int tileHeight, int itemsToRender);
 
 protected:
@@ -109,14 +108,14 @@ protected:
     friend class Director;
     void setIgnoreContentScaleFactor(bool bIgnoreContentScaleFactor);
 
-    //! chars per row
+    //! 每行的字数
     int    _itemsPerRow;
-    //! chars per column
+    //! 每列的字数
     int    _itemsPerColumn;
 
-    //! width of each char
+    //! 每个字的宽度
     int    _itemWidth;
-    //! height of each char
+    //! 每个字的高度
     int    _itemHeight;
     
     Color3B    _colorUnmodified;

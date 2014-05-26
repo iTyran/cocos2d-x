@@ -36,7 +36,7 @@ namespace cocostudio {
 #define CC_HALF_PI  (M_PI * 0.5f)
 
 
-//! hit test function
+//! 点击测试函数
 bool isSpriteContainPoint(cocos2d::Sprite *sprite, cocos2d::Vec2 point);
 bool isSpriteContainPoint(cocos2d::Sprite *sprite, cocos2d::Vec2 point, cocos2d::Vec2 &outPoint);
 
@@ -44,7 +44,7 @@ bool isSpriteContainPoint(cocos2d::Sprite *sprite, cocos2d::Vec2 point, cocos2d:
 #define CC_SPRITE_CONTAIN_POINT_WITH_RETURN(sprite, point, outPoint) isSpriteContainPoint((sprite), (point), outPoint)
 
 
-//! motion curve function
+//! 移动函数
 cocos2d::Vec2 bezierTo(float t, cocos2d::Vec2 &point1, cocos2d::Vec2 &point2, cocos2d::Vec2 &point3);
 cocos2d::Vec2 bezierTo(float t, cocos2d::Vec2 &point1, cocos2d::Vec2 &point2, cocos2d::Vec2 &point3, cocos2d::Vec2 &point4);
 

@@ -59,7 +59,7 @@ public:
 
     /**
      * 创建和初始化对象
-	 * 译者注：Allocate此处是为对象分配空间
+	 * 注：Allocate此处是为对象分配空间
      */
     static Text* create();
     

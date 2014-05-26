@@ -15,17 +15,17 @@ namespace CocosDenshion {
 
 struct OpenALFile
 {
-    std::string debugName; ///< For logging.
+    std::string debugName; ///< Log名称.
     FILE *file;
-    void *mappedFile; ///< Reserved by decoders.
-    size_t fileSize; ///< Reserved by decoders.
+    void *mappedFile; ///< 保留给解码器使用
+    size_t fileSize; ///< 保留给解码器使用.
 
     OpenALFile() : file(0), mappedFile(0), fileSize(0) {}
     ~OpenALFile() { clear(); }
 
-    /// Unmaps from memory and closes file.
+    /// 取消内存映射并关闭文件
     void clear();
-    /// Performs memory map, if was not mapped before.
+    /// 如果原来没有做内存映射，那么映射到内存
     bool mapToMemory();
 };
 
@@ -43,8 +43,7 @@ public:
     };
 
     virtual ~OpenALDecoder() {}
-
-    /// Returns true if such format is supported and decoding was successful.
+    /// 如果该格式已经支持并且成功解码
     virtual bool decode(OpenALFile &file, ALuint &result) = 0;
     virtual bool acceptsFormat(Format format) const = 0;
 

@@ -44,17 +44,15 @@ NS_CC_BEGIN
  */
 
 /** 
-@brief An interval action is an action that takes place within a certain period of time.
-It has an start time, and a finish time. The finish time is the parameter
-duration plus the start time.
+@brief 持续动作是需要持续运行一段时间的动作。
+它有一个启动时间和结束时间。结束时间由启动时间加上周期得出。
 
-These ActionInterval actions have some interesting properties, like:
-- They can run normally (default)
-- They can run reversed with the reverse method
-- They can run with the time altered with the Accelerate, AccelDeccel and Speed actions.
+持续时间由很多有趣的特性，例如：
+- 他们可以正常运行(default)
+- 他们也可以反向运行
+- 他们可以随加速器的改变运行
 
-For example, you can simulate a Ping Pong effect running the action normally and
-then running it again in Reverse mode.
+例如：你可以使用正常运行加反向运行模拟一个乒乓球的运动。
 
 Example:
 
@@ -87,7 +85,7 @@ protected:
     bool   _firstTick;
 };
 
-/** @brief Runs actions sequentially, one after another
+/** @brief 顺序执行动作。
  */
 class CC_DLL Sequence : public ActionInterval
 {
@@ -116,9 +114,9 @@ public:
 
     /**用一组给定的动作创建一组顺序性动作的协助构造函数
      * @code
-     * When this funtion bound to the js or lua,the input params changed
-     * in js  :var   create(var   object1,var   object2, ...)
-     * in lua :local create(local object1,local object2, ...)
+     * 当这个函数绑定到js或lua，输入参数会改变。
+     * js中  :var   create(var   object1,var   object2, ...)
+     * lua中 :local create(local object1,local object2, ...)
      * @endcode
      */
     static Sequence* create(const Vector<FiniteTimeAction*>& arrayOfActions);
@@ -152,8 +150,8 @@ private:
     CC_DISALLOW_COPY_AND_ASSIGN(Sequence);
 };
 
-/** @brief Repeats an action a number of times.
- * To repeat an action forever use the RepeatForever action.
+/** @brief 重复执行动作很多次。次数由参数决定。
+ * 要无线循环动作，使用RepeatForever。
  */
 class CC_DLL Repeat : public ActionInterval
 {
@@ -205,9 +203,9 @@ private:
     CC_DISALLOW_COPY_AND_ASSIGN(Repeat);
 };
 
-/** @brief Repeats an action for ever.
-To repeat the an action for a limited number of times use the Repeat action.
-@warning This action can't be Sequenceable because it is not an IntervalAction
+/** @brief 无线循环一个动作。
+如果要循环有限次数，请使用Repeat动作。
+@warning 这个动作不能被用于串行，因为它不是一个持续动作
 */
 class CC_DLL RepeatForever : public ActionInterval
 {
@@ -256,16 +254,16 @@ private:
     CC_DISALLOW_COPY_AND_ASSIGN(RepeatForever);
 };
 
-/** @brief Spawn a new action immediately
+/** @brief 并行动作
  */
 class CC_DLL Spawn : public ActionInterval
 {
 public:
-    /** helper constructor to create an array of spawned actions 
+    /** 构造函数用来创建并行动作
      * @code
-     * When this funtion bound to the js or lua,the input params changed
-     * in js  :var   create(var   object1,var   object2, ...)
-     * in lua :local create(local object1,local object2, ...)
+     * 当绑定到js或lua，输入参数会变化。
+     * js中 :var   create(var   object1,var   object2, ...)
+     * lua中:local create(local object1,local object2, ...)
      * @endcode
      */
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) || (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
@@ -322,10 +320,9 @@ private:
     CC_DISALLOW_COPY_AND_ASSIGN(Spawn);
 };
 
-/** @brief Rotates a Node object to a certain angle by modifying it's
- rotation attribute.
- The direction will be decided by the shortest angle.
-*/ 
+/** @brief 旋转节点到指定角度。
+ * 方向将通过最短角决定
+ */ 
 class CC_DLL RotateTo : public ActionInterval
 {
 public:
@@ -364,7 +361,7 @@ private:
     CC_DISALLOW_COPY_AND_ASSIGN(RotateTo);
 };
 
-/** @brief Rotates a Node object clockwise a number of degrees by modifying it's rotation attribute.
+/** @brief 旋转一个节点
 */
 class CC_DLL RotateBy : public ActionInterval
 {
@@ -534,8 +531,7 @@ private:
     CC_DISALLOW_COPY_AND_ASSIGN(SkewBy);
 };
 
-/** @brief Moves a Node object simulating a parabolic jump movement by modifying it's position attribute.
-*/
+/** @brief 模仿跳跃的轨迹移动节点 */
 class CC_DLL JumpBy : public ActionInterval
 {
 public:
@@ -568,7 +564,7 @@ private:
     CC_DISALLOW_COPY_AND_ASSIGN(JumpBy);
 };
 
-/** @brief Moves a Node object to a parabolic position simulating a jump movement by modifying it's position attribute.
+/** @brief 模仿跳跃的轨迹移动节点
 */ 
 class CC_DLL JumpTo : public JumpBy
 {
@@ -600,7 +596,7 @@ typedef struct _ccBezierConfig {
     Vec2 controlPoint_2;
 } ccBezierConfig;
 
-/** @brief An action that moves the target with a cubic Bezier curve by a certain distance.
+/** @brief 贝塞尔曲线动作。
  */
 class CC_DLL BezierBy : public ActionInterval
 {
@@ -608,9 +604,9 @@ public:
     /** 
      * 以持续时间和贝塞尔曲线的配置结构体为参数创建动作
      * @code
-     * when this function bound to js or lua,the input params are changed
-     * in js: var create(var t,var table)
-     * in lua: lcaol create(local t, local table)
+     * 当绑定到js或lua，输入参数会改变
+     * js中 : var create(var t,var table)
+     * lua中: lcaol create(local t, local table)
      * @endcode
      */
     static BezierBy* create(float t, const ccBezierConfig& c);
@@ -639,7 +635,7 @@ private:
     CC_DISALLOW_COPY_AND_ASSIGN(BezierBy);
 };
 
-/** @brief An action that moves the target with a cubic Bezier curve to a destination point.
+/** @brief 贝塞尔曲线动作。
  @since v0.8.2
  */
 class CC_DLL BezierTo : public BezierBy
@@ -647,9 +643,9 @@ class CC_DLL BezierTo : public BezierBy
 public:
     /** 以持续时间和贝塞尔曲线的配置结构体为参数创建动作
      * @code
-     * when this function bound to js or lua,the input params are changed
-     * in js: var create(var t,var table)
-     * in lua: lcaol create(local t, local table)
+     * 当绑定到js或lua，输入参数会改变
+     * js中 : var create(var t,var table)
+     * lua中: lcaol create(local t, local table)
      * @endcode
      */
     static BezierTo* create(float t, const ccBezierConfig& c);
@@ -674,8 +670,8 @@ private:
     CC_DISALLOW_COPY_AND_ASSIGN(BezierTo);
 };
 
-/** @brief Scales a Node object to a zoom factor by modifying it's scale attribute.
- @warning This action doesn't support "reverse"
+/** @brief 缩放动作.
+ @warning 这个动作不支持"reverse"
  */
 class CC_DLL ScaleTo : public ActionInterval
 {
@@ -726,7 +722,7 @@ private:
     CC_DISALLOW_COPY_AND_ASSIGN(ScaleTo);
 };
 
-/** @brief Scales a Node object a zoom factor by modifying it's scale attribute.
+/** @brief 缩放动作
 */
 class CC_DLL ScaleBy : public ScaleTo
 {
@@ -755,7 +751,7 @@ private:
     CC_DISALLOW_COPY_AND_ASSIGN(ScaleBy);
 };
 
-/** @brief Blinks a Node object by modifying it's visible attribute
+/** @brief 闪烁动作
 */
 class CC_DLL Blink : public ActionInterval
 {
@@ -788,8 +784,8 @@ private:
 };
 
 
-/** @brief Fades an object that implements the RGBAProtocol protocol. It modifies the opacity from the current value to a custom one.
- @warning This action doesn't support "reverse"
+/** @brief 渐变动作
+ @warning 不支持"reverse"
  */
 class CC_DLL FadeTo : public ActionInterval
 {
@@ -821,8 +817,8 @@ private:
     CC_DISALLOW_COPY_AND_ASSIGN(FadeTo);
 };
 
-/** @brief Fades In an object that implements the RGBAProtocol protocol. It modifies the opacity from 0 to 255.
- The "reverse" of this action is FadeOut
+/** @brief 渐变动作
+  "reverse"动作是FadeOut
  */
 class CC_DLL FadeIn : public FadeTo
 {
@@ -848,9 +844,9 @@ private:
     FadeTo* _reverseAction;
 };
 
-/** @brief Fades Out an object that implements the RGBAProtocol protocol. It modifies the opacity from 255 to 0.
- The "reverse" of this action is FadeIn
-*/
+/** @brief 渐变动作
+ * "reverse"动作是FadeIn
+ */
 class CC_DLL FadeOut : public FadeTo
 {
 public:
@@ -873,8 +869,8 @@ private:
     CC_DISALLOW_COPY_AND_ASSIGN(FadeOut);
     FadeTo* _reverseAction;
 };
-/** @brief Tints a Node that implements the NodeRGB protocol from current tint to a custom one.
- @warning This action doesn't support "reverse"
+/** @brief 节点变色动作
+ @warning 不支持"reverse"
  @since v0.7.2
 */
 class CC_DLL TintTo : public ActionInterval
@@ -906,7 +902,7 @@ private:
     CC_DISALLOW_COPY_AND_ASSIGN(TintTo);
 };
 
-/** @brief Tints a Node that implements the NodeRGB protocol from current tint to a custom one.
+/** @brief 节点变色动作
  @since v0.7.2
  */
 class CC_DLL TintBy : public ActionInterval
@@ -943,7 +939,7 @@ private:
     CC_DISALLOW_COPY_AND_ASSIGN(TintBy);
 };
 
-/** @brief Delays the action a certain amount of seconds
+/** @brief 延时动作
 */
 class CC_DLL DelayTime : public ActionInterval
 {
@@ -966,12 +962,9 @@ private:
     CC_DISALLOW_COPY_AND_ASSIGN(DelayTime);
 };
 
-/** @brief Executes an action in reverse order, from time=duration to time=0
+/** @brief 反转动作
  
- @warning Use this action carefully. This action is not
- sequenceable. Use it as the default "reversed" method
- of your own actions, but using it outside the "reversed"
- scope is not recommended.
+ @warning 小心使用这个动作，这个动作不能用在串行动作序列中。
 */
 class CC_DLL ReverseTime : public ActionInterval
 {
@@ -1003,7 +996,7 @@ private:
 };
 
 class Texture2D;
-/** @brief Animates a sprite given the name of an Animation */
+/** @brief 创建序列帧动画 */
 class CC_DLL Animate : public ActionInterval
 {
 public:
