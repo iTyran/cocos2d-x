@@ -75,7 +75,7 @@ http://www.mapeditor.org官网将其加入支持TMX tiled地图格式
 - TXM layers默认会设置一个别名
 - Tileset图片可以在使用TextureCache时加入
 - 每个tile都有一个唯一的tag
-- 每个tile都有一个唯一的z指.左上(top-left): z=1, 右下(bottom-right): z=max z
+- 每个tile都有一个唯一的z值.左上(top-left): z=1, 右下(bottom-right): z=max z
 - 每个对象组(object group)可以用作可变数组(MutaleArray)
 - 对象类包含的属性都存储在一个字典(dictionary)中
 - 属性可以赋值给地图(Map),层(Layer),对象属性(Object Group)以及对象(Object)
