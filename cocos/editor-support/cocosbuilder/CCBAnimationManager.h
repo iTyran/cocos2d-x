@@ -86,18 +86,18 @@ public:
     
     void moveAnimationsFromNode(cocos2d::Node* fromNode, cocos2d::Node* toNode);
 
-    /** @deprecated This interface will be deprecated sooner or later.*/
+    /** @deprecated 这个接口将在不久被移除掉 */
     CC_DEPRECATED_ATTRIBUTE void runAnimations(const char *pName, float fTweenDuration);
-    /** @deprecated This interface will be deprecated sooner or later.*/
+    /** @deprecated 这个接口将在不久被移除掉 */
     CC_DEPRECATED_ATTRIBUTE void runAnimations(const char *pName);
-    /** @deprecated This interface will be deprecated sooner or later.*/
+    /** @deprecated 这个接口将在不久被移除掉 */
     CC_DEPRECATED_ATTRIBUTE void runAnimations(int nSeqId, float fTweenDuraiton);
 
     void runAnimationsForSequenceNamedTweenDuration(const char *pName, float fTweenDuration);
     void runAnimationsForSequenceNamed(const char *pName);
     void runAnimationsForSequenceIdTweenDuration(int nSeqId, float fTweenDuraiton);
     /**
-     * when this function bound to js ,the second param are callfunc_selector
+     * 当绑定到js，第二个参数是callfunc_selector
      * @lua NA
      */
     void setAnimationCompletedCallback(cocos2d::Ref *target, cocos2d::SEL_CallFunc callbackFunc);
@@ -163,7 +163,7 @@ private:
 class CCBSetSpriteFrame : public cocos2d::ActionInstant
 {
 public:
-    /** creates a Place action with a position */
+    /** 用坐标创建一个位置动作*/
     static CCBSetSpriteFrame* create(cocos2d::SpriteFrame *pSpriteFrame);
     /**
      * @js NA
