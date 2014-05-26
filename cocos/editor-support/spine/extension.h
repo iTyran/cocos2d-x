@@ -31,30 +31,30 @@
 #ifndef SPINE_EXTENSION_H_
 #define SPINE_EXTENSION_H_
 
-/* All allocation uses these. */
+/* 内存分配函数.spine使用下面的函数进行内存空间分配 */
 #define MALLOC(TYPE,COUNT) ((TYPE*)_malloc(sizeof(TYPE) * COUNT))
 #define CALLOC(TYPE,COUNT) ((TYPE*)_calloc(COUNT, sizeof(TYPE)))
 #define NEW(TYPE) CALLOC(TYPE,1)
 
-/* Gets the direct super class. Type safe. */
+/* 返回直接超类，类型安全. */
 #define SUPER(VALUE) (&VALUE->super)
 
-/* Cast to a super class. Not type safe, use with care. Prefer SUPER() where possible. */
+/* 转换为超类，非类型安全，小心使用， 尽可能的使用SUPER()来替代. */
 #define SUPER_CAST(TYPE,VALUE) ((TYPE*)VALUE)
 
-/* Cast to a sub class. Not type safe, use with care. */
+/* 转换为子类. 非类型安全, 小心使用. */
 #define SUB_CAST(TYPE,VALUE) ((TYPE*)VALUE)
 
-/* Casts away const. Can be used as an lvalue. Not type safe, use with care. */
+/* 去除const. 可以用于左值. 非类型安全, 小心使用. */
 #define CONST_CAST(TYPE,VALUE) (*(TYPE*)&VALUE)
 
-/* Gets the vtable for the specified type. Not type safe, use with care. */
+/* 返回指定类型的vtable. 非类型安全, 小心使用. */
 #define VTABLE(TYPE,VALUE) ((_##TYPE##Vtable*)((TYPE*)VALUE)->vtable)
 
-/* Frees memory. Can be used on const types. */
+/* 释放内存. 可用于常量类型. */
 #define FREE(VALUE) _free((void*)VALUE)
 
-/* Allocates a new char[], assigns it to TO, and copies FROM to it. Can be used on const types. */
+/* 申请一个新的字符数组char[], 将他分配给TO, 讲FROM的内容拷贝到TO. 可用于常量类型. */
 #define MALLOC_STR(TO,FROM) strcpy(CONST_CAST(char*, TO) = (char*)malloc(strlen(FROM) + 1), FROM)
 
 #ifdef __STDC_VERSION__
@@ -78,7 +78,7 @@ extern "C" {
 #endif
 
 /*
- * Functions that must be implemented:
+ * 必须实现下列函数:
  */
 
 void _spAtlasPage_createTexture (spAtlasPage* self, const char* path);
@@ -92,7 +92,7 @@ char* _spUtil_readFile (const char* path, int* length);
 #endif
 
 /*
- * Internal API available for extension:
+ * spine扩展的内部api
  */
 
 void* _malloc (size_t size);

@@ -180,41 +180,38 @@ int getUTF8StringLength(const UTF8* utf8);
 namespace llvm {
 
 /**
- * Convert an UTF8 StringRef to UTF8, UTF16, or UTF32 depending on
- * WideCharWidth. The converted data is written to ResultPtr, which needs to
- * point to at least WideCharWidth * (Source.Size() + 1) bytes. On success,
- * ResultPtr will point one after the end of the copied string. On failure,
- * ResultPtr will not be changed, and ErrorPtr will be set to the location of
- * the first character which could not be converted.
- * \return true on success.
+ * 根据WideCharWidth转换UTF8的StringRef为UTF8, UTF16, 或UTF32。
+ * 转换的数据将被写入到ResultPtr，
+ * ResultPtr需要调用者预先分配至少 WideCharWidth * (Source.Size() + 1)字节的空间。
+ * 如果转换成功，ResultPtr指向一个复制字符串的结尾。
+ * 如果失败，ResultPtr将不被改变，ErrorPtr会指向第一个出错的字符。
+ * \return 成功返回true。
  */
 bool ConvertUTF8toWide(unsigned WideCharWidth, const std::string& Source,
                        char *&ResultPtr, const UTF8 *&ErrorPtr);
 
 /**
- * Convert an Unicode code point to UTF8 sequence.
+ * 转换一个Unicode字符为UTF8序列
  *
- * \param Source a Unicode code point.
- * \param [in,out] ResultPtr pointer to the output buffer, needs to be at least
- * \c UNI_MAX_UTF8_BYTES_PER_CODE_POINT bytes.  On success \c ResultPtr is
- * updated one past end of the converted sequence.
+ * \param Source Unicode码。
+ * \param [in,out] ResultPtr 指向输出buffer，至少需要UNI_MAX_UTF8_BYTES_PER_CODE_POINT字节
  *
- * \returns true on success.
+ * \returns 成功返回true。
  */
 bool ConvertCodePointToUTF8(unsigned Source, char *&ResultPtr);
 
 /**
  * Convert the first UTF8 sequence in the given source buffer to a UTF32
  * code point.
+ * 转换source指向的第一个UTF8序列为UTF32。
  *
- * \param [in,out] source A pointer to the source buffer. If the conversion
- * succeeds, this pointer will be updated to point to the byte just past the
- * end of the converted sequence.
- * \param sourceEnd A pointer just past the end of the source buffer.
- * \param [out] target The converted code
- * \param flags Whether the conversion is strict or lenient.
+ * \param [in,out] source 指向源buffer头. 如果成功转换，
+ * 该指针将被更新以指向字节刚刚过去的经转换的序列的末尾。
+ * \param sourceEnd 指向源buffer尾。
+ * \param [out] target 转换后的编码
+ * \param flags 转换是严谨还是宽松。
  *
- * \returns conversionOK on success
+ * \returns 成功返回conversionOK
  *
  * \sa ConvertUTF8toUTF32
  */
@@ -231,17 +228,16 @@ static inline ConversionResult convertUTF8Sequence(const UTF8 **source,
 }
 
 /**
- * Returns true if a blob of text starts with a UTF-16 big or little endian byte
- * order mark.
+ * 如果一个二进制的文本是UTF-16大端或小端开头，返回true。
  */
 bool hasUTF16ByteOrderMark(const char* SrcBytes, size_t len);
 
 /**
- * Converts a stream of raw bytes assumed to be UTF16 into a UTF8 std::string.
+ * 转换一假设为UTF16的裸数据了流到UTF8的std::string。
  *
- * \param [in] SrcBytes A buffer of what is assumed to be UTF-16 encoded text.
- * \param [out] Out Converted UTF-8 is stored here on success.
- * \returns true on success
+ * \param [in] SrcBytes 指向假设为UTF16的数据流。
+ * \param [out] Out 转换后的UTF8输出。
+ * \returns 成功返回true。
  */
 bool convertUTF16ToUTF8String(const std::u16string& utf16, std::string &Out);
 

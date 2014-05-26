@@ -86,211 +86,211 @@ public:
     };
     typedef std::function<void(Ref*, EventType)> ccScrollViewCallback;
     /**
-     * Default constructor
+     * 默认构造函数
      */
     ScrollView();
     
     /**
-     * Default destructor
+     * 默认析构函数
      */
     virtual ~ScrollView();
     
     /**
-     * Allocates and initializes.
+     * 分配并初始化
      */
     static ScrollView* create();
     
     /**
-     * Changes scroll direction of scrollview.
+     * 改变滚动视图的滚动方向
      *
-     * @see SCROLLVIEW_DIR      SCROLLVIEW_DIR_VERTICAL means vertical scroll, SCROLLVIEW_DIR_HORIZONTAL means horizontal scroll
+     * @see SCROLLVIEW_DIR      SCROLLVIEW_DIR_VERTICAL 表示滚动视图沿垂直方向滚动, SCROLLVIEW_DIR_HORIZONTAL 表示滚动视图沿水平方向滚动
      *
      * @param SCROLLVIEW_DIR
      */
     virtual void setDirection(Direction dir);
     
     /**
-     * Gets scroll direction of scrollview.
+     * 获取滚动视图当前的滚动方向
      *
-     * @see SCROLLVIEW_DIR      SCROLLVIEW_DIR_VERTICAL means vertical scroll, SCROLLVIEW_DIR_HORIZONTAL means horizontal scroll
+     * @see SCROLLVIEW_DIR      SCROLLVIEW_DIR_VERTICAL 表示滚动视图沿垂直方向滚动, SCROLLVIEW_DIR_HORIZONTAL 表示滚动视图沿水平方向滚动
      *
      * @return SCROLLVIEW_DIR
      */
     Direction getDirection();
     
     /**
-     * Gets inner container of scrollview.
+     * 获取该滚动视图的内部容器(inner container)
      *
-     * Inner container is the container of scrollview's children.
+     * 滚动视图的内部容器(inner container)是指包含该滚动视图内的子节点(children)的容器
      *
      * @return inner container.
      */
     Layout* getInnerContainer();
     
     /**
-     * Scroll inner container to bottom boundary of scrollview.
+     * 将滚动视图的内部容器(inner container)滚动至滚动视图的底部边界(bottom boundary)
      */
     void scrollToBottom(float time, bool attenuated);
     
     /**
-     * Scroll inner container to top boundary of scrollview.
+     * 将滚动视图的内部容器(inner container)滚动至滚动视图的顶部边界(top boundary)
      */
     void scrollToTop(float time, bool attenuated);
     
     /**
-     * Scroll inner container to left boundary of scrollview.
+     * 将滚动视图的内部容器(inner container)滚动至滚动视图的左边界(left boundary)
      */
     void scrollToLeft(float time, bool attenuated);
     
     /**
-     * Scroll inner container to right boundary of scrollview.
+     * 将滚动视图的内部容器(inner container)滚动至滚动视图的右边界(right boundary)
      */
     void scrollToRight(float time, bool attenuated);
     
     /**
-     * Scroll inner container to top and left boundary of scrollview.
+     * 将滚动视图的内部容器(inner container)滚动至滚动视图的左上边界(top and left boundary)
      */
     void scrollToTopLeft(float time, bool attenuated);
     
     /**
-     * Scroll inner container to top and right boundary of scrollview.
+     * 将滚动视图的内部容器(inner container)滚动至滚动视图的右上边界(top and right boundary)
      */
     void scrollToTopRight(float time, bool attenuated);
     
     /**
-     * Scroll inner container to bottom and left boundary of scrollview.
+     * 将滚动视图的内部容器(inner container)滚动至滚动视图的左下边界(bottom and left boundary)
      */
     void scrollToBottomLeft(float time, bool attenuated);
     
     /**
-     * Scroll inner container to bottom and right boundary of scrollview.
+     * 将滚动视图的内部容器(inner container)滚动至滚动视图的右下边界(bottom and right boundary)
      */
     void scrollToBottomRight(float time, bool attenuated);
     
     /**
-     * Scroll inner container to vertical percent position of scrollview.
+     * 将滚动视图的内部容器(inner container)滚动至滚动视图上沿垂直方向一定比例的位置(vertical percent position)
      */
     void scrollToPercentVertical(float percent, float time, bool attenuated);
     
     /**
-     * Scroll inner container to horizontal percent position of scrollview.
+     * 将滚动视图的内部容器(inner container)滚动至滚动视图上沿水平方向一定比例的位置(horizontal percent position)
      */
     void scrollToPercentHorizontal(float percent, float time, bool attenuated);
     
     /**
-     * Scroll inner container to both direction percent position of scrollview.
+     * 将滚动视图的内部容器(inner container)滚动至滚动视图上沿水平方向一定比例且沿垂直方向一定比例的位置(both direction percent position)
      */
     void scrollToPercentBothDirection(const Vec2& percent, float time, bool attenuated);
     
     /**
-     * Move inner container to bottom boundary of scrollview.
+     * 将滚动视图的内部容器(inner container)直接移动（move）至滚动视图的底部边界(bottom boundary)
      */
     void jumpToBottom();
     
     /**
-     * Move inner container to top boundary of scrollview.
+     * 将滚动视图的内部容器(inner container)直接移动（move）至滚动视图的顶部边界(top boundary)
      */
     void jumpToTop();
     
     /**
-     * Move inner container to left boundary of scrollview.
+     * 将滚动视图的内部容器(inner container)直接移动（move）至滚动视图的左边界(left boundary)
      */
     void jumpToLeft();
     
     /**
-     * Move inner container to right boundary of scrollview.
+     * 将滚动视图的内部容器(inner container)直接移动（move）至滚动视图的右边界(right boundary)
      */
     void jumpToRight();
     
     /**
-     * Move inner container to top and left boundary of scrollview.
+     * 将滚动视图的内部容器(inner container)直接移动（move）至滚动视图的左上边界(top and left boundary)
      */
     void jumpToTopLeft();
     
     /**
-     * Move inner container to top and right boundary of scrollview.
+     * 将滚动视图的内部容器(inner container)直接移动（move）至滚动视图的右上边界(top and right boundary)
      */
     void jumpToTopRight();
     
     /**
-     * Move inner container to bottom and left boundary of scrollview.
+     * 将滚动视图的内部容器(inner container)直接移动（move）至滚动视图的左下边界(bottom and left boundary)
      */
     void jumpToBottomLeft();
     
     /**
-     * Move inner container to bottom and right boundary of scrollview.
+     * 将滚动视图的内部容器(inner container)直接移动（move）至滚动视图的右下边界(bottom and right boundary)
      */
     void jumpToBottomRight();
     
     /**
-     * Move inner container to vertical percent position of scrollview.
+     * 将滚动视图的内部容器(inner container)直接移动（move）至滚动视图上沿垂直方向一定比例的位置(vertical percent position)
      */
     void jumpToPercentVertical(float percent);
     
     /**
-     * Move inner container to horizontal percent position of scrollview.
+     * 将滚动视图的内部容器(inner container)直接移动（move）至滚动视图上沿水平方向一定比例的位置(horizontal percent position)
      */
     void jumpToPercentHorizontal(float percent);
     
     /**
-     * Move inner container to both direction percent position of scrollview.
+     * 将滚动视图的内部容器(inner container)直接移动（move）至滚动视图上沿水平方向一定比例且沿垂直方向一定比例的位置(both direction percent position)
      */
     void jumpToPercentBothDirection(const Vec2& percent);
     
     /**
-     * Changes inner container size of scrollview.
+     * 改变滚动视图内部容器的尺寸(size)
      *
-     * Inner container size must be larger than or equal scrollview's size.
+     * 滚动视图的内部容器的尺寸必须大于或者等于该滚动视图的尺寸
      *
      * @param inner container size.
      */
     void setInnerContainerSize(const Size &size);
     
     /**
-     * Gets inner container size of scrollview.
+     * 获取该滚动视图内部容器的尺寸
      *
-     * Inner container size must be larger than or equal scrollview's size.
+     * 滚动视图的内部容器的尺寸必须大于或者等于该滚动视图的尺寸
      *
      * @return inner container size.
      */
 	const Size& getInnerContainerSize() const;
     
     /**
-     * Add call back function called scrollview event triggered
+     * 添加由滚动事件触发的回调函数
      */
     CC_DEPRECATED_ATTRIBUTE void addEventListenerScrollView(Ref* target, SEL_ScrollViewEvent selector);
     void addEventListener(const ccScrollViewCallback& callback);
         
     virtual void addChild(Node * child) override;
     /**
-     * Adds a child to the container with a z-order
+     * 在内部容器中加入一个子节点（child）并确定其在画布中的z-order
      *
-     * If the child is added to a 'running' node, then 'onEnter' and 'onEnterTransitionDidFinish' will be called immediately.
+     * 如果在一个running节点上添加子节点，'onEnter'和'onEnterTransitionDidFinish'方法会被立刻调用
      *
-     * @param child     A child node
-     * @param zOrder    Z order for drawing priority. Please refer to setLocalZOrder(int)
+     * @param child     一个子节点（A child node）
+     * @param zOrder    Z order 用于确定绘图时的优先级. 具体细节轻参考setLocalZOrder(int)
      */
     virtual void addChild(Node * child, int zOrder) override;
     /**
-     * Adds a child to the container with z order and tag
+     * 在内部容器中加入一个子节点（child）并确定其在画布中的z-order和其在父节点中的标签（tag）
      *
-     * If the child is added to a 'running' node, then 'onEnter' and 'onEnterTransitionDidFinish' will be called immediately.
+     * 如果在一个running节点上添加子节点，'onEnter'和'onEnterTransitionDidFinish'方法会被立刻调用
      *
-     * @param child     A child node
-     * @param zOrder    Z order for drawing priority. Please refer to setLocalZOrder(int)
-     * @param tag       A interger to identify the node easily. Please refer to setTag(int)
+     * @param child     一个子节点（A child node）
+     * @param zOrder    Z order 用于确定绘图时的优先级. 具体细节轻参考setLocalZOrder(int)
+     * @param tag       一个有助于辨认不同节点的整型变量. 具体细节请参考setTag(int)
      */
     virtual void addChild(Node* child, int zOrder, int tag) override;
     
-    //override "removeAllChildrenAndCleanUp" method of widget.
+    //重载widget的"removeAllChildrenAndCleanUp"方法.
     virtual void removeAllChildren() override;
     
     virtual void removeAllChildrenWithCleanup(bool cleanup) override;
     
-    //override "removeChild" method of widget.
+    //重载widget的"removeChild"方法.
 	virtual void removeChild(Node* child, bool cleaup = true) override;
     
-    //override "getChildren" method of widget.
+    //重载widget的"getChildren"方法.
     virtual Vector<Node*>& getChildren() override;
     virtual const Vector<Node*>& getChildren() const override;
     
@@ -316,7 +316,7 @@ public:
     bool isInertiaScrollEnabled() const;
     
     /**
-     * Sets LayoutType.
+     * 设置 LayoutType.
      *
      * @see LayoutType
      *
@@ -325,7 +325,7 @@ public:
     virtual void setLayoutType(Type type) override;
     
     /**
-     * Gets LayoutType.
+     * 获取 LayoutType.
      *
      * @see LayoutType
      *
@@ -334,7 +334,7 @@ public:
     virtual Type getLayoutType() const override;
     
     /**
-     * Returns the "class name" of widget.
+     * 返回widget的类名称
      */
     virtual std::string getDescription() const override;
     
@@ -434,14 +434,14 @@ protected:
     Ref* _scrollViewEventListener;
 #if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
 #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-#elif _MSC_VER >= 1400 //vs 2005 or higher
+#elif _MSC_VER >= 1400 //支持 vs 2005 或其更高版本
 #pragma warning (push)
 #pragma warning (disable: 4996)
 #endif
     SEL_ScrollViewEvent _scrollViewEventSelector;
 #if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
 #pragma GCC diagnostic warning "-Wdeprecated-declarations"
-#elif _MSC_VER >= 1400 //vs 2005 or higher
+#elif _MSC_VER >= 1400 //支持 vs 2005 或其更高版本
 #pragma warning (pop)
 #endif
     ccScrollViewCallback _eventCallback;

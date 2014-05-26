@@ -44,7 +44,7 @@
 namespace spine {
 
 /**
-Draws a skeleton.
+用于绘制骨骼的cocos2d-x类.
 */
 class Skeleton: public cocos2d::Node, public cocos2d::BlendProtocol {
 public:
@@ -73,26 +73,29 @@ public:
 	void onExit() override;
 	virtual cocos2d::Rect getBoundingBox () const override;
 
-	// --- Convenience methods for common Skeleton_* functions.
+	// --- 调用Skeleton_*方法的简便方式.
 	void updateWorldTransform ();
 
 	void setToSetupPose ();
 	void setBonesToSetupPose ();
 	void setSlotsToSetupPose ();
 
-	/* Returns 0 if the bone was not found. */
+	/* 查找指定名字的骨骼（bone）如果找不到返回0. */
 	spBone* findBone (const char* boneName) const;
-	/* Returns 0 if the slot was not found. */
+	/* 查找指定名字槽（slot）如果找不到返回0. */
 	spSlot* findSlot (const char* slotName) const;
 	
-	/* Sets the skin used to look up attachments not found in the SkeletonData defaultSkin. Attachments from the new skin are
+	/* 设置皮肤（skin）用于查找在默认皮肤中的SkeletonData数据中找不到的附件（attachment），如果在新皮肤中的附件（attachment）
+	 * 在之前的皮肤中已经存在，皮肤就会被加载（译者注：换言之如果原来的皮肤里不存在的话是不会自动加载的，你需要调用setSlotsToSetupPose.
+	 * 更多详情请参考http://esotericsoftware.com/spine-using-runtimes#Skin-changes），如果皮肤找不到返回false
+	 * Sets the skin used to look up attachments not found in the SkeletonData defaultSkin. Attachments from the new skin are
 	 * attached if the corresponding attachment from the old skin was attached. Returns false if the skin was not found.
-	 * @param skin May be 0.*/
+	 * @param skin 可以是0.*/
 	bool setSkin (const char* skinName);
 	
-	/* Returns 0 if the slot or attachment was not found. */
+	/* 查找附件（attachment）如果slot或者attachment找不到返回0. */
 	spAttachment* getAttachment (const char* slotName, const char* attachmentName) const;
-	/* Returns false if the slot or attachment was not found. */
+	/* 设置附件（attachment）如果slot或者attachment找不到返回false. */
 	bool setAttachment (const char* slotName, const char* attachmentName);
 
 	// --- CCBlendProtocol

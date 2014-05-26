@@ -75,24 +75,24 @@ spSkeletonBounds* spSkeletonBounds_create ();
 void spSkeletonBounds_dispose (spSkeletonBounds* self);
 void spSkeletonBounds_update (spSkeletonBounds* self, spSkeleton* skeleton, int/*bool*/updateAabb);
 
-/** Returns true if the axis aligned bounding box contains the point. */
+/** 如果边界框（bounding box）的包围盒包含坐标点（x，y）返回true. */
 int/*bool*/spSkeletonBounds_aabbContainsPoint (spSkeletonBounds* self, float x, float y);
 
-/** Returns true if the axis aligned bounding box intersects the line segment. */
+/** 如果边界框（bounding box）的包围盒与点（x1,y1）与点(x2,y2)组成的线段相交返回true. */
 int/*bool*/spSkeletonBounds_aabbIntersectsSegment (spSkeletonBounds* self, float x1, float y1, float x2, float y2);
 
-/** Returns true if the axis aligned bounding box intersects the axis aligned bounding box of the specified bounds. */
+/** 如果边界框（bounding box）的包围盒与指定的边界矿相交则返回true. */
 int/*bool*/spSkeletonBounds_aabbIntersectsSkeleton (spSkeletonBounds* self, spSkeletonBounds* bounds);
 
-/** Returns the first bounding box attachment that contains the point, or null. When doing many checks, it is usually more
- * efficient to only call this method if spSkeletonBounds_aabbContainsPoint returns true. */
+/** 返回包含点(x,y)的第一个边界框附件，如果没有返回null。 
+ * 如果需要测试附件有很多，在spSkeletonBounds_aabbContainsPoint返回true时再进行这个检测是一个更高效的方法 */
 spBoundingBoxAttachment* spSkeletonBounds_containsPoint (spSkeletonBounds* self, float x, float y);
 
-/** Returns the first bounding box attachment that contains the line segment, or null. When doing many checks, it is usually
- * more efficient to only call this method if spSkeletonBounds_aabbIntersectsSegment returns true. */
+/** 返回与点(x1,y1)和点(x2,y2)组成的线段相交的第一个边界框附件，如果没有返回null。
+ * 如果需要测试附件有很多，在spSkeletonBounds_aabbIntersectsSegment返回true时再进行这个检测是一个更高效的方法 */
 spBoundingBoxAttachment* spSkeletonBounds_intersectsSegment (spSkeletonBounds* self, float x1, float y1, float x2, float y2);
 
-/** Returns the polygon for the specified bounding box, or null. */
+/** 返回指定的边界框附件对应的多边形，如果不存在返回null. */
 spPolygon* spSkeletonBounds_getPolygon (spSkeletonBounds* self, spBoundingBoxAttachment* boundingBox);
 
 #ifdef SPINE_SHORT_NAMES

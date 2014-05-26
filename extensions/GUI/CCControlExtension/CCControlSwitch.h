@@ -45,13 +45,13 @@ class ControlSwitchSprite;
  * @{
  */
 
-/** @class ControlSwitch Switch control for Cocos2D. */
+/** @class ControlSwitch Cocos2d-x的开关控件 */
 class ControlSwitch : public Control
 {
 public:
-    /** Creates a switch with a mask sprite, on/off sprites for on/off states, a thumb sprite and an on/off labels. */
+    /** 根据蒙版Sprite、开/关状态Sprite、滑块Sprite、开/关状态Label创建开关控件 */
     static ControlSwitch* create(Sprite *maskSprite, Sprite * onSprite, Sprite * offSprite, Sprite * thumbSprite, Label* onLabel, Label* offLabel);
-    /** Creates a switch with a mask sprite, on/off sprites for on/off states and a thumb sprite. */
+    /** 根据蒙版Sprite、开/关状态Sprite、滑块Sprite创建开关控件 */
     static ControlSwitch* create(Sprite *maskSprite, Sprite * onSprite, Sprite * offSprite, Sprite * thumbSprite);
     /**
      * @js ctor
@@ -63,18 +63,17 @@ public:
      */
     virtual ~ControlSwitch();
 
-    /** Initializes a switch with a mask sprite, on/off sprites for on/off states and a thumb sprite. */
+    /** 根据蒙版Sprite、开/关状态Sprite、滑块Sprite初始化开关控件 */
     bool initWithMaskSprite(Sprite *maskSprite, Sprite * onSprite, Sprite * offSprite, Sprite * thumbSprite);
-    /** Initializes a switch with a mask sprite, on/off sprites for on/off states, a thumb sprite and an on/off labels. */
+    /** 根据蒙版Sprite、开/关状态Sprite、滑块Sprite、开/关状态Label初始化开关控件 */
     bool initWithMaskSprite(Sprite *maskSprite, Sprite * onSprite, Sprite * offSprite, Sprite * thumbSprite, Label* onLabel, Label* offLabel);
 
     /**
-     * Set the state of the switch to On or Off, optionally animating the transition.
+     * 将开关状态设为开或者关，并可选是否播放过渡动画
      *
-     * @param isOn YES if the switch should be turned to the On position; NO if it 
-     * should be turned to the Off position. If the switch is already in the 
-     * designated position, nothing happens.
-     * @param animated YES to animate the "flipping" of the switch; otherwise NO.
+     * @param isOn 为真则开关打开，为假则开关关闭
+     * 如果开关已经在此状态则什么都不发生
+     * @param animated 为真则开关切换播放过渡动画，为假则直接切换
      */
     void setOn(bool isOn, bool animated);
     void setOn(bool isOn);
@@ -91,12 +90,12 @@ public:
     virtual void onTouchCancelled(Touch *pTouch, Event *pEvent) override;
 
 protected:
-    /** Sprite which represents the view. */
+    /** 用于表现本控件的Sprite派生类 */
     ControlSwitchSprite* _switchSprite;
     float _initialTouchXPosition;
     
     bool _moved;
-    /** A Boolean value that determines the off/on state of the switch. */
+    /** 表示开关状态的布尔值 */
     bool _on;
 };
 

@@ -39,12 +39,12 @@ NS_CC_EXT_BEGIN
  * @{
  */
 
-/** @class ControlPotentiometer Potentiometer control for Cocos2D. */
+/** @class ControlPotentiometer，Cocos2d-x的旋钮控件 */
 class ControlPotentiometer : public Control
 {
 public:
     /**
-     * Creates potentiometer with a track filename and a progress filename.
+     * 根据轨道、进度条、旋钮的资源文件名创建potentiometer。
      */
     static ControlPotentiometer* create(const char* backgroundFile, const char* progressFile, const char* thumbFile);
     /**
@@ -58,10 +58,11 @@ public:
     virtual ~ControlPotentiometer();
 
     /** 
-     * Initializes a potentiometer with a track sprite and a progress bar.
+     * 用轨道精灵，进度条对象以及旋钮精灵初始化potentiometer
      *
-     * @param trackSprite   Sprite, that is used as a background.
-     * @param progressTimer ProgressTimer, that is used as a progress bar.
+     * @param trackSprite   用于做背景的精灵
+     * @param progressTimer 用于计时器
+     * @param thumbSprite   用于旋钮的精灵
      */
     bool initWithTrackSprite_ProgressTimer_ThumbSprite(Sprite* trackSprite, ProgressTimer* progressTimer, Sprite* thumbSprite);
 
@@ -81,14 +82,14 @@ public:
     virtual void onTouchMoved(Touch *pTouch, Event *pEvent) override;
     virtual void onTouchEnded(Touch *pTouch, Event *pEvent) override;
 
-    /** Factorize the event dispath into these methods. */
+    /** 将事件分解派发到这些方法 */
     void potentiometerBegan(Vec2 location);
     void potentiometerMoved(Vec2 location);
     void potentiometerEnded(Vec2 location);
 
-    /** Returns the distance between the point1 and point2. */
+    /** 返回点1与点2之间的距离 */
     float distanceBetweenPointAndPoint(Vec2 point1, Vec2 point2);
-    /** Returns the angle in degree between line1 and line2. */
+    /** 返回线1与线2之间的角度，单位为度 */
     float angleInDegreesBetweenLineFromPoint_toPoint_toLineFromPoint_toPoint(
         Vec2 beginLineA, 
         Vec2 endLineA,
@@ -96,13 +97,11 @@ public:
         Vec2 endLineB);
 
 protected:
-    /** Contains the receiver’s current value. */
+    /** 存放接收者当前值 */
     float           _value;
-    /** Contains the minimum value of the receiver.
-     * The default value of this property is 0.0. */
+    /** 存放接收者的最小值，默认为0.0 */
     float           _minimumValue;
-    /** Contains the maximum value of the receiver.
-     * The default value of this property is 1.0. */
+    /** 存放接收者的最大值，默认为1.0 */
     float           _maximumValue;
 
     CC_SYNTHESIZE_RETAIN(Sprite*, _thumbSprite, ThumbSprite)

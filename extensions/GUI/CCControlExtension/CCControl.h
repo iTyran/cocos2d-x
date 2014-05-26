@@ -45,112 +45,104 @@ class Invocation;
  * @{
  */
 
-/** Number of kinds of control event. */
+/** 控件事件的种类 */
 #define kControlEventTotalNumber 9
 
 
 /*
  * @class
- * Control is inspired by the UIControl API class from the UIKit library of 
- * CocoaTouch. It provides a base class for control Sprites such as Button 
- * or Slider that convey user intent to the application.
+ * Control类是受到CocoaTouch里UIKit库的UIControl类API启发而来
+ * 它是诸如按钮、滚动条等用户交互控件的基类。
  *
- * The goal of Control is to define an interface and base implementation for 
- * preparing action messages and initially dispatching them to their targets when
- * certain events occur.
+ * Control类的目的就是定义一个标准接口，并提供了一个基础实现用于 
+ * 准备动作消息以及向目标派发特定事件。
  *
- * To use the Control you have to subclass it.
+ * 使用Control类时从该类派生即可。
  */
 class Control : public Layer
 {
 public:
-    /** Kinds of possible events for the control objects. */
+    /** 控件对象可能产生的事件种类 */
     enum class EventType
     {
-        TOUCH_DOWN           = 1 << 0,    // A touch-down event in the control.
-        DRAG_INSIDE          = 1 << 1,    // An event where a finger is dragged inside the bounds of the control.
-        DRAG_OUTSIDE         = 1 << 2,    // An event where a finger is dragged just outside the bounds of the control.
-        DRAG_ENTER           = 1 << 3,    // An event where a finger is dragged into the bounds of the control.
-        DRAG_EXIT            = 1 << 4,    // An event where a finger is dragged from within a control to outside its bounds.
-        TOUCH_UP_INSIDE      = 1 << 5,    // A touch-up event in the control where the finger is inside the bounds of the control.
-        TOUCH_UP_OUTSIDE     = 1 << 6,    // A touch-up event in the control where the finger is outside the bounds of the control.
-        TOUCH_CANCEL         = 1 << 7,    // A system event canceling the current touches for the control.
-        VALUE_CHANGED        = 1 << 8      // A touch dragging or otherwise manipulating a control, causing it to emit a series of different values.
+        TOUCH_DOWN           = 1 << 0,    // 控件内按下
+        DRAG_INSIDE          = 1 << 1,    // 控件范围内的拖拽
+        DRAG_OUTSIDE         = 1 << 2,    // 控件范围外的拖拽
+        DRAG_ENTER           = 1 << 3,    // 手指拖拽并刚好从控件范围外移入控件范围
+        DRAG_EXIT            = 1 << 4,    // 手指拖拽并刚好从控件范围内移入控件范围
+        TOUCH_UP_INSIDE      = 1 << 5,    // 手指在控件范围内抬起
+        TOUCH_UP_OUTSIDE     = 1 << 6,    // 手指在控件范围外抬起
+        TOUCH_CANCEL         = 1 << 7,    // 取消当前触摸的系统事件
+        VALUE_CHANGED        = 1 << 8      // 因为拖拽或者操作一个控件，导致控件取值发生改变
     };
     
     typedef void (Ref::*Handler)(Ref*, EventType);
     
-    /** The possible state for a control.  */
+    /** 控件的可能状态  */
     enum class State
     {
-        NORMAL         = 1 << 0, // The normal, or default state of a control��that is, enabled but neither selected nor highlighted.
-        HIGH_LIGHTED   = 1 << 1, // Highlighted state of a control. A control enters this state when a touch down, drag inside or drag enter is performed. You can retrieve and set this value through the highlighted property.
-        DISABLED       = 1 << 2, // Disabled state of a control. This state indicates that the control is currently disabled. You can retrieve and set this value through the enabled property.
-        SELECTED       = 1 << 3  // Selected state of a control. This state indicates that the control is currently selected. You can retrieve and set this value through the selected property.
+        NORMAL         = 1 << 0, // 控件的普通以及默认状态，功能可用但是未被选中或者高亮。
+        HIGH_LIGHTED   = 1 << 1, // 控件的高亮状态，当在控件内按下，控件内拖拽或者拖拽进入控件时处于此状态，可以通过highlighted相关方法进行判断或设置。
+        DISABLED       = 1 << 2, // 控件的禁用状态，表明控件当前不可用，可以通过enabled相关方法进行判断或设置。
+        SELECTED       = 1 << 3  // 控件的选中状态，表明控件当前被选中，可以通过selected相关方法进行判断或设置。
     };
 
-    /** Creates a Control object */
+    /** 创建控件对象 */
     static Control* create();
 
-    /** Tells whether the control is enabled. */
+    /** 设置/判断控件是否被启用 */
     virtual void setEnabled(bool bEnabled);
     virtual bool isEnabled() const;
 
-    /** A Boolean value that determines the control selected state. */
+    /** 设置/判断控件是否被选中 */
     virtual void setSelected(bool bSelected);
     virtual bool isSelected() const;
 
-    /** A Boolean value that determines whether the control is highlighted. */
+    /** 设置/判断控件是否高亮 */
     virtual void setHighlighted(bool bHighlighted);
     virtual bool isHighlighted() const;
 
     bool hasVisibleParents() const;
     /**
-     * Updates the control layout using its current internal state.
+     * 根据控件当前内部状态更新布局显示
      */
     virtual void needsLayout();
 
     /**
-     * Sends action messages for the given control events.
+     * 为指定控件事件发送动作消息
      *
-     * @param controlEvents A bitmask whose set flags specify the control events for
-     * which action messages are sent. See "CCControlEvent" for bitmask constants.
+     * @param controlEvents 用于标明动作消息在哪些控件事件下需要发送的位掩码
+     * 位掩码常量参见"EventType"
      */
     virtual void sendActionsForControlEvents(EventType controlEvents);
 
     /**
-     * Adds a target and action for a particular event (or events) to an internal
-     * dispatch table.
-     * The action message may optionnaly include the sender and the event as
-     * parameters, in that order.
-     * When you call this method, target is not retained.
+     * 在内部派发表中，为指定事件（或事件们）增加一个目标及动作。
+     * 动作消息中，可能会依次加入发送者以及事件类型作为参数。
+     * 调用此方法时，目标不会被retain。
      *
-     * @param target The target object that is, the object to which the action
-     * message is sent. It cannot be nil. The target is not retained.
-     * @param action A selector identifying an action message. It cannot be NULL.
-     * @param controlEvents A bitmask specifying the control events for which the
-     * action message is sent. See "CCControlEvent" for bitmask constants.
+     * @param target 派发动作消息的目标对象，不能为空且不会被retain
+     * @param action 用于标示动作消息的selector，不能为空
+     * @param controlEvents 用于标明动作消息在哪些控件事件下需要发送的位掩码
+     * 位掩码常量参见"EventType"
      */
     virtual void addTargetWithActionForControlEvents(Ref* target, Handler action, EventType controlEvents);
 
     /**
-     * Removes a target and action for a particular event (or events) from an
-     * internal dispatch table.
+     * 在内部派发表中，为指定事件（或事件们）移除一个目标及动作。
      *
-     * @param target The target object�that is, the object to which the action
-     * message is sent. Pass nil to remove all targets paired with action and the
-     * specified control events.
-     * @param action A selector identifying an action message. Pass NULL to remove
-     * all action messages paired with target.
-     * @param controlEvents A bitmask specifying the control events associated with
-     * target and action. See "CCControlEvent" for bitmask constants.
+     * @param target 目标对象，即动作消息的接收者
+     * 传入空则移除所有与动作-控件事件对相匹配的目标
+     * @param action 用于标示动作消息的selector
+     * 传入空则移除所有与目标对象相匹配的动作消息
+     * @param controlEvents 用于标明与目标及动作关联的控件事件的位掩码
+     * 位掩码常量参见"EventType"
      */
     virtual void removeTargetWithActionForControlEvents(Ref* target, Handler action, EventType controlEvents);
 
     /**
-     * Returns a point corresponding to the touh location converted into the
-     * control space coordinates.
-     * @param touch A Touch object that represents a touch.
+     * 获取转换到控件坐标系的触摸点位置
+     * @param touch 触摸对象
      */
     virtual Vec2 getTouchLocation(Touch* touch);
 
@@ -160,12 +152,12 @@ public:
     virtual void onTouchCancelled(Touch *touch, Event *event) {};
     
     /**
-     * Returns a boolean value that indicates whether a touch is inside the bounds
-     * of the receiver. The given touch must be relative to the world.
+     * 判断触摸是否在接收者的包围框内
+     * 所给触摸参数必须相对世界坐标
      *
-     * @param touch A Touch object that represents a touch.
+     * @param touch 触摸对象
      *
-     * @return Whether a touch is inside the receiver's rect.
+     * @return 触摸是否在接收者的包围框内
      */
     virtual bool isTouchInside(Touch * touch);
 
@@ -188,57 +180,50 @@ CC_CONSTRUCTOR_ACCESS:
 
 protected:
     /**
-     * Returns an Invocation object able to construct messages using a given 
-     * target-action pair. (The invocation may optionnaly include the sender and
-     * the event as parameters, in that order)
+     * 返回一个Invocation对象，能根据所给目标-动作对构建消息
+     * （Invocation对象可能依次包含发送者和事件作为参数）
      *
-     * @param target The target object.
-     * @param action A selector identifying an action message.
-     * @param controlEvent A control events for which the action message is sent.
-     * See "CCControlEvent" for constants.
+     * @param target 目标对象
+     * @param action 用于标示动作消息的selector
+     * @param controlEvent 用于标示动作消息发送时机的控件事件
+     * 常量取值参见"EventType"
      *
-     * @return an Invocation object able to construct messages using a given 
-     * target-action pair.
+     * @return 一个Invocation对象，能根据所给目标-动作对构建消息
      */
     Invocation* invocationWithTargetAndActionForControlEvent(Ref* target, Handler action, EventType controlEvent);
 
     /**
-    * Returns the Invocation list for the given control event. If the list does
-    * not exist, it'll create an empty array before returning it.
+    * 根据所给控件事件，返回对应Invocation的vector
+    * 如果这个list不存在，则创建一个空序列返回
     *
-    * @param controlEvent A control events for which the action message is sent.
-    * See "CCControlEvent" for constants.
+    * @param controlEvent 用于标示动作消息发送时机的控件事件
+    * 常量取值参见"EventType"
     *
-    * @return the Invocation list for the given control event.
+    * @return 对应所给控件事件的Invocation vector
     */
     Vector<Invocation*>& dispatchListforControlEvent(EventType controlEvent);
 
     /**
-     * Adds a target and action for a particular event to an internal dispatch 
-     * table.
-     * The action message may optionnaly include the sender and the event as 
-     * parameters, in that order.
-     * When you call this method, target is not retained.
+     * 在内部派发表中，为指定事件增加目标与动作。
+     * 动作消息中，可能会依次加入发送者以及事件类型作为参数。
+     * 调用此方法时，目标不会被retain。
      *
-     * @param target The target object��that is, the object to which the action 
-     * message is sent. It cannot be nil. The target is not retained.
-     * @param action A selector identifying an action message. It cannot be NULL.
-     * @param controlEvent A control event for which the action message is sent.
-     * See "CCControlEvent" for constants.
+     * @param target 派发动作消息的目标对象，不能为空且不会被retain。
+     * @param action 用于标示动作消息的selector，不能为空
+     * @param controlEvent 用于标示动作消息发送时机的控件事件
+     * 常量取值参见"EventType"
      */
     void addTargetWithActionForControlEvent(Ref* target, Handler action, EventType controlEvent);
     
     /**
-     * Removes a target and action for a particular event from an internal dispatch
-     * table.
+     * 在内部派发表中，为指定事件移除一个目标及动作。
      *
-     * @param target The target object��that is, the object to which the action 
-     * message is sent. Pass nil to remove all targets paired with action and the
-     * specified control events.
-     * @param action A selector identifying an action message. Pass NULL to remove
-     * all action messages paired with target.
-     * @param controlEvent A control event for which the action message is sent.
-     * See "CCControlEvent" for constants.
+     * @param target 目标对象，即动作消息的接收者
+     * 传入空则移除所有与动作-控件事件对相匹配的目标
+     * @param action 用于标示动作消息的selector
+     * 传入空则移除所有与目标对象相匹配的动作消息
+     * @param controlEvent 用于标示动作消息发送时机的控件事件
+     * 常量取值参见"EventType"
      */
     void removeTargetWithActionForControlEvent(Ref* target, Handler action, EventType controlEvent);
 
@@ -246,20 +231,19 @@ protected:
     bool _selected;
     bool _highlighted;
 
-    /** True if all of the controls parents are visible */
+    /** 控件所有父亲节点为可见时值为真 */
     bool _hasVisibleParents;
 
     /**
-     * Table of connection between the ControlEvents and their associated
-     * target-actions pairs. For each ButtonEvents a list of NSInvocation
-     * (which contains the target-action pair) is linked.
+     * 存放控件事件及对应目标-动作对之间联系的表格
+     * 每一个按钮事件均对应指向一个Invocation的vector(存放目标-动作对)。
      */
     std::unordered_map<int, Vector<Invocation*>*> _dispatchTable;
 
     //CCRGBAProtocol
     bool _isOpacityModifyRGB;
 
-    /** The current control state constant. */
+    /** 当前控件状态 */
     CC_SYNTHESIZE_READONLY(State, _state, State);
 
 private:

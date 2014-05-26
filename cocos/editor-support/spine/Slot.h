@@ -55,7 +55,7 @@ typedef struct spSlot {
 spSlot* spSlot_create (spSlotData* data, struct spSkeleton* skeleton, spBone* bone);
 void spSlot_dispose (spSlot* self);
 
-/* @param attachment May be 0 to clear the attachment for the slot. */
+/* @param attachment 可以是0 用于清除slot对应的attachment. */
 void spSlot_setAttachment (spSlot* self, spAttachment* attachment);
 
 void spSlot_setAttachmentTime (spSlot* self, float time);
