@@ -69,7 +69,7 @@ CC_DLL bool UTF8ToUTF16(const std::string& utf8, std::u16string& outUtf16);
 CC_DLL bool UTF16ToUTF8(const std::u16string& utf16, std::string& outUtf8);
 
 /**
- *  @brief       去掉char16_t类型容器(vector)结尾的字符串结尾unicode格式空格
+ *  @brief       去掉char16_t类型容器(vector)结尾的unicode格式空格
  */
 CC_DLL void trimUTF16Vector(std::vector<char16_t>& str);
 
@@ -97,10 +97,10 @@ CC_DLL bool isUnicodeSpace(char16_t ch);
 CC_DLL bool isCJKUnicode(char16_t ch);
 
 /**
- *  @brief   返回给定字符的字符串长度  Returns the length of the string in characters.
+ *  @brief   返回给定字符的字符串长度 .
  *
- *  @param   参数utf8是一个UTF-8编码的字符串  utf8 an UTF-8 encoded string.
- *  @returns 返回给定字符的字符串长度  the length of the string in characters
+ *  @param   参数utf8是一个UTF-8编码的字符串 .
+ *  @returns 返回给定字符的字符串长度
  */
 CC_DLL long getCharacterCountInUTF8String(const std::string& utf8);
 
@@ -110,7 +110,7 @@ CC_DLL long getCharacterCountInUTF8String(const std::string& utf8);
  *  @param   参数str即需要进行搜索的字符串 .
  *  @param   参数c即需要被寻找的字符 .
  *
- *  @returns the index of the last character that is not \p c.
+ *  @returns 返回最后一个不同于c的字符索引
  *
  */
 CC_DLL unsigned int getIndexOfLastNotChar16(const std::vector<char16_t>& str, char16_t c);
@@ -138,8 +138,8 @@ CC_DEPRECATED_ATTRIBUTE void cc_utf8_trim_ws(std::vector<unsigned short>* str);
 /**
  * 给定字符是否是一个空白字符.
  *
- * @param ch    参数ch是unicode格式的字符 the unicode character
- * @returns     返回给定字符是否一个空白字符 whether the character is a white space character.
+ * @param ch    参数ch是unicode格式的字符
+ * @returns     返回给定字符是否一个空白字符
  * @deprecated  请使用`StringUtils::isUnicodeSpace`代替
  *
  * @see http://en.wikipedia.org/wiki/Whitespace_character#Unicode
