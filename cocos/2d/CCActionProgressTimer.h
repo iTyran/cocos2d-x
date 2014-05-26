@@ -36,13 +36,13 @@ NS_CC_BEGIN
  */
 
 /**
-@brief Progress to percentage
+@brief 百分比进度。
 @since v0.99.1
 */
 class CC_DLL ProgressTo : public ActionInterval
 {
 public:
-    /** Creates and initializes with a duration and a percent */
+    /** 创建并初始化进度 */
     static ProgressTo* create(float duration, float percent);
 
     //
@@ -57,7 +57,7 @@ CC_CONSTRUCTOR_ACCESS:
     ProgressTo() {}
     virtual ~ProgressTo() {}
 
-    /** Initializes with a duration and a percent */
+    /** 用时间和进度初始化动作 */
     bool initWithDuration(float duration, float percent);
 
 protected:
@@ -69,13 +69,13 @@ private:
 };
 
 /**
-@brief Progress from a percentage to another percentage
+@brief 从一个百分比到另一个百分比的动画
 @since v0.99.1
 */
 class CC_DLL ProgressFromTo : public ActionInterval
 {
 public:
-    /** Creates and initializes the action with a duration, a "from" percentage and a "to" percentage */
+    /** 用持续时间，初始百分比，结束百分比来创建并初始化动作 */
     static ProgressFromTo* create(float duration, float fromPercentage, float toPercentage);
 
     //
@@ -90,7 +90,7 @@ CC_CONSTRUCTOR_ACCESS:
     ProgressFromTo() {}
     virtual ~ProgressFromTo() {}
 
-    /** Initializes the action with a duration, a "from" percentage and a "to" percentage */
+    /** 用持续时间，初始百分比，结束百分比来 初始化动作 */
     bool initWithDuration(float duration, float fromPercentage, float toPercentage);
 
 protected:

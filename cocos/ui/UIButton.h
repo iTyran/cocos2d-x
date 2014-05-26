@@ -104,7 +104,7 @@ public:
     void loadTexturePressed(const std::string& selected, TextureResType texType = TextureResType::LOCAL);
 
     /**
-     * 加载按钮暗态（dark state）的纹理贴图（texture）（此处暗态（dark state）即为禁用状态（disabled）原文写为dark state。译者注）
+     * 加载按钮暗态（dark state）的纹理贴图（texture）（此处暗态（dark state）即为禁用状态（disabled）原文写为dark state。）
      *
      * @param disabled    暗态（dark state）纹理贴图（texture）
      *

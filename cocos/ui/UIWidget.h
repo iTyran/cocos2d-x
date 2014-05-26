@@ -464,7 +464,7 @@ public:
      *
      * @see LayoutParameter
      *
-     * @param LayoutParameter pointer
+     * @param LayoutParameter LayoutParameter指针
      *
      * @param type  相对的（relative）或者线性的（linear）
      */

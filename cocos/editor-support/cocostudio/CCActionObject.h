@@ -40,118 +40,118 @@ class ActionObject : public cocos2d::Ref
 public:
 
 	/**
-	* Default constructor
+	* 默认构造函数
 	*/
 	ActionObject();
 
 	/**
-	* Default destructor
+	* 默认析构函数
 	*/
 	virtual ~ActionObject();
 
 	/**
-	* Sets name for object
+	* 设置对象的名称
 	*
-	* @param name    name of object
+	* @param name    对象的名称
 	*/
 	void setName(const char* name);
 
 	/**
-	* Sets name for object
+	* 获取对象的名称
 	*
-	* @return name of object
+	* @return 对象的名称
 	*/
 	const char* getName();
 
 	/**
-	* Sets if the action will loop play.
+	* 设置action是否循环播放
 	*
-	* @param bLoop     that if the action will loop play
+	* @param bLoop     action是否循环播放
 	*/
 	void setLoop(bool bLoop);
 
 	/**
-	* Gets if the action will loop play.
+	* 获取action是否循环播放
 	*
-	* @return   that if the action will loop play
+	* @return   action是否循环播放
 	*/
 	bool getLoop();
 
 	/**
-	* Sets the time interval of frame.
+	* 设置帧（frame）的时间间隔
 	*
-	* @param fTime   the time interval of frame
+	* @param fTime   帧（frame）的时间间隔
 	*/
 	void setUnitTime(float fTime);
 
 	/**
-	* Gets the time interval of frame.
+	* 获取帧（frame）的时间间隔
 	*
-	* @return fTime   the time interval of frame
+	* @return 帧（frame）的时间间隔
 	*/
 	float getUnitTime();
 
 	/**
-	* Sets the current time of frame.
+	* 设置帧（frame）的当前时间
 	*
-	* @param fTime   the current time of frame
+	* @param fTime   帧（frame）的当前时间
 	*/
 	void setCurrentTime(float fTime);
 
 	/**
-	* Gets the current time of frame.
+	* 获取帧（frame）的当前时间
 	*
-	* @return fTime   the current time of frame
+	* @return 帧（frame）的当前时间
 	*/
 	float getCurrentTime();
 
 	/**
-	* Gets the total time of frame.
+	* 获取帧（frame）的总时间
 	*
-	* @return fTime   the current time of frame
+	* @return 帧（frame）的总时间
 	*/
 	float getTotalTime();
 
 	/**
-	* Return if the action is playing.
+	* 返回action是否正在播放。
 	*
-	* @return true if the action is playing, false the otherwise
+	* @return 如果action正在播放，返回true，否则返回false
 	*/
 	bool isPlaying();
 
 	/**
-	* Play the action.
+	* 播放action
 	*/
 	void play();
 
 	/**
-	* Play the action.
+	* 播放action
 	*
-	* @ Action Call Back
+	* @param func Action回调函数
 	*/
 	void play(cocos2d::CallFunc* func);
 
 	/** 
-	* Pause the action.
+	* 暂停action
 	*/
 	void pause();
 
 	/**
-	* Stop the action.
+	* 停止action
 	*/
 	void stop();
 
 	/**
-	* Adds a ActionNode to play the action.
+	* 添加播放action的ActionNode
 	*
-	* @node    the ActionNode which will play the action
+	* @node    播放action的ActionNode
 	*/
 	void addActionNode(ActionNode* node);
 
 	/**
-	* Removes a ActionNode which play the action.
+	* 删除播放action的ActionNode
 	*
-	* @node    the ActionNode which play the action
+	* @node    播放action的ActionNode
 	*/
 	void removeActionNode(ActionNode* node);
 

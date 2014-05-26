@@ -126,7 +126,7 @@ private:
 };
 
 /*
- *  @brief  ContourSprite used to draw the contour of the display
+ *  @brief  ContourSprite用来画轮廓
  *  @js NA
  *  @lua NA
  */

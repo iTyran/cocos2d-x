@@ -32,19 +32,19 @@ NS_CC_BEGIN
 class EventCustom : public Event
 {
 public:
-    /** Constructor */
+    /** 构造函数 */
     EventCustom(const std::string& eventName);
     
-    /** Sets user data */
+    /** 设置用户数据 */
     inline void setUserData(void* data) { _userData = data; };
     
-    /** Gets user data */
+    /** 获取用户数据 */
     inline void* getUserData() const { return _userData; };
     
-    /** Gets event name */
+    /** 获取事件名称 */
     inline const std::string& getEventName() const { return _eventName; };
 protected:
-    void* _userData;       ///< User data
+    void* _userData;       ///< 用户数据
     std::string _eventName;
 };
 

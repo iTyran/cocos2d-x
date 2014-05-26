@@ -43,10 +43,9 @@ class TMXObjectGroup;
 class TMXTilesetInfo;
 
 /** @file
-* Internal TMX parser
+* 内部的TMX解析器
 *
-* IMPORTANT: These classed should not be documented using doxygen strings
-* since the user should not use them.
+* 重要: 用户不需要关心这些
 *
 */
 

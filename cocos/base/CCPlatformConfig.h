@@ -27,7 +27,7 @@ THE SOFTWARE.
 #define __CC_PLATFORM_CONFIG_H__
 
 /**
-Config of cocos2d-x project, per target platform.
+配置每个平台的cocos2d-x project
 */
 
 //////////////////////////////////////////////////////////////////////////

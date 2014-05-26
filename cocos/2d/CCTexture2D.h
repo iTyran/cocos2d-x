@@ -54,11 +54,12 @@ class GLProgram;
 
 //CLASS INTERFACES:
 
-/** @brief Texture2D class.
-* This class allows to easily create OpenGL 2D textures from images, text or raw data.
-* The created Texture2D object will always have power-of-two dimensions.
-* Depending on how you create the Texture2D object, the actual image area of the texture might be smaller than the texture dimensions i.e. "contentSize" != (pixelsWide, pixelsHigh) and (maxS, maxT) != (1.0, 1.0).
-* Be aware that the content of the generated textures will be upside-down!
+/** @brief Texture2D
+ * 通过Texture2D类，可以根据图像、文本或者原始数据（raw data）创建OpenGL 2D纹理。
+ * 创建的纹理的尺寸是POT（power-of-two)。
+ * 根据创建Texture2D对象的方法，实际的图像尺寸可能比纹理尺寸小。例如：
+ * "contentSize" != (pixelsWide, pixelsHigh) and (maxS, maxT) != (1.0, 1.0).
+ * 注意，生成的纹理内容是倒置的。
 */
 class CC_DLL Texture2D : public Ref
 #ifdef EMSCRIPTEN
@@ -67,53 +68,53 @@ class CC_DLL Texture2D : public Ref
 {
 public:
     /** @typedef Texture2D::PixelFormat
-     Possible texture pixel formats
+	 支持的纹理像素格式。
      */
     enum class PixelFormat
     {
-        //! auto detect the type
+        //! 自动检测模式
         AUTO,
-        //! 32-bit texture: BGRA8888
+        //! 32-bit纹理: BGRA8888
         BGRA8888,
-        //! 32-bit texture: RGBA8888
+        //! 32-bit纹理: RGBA8888
         RGBA8888,
-        //! 24-bit texture: RGBA888
+        //! 24-bit纹理: RGBA888
         RGB888,
-        //! 16-bit texture without Alpha channel
+        //! 16-bit纹理，不带Alpha通道
         RGB565,
-        //! 8-bit textures used as masks
+        //! 用作遮罩(masks)的8-bit纹理
         A8,
-        //! 8-bit intensity texture
+        //! 8-bit intensity纹理
         I8,
-        //! 16-bit textures used as masks
+        //! 用作遮罩的16-bit纹理
         AI88,
-        //! 16-bit textures: RGBA4444
+        //! 16-bit纹理: RGBA4444
         RGBA4444,
-        //! 16-bit textures: RGB5A1
+        //! 16-bit纹理: RGB5A1
         RGB5A1,
-        //! 4-bit PVRTC-compressed texture: PVRTC4
+        //! 4-bit PVRTC压缩纹理 texture: PVRTC4
         PVRTC4,
-        //! 4-bit PVRTC-compressed texture: PVRTC4 (has alpha channel)
+        //! 4-bit PVRTC压缩纹理: PVRTC4 (has alpha channel)
         PVRTC4A,
-        //! 2-bit PVRTC-compressed texture: PVRTC2
+        //! 2-bit PVRTC压缩纹理: PVRTC2
         PVRTC2,
-        //! 2-bit PVRTC-compressed texture: PVRTC2 (has alpha channel)
+        //! 2-bit PVRTC压缩纹理: PVRTC2 (has alpha channel)
         PVRTC2A,
-        //! ETC-compressed texture: ETC
+        //! ETC压缩纹理: ETC
         ETC,
-        //! S3TC-compressed texture: S3TC_Dxt1
+        //! S3TC压缩纹理: S3TC_Dxt1
         S3TC_DXT1,
-        //! S3TC-compressed texture: S3TC_Dxt3
+        //! S3TC压缩纹理: S3TC_Dxt3
         S3TC_DXT3,
-        //! S3TC-compressed texture: S3TC_Dxt5
+        //! S3TC压缩纹理: S3TC_Dxt5
         S3TC_DXT5,
-        //! ATITC-compressed texture: ATC_RGB
+        //! ATITC压缩纹理: ATC_RGB
         ATC_RGB,
-        //! ATITC-compressed texture: ATC_EXPLICIT_ALPHA
+        //! ATITC压缩纹理: ATC_EXPLICIT_ALPHA
         ATC_EXPLICIT_ALPHA,
-        //! ATITC-compresed texture: ATC_INTERPOLATED_ALPHA
+        //! ATITC压缩纹理: ATC_INTERPOLATED_ALPHA
         ATC_INTERPOLATED_ALPHA,
-        //! Default texture format: AUTO
+        //! 默认纹理PixelFormat: AUTO
         DEFAULT = AUTO,
         
         NONE = -1
@@ -142,7 +143,7 @@ public:
     typedef std::map<Texture2D::PixelFormat, const PixelFormatInfo> PixelFormatInfoMap;
     
     /**
-     Extension to set the Min / Mag filter
+	 设置Min/Mag filter的方法。
      */
     typedef struct _TexParams {
         GLuint    minFilter;
@@ -152,36 +153,35 @@ public:
     }TexParams;
     
 public:
-    /** sets the default pixel format for UIImagescontains alpha channel.
-     If the UIImage contains alpha channel, then the options are:
-     - generate 32-bit textures: Texture2D::PixelFormat::RGBA8888 (default one)
-     - generate 24-bit textures: Texture2D::PixelFormat::RGB888
-     - generate 16-bit textures: Texture2D::PixelFormat::RGBA4444
-     - generate 16-bit textures: Texture2D::PixelFormat::RGB5A1
-     - generate 16-bit textures: Texture2D::PixelFormat::RGB565
-     - generate 8-bit textures: Texture2D::PixelFormat::A8 (only use it if you use just 1 color)
+    /** 指定包含alpha通道的UIImage的默认PixelFormat。
+	 如果UIImage包含alpha通道，那么支持以下选项：
+	 －生成32-bit纹理：Texture2D::PixelFormat::RGBA8888 (default one)
+     －生成24-bit纹理：Texture2D::PixelFormat::RGB888
+     －生成16-bit纹理：Texture2D::PixelFormat::RGBA4444
+     －生成16-bit纹理：Texture2D::PixelFormat::RGB5A1
+     －生成16-bit纹理：Texture2D::PixelFormat::RGB565
+     －生成8-bit纹理：Texture2D::PixelFormat::A8（仅当使用一种颜色时选择该选项）
 
-     How does it work ?
-     - If the image is an RGBA (with Alpha) then the default pixel format will be used (it can be a 8-bit, 16-bit or 32-bit texture)
-     - If the image is an RGB (without Alpha) then: If the default pixel format is RGBA8888 then a RGBA8888 (32-bit) will be used. Otherwise a RGB565 (16-bit texture) will be used.
+	 工作原理：
+	 －图像是RGBA(带Alpha通道)格式，那么使用默认的PixelFormat（可以是8-bit、16-bit或32-bit纹理）
+	 －图像是RGBA(不带Alpha通道)格式，如果默认的PixelFormat为RGBA8888，那么使用RGBA8888(32-bit)模式，否则使用RGB565(16-bit纹理)。
 
-     This parameter is not valid for PVR / PVR.CCZ images.
+	 该参数对PVR/PVR.CCZ文件无效。
 
      @since v0.8
      */
     static void setDefaultAlphaPixelFormat(Texture2D::PixelFormat format);
 
-    /** returns the alpha pixel format
+    /** 获取alpha通道PixelFormat
      @since v0.8
      */
     static Texture2D::PixelFormat getDefaultAlphaPixelFormat();
     CC_DEPRECATED_ATTRIBUTE static Texture2D::PixelFormat defaultAlphaPixelFormat() { return Texture2D::getDefaultAlphaPixelFormat(); };
 
-    /** treats (or not) PVR files as if they have alpha premultiplied.
-     Since it is impossible to know at runtime if the PVR images have the alpha channel premultiplied, it is
-     possible load them as if they have (or not) the alpha channel premultiplied.
+    /** 设置PVR格式图像是否已自乘alpha值。
+	 因为在运行时无法获PVR图像是否已自乘alpha值，因为，只能在加载的时候指定是否已自乘alpha值。
 
-     By default it is disabled.
+	 默认为未自乘alpha值。
 
      @since v0.99.5
      */
@@ -203,58 +203,58 @@ public:
      */
     virtual std::string getDescription() const;
 
-    /** Initializes with a texture2d with data 
+    /** 指定数据，初始化Texture2D。
      * @js NA
      * @lua NA
      */
     bool initWithData(const void *data, ssize_t dataLen, Texture2D::PixelFormat pixelFormat, int pixelsWide, int pixelsHigh, const Size& contentSize);
 
-    /** Initializes with mipmaps */
+    /** 指定MipmapInfo，初始化Texture2D*/
     bool initWithMipmaps(MipmapInfo* mipmaps, int mipmapsNum, Texture2D::PixelFormat pixelFormat, int pixelsWide, int pixelsHigh);
 
-    /** Update with texture data*/
+    /** 指定数据，更新Texture2D*/
     bool updateWithData(const void *data,int offsetX,int offsetY,int width,int height);
     /**
-    Drawing extensions to make it easy to draw basic quads using a Texture2D object.
-    These functions require GL_TEXTURE_2D and both GL_VERTEX_ARRAY and GL_TEXTURE_COORD_ARRAY client states to be enabled.
+	绘制方法的拓展，可以轻松的根据Texture2D对象绘制基本的quads。
+	这些方法需要使能GL_TEXTURE_2D、GL_VERTEX_ARRAY、GL_TEXTURE_COORD_ARRAY。
     */
-    /** draws a texture at a given point */
+    /** 指定点，绘制纹理*/
     void drawAtPoint(const Vec2& point);
-    /** draws a texture inside a rect */
+    /** 指定矩形(Rect)，绘制纹理*/
     void drawInRect(const Rect& rect);
 
     /**
-    Extensions to make it easy to create a Texture2D object from an image file.
+	扩展库：方便的根据图像文件创建Texture2D对象。
     */
     /** 
-	Initializes a texture from a UIImage object.
-    We will use the format you specified with setDefaultAlphaPixelFormat to convert the image for texture.
-    NOTE: It will not convert the pvr image file.
+	指定UIImage对象，初始化纹理。
+	根据setDefaultAlphaPixelFormat方法所指定的格式，将图像转化为纹理。
+	注意：不支持pvr格式文件。
 	*/
     bool initWithImage(Image * image);
     
     /** 
-	Initializes a texture from a UIImage object.
-	we will use the format you passed to the function to convert the image format to the texture format.
-    If you pass PixelFormat::Automatic, we will auto detect the image render type and use that type for texture to render.
+	指定UIImage对象，初始化纹理。
+	根据传入的PixelFormat，将图像格式转化为对应的纹理。
+	如果传入PixelFormat::Automatic，那么会用自动检测到的图像格式来初始化纹理。
     **/
     bool initWithImage(Image * image, PixelFormat format);
 
-    /** Initializes a texture from a string with dimensions, alignment, font name and font size */
+    /** 指定大小、对齐方式、字体名和字体大小，根据输入的字符串初始化纹理 */
     bool initWithString(const char *text,  const std::string &fontName, float fontSize, const Size& dimensions = Size(0, 0), TextHAlignment hAlignment = TextHAlignment::CENTER, TextVAlignment vAlignment = TextVAlignment::TOP);
-    /** Initializes a texture from a string using a text definition*/
+    /** 指定FontDefinition，根据输入的字符串初始化纹理*/
     bool initWithString(const char *text, const FontDefinition& textDefinition);
 
-    /** sets the min filter, mag filter, wrap s and wrap t texture parameters.
-    If the texture size is NPOT (non power of 2), then in can only use GL_CLAMP_TO_EDGE in GL_TEXTURE_WRAP_{S,T}.
+    /** 设置纹理的min filter, mag filter, wrap s和wrap t参数。
+	如果纹理大小为NPOT(非2的整数次幂)，那么只能参数GL_TEXTURE_WRAP_{S,T}只能为GL_CLAMP_TO_EDGE。
 
-    @warning Calling this method could allocate additional texture memory.
+	@warning 调用本方法将会导致额外的纹理内存开销。
 
     @since v0.8
     * @code 
-    * When this function bound into js or lua,the input parameter will be changed
-    * In js: var setBlendFunc(var arg1, var arg2, var arg3, var arg4)
-    * In lua: local setBlendFunc(local arg1, local arg2, local arg3, local arg4)
+	* 当将本方法绑定到js或者lua是，输入参数按如下改变：
+	* js: var setBlendFunc(var arg1, var arg2, var arg3, var arg4)
+    * lua: local setBlendFunc(local arg1, local arg2, local arg3, local arg4)
     * @endcode
     */
     void setTexParameters(const TexParams& texParams);
@@ -264,77 +264,77 @@ public:
      */
     CC_DEPRECATED_ATTRIBUTE void setTexParameters(const TexParams* texParams) { return setTexParameters(*texParams); };
 
-    /** sets antialias texture parameters:
+    /** 设置antialias纹理参数：
     - GL_TEXTURE_MIN_FILTER = GL_LINEAR
     - GL_TEXTURE_MAG_FILTER = GL_LINEAR
 
-    @warning Calling this method could allocate additional texture memory.
+	@warning 调用本方法会导致额外的纹理内存开销。
 
     @since v0.8
     */
     void setAntiAliasTexParameters();
 
-    /** sets alias texture parameters:
+    /** 设置alias纹理参数
     - GL_TEXTURE_MIN_FILTER = GL_NEAREST
     - GL_TEXTURE_MAG_FILTER = GL_NEAREST
 
-    @warning Calling this method could allocate additional texture memory.
+	@warning 调用本方法会导致额外的纹理内存开销。
 
     @since v0.8
     */
     void setAliasTexParameters();
 
 
-    /** Generates mipmap images for the texture.
-    It only works if the texture size is POT (power of 2).
+    /**生成纹理的mipmap图像。
+	仅对大小为POT(2的整数次幂)的纹理有效。
     @since v0.99.0
     */
     void generateMipmap();
 
-    /** returns the pixel format.
+    /** 返回像素格式。
      @since v2.0
      */
     const char* getStringForFormat() const;
     CC_DEPRECATED_ATTRIBUTE const char* stringForFormat() const { return getStringForFormat(); };
 
-    /** returns the bits-per-pixel of the in-memory OpenGL texture
+    /** 返回in-memory OpenGL纹理每个像素占用的bit位数(bits-per-pixel)。
     @since v1.0
     */
     unsigned int getBitsPerPixelForFormat() const;
     CC_DEPRECATED_ATTRIBUTE unsigned int bitsPerPixelForFormat() const { return getBitsPerPixelForFormat(); };
 
-    /** Helper functions that returns bits per pixels for a given format.
+    /** 指定像素格式，返回每个像素所占用的bit位数。
      @since v2.0
      */
     unsigned int getBitsPerPixelForFormat(Texture2D::PixelFormat format) const;
     CC_DEPRECATED_ATTRIBUTE unsigned int bitsPerPixelForFormat(Texture2D::PixelFormat format) const { return getBitsPerPixelForFormat(format); };
 
-    /** content size */
+    /** 获取content大小。 */
     const Size& getContentSizeInPixels();
 
     bool hasPremultipliedAlpha() const;
     bool hasMipmaps() const;
 
-    /** Gets the pixel format of the texture */
+    /** 获取纹理的像素格式。*/
     Texture2D::PixelFormat getPixelFormat() const;
     
-    /** Gets the width of the texture in pixels */
+    /** 获取纹理的宽度，以像素为单位 */
     int getPixelsWide() const;
     
-    /** Gets the height of the texture in pixels */
+    /** 获取纹理的高度，以像素为单位*/
     int getPixelsHigh() const;
     
-    /** Gets the texture name */
+    /** 获取纹理名称*/
     GLuint getName() const;
     
-    /** Gets max S */
+    /** 获取最大的S值*/
     GLfloat getMaxS() const;
-    /** Sets max S */
+    /** 设置最大的S值*/
     void setMaxS(GLfloat maxS);
     
-    /** Gets max T */
+    /** 获取最大的T值*/
     GLfloat getMaxT() const;
-    /** Sets max T */
+    /** 设置最大的T值*/
     void setMaxT(GLfloat maxT);
     
     Size getContentSize() const;
@@ -347,11 +347,11 @@ public:
     
 private:
 
-    /**convert functions*/
+    /**转换函数*/
 
     /**
-    Convert the format to the format param you specified, if the format is PixelFormat::Automatic, it will detect it automatically and convert to the closest format for you.
-    It will return the converted format to you. if the outData != data, you must delete it manually.
+	将像素格式转换为指定的格式，如果像素格式是PixelFormat::Automatic,将自动检测像素格式并转换为最接近的格式。
+	返回转换后的像素格式。如果outData != data,那么你需要手动释放outData。
     */
     static PixelFormat convertDataToFormat(const unsigned char* data, ssize_t dataLen, PixelFormat originFormat, PixelFormat format, unsigned char** outData, ssize_t* outDataLen);
 
@@ -395,33 +395,33 @@ private:
     static void convertRGBA8888ToRGB5A1(const unsigned char* data, ssize_t dataLen, unsigned char* outData);
 
 protected:
-    /** pixel format of the texture */
+    /** 纹理的像素格式*/
     Texture2D::PixelFormat _pixelFormat;
 
-    /** width in pixels */
+    /** 宽度，以像素为单位*/
     int _pixelsWide;
 
-    /** height in pixels */
+    /** 高度，以像素为单位*/
     int _pixelsHigh;
 
-    /** texture name */
+    /** 纹理名称*/
     GLuint _name;
 
-    /** texture max S */
+    /** 纹理的最大S值*/
     GLfloat _maxS;
     
-    /** texture max T */
+    /** 纹理的最大T值*/
     GLfloat _maxT;
 
-    /** content size */
+    /** content大小*/
     Size _contentSize;
 
-    /** whether or not the texture has their Alpha premultiplied */
+    /** 指示纹理是否自乘Alpha值 */
     bool _hasPremultipliedAlpha;
 
     bool _hasMipmaps;
 
-    /** shader program used by drawAtPoint and drawInRect */
+    /** drawAtPoint和drawInRect方法所使用的shader程序*/
     GLProgram* _shaderProgram;
 
     static const PixelFormatInfoMap _pixelFormatInfoTables;
