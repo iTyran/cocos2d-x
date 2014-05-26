@@ -43,23 +43,29 @@ class Mat4;
 
 /**
  * Defines a 2-element floating point vector.
+ * 定义一个2维浮点向量
  */
+ 
+ 
 class Vec2
 {
 public:
 
     /**
      * The x coordinate.
+     * 向量的x值
      */
     float x;
 
     /**
      * The y coordinate.
+     * 向量的y值
      */
     float y;
 
     /**
      * Constructs a new vector initialized to all zeros.
+     * 构造一个新向量初始值为0.
      */
     Vec2();
 
@@ -68,6 +74,9 @@ public:
      *
      * @param xx The x coordinate.
      * @param yy The y coordinate.
+     * 
+     * 用指定x,y值构造一个新向量
+     * 参数xx是x的值，参数yy是y的值
      */
     Vec2(float xx, float yy);
 
@@ -75,6 +84,8 @@ public:
      * Constructs a new vector from the values in the specified array.
      *
      * @param array An array containing the elements of the vector in the order x, y.
+     * 
+     * 用指定array构造一个新的向量，array依序包含x、y的值。
      */
     Vec2(const float* array);
 
@@ -83,6 +94,9 @@ public:
      *
      * @param p1 The first point.
      * @param p2 The second point.
+     * 
+     * 
+     * 构造方向由点p1指向点p2的向量
      */
     Vec2(const Vec2& p1, const Vec2& p2);
 
@@ -90,6 +104,8 @@ public:
      * Constructs a new vector that is a copy of the specified vector.
      *
      * @param copy The vector to copy.
+     * 
+     * 构造一个新向量，从一个指定向量获取值
      */
     Vec2(const Vec2& copy);
 
@@ -102,6 +118,9 @@ public:
      * Indicates whether this vector contains all zeros.
      *
      * @return true if this vector contains all zeros, false otherwise.
+     * 
+     * 向量值是否为0
+     * 如果为0则返回true，否则返回false
      */
     bool isZero() const;
 
@@ -109,6 +128,9 @@ public:
      * Indicates whether this vector contains all ones.
      *
      * @return true if this vector contains all ones, false otherwise.
+     * 
+     * 向量的x、y值是否均为1.0f
+     * 如果x、y均为1.0f，则返回true，否则返回false。
      */
     bool isOne() const;
 
@@ -119,6 +141,11 @@ public:
      * @param v2 The second vector.
      * 
      * @return The angle between the two vectors (in radians).
+     * 
+     * 返回两个向量之间的角度（用弧度表示）
+     * 参数v1为第一个向量
+     * 参数v2为第二个向量
+     * 
      */
     static float angle(const Vec2& v1, const Vec2& v2);
 
@@ -126,6 +153,8 @@ public:
      * Adds the elements of the specified vector to this one.
      *
      * @param v The vector to add.
+     * 
+     * 向量加法，加上v向量的值
      */
     void add(const Vec2& v);
 
@@ -135,6 +164,9 @@ public:
      * @param v1 The first vector.
      * @param v2 The second vector.
      * @param dst A vector to store the result in.
+     * 
+     * 向量v1和v2相加，将结果保存在dst中
+     * 
      */
     static void add(const Vec2& v1, const Vec2& v2, Vec2* dst);
 
@@ -143,6 +175,10 @@ public:
      *
      * @param min The minimum value.
      * @param max The maximum value.
+     * 
+     * 将向量值限制在指定的[min,max]区间内
+     * 
+     * 
      */
     void clamp(const Vec2& min, const Vec2& max);
 
@@ -153,6 +189,8 @@ public:
      * @param min The minimum value.
      * @param max The maximum value.
      * @param dst A vector to store the result in.
+     * 
+     * 将指定向量v限制在[min,max]区间内，并用dst保存结果。
      */
     static void clamp(const Vec2& v, const Vec2& min, const Vec2& max, Vec2* dst);
 
@@ -164,6 +202,8 @@ public:
      * @return The distance between this vector and v.
      * 
      * @see distanceSquared
+     * 
+     * 返回本向量到向量v的距离
      */
     float distance(const Vec2& v) const;
 
@@ -180,6 +220,10 @@ public:
      * @return The squared distance between this vector and v.
      * 
      * @see distance
+     * 
+     * 返回本向量到向量v的距离的平方值
+     * 
+     * 如果不需要得到两个向量之间的准确距离，例如只是比较不同向量之间的距离大小的时候，建议使用这个方法来代替distance(const Vec2& v)方法
      */
     float distanceSquared(const Vec2& v) const;
 
@@ -189,6 +233,8 @@ public:
      * @param v The vector to compute the dot product with.
      * 
      * @return The dot product.
+     * 
+     * 返回本向量与指定向量v的点积
      */
     float dot(const Vec2& v) const;
 
@@ -199,6 +245,8 @@ public:
      * @param v2 The second vector.
      * 
      * @return The dot product between the vectors.
+     * 
+     * 返回向量v1和v2的点积
      */
     static float dot(const Vec2& v1, const Vec2& v2);
 
@@ -208,6 +256,8 @@ public:
      * @return The length of the vector.
      * 
      * @see lengthSquared
+     * 
+     * 计算向量的长度并返回
      */
     float length() const;
 
@@ -222,11 +272,19 @@ public:
      * @return The squared length of the vector.
      * 
      * @see length
+     * 
+     * 计算向量长度的平方并返回
+     * 
+     * 当不需要获取准确的向量长度时，例如只是简单比较不同向量之间的长度大小，可以使用本方法代替length()
+     * 
+     * 
      */
     float lengthSquared() const;
 
     /**
      * Negates this vector.
+     * 
+     * 向量求负
      */
     void negate();
 
@@ -240,6 +298,8 @@ public:
      * is zero, this method does nothing.
      * 
      * @return This vector, after the normalization occurs.
+     * 
+     * 
      */
     void normalize();
 
