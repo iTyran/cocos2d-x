@@ -32,22 +32,22 @@ class CCBMemberVariableAssigner {
         virtual ~CCBMemberVariableAssigner() {};
 
         /**
-         *  The callback function of assigning member variable.
-         *  @note The member variable must be Node or its subclass.
-         *  @param target               The custom class.
-         *  @param memberVariableName   The name of the member variable.
-         *  @param node                 The member variable.
-         *  @return Whether the assignment was successful.
+         *  设施成员变量的回调函数
+         *  @note 成员变量必须是Node或Node的子类
+         *  @param target               自定义的类
+         *  @param memberVariableName   成员变量的名称
+         *  @param node                 成员变量
+         *  @return 成功返回true
          */
         virtual bool onAssignCCBMemberVariable(cocos2d::Ref* target, const char* memberVariableName, cocos2d::Node* node) = 0;
 
         /**
-         *  The callback function of assigning custom properties.
-         *  @note The member variable must be Integer, Float, Boolean or String.
-         *  @param target               The custom class.
-         *  @param memberVariableName   The name of the member variable.
-         *  @param value                The value of the property.
-         *  @return Whether the assignment was successful.
+         *  设置自定义属性的回调函数。
+         *  @note 成员变量必须是Integer, Float, Boolean 或 String.
+         *  @param target               自定义类
+         *  @param memberVariableName   成员变量的名称
+         *  @param value                属性的值
+         *  @return 成功返回true
          */
         virtual bool onAssignCCBCustomProperty(cocos2d::Ref* target, const char* memberVariableName, const cocos2d::Value& value) { return false; };
 };

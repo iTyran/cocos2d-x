@@ -44,7 +44,7 @@ class TMXMapInfo;
  * @{
  */
 
-/** Possible orientations of the TMX map */
+/** TMXmap的方位 */
 enum
 {
     /** 直角鸟瞰定向(orientation) */

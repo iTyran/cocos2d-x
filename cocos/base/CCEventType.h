@@ -26,7 +26,7 @@
 #define __CCEVENT_TYPE_H__
 
 /**
- * This header is used for defining event types using in NotificationCenter
+ * 这个头文件定义了使用NotificationCenter的类型
  */
 
 // The application will come to foreground.

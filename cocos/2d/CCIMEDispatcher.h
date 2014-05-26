@@ -36,7 +36,7 @@ NS_CC_BEGIN
  */
 
 /**
-@brief    Input Method Edit Message Dispatcher.
+@brief    输入法消息分发
 */
 class CC_DLL IMEDispatcher
 {
