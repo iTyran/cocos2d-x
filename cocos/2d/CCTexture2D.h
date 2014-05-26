@@ -203,7 +203,7 @@ public:
      */
     virtual std::string getDescription() const;
 
-    /** Initializes with a texture2d with data 指定数据，初始化Texture2D。
+    /** 指定数据，初始化Texture2D。
      * @js NA
      * @lua NA
      */
