@@ -137,22 +137,21 @@ protected:
 
 
 /**
- GLProgramState holds the 'state' (uniforms and attributes) of the GLProgram.
- A GLProgram can be used by thousands of Nodes, but if different uniform values 
- are going to be used, then each node will need its own GLProgramState
+ GLProgramState 持有GL编程的状态(制服和属性).
+ 一个GL编程可以被上千个节点(Nodes)使用,但如果不同的制服值被使用,各个节点将需要自己的GLProgramState
  */
 class GLProgramState : public Ref
 {
     friend class GLProgramStateCache;
 public:
 
-    /** returns a new instance of GLProgramState for a given GLProgram */
+    /** 返回指定GL编程的GLProgramState实例 */
     static GLProgramState* create(GLProgram* glprogram);
 
-    /** gets-or-creates an instance of GLProgramState for a given GLProgram */
+    /** 获取或创建指定GL编程的GLProgramState实例 */
     static GLProgramState* getOrCreateWithGLProgram(GLProgram* glprogram);
 
-    /** gets-or-creates an instance of GLProgramState for a given GLProgramName */
+    /** 获取或创建指定GL编程的GLProgramState实例 */
     static GLProgramState* getOrCreateWithGLProgramName(const std::string &glProgramName );
 
     void apply(const Mat4& modelView);
@@ -160,13 +159,13 @@ public:
     void setGLProgram(GLProgram* glprogram);
     GLProgram* getGLProgram() const { return _glprogram; }
 
-    // vertex attribs
+    // 顶点属性(vertex attribs)
     uint32_t getVertexAttribsFlags() const { return _vertexAttribsFlags; }
     ssize_t getVertexAttribCount() const { return _attributes.size(); }
     void setVertexAttribCallback(const std::string &name, const std::function<void(VertexAttrib*)> &callback);
     void setVertexAttribPointer(const std::string &name, GLint size, GLenum type, GLboolean normalized, GLsizei stride, GLvoid *pointer);
 
-    // user defined uniforms
+    // 用户定义的制服(uniforms)
     ssize_t getUniformCount() const { return _uniforms.size(); }
     void setUniformInt(const std::string &uniformName, int value);
     void setUniformFloat(const std::string &uniformName, float value);
