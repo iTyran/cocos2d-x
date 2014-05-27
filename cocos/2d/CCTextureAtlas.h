@@ -1,8 +1,7 @@
 /****************************************************************************
-Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
+Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2011      Zynga Inc.
-Copyright (c) 2013-2014 Chukong Technologies Inc.
 
 http://www.cocos2d-x.org
 
@@ -28,16 +27,14 @@ THE SOFTWARE.
 #ifndef __CCTEXTURE_ATLAS_H__
 #define __CCTEXTURE_ATLAS_H__
 
-#include "base/ccTypes.h"
-#include "base/CCRef.h"
-#include "base/ccConfig.h"
+#include "ccTypes.h"
+#include "cocoa/CCObject.h"
+#include "ccConfig.h"
 #include <string>
 
 NS_CC_BEGIN
 
-class Texture2D;
-class EventCustom;
-class EventListenerCustom;
+class CCTexture2D;
 
 /**
  * @addtogroup textures
@@ -45,205 +42,178 @@ class EventListenerCustom;
  */
 
 /** @brief A class that implements a Texture Atlas.
-Supported features:
-* The atlas file can be a PVRTC, PNG or any other format supported by Texture2D
-* Quads can be updated in runtime
-* Quads can be added in runtime
-* Quads can be removed in runtime
-* Quads can be re-ordered in runtime
-* The TextureAtlas capacity can be increased or decreased in runtime
-* OpenGL component: V3F, C4B, T2F.
-The quads are rendered using an OpenGL ES VBO.
-To render the quads using an interleaved vertex array list, you should modify the ccConfig.h file 
-
-@warning If you want to use TextureAtlas, you'd better setup GL status before it's rendered.
-         Otherwise, the effect of TextureAtlas will be affected by the GL status of other nodes.
+支持特性:
+* 贴图集文件可以是PVRTC、PNG或者其他支持Texture2D的格式
+* 方块可以在运行时更新
+* 方块可以在运行时增加
+* 方块可以在运行时移除
+* 方块可以在运行时重新排序
+* 纹理贴图集容量可以在运行时增加或减少
+* OpenGL的组成: V3F, C4B, T2F
+方块使用OpenGL ES VBO来渲染
+为了使用隔行扫描顶点数组列表来渲染方块，你应该修改ccConfig.h文件
 */
-class CC_DLL TextureAtlas : public Ref 
+class CC_DLL CCTextureAtlas : public CCObject 
 {
-public:
-    /** creates a TextureAtlas with an filename and with an initial capacity for Quads.
-     * The TextureAtlas capacity can be increased in runtime.
-     */
-    static TextureAtlas* create(const std::string& file , ssize_t capacity);
+protected:
+    GLushort*           m_pIndices;
+#if CC_TEXTURE_ATLAS_USE_VAO
+    GLuint              m_uVAOname;
+#endif
+    GLuint              m_pBuffersVBO[2]; // 0: 顶点  1: 索引
+    bool                m_bDirty; // 指出VBO数组缓冲区是否需要更新
 
-    /** creates a TextureAtlas with a previously initialized Texture2D object, and
-     * with an initial capacity for n Quads.
-     * The TextureAtlas capacity can be increased in runtime.
-     */
-    static TextureAtlas* createWithTexture(Texture2D *texture, ssize_t capacity);
+
+    /** 将被绘制的方块数量 */
+    CC_PROPERTY_READONLY(unsigned int, m_uTotalQuads, TotalQuads)
+    /** 可以存储当前纹理贴图集尺寸的方块数量 */
+    CC_PROPERTY_READONLY(unsigned int, m_uCapacity, Capacity)
+    /** 纹理贴图集的纹理 */
+    CC_PROPERTY(CCTexture2D *, m_pTexture, Texture)
+    /** 将被渲染的方块 */
+    CC_PROPERTY(ccV3F_C4B_T2F_Quad *, m_pQuads, Quads)
+
+public:
     /**
      * @js ctor
      */
-    TextureAtlas();
+    CCTextureAtlas();
     /**
-     * @js NA
-     * @lua NA
+     *  @js NA
+     *  @lua NA
      */
-    virtual ~TextureAtlas();
+    virtual ~CCTextureAtlas();
+    /**
+     *  @js NA
+     *  @lua NA
+     */
+    const char* description();
 
-    /** initializes a TextureAtlas with a filename and with a certain capacity for Quads.
-    * The TextureAtlas capacity can be increased in runtime.
-    *
-    * WARNING: Do not reinitialize the TextureAtlas because it will leak memory (issue #706)
+    /** 用一个文件名和方块初始容量创建纹理贴图集
+    * 纹理贴图集容量可以在运行时增加
     */
-    bool initWithFile(const std::string& file, ssize_t capacity);
+    static CCTextureAtlas* create(const char* file , unsigned int capacity);
 
-    /** initializes a TextureAtlas with a previously initialized Texture2D object, and
-    * with an initial capacity for Quads. 
-    * The TextureAtlas capacity can be increased in runtime.
-    *
-    * WARNING: Do not reinitialize the TextureAtlas because it will leak memory (issue #706)
+    /** 用一个文件名和确定的方块容量初始化纹理贴图集
+    * 纹理贴图集容量可以在运行时增加
+    * 警告：不要重置纹理贴图集因为它会内存泄露（问题 #706）
     */
-    bool initWithTexture(Texture2D *texture, ssize_t capacity);
+    bool initWithFile(const char* file, unsigned int capacity);
 
-    /** updates a Quad (texture, vertex and color) at a certain index
-    * index must be between 0 and the atlas capacity - 1
+   /** 用一个事先初始化的Texture2D对象创建纹理贴图集，并为n个方块初始化容量
+    * 纹理贴图集容量可以在运行时增加
+    */
+    static CCTextureAtlas* createWithTexture(CCTexture2D *texture, unsigned int capacity);
+
+
+    /** 用一个事先初始化的Texture2D对象初始化纹理贴图集，并为方块初始化容量
+    * 纹理贴图集的容量可以在运行时增加
+    * 警告：不要重置纹理贴图集因为它会内存泄露（问题 #706）
+    */
+    bool initWithTexture(CCTexture2D *texture, unsigned int capacity);
+
+    /** 在一个确定的索引里更新方块（纹理、顶点和颜色）
+    * 索引必须在 0 ~ 贴图集容量-1 之间
     @since v0.8
     */
-    void updateQuad(V3F_C4B_T2F_Quad* quad, ssize_t index);
+    void updateQuad(ccV3F_C4B_T2F_Quad* quad, unsigned int index);
 
-    /** Inserts a Quad (texture, vertex and color) at a certain index
-    index must be between 0 and the atlas capacity - 1
+    /** 在一个确定的索引里插入方块（纹理、顶点和颜色）
+    * 索引必须在 0 ~ 贴图集容量-1 之间
     @since v0.8
     */
-    void insertQuad(V3F_C4B_T2F_Quad* quad, ssize_t index);
+    void insertQuad(ccV3F_C4B_T2F_Quad* quad, unsigned int index);
 
-    /** Inserts a c array of quads at a given index
-     index must be between 0 and the atlas capacity - 1
-     this method doesn't enlarge the array when amount + index > totalQuads
+    /** 在一个特定的索引里为方块插入C数组
+     * 索引必须在 0 ~ 贴图集容量-1 之间
+     * 当 数量 + 索引 > 全部方块 时，这个方法不能扩充数组
      @since v1.1
     */
-    void insertQuads(V3F_C4B_T2F_Quad* quads, ssize_t index, ssize_t amount);
+    void insertQuads(ccV3F_C4B_T2F_Quad* quads, unsigned int index, unsigned int amount);
 
-    /** Removes the quad that is located at a certain index and inserts it at a new index
-    This operation is faster than removing and inserting in a quad in 2 different steps
+    /** 在一个确定的索引里移除方块，并插入到一个新索引
+    * 这个操作比在2个不同步骤里移除和插入方块更快
     @since v0.7.2
     */
-    void insertQuadFromIndex(ssize_t fromIndex, ssize_t newIndex);
+    void insertQuadFromIndex(unsigned int fromIndex, unsigned int newIndex);
 
-    /** removes a quad at a given index number.
-    The capacity remains the same, but the total number of quads to be drawn is reduced in 1
+    /** 在一个特定索引数字里移除方块
+    * 相同的剩余容量，但渲染的方块总数会减1
     @since v0.7.2
     */
-    void removeQuadAtIndex(ssize_t index);
+    void removeQuadAtIndex(unsigned int index);
 
-    /** removes a amount of quads starting from index
+    /** 开始从索引里移除一个方块数量
         @since 1.1
      */
-    void removeQuadsAtIndex(ssize_t index, ssize_t amount);
-    /** removes all Quads.
-    The TextureAtlas capacity remains untouched. No memory is freed.
-    The total number of quads to be drawn will be 0
+    void removeQuadsAtIndex(unsigned int index, unsigned int amount);
+    /** 移除所有方块
+    * 剩余的纹理贴图集容量未受影响，没有内存被释放
+    * 渲染的方块总数将会变成0
     @since v0.7.2
     */
     void removeAllQuads();
 
-    /** resize the capacity of the TextureAtlas.
-    * The new capacity can be lower or higher than the current one
-    * It returns true if the resize was successful.
-    * If it fails to resize the capacity it will return false with a new capacity of 0.
-    */
-    bool resizeCapacity(ssize_t capacity);
 
-    /**
-     Used internally by ParticleBatchNode
-     don't use this unless you know what you're doing
+    /** 调整CCTextureAtlas容量的大小
+    * 新的容量可以比当前的更低或更高
+    * 如果调整大小成功，返回YES
+    * 如果调整大小失败，返回NO，新的容量为0
+    */
+    bool resizeCapacity(unsigned int n);
+
+    /** 通过CCParticleBatchNode内部使用
+     * 除非你知道自己在做什么，否则不要使用这个方法
      @since 1.1
     */
-    void increaseTotalQuadsWith(ssize_t amount);
+    void increaseTotalQuadsWith(unsigned int amount);
 
-    /** Moves an amount of quads from oldIndex at newIndex
+    /** 从旧索引移动一个方块数量到新索引
      @since v1.1
      */
-    void moveQuadsFromIndex(ssize_t oldIndex, ssize_t amount, ssize_t newIndex);
+    void moveQuadsFromIndex(unsigned int oldIndex, unsigned int amount, unsigned int newIndex);
 
-    /**
-     Moves quads from index till totalQuads to the newIndex
-     Used internally by ParticleBatchNode
-     This method doesn't enlarge the array if newIndex + quads to be moved > capacity
+    /** 从索引移动所有方块到新索引
+     * 通过CCParticleBatchNode内部使用
+     * 如果 新索引+方块 使 移动量>容量 ，这个方法不会扩充数组
      @since 1.1
     */
-    void moveQuadsFromIndex(ssize_t index, ssize_t newIndex);
+    void moveQuadsFromIndex(unsigned int index, unsigned int newIndex);
 
-    /**
-     Ensures that after a realloc quads are still empty
-     Used internally by ParticleBatchNode
+    /** 确保realloc后的方块仍然为空
+     * 通过CCParticleBatchNode内部使用
      @since 1.1
     */
-    void fillWithEmptyQuadsFromIndex(ssize_t index, ssize_t amount);
+    void fillWithEmptyQuadsFromIndex(unsigned int index, unsigned int amount);
 
-    /** draws n quads
-    * n can't be greater than the capacity of the Atlas
+    /** 绘制n个方块
+    * n不能大于贴图集容量
     */
-    void drawNumberOfQuads(ssize_t n);
+    void drawNumberOfQuads(unsigned int n);
 
-    /** draws n quads from an index (offset).
-    n + start can't be greater than the capacity of the atlas
-
+    /** 从一个索引（偏移量）绘制n个方块
+    * n+开始不能大于贴图集容量
     @since v1.0
     */
-    void drawNumberOfQuads(ssize_t numberOfQuads, ssize_t start);
+    void drawNumberOfQuads(unsigned int n, unsigned int start);
 
-    /** draws all the Atlas's Quads
-    */
+    /** 绘制所有的贴图集方块 */
     void drawQuads();
-    /** listen the event that coming to foreground on Android
-     */
-    void listenBackToForeground(EventCustom* event);
+    /** 监听来到安卓前台的事件 */
+    void listenBackToForeground(CCObject *obj);
 
-    /** whether or not the array buffer of the VBO needs to be updated*/
-    inline bool isDirty(void) { return _dirty; }
-    /** specify if the array buffer of the VBO needs to be updated */
-    inline void setDirty(bool bDirty) { _dirty = bDirty; }
-    /**
-     * @js NA
-     * @lua NA
-     */
-    virtual std::string getDescription() const;
+    /** VOB数组缓冲区是否需要更新 */
+    inline bool isDirty(void) { return m_bDirty; }
+    /** 指定的VBO数组缓冲区是否需要更新 */
+    inline void setDirty(bool bDirty) { m_bDirty = bDirty; }
 
-    /** Gets the quantity of quads that are going to be drawn */
-    ssize_t getTotalQuads() const;
-    
-    /** Gets the quantity of quads that can be stored with the current texture atlas size */
-    ssize_t getCapacity() const;
-    
-    /** Gets the texture of the texture atlas */
-    Texture2D* getTexture() const;
-    
-    /** Sets the texture for the texture atlas */
-    void setTexture(Texture2D* texture);
-    
-    /** Gets the quads that are going to be rendered */
-    V3F_C4B_T2F_Quad* getQuads();
-    
-    /** Sets the quads that are going to be rendered */
-    void setQuads(V3F_C4B_T2F_Quad* quads);
-    
 private:
-    void renderCommand();
-
     void setupIndices();
     void mapBuffers();
+#if CC_TEXTURE_ATLAS_USE_VAO
     void setupVBOandVAO();
+#else
     void setupVBO();
-
-protected:
-    GLushort*           _indices;
-    GLuint              _VAOname;
-    GLuint              _buffersVBO[2]; //0: vertex  1: indices
-    bool                _dirty; //indicates whether or not the array buffer of the VBO needs to be updated
-    /** quantity of quads that are going to be drawn */
-    ssize_t _totalQuads;
-    /** quantity of quads that can be stored with the current texture atlas size */
-    ssize_t _capacity;
-    /** Texture of the texture atlas */
-    Texture2D* _texture;
-    /** Quads that are going to be rendered */
-    V3F_C4B_T2F_Quad* _quads;
-    
-#if CC_ENABLE_CACHE_TEXTURE_DATA
-    EventListenerCustom* _backToForegroundlistener;
 #endif
 };
 
