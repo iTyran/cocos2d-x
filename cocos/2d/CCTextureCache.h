@@ -49,7 +49,7 @@ THE SOFTWARE.
 NS_CC_BEGIN
 
 /**
- * @addtogroup 纹理贴图（texture）
+ * @addtogroup textures
  * @{
  */
 /*
@@ -280,7 +280,7 @@ private:
 
 #endif
 
-// 纹理贴图（texture）组的结尾
+// end of textures group
 /// @}
 
 NS_CC_END
