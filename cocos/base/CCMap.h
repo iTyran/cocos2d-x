@@ -49,7 +49,7 @@ class CC_DLL Map
 {
 public:
     // ------------------------------------------
-    // Iterators
+    // 迭代器(Iterators)
     // ------------------------------------------
 #if USE_STD_UNORDERED_MAP
     typedef std::unordered_map<K, V> RefMap;
@@ -77,7 +77,7 @@ public:
         CCLOGINFO("In the default constructor of Map!");
     }
     
-    /** Contructor with capacity */
+    /** 指定容量构造 */
     explicit Map<K, V>(ssize_t capacity)
     : _data()
     {
@@ -86,7 +86,7 @@ public:
         _data.reserve(capacity);
     }
     
-    /** Copy constructor */
+    /** 拷贝构造函数 */
     Map<K, V>(const Map<K, V>& other)
     {
         static_assert(std::is_convertible<V, Ref*>::value, "Invalid Type for cocos2d::Map<K, V>!");
@@ -95,7 +95,7 @@ public:
         addRefForAllObjects();
     }
     
-    /** Move constructor */
+    /** 移动构造函数（Move constructor） */
     Map<K, V>(Map<K, V>&& other)
     {
         static_assert(std::is_convertible<V, Ref*>::value, "Invalid Type for cocos2d::Map<K, V>!");
@@ -103,8 +103,8 @@ public:
         _data = std::move(other._data);
     }
     
-    /** Destructor
-     *  It will release all objects in map.
+    /** 虚构函数
+     *  它会释放map中的所有对象.
      */
     ~Map<K, V>()
     {
@@ -112,7 +112,7 @@ public:
         clear();
     }
     
-    /** Sets capacity of the map */
+    /** 设置map的容量 */
     void reserve(ssize_t capacity)
     {
 #if USE_STD_UNORDERED_MAP
@@ -120,7 +120,7 @@ public:
 #endif
     }
     
-    /** Returns the number of buckets in the Map container. */
+    /** 返回 Map容器中桶的容量. */
     ssize_t bucketCount() const
     {
 #if USE_STD_UNORDERED_MAP
@@ -130,7 +130,7 @@ public:
 #endif
     }
     
-    /** Returns the number of elements in bucket n. */
+    /** 返回n桶中元素的数量 . */
     ssize_t bucketSize(ssize_t n) const
     {
 #if USE_STD_UNORDERED_MAP
@@ -140,7 +140,7 @@ public:
 #endif
     }
     
-    /** Returns the bucket number where the element with key k is located. */
+    /** 返回关键字k所在位置桶的数量. */
     ssize_t bucket(const K& k) const
     {
 #if USE_STD_UNORDERED_MAP
@@ -150,22 +150,22 @@ public:
 #endif
     }
     
-    /** The number of elements in the map. */
+    /** map中元素的数量. */
     ssize_t size() const
     {
         return _data.size();
     }
     
-    /** Returns a bool value indicating whether the map container is empty, i.e. whether its size is 0.
-     *  @note This function does not modify the content of the container in any way.
-     *        To clear the content of an array object, member function unordered_map::clear exists.
+    /** 返回一个布尔值表示该map容器是否为空，如果为空它的大小为0.
+     *  @note 此方法不会以任何方式修改容器的内容.
+     *        已存在成员函数nordered_map::clear 清理数组对象的内容.
      */
     bool empty() const
     {
         return _data.empty();
     }
     
-    /** Returns all keys in the map */
+    /** 返回map中所有关键字key的集合 */
     std::vector<K> keys() const
     {
         std::vector<K> keys;
@@ -182,7 +182,7 @@ public:
         return keys;
     }
     
-    /** Returns all keys that matches the object */
+    /** 返回所有匹配该对象的key */
     std::vector<K> keys(V object) const
     {
         std::vector<K> keys;
@@ -205,10 +205,10 @@ public:
         return keys;
     }
     
-    /** @brief Returns a reference to the mapped value of the element with key k in the map.
-     *  @note If key does not match the key of any element in the container, the function return nullptr.
-     *  @param key Key value of the element whose mapped value is accessed.
-     *       Member type K is the keys for the elements in the container. defined in Map<K, V> as an alias of its first template parameter (Key).
+    /** @brief 返回map中key映射的元素的值 .
+     *  @note 如果容器中没有匹配的该key的元素，此方法返回 nullptr.
+     *  @param key 传人Key的值是元素的键值映射的值.
+     *       成员类型K 是容器中元素的keys. Map < K、V >中定义的别名,它的第一个模板参数(键).
      */
     const V at(const K& key) const
     {
@@ -226,12 +226,9 @@ public:
         return nullptr;
     }
     
-    /** @brief Searches the container for an element with 'key' as key and returns an iterator to it if found,
-     *         otherwise it returns an iterator to Map<K, V>::end (the element past the end of the container).
-     *  @param key Key to be searched for.
-     *         Member type 'K' is the type of the keys for the elements in the container,
-     *         defined in Map<K, V> as an alias of its first template parameter (Key).
-     *
+    /** @brief 用参数key搜索容器的一个元素，如果找到返回iterator，相反返回 Map<K, V>::end 的iterator（容器中的最后一个元素）
+     *  @param key 用于搜索的Key.
+     *       成员类型K 是容器中元素的keys. Map < K、V >中定义的别名,它的第一个模板参数(键).
      */
     const_iterator find(const K& key) const
     {
@@ -243,10 +240,10 @@ public:
         return _data.find(key);
     }
     
-    /** @brief Inserts new elements in the map.
-     *  @note If the container has already contained the key, this function will erase the old pair(key, object)  and insert the new pair.
-     *  @param key The key to be inserted.
-     *  @param object The object to be inserted.
+    /** @brief 插入新元素到map.
+     *  @note 如果容器中已经包含该key,此方法将移除容器中旧的键值对(key, object)然后插入.
+     *  @param key 插入的Key键.
+     *  @param object 插入的对象.
      */
     void insert(const K& key, V object)
     {
@@ -256,9 +253,9 @@ public:
         object->retain();
     }
     
-    /** @brief Removes an element with an iterator from the Map<K, V> container.
-     *  @param position Iterator pointing to a single element to be removed from the Map<K, V>.
-     *         Member type const_iterator is a forward iterator type.
+    /** @brief 指定 iterator 从 Map<K, V> 容器中移除元素.
+     *  @param position Iterator 指向的单个元素被从 Map<K, V> 移除.
+     *         成员类型 const_iterator 是一个前向 iterator 类型.
      */
     iterator erase(const_iterator position)
     {
@@ -267,10 +264,9 @@ public:
         return _data.erase(position);
     }
     
-    /** @brief Removes an element with an iterator from the Map<K, V> container.
-     *  @param k Key of the element to be erased.
-     *         Member type 'K' is the type of the keys for the elements in the container,
-     *         defined in Map<K, V> as an alias of its first template parameter (Key).
+    /** @brief  从Map<K, V> 容器中移除元素.
+     *  @param k key对应的元素被移除.
+     *       成员类型K 是容器中元素的keys. Map < K、V >中定义的别名,它的第一个模板参数(键).
      */
     size_t erase(const K& k)
     {
@@ -285,8 +281,8 @@ public:
         return 0;
     }
     
-    /** @brief Removes some elements with a vector which contains keys in the map.
-     *  @param keys Keys of elements to be erased.
+    /** @brief 移除map中vector集合键值key相关的一些元素.
+     *  @param keys 键值相关的元素被移除.
      */
     void erase(const std::vector<K>& keys)
     {
@@ -295,9 +291,8 @@ public:
         }
     }
     
-    /** All the elements in the Map<K,V> container are dropped:
-     *  their reference count will be decreased, and they are removed from the container,
-     *  leaving it with a size of 0.
+    /** Map<K,V>容器中的所有元素被丢弃:
+     * 他们的引用计数会减1, 且被从容器中移除,直到容器大小为0
      */
     void clear()
     {
@@ -309,8 +304,8 @@ public:
         _data.clear();
     }
     
-    /** @brief Gets a random object in the map
-     *  @return Returns the random object if the map isn't empty, otherwise it returns nullptr.
+    /** @brief 获取 map中的一个随机对象
+     *  @return 返回非空map中的一个随机对象, 相反返回nullptr.
      */
     V getRandomObject() const
     {
@@ -349,7 +344,7 @@ public:
     //        return _data.at(key);
     //    }
     
-    /** Copy assignment operator */
+    /** 拷贝赋值运算符 */
     Map<K, V>& operator= ( const Map<K, V>& other )
     {
         if (this != &other) {
@@ -361,7 +356,7 @@ public:
         return *this;
     }
     
-    /** Move assignment operator */
+    /** 移动赋值运算符 */
     Map<K, V>& operator= ( Map<K, V>&& other )
     {
         if (this != &other) {
@@ -374,7 +369,7 @@ public:
     
 protected:
     
-    /** Retains all the objects in the map */
+    /** 对map中的所有元素执行retain操作 */
     void addRefForAllObjects()
     {
         for (auto iter = _data.begin(); iter != _data.end(); ++iter)
