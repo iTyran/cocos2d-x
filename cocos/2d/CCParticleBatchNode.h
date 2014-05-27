@@ -38,7 +38,7 @@ NS_CC_BEGIN
 
 class Texture2D;
 class TextureAtlas;
-class ParticleSystem;ichul
+class ParticleSystem;
 
 /**
  * @addtogroup particle_nodes
