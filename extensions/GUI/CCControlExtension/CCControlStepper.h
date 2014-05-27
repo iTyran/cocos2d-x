@@ -70,7 +70,7 @@ public:
 
     virtual double getValue() const;
     virtual void setStepValue(double stepValue);
-    /** Set the numeric value of the stepper. If send is true, the Control::EventType::VALUE_CHANGED is sent. */
+    /** 为stepper设置数值. 如果send参数取值为真, Control::EventType::VALUE_CHANGED事件会被发送 */
     virtual void setValueWithSendingEvent(double value, bool send);
     virtual bool isContinuous() const;
 
@@ -80,29 +80,29 @@ public:
     virtual void onTouchEnded(Touch *pTouch, Event *pEvent) override;
     void update(float dt);
 
-    /** Update the layout of the stepper with the given touch location. */
+    /** 根据所给触摸位置，更新stepper的布局 */
     void updateLayoutUsingTouchLocation(Vec2 location);
 
-    /** Start the autorepeat increment/decrement. */
+    /** 开始自动重复增加/减少 */
     void startAutorepeat();
 
-    /** Stop the autorepeat. */
+    /** 停止自动重复 */
     void stopAutorepeat();
 
 protected:
-    /** The numeric value of the stepper. */
+    /** stepper的数值 */
     double                  _value;
-    /** The continuous vs. noncontinuous state of the stepper. */
+    /** stepper的状态是否为连续 */
     bool                    _continuous;
-    /** The automatic vs. nonautomatic repeat state of the stepper. */
+    /** stepper的状态是否为自动重复 */
     bool                    _autorepeat;
-    /** The wrap vs. no-wrap state of the stepper. */
+    /** stepper的状态是否为可循环（超出最大值后变成最小值，反之亦然） */
     bool                    _wraps;
-    /** The lowest possible numeric value for the stepper. */
+    /** stepper的最小值 */
     double                  _minimumValue;
-    /** The highest possible numeric value for the stepper. */
+    /** stepper的最大值 */
     double                  _maximumValue;
-    /** The step, or increment, value for the stepper. */
+    /** stepper的步长 */
     double                  _stepValue;
     bool                    _touchInsideFlag;
     Part                    _touchedPart;

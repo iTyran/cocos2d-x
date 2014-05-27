@@ -106,136 +106,136 @@ public:
 
     
     /**
-     * Default constructor
+     * 默认构造函数
      */
     Widget(void);
 
     /**
-     * Default destructor
+     * 默认析构函数
      */
     virtual ~Widget();
 
     /**
-     * Allocates and initializes a widget.
+     * 分配空间并初始化widget
      */
     static Widget* create();
 
     /**
-     * Sets whether the widget is enabled
+     * 设置widget是否为可用
      * 
-     * true if the widget is enabled, widget may be touched , false if the widget is disabled, widget cannot be touched.
+     * 参数为true则设置该widget可用，该widget可以响应触摸；参数为false则设置该widget不可用，该widget不能响应触摸
      *
-     * The default value is true, a widget is default to enabled
+     * 参数默认值为true，widget默认为可用
      *
      * @param enabled
      */
     virtual void setEnabled(bool enabled);
 
     /**
-     * Determines if the widget is enabled
+     * 判断该widget是否可用
      *
-     * @return true if the widget is enabled, false if the widget is disabled.
+     * @return 可用则返回true，不可用则返回false
      */
     bool isEnabled() const;
 
     /**
-     * Sets whether the widget is bright
+     * 设置widget是否为亮色（对应可用状态）
      *
-     * The default value is true, a widget is default to bright
+     * 默认值为true，widget默认为亮色
      *
-     * @param visible   true if the widget is bright, false if the widget is dark.
+     * @param visible   参数为true则设置该widget为亮色，参数为false则设置该widget为暗色（dark，对应禁用状态）。
      */
     void setBright(bool bright);
 
     /**
-     * Determines if the widget is bright
+     * 判断该widget是否为亮色
      *
-     * @return true if the widget is bright, false if the widget is dark.
+     * @return 亮色则返回true，暗色则返回false
      */
     bool isBright() const;
 
     /**
-     * Sets whether the widget is touch enabled
+     * 设置widget是否可以响应触摸。
      *
-     * The default value is false, a widget is default to touch disabled
+     * 默认值为false，widget默认为不能响应触摸
      *
-     * @param visible   true if the widget is touch enabled, false if the widget is touch disabled.
+     * @param visible   参数为true则设置该widget可以响应触摸，参数为false则设置该widget不能响应触摸
      */
     virtual void setTouchEnabled(bool enabled);
 
     /**
-     * To set the bright style of widget.
+     * 设置widget的亮色风格（bright style）
      *
      * @see BrightStyle
      *
-     * @param style   BRIGHT_NORMAL the widget is normal state, BRIGHT_HIGHLIGHT the widget is height light state.
+     * @param style   BRIGHT_NORMAL 表示该widget为普通亮色, BRIGHT_HIGHLIGHT 表示该widget为高亮
      */
     void setBrightStyle(BrightStyle style);
 
     /**
-     * Determines if the widget is touch enabled
+     * 判定该widget是否可以响应触摸
      *
-     * @return true if the widget is touch enabled, false if the widget is touch disabled.
+     * @return 如果可以响应触摸则返回true，不能响应触摸则返回false
      */
     bool isTouchEnabled() const;
 
     /**
-     * Determines if the widget is highlighted
+     * 判定该widget是否为高亮（对应被选中状态）
      *
-     * @return true if the widget is highlighted, false if the widget is not hignlighted .
+     * @return 如果该widget处于高亮状态则返回true，如果该widget不处于高亮状态则返回false
      */
     bool isHighlighted() const;
 
     /**
-     * Sets whether the widget is hilighted
+     * 设置该widget是否处于高亮状态（对应被选中状态）
      *
-     * The default value is false, a widget is default to not hilighted
+     * 默认值为false，widget默认为处于非高亮状态
      *
-     * @param hilight   true if the widget is hilighted, false if the widget is not hilighted.
+     * @param hilight   参数为true则设置该widget为高亮状态，参数为false则设置该widget为非高亮状态
      */
     void setHighlighted(bool hilight);
 
     /**
-     * Gets the left boundary position of this widget.
+     * 获取该widget左边界横坐标
      *
-     * @return The left boundary position of this widget.
+     * @return 该widget左边界横坐标
      */
     float getLeftInParent();
 
     /**
-     * Gets the bottom boundary position of this widget.
+     * 获取该widget底部边界纵坐标
      *
-     * @return The bottom boundary position of this widget.
+     * @return 该widget底部边界纵坐标
      */
     float getBottomInParent();
 
     /**
-     * Gets the right boundary position of this widget.
+     * 获取该widget右边界横坐标
      *
-     * @return The right boundary position of this widget.
+     * @return 该widget右边界横坐标
      */
     float getRightInParent();
 
     /**
-     * Gets the top boundary position of this widget.
+     * 获取该widget顶部边界纵坐标
      *
-     * @return The top boundary position of this widget.
+     * @return 该widget顶部边界纵坐标
      */
     float getTopInParent();
 
     /**
-     * Gets a child from the container with its name
+     * 通过名字从容器中获取一个子节点
      *
-     * @param name   An key to find the child widget.
+     * @param name   用于找到所需widget子节点的关键字（key）
      *
-     * @return a Widget object whose name equals to the input parameter
+     * @return 名字与输入的参数相同的widget
      */
     virtual Widget* getChildByName(const std::string& name);
 
     virtual void visit(cocos2d::Renderer *renderer, const Mat4 &parentTransform, bool parentTransformUpdated) override;
 
     /**
-     * Sets the touch event target/selector of the menu item
+     * 为菜单项的目标／选择器设置触摸事件
      */
     CC_DEPRECATED_ATTRIBUTE void addTouchEventListener(Ref* target,SEL_TouchEvent selector);
     void addTouchEventListener(ccWidgetTouchCallback callback);
@@ -243,87 +243,87 @@ public:
     //cocos2d property
 
     /**
-     * Changes the position (x,y) of the widget in OpenGL coordinates
+     * 改变该widget在OpenGL坐标系中的绝对位置坐标（x,y）
      *
-     * Usually we use p(x,y) to compose Vec2 object.
-     * The original point (0,0) is at the left-bottom corner of screen.
+     * 我们通常使用p(x,y)来组成Vec2对象
+     * 原点（0，0）位于屏幕的左下方
      *
-     * @param position  The position (x,y) of the widget in OpenGL coordinates
+     * @param position  该widget在OpenGL坐标系中的绝对位置坐标(x,y)
      */
     virtual void setPosition(const Vec2 &pos) override;
 
     /**
-     * Changes the position (x,y) of the widget in OpenGL coordinates
+     * 改变该widget在OpenGL坐标系中的相对百分比位置坐标（x,y）
      *
-     * Usually we use p(x,y) to compose Vec2 object.
-     * The original point (0,0) is at the left-bottom corner of screen.
+     * 我们通常使用p(x,y)来组成Vec2对象
+     * 原点（0，0）位于屏幕的左下方
      *
-     * @param percent  The percent (x,y) of the widget in OpenGL coordinates
+     * @param percent   该widget在OpenGL坐标系中的相对百分比位置坐标(x,y)
      */
     void setPositionPercent(const Vec2 &percent);
 
     /**
-     * Gets the percent (x,y) of the widget in OpenGL coordinates
+     * 获取该widget在OpenGL坐标系中的相对百分比位置坐标(x,y)
      *
      * @see setPosition(const Vec2&)
      *
-     * @return The percent (x,y) of the widget in OpenGL coordinates
+     * @return 该widget在OpenGL坐标系中的相对百分比位置坐标(x,y)
      */
     const Vec2& getPositionPercent();
 
     /**
-     * Changes the position type of the widget
+     * 改变该widget的位置坐标类型
      *
      * @see PositionType
      *
-     * @param type  the position type of widget
+     * @param type  该widget的位置坐标类型
      */
     void setPositionType(PositionType type);
 
     /**
-     * Gets the position type of the widget
+     * 获取该widget的位置坐标类型
      *
      * @see PositionType
      *
-     * @return type  the position type of widget
+     * @return type  该widget的位置坐标类型
      */
     PositionType getPositionType() const;
 
     /**
-     * Sets whether the widget should be flipped horizontally or not.
+     * 设置该widget是否应该被水平翻转.
      *
-     * @param bFlippedX true if the widget should be flipped horizaontally, false otherwise.
+     * @param bFlippedX true 该widget应该被水平翻转, false 该widget不应被水平翻转.
      */
     virtual void setFlippedX(bool flippedX);
 
     /**
-     * Returns the flag which indicates whether the widget is flipped horizontally or not.
+     * 返回表明该widget是否被水平翻转的标识
      *
-     * It only flips the texture of the widget, and not the texture of the widget's children.
-     * Also, flipping the texture doesn't alter the anchorPoint.
-     * If you want to flip the anchorPoint too, and/or to flip the children too use:
+     * 只会翻转该widget自身的纹理贴图（texture），不会翻转其子节点（child）的纹理贴图
+     * 并且翻转不会改变anchorPoint
+     * 如果你想要翻转anchorPoint，并且／或者翻转该widget的子节点，你应该使用:
      * widget->setScaleX(sprite->getScaleX() * -1);
      *
-     * @return true if the widget is flipped horizaontally, false otherwise.
+     * @return 如果该widget被水平翻转则返回true，该widget没有被水平翻转则返回false
      */
     virtual bool isFlippedX(){return _flippedX;};
 
     /**
-     * Sets whether the widget should be flipped vertically or not.
+     * 设置该widget是否应该被垂直翻转.
      *
-     * @param bFlippedY true if the widget should be flipped vertically, flase otherwise.
+     * @param bFlippedX true 该widget应该被垂直翻转, false 该widget不应被垂直翻转.
      */
     virtual void setFlippedY(bool flippedY);
 
     /**
-     * Return the flag which indicates whether the widget is flipped vertically or not.
+     * 返回表明该widget是否被垂直翻转的标识
      *
-     * It only flips the texture of the widget, and not the texture of the widget's children.
-     * Also, flipping the texture doesn't alter the anchorPoint.
-     * If you want to flip the anchorPoint too, and/or to flip the children too use:
-     * widget->setScaleY(widget->getScaleY() * -1);
+     * 只会翻转该widget自身的纹理贴图（texture），不会翻转其子节点（child）的纹理贴图
+     * 并且翻转不会改变anchorPoint
+     * 如果你想要翻转anchorPoint，并且／或者翻转该widget的子节点，你应该使用:
+     * widget->setScaleY(sprite->getScaleY() * -1);
      *
-     * @return true if the widget is flipped vertically, flase otherwise.
+     * @return 如果该widget被垂直翻转则返回true，该widget没有被垂直翻转则返回false
      */
     virtual bool isFlippedY(){return _flippedY;};
     
@@ -335,100 +335,100 @@ public:
     
     GLubyte getOpacity() const override {return _opacity;};
 
-    /** @deprecated Use isFlippedX() instead */
+    /** @deprecated 使用 isFlippedX() 作为替代 */
     CC_DEPRECATED_ATTRIBUTE bool isFlipX() { return isFlippedX(); };
-    /** @deprecated Use setFlippedX() instead */
+    /** @deprecated 使用 setFlippedX() 作为替代 */
     CC_DEPRECATED_ATTRIBUTE void setFlipX(bool flipX) { setFlippedX(flipX); };
-    /** @deprecated Use isFlippedY() instead */
+    /** @deprecated 使用 isFlippedY() 作为替代 */
     CC_DEPRECATED_ATTRIBUTE bool isFlipY() { return isFlippedY(); };
-    /** @deprecated Use setFlippedY() instead */
+    /** @deprecated 使用 setFlippedY() 作为替代 */
     CC_DEPRECATED_ATTRIBUTE void setFlipY(bool flipY) { setFlippedY(flipY); };
 
     /*
-     * Checks a point if in parent's area.
+     * 检查一个点是否在其父节点的区域内
      *
      * @param point
      *
-     * @return true if the point is in parent's area, flase otherwise.
+     * @return 如果该点在其父节点的区域则返回true，该点没有在其父节点的区域则返回false
      */
     bool clippingParentAreaContainPoint(const Vec2 &pt);
 
     /*
-     * Sends the touch event to widget's parent
+     * 向该widget的父节点发送触摸事件
      */
     virtual void checkChildInfo(int handleState,Widget* sender,const Vec2 &touchPoint);
 
     /*
-     * Gets the touch began point of widget when widget is selected.
+     * 在widget被选中时，获取该触摸事件开始时的点
      *
-     * @return the touch began point.
+     * @return 触摸事件开始时的点
      */
     const Vec2& getTouchStartPos();
 
     /*
-     * Gets the touch move point of widget when widget is selected.
+     * 在widget被选中时，获取该触摸事件进行中的点
      *
-     * @return the touch move point.
+     * @return 该触摸事件进行中的点
      */
     const Vec2& getTouchMovePos();
 
     /*
-     * Gets the touch end point of widget when widget is selected.
+     * 在widget被选中时，获取该触摸事件结束时的点
      *
-     * @return the touch end point.
+     * @return 该触摸事件结束时的点
      */
     const Vec2& getTouchEndPos();
 
     /**
-     * Changes the name that is used to identify the widget easily.
+     * 改变widget的名字，使用名字可以更轻松地识别出该widget
      *
-     * @param A const std::string that indentifies the widget.
+     * @param 一个可用于识别该widget的字符串常量（const std::string）
      */
     void setName(const std::string& name);
 
     /**
-     * Returns a name that is used to identify the widget easily.
+     * 返回widget的名字，使用名字可以更轻松地识别出该widget
      *
-     * You can set tags to widget then identify them easily.
+     * 你可以为widget设置标签（tag）以更好地识别他们
      *
-     * @return A const std::string that identifies the widget.
+     * @return 一个可用于识别该widget的字符串常量（const std::string）
      */
     const std::string& getName() const;
 
     /**
-     * Changes the size that is widget's size
+     * 改变widget的尺寸（size）
      *
-     * @param size that is widget's size
+     * @param size widget的尺寸（size）
      */
     virtual void setSize(const Size &size);
 
     /**
-     * Changes the percent that is widget's percent size
+     * 改变widget的百分比尺寸（percent size）
      *
-     * @param percent that is widget's percent size
+     * @param percent idget的百分比尺寸（percent size）
      */
     virtual void setSizePercent(const Vec2 &percent);
 
     /**
-     * Changes the size type of widget.
+     * 改变widget的尺寸类型（size type）
      *
      * @see SizeType
      *
-     * @param type that is widget's size type
+     * @param type widget的尺寸类型（size type）
      */
     void setSizeType(SizeType type);
 
     /**
-     * Gets the size type of widget.
+     * 获取widget的尺寸类型（size type）
      *
      * @see SizeType
      *
-     * @param type that is widget's size type
+     * @param type widget的尺寸类型（size type）
      */
     SizeType getSizeType() const;
 
     /**
-     * Returns size of widget
+     * 返回widget的尺寸（size）
      *
      * @return size
      */
@@ -439,18 +439,18 @@ public:
     virtual const Size& getLayoutSize() {return _size;};
 
     /**
-     * Returns size percent of widget
+     * 返回widget的尺寸百分比
      *
      * @return size percent
      */
     const Vec2& getSizePercent() const;
 
     /**
-     * Checks a point if is in widget's space
+     * 检查一个点是否在该widget所在区域
      *
      * @param point
      *
-     * @return true if the point is in widget's space, flase otherwise.
+     * @return 如果改点在widget所在区域则返回true，不在widget所在区域则返回false
      */
     virtual bool hitTest(const Vec2 &pt);
 
@@ -460,61 +460,61 @@ public:
     virtual void onTouchCancelled(Touch *touch, Event *unusedEvent);
 
     /**
-     * Sets a LayoutParameter to widget.
+     * 为widget设置LayoutParameter
      *
      * @see LayoutParameter
      *
-     * @param LayoutParameter pointer
+     * @param LayoutParameter LayoutParameter指针
      *
-     * @param type  Relative or Linear
+     * @param type  相对的（relative）或者线性的（linear）
      */
     void setLayoutParameter(LayoutParameter* parameter);
 
     /**
-     * Gets LayoutParameter of widget.
+     * 获取widget的LayoutParameter
      *
      * @see LayoutParameter
      *
-     * @param type  Relative or Linear
+     * @param type  相对的或者线性的
      *
      * @return LayoutParameter
      */
     LayoutParameter* getLayoutParameter(LayoutParameter::Type type);
 
     /**
-     * Ignore the widget size
+     * 忽略widget的尺寸（size）
      *
-     * @param ignore, true that widget will ignore it's size, use texture size, false otherwise. Default value is true.
+     * @param ignore, 参数为true则忽略widget的尺寸，使用纹理贴图的尺寸，参数为false则不忽略widget的尺寸。参数的默认值为true
      */
     virtual void ignoreContentAdaptWithSize(bool ignore);
 
     /**
-     * Gets the widget if is ignore it's size.
+     * 检查该widget的尺寸（size）是否被忽略
      *
-     * @param ignore, true that widget will ignore it's size, use texture size, false otherwise. Default value is true.
+     * @param 参数为true则忽略widget的尺寸，使用纹理贴图的尺寸，参数为false则不忽略widget的尺寸。参数的默认值为true
      */
     bool isIgnoreContentAdaptWithSize() const;
 
     /**
-     * Gets world position of widget.
+     * 获取widget在全局中的位置坐标
      *
-     * @return world position of widget.
+     * @return widget在全局中的位置坐标
      */
     Vec2 getWorldPosition();
 
     /**
-     * Gets the Virtual Renderer of widget.
+     * 获取widget的虚拟渲染器
      *
-     * For example, a button's Virtual Renderer is it's texture renderer.
+     * 比如说，按钮的虚拟渲染器渲染器就是该按钮的纹理贴图的渲染器
      *
      * @return Node pointer.
      */
     virtual Node* getVirtualRenderer();
 
 //    /**
-//     * Gets the content size of widget.
+//     * 获取widget的content size
 //     *
-//     * Content size is widget's texture size.
+//     * Content size是指widget所用纹理贴图的尺寸
 //     */
 //    virtual const Size& getContentSize() const;
     virtual const Size& getVirtualRendererSize() const;
@@ -522,7 +522,7 @@ public:
     
 
     /**
-     * Returns the "class name" of widget.
+     * 返回widget的类名
      */
     virtual std::string getDescription() const override;
 
@@ -535,81 +535,81 @@ public:
 
     void updateSizeAndPosition(const Size& parentSize);
     
-    /*temp action*/
+    /*临时动作*/
     void setActionTag(int tag);
 	int getActionTag();
     
     /**
-     *@return  whether the widget is focused or not
+     *@return  widget是否被focus
      */
     bool isFocused();
     
     /**
-     *@param focus  pass true to let the widget get focus or pass false to let the widget lose focus
+     *@param focus  传递参数true来使得widget处于focus状态或者传递参数false来取消focus状态
      *@return void
      */
     void setFocused(bool focus);
     
     /**
-     *@return true represent the widget could accept focus, false represent the widget couldn't accept focus
+     *@return 如果widget可以被focus则返回true，如果widget不能被focus则返回false
      */
     bool isFocusEnabled();
     
     /**
-     *@param enable pass true/false to enable/disable the focus ability of a widget
+     *@param enable 传递参数true/flase来使得widget可以／不可以被focus
      *@return void
      */
     void setFocusEnabled(bool enable);
     
     /**
-     *  When a widget is in a layout, you could call this method to get the next focused widget within a specified direction. 
-     *  If the widget is not in a layout, it will return itself
-     *@param dir the direction to look for the next focused widget in a layout
-     *@param current  the current focused widget
-     *@return the next focused widget in a layout
+     * 当一个widget处于某一个layout中的时候，你可以通过调用这个方法在指定的方向获取下一个被focus的widget
+     * 如果一个widget没有在一个layout中，调用这个方法会获得该widget自身
+     *@param dir 在该layout中找寻下一个被focus的widget的方向
+     *@param current  目前被focus的widget
+     *@return 该layout中下一个被focus的widget
      */
     virtual Widget* findNextFocusedWidget(FocusDirection direction, Widget* current);
     
     /**
-     * when a widget calls this method, it will get focus immediately.
+     *当一个widget调用了这个方法，这个widget会立刻被focus
      */
     void requestFocus();
     
 CC_CONSTRUCTOR_ACCESS:
-    //initializes state of widget.
+    //初始化widget的状态
     virtual bool init() override;
     
     /**
-     * This method is called when a focus change event happens
-     *@param widgetLostFocus  The widget which lose its focus
-     *@param widgetGetFocus  The widget whihc get its focus
+     * 这个方法会在focus状态发生改变的时候被调用
+     *@param widgetLostFocus  失去focus状态的widget
+     *@param widgetGetFocus  得到focus状态的widget
      *@return void
      */
     void onFocusChange(Widget* widgetLostFocus, Widget* widgetGetFocus);
     
     /**
-     * Dispatch a EventFocus through a EventDispatcher
-     *@param widgetLoseFocus  The widget which lose its focus
-     *@param widgetGetFocus he widget whihc get its focus
+     * 通过EventDispatcher来调度EventFocus
+     *@param widgetLoseFocus  失去focus状态的widget
+     *@param widgetGetFocus  得到focus状态的widget
      *@return void
      */
     void  dispatchFocusEvent(Widget* widgetLoseFocus, Widget* widgetGetFocus);
 
     
 protected:
-    //call back function called when size changed.
+    //尺寸（size）改变时的回调函数
     virtual void onSizeChanged();
 
-    //initializes renderer of widget.
+    //初始化widget的渲染内容
     virtual void initRenderer();
 
-    //call back function called widget's state changed to normal.
+    //当widget回到正常状态时的回调函数
     virtual void onPressStateChangedToNormal();
 
-    //call back function called widget's state changed to selected.
+    //当widget切换到被选中状态时的回调函数
     virtual void onPressStateChangedToPressed();
 
-    //call back function called widget's state changed to dark.
+    //当widget切换到不可用状态时的回调函数
     virtual void onPressStateChangedToDisabled();
     void pushDownEvent();
     void moveEvent();
@@ -635,28 +635,28 @@ protected:
     bool isAncestorsVisible(Node* node);
 
 protected:
-    bool _enabled;            ///< Highest control of widget
-    bool _bright;             ///< is this widget bright
-    bool _touchEnabled;       ///< is this widget touch endabled
-    bool _highlight;              ///< is the widget on focus
-    BrightStyle _brightStyle; ///< bright style
-    Vec2 _touchStartPos;    ///< touch began point
-    Vec2 _touchMovePos;     ///< touch moved point
-    Vec2 _touchEndPos;      ///< touch ended point
+    bool _enabled;            ///< widget的最高控制
+    bool _bright;             ///< widget是否为亮色（bright）
+    bool _touchEnabled;       ///< widget是否能响应触摸
+    bool _highlight;              ///< widget是否被focus
+    BrightStyle _brightStyle; ///< 亮色风格（bright style）
+    Vec2 _touchStartPos;    ///< 触摸开始点
+    Vec2 _touchMovePos;     ///< 触摸移动点
+    Vec2 _touchEndPos;      ///< 触摸结束点
     
-    //if use the old API, we must retain the _touchEventListener
+    //如果要使用原有的API, 我们必须保留_touchEventListener
     Ref*       _touchEventListener;
     
 #if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
 #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-#elif _MSC_VER >= 1400 //vs 2005 or higher
+#elif _MSC_VER >= 1400 //vs 2005 或者更高版本
 #pragma warning (push)
 #pragma warning (disable: 4996)
 #endif
     SEL_TouchEvent    _touchEventSelector;
 #if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
 #pragma GCC diagnostic warning "-Wdeprecated-declarations"
-#elif _MSC_VER >= 1400 //vs 2005 or higher
+#elif _MSC_VER >= 1400 //vs 2005 或者更高版本
 #pragma warning (pop)
 #endif
     
@@ -685,15 +685,14 @@ protected:
     bool _focusEnabled;
     
     /**
-     * store the only one focued widget
+     * 储存唯一一个处于被focus状态的widget
      */
-    static Widget *_focusedWidget;  //both layout & widget will be stored in this variable
-    static Widget *_realFocusedWidget; //only the widget class will be stored in this variable
+    static Widget *_focusedWidget;  //layout和widget都会被储存在这个变量中
+    static Widget *_realFocusedWidget; //只有widget类的变量会被储存在这个变量里
 public:
     /**
-     * no matter what widget object you call this method on , it will return you the exact one focused widget
-     * @param isWidget  if your set isWidget to true, it will return the _realFocusedWidget which is always a widget
-     *                  otherwise, it will return a widget or a layout
+     * 不管你想要调用这个方法去获得什么样的widget对象，这个方法会返回给你被focus的widget
+     * @param isWidget  如果你将参数isWidget设置为true，这个方法会返回_realFocusedWidget，它只是一个widget类的变量；如果你将参数isWidget设置为false，这个方法会返回一个widget类变量或者一个layout类变量
      */
     Widget* getCurrentFocusedWidget(bool isWidget);
     

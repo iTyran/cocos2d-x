@@ -43,10 +43,9 @@ class TMXObjectGroup;
 class TMXTilesetInfo;
 
 /** @file
-* Internal TMX parser
+* 内部的TMX解析器
 *
-* IMPORTANT: These classed should not be documented using doxygen strings
-* since the user should not use them.
+* 重要: 用户不需要关心这些
 *
 */
 
@@ -79,15 +78,15 @@ typedef enum TMXTileFlags_ {
     kTMXFlippedMask         = ~(kTMXFlipedAll)
 } TMXTileFlags;
 
-// Bits on the far end of the 32-bit global tile ID (GID's) are used for tile flags
+// 当前32位全局tile标识符的最后部分被用来表示tile标记
 
-/** @brief TMXLayerInfo contains the information about the layers like:
-- Layer name
-- Layer size
-- Layer opacity at creation time (it can be modified at runtime)
-- Whether the layer is visible (if it's not visible, then the CocosNode won't be created)
+/** @brief TMXLayerInfo所包含的一些layers信息:
+- Layer名字
+- Layer尺寸
+- 创建时的Layer opacity(不能在运行时修改)
+- layer可视化(如不可视,CocosNode则不会被创建)
 
-This information is obtained from the TMX file.
+这些信息均可从TMX文件中获取
 */
 class CC_DLL TMXLayerInfo : public Ref
 {
@@ -115,15 +114,15 @@ public:
     Vec2               _offset;
 };
 
-/** @brief TMXTilesetInfo contains the information about the tilesets like:
-- Tileset name
-- Tileset spacing
-- Tileset margin
-- size of the tiles
-- Image used for the tiles
-- Image size
+/** @brief TMXTilesetInfo所包含的一些tilesets信息:
+- Tileset名字
+- Tileset间隔
+- Tileset外边距
+- tiles尺寸
+- tiles图片
+- 图片尺寸
 
-This information is obtained from the TMX file. 
+这些信息均可从TMX文件中读取 
 */
 class CC_DLL TMXTilesetInfo : public Ref
 {
@@ -133,9 +132,9 @@ public:
     Size            _tileSize;
     int             _spacing;
     int             _margin;
-    //! filename containing the tiles (should be spritesheet / texture atlas)
+    //! 包含tiles(spritesheet/texture atlas)的文件
     std::string     _sourceImage;
-    //! size in pixels of the image
+    //! 图片像素尺寸
     Size            _imageSize;
 public:
     /**
@@ -150,30 +149,30 @@ public:
     Rect getRectForGID(uint32_t gid);
 };
 
-/** @brief TMXMapInfo contains the information about the map like:
-- Map orientation (hexagonal, isometric or orthogonal)
-- Tile size
-- Map size
+/** @brief TMXMapInfo所包含的一些map的信息:
+- 地图定向(orientation):六边形(hexagonal),等距斜视(isometric),直角鸟瞰(orthogonal)
+- Tile尺寸
+- 地图尺寸
 
-And it also contains:
-- Layers (an array of TMXLayerInfo objects)
-- Tilesets (an array of TMXTilesetInfo objects)
-- ObjectGroups (an array of TMXObjectGroupInfo objects)
+以及如下:
+- Layers (一组TMXLayerInfo对象)
+- Tilesets (一组TMXTilesetInfo对象)
+- ObjectGroups (一组TMXObjectGroupInfo对象)
 
-This information is obtained from the TMX file.
+这些信息均可从TMX文件中读取
 
 */
 class CC_DLL TMXMapInfo : public Ref, public SAXDelegator
 {    
 public:    
-    /** creates a TMX Format with a tmx file */
+    /** 创建一个指定tmx文件格式的TMX */
     static TMXMapInfo * create(const std::string& tmxFile);
-    /** creates a TMX Format with an XML string and a TMX resource path */
+    /** 创建一个指定XML字符串和TMX资源路径(TMX resource path)格式的TMX */
     static TMXMapInfo * createWithXML(const std::string& tmxString, const std::string& resourcePath);
     
-    /** creates a TMX Format with a tmx file */
+    /** 创建一个指定tmx文件格式的TMX */
     CC_DEPRECATED_ATTRIBUTE static TMXMapInfo * formatWithTMXFile(const char *tmxFile) { return TMXMapInfo::create(tmxFile); };
-    /** creates a TMX Format with an XML string and a TMX resource path */
+    /** 创建一个指定XML字符串和TMX资源路径(TMX resource path)格式的TMX */
     CC_DEPRECATED_ATTRIBUTE static TMXMapInfo * formatWithXML(const char* tmxString, const char* resourcePath) { return TMXMapInfo::createWithXML(tmxString, resourcePath); };
     /**
      * @js ctor
@@ -185,13 +184,13 @@ public:
      */
     virtual ~TMXMapInfo();
     
-    /** initializes a TMX format with a  tmx file */
+    /** 使用指定tmx文件格式初始化一个TMX */
     bool initWithTMXFile(const std::string& tmxFile);
-    /** initializes a TMX format with an XML string and a TMX resource path */
+    /** 使用指定XML字符串和TMX资源路径(TMX resource path)格式初始化一个TMX */
     bool initWithXML(const std::string& tmxString, const std::string& resourcePath);
-    /** initializes parsing of an XML file, either a tmx (Map) file or tsx (Tileset) file */
+    /** 通过解析一个XML文件,tmx(Map)文件或tsx(Tileset)文件初始化一个TMX */
     bool parseXMLFile(const std::string& xmlFilename);
-    /* initializes parsing of an XML string, either a tmx (Map) string or tsx (Tileset) string */
+    /* 通过解析一个XML字符串,tmx(Map)字符串或tsx(Tileset)字符串初始化一个TMX */
     bool parseXMLString(const std::string& xmlString);
 
     ValueMapIntKey& getTileProperties() { return _tileProperties; };
@@ -199,15 +198,15 @@ public:
         _tileProperties = tileProperties;
     };
 
-    /// map orientation
+    /// 地图定向(orientation)
     inline int getOrientation() const { return _orientation; };
     inline void setOrientation(int orientation) { _orientation = orientation; };
 
-    /// map width & height
+    /// 地图尺寸(宽和高)
     inline const Size& getMapSize() const { return _mapSize; };
     inline void setMapSize(const Size& mapSize) { _mapSize = mapSize; };
 
-    /// tiles width & height
+    /// tiles尺寸(宽和高)
     inline const Size& getTileSize() const { return _tileSize; };
     inline void setTileSize(const Size& tileSize) { _tileSize = tileSize; };
     
@@ -225,38 +224,38 @@ public:
         _tilesets = tilesets;
     };
 
-    /// ObjectGroups
+    /// 对象组(ObjectGroups)
     inline const Vector<TMXObjectGroup*>& getObjectGroups() const { return _objectGroups; };
     inline Vector<TMXObjectGroup*>& getObjectGroups() { return _objectGroups; };
     inline void setObjectGroups(const Vector<TMXObjectGroup*>& groups) {
         _objectGroups = groups;
     };
 
-    /// parent element
+    /// 父元素
     inline int getParentElement() const { return _parentElement; };
     inline void setParentElement(int element) { _parentElement = element; };
 
-    /// parent GID
+    /// 父全局标识(GID)
     inline int getParentGID() const { return _parentGID; };
     inline void setParentGID(int gid) { _parentGID = gid; };
 
-    /// layer attribs
+    /// layer属性
     inline int getLayerAttribs() const { return _layerAttribs; };
     inline void setLayerAttribs(int layerAttribs) { _layerAttribs = layerAttribs; };
 
-    /// is storing characters?
+    /// TMX文件中data元素内容是否为base64字符(TMX文件中data元素是否以base64字符信息保存)
     inline bool isStoringCharacters() const { return _storingCharacters; };
     CC_DEPRECATED_ATTRIBUTE inline bool getStoringCharacters() const { return isStoringCharacters(); };
     inline void setStoringCharacters(bool storingCharacters) { _storingCharacters = storingCharacters; };
 
-    /// properties
+    /// 属性
     inline const ValueMap& getProperties() const { return _properties; }
     inline ValueMap& getProperties() { return _properties; }
     inline void setProperties(const ValueMap& properties) {
         _properties = properties;
     };
     
-    // implement pure virtual methods of SAXDelegator
+    // 实现SAXDelegator的纯虚函数
     /**
      * @js NA
      * @lua NA
@@ -281,38 +280,38 @@ public:
 protected:
     void internalInit(const std::string& tmxFileName, const std::string& resourcePath);
 
-    /// map orientation
+    /// 地图定向(orientation)
     int    _orientation;
-    /// map width & height
+    /// 地图尺寸(宽和高)
     Size _mapSize;
-    /// tiles width & height
+    /// tiles尺寸(宽和高)
     Size _tileSize;
     /// Layers
     Vector<TMXLayerInfo*> _layers;
     /// tilesets
     Vector<TMXTilesetInfo*> _tilesets;
-    /// ObjectGroups
+    /// 对象组(ObjectGroups)
     Vector<TMXObjectGroup*> _objectGroups;
-    /// parent element
+    /// 父元素
     int _parentElement;
-    /// parent GID
+    /// 父全局标识(GID)
     int _parentGID;
-    /// layer attribs
+    /// layer属性
     int _layerAttribs;
-    /// is storing characters?
+    /// TMX文件中data元素内容是否为base64字符(TMX文件中data元素是否以base64字符信息保存)
     bool _storingCharacters;
-    /// properties
+    /// 属性
     ValueMap _properties;
-    //! xml format tile index
+    //! xml格式的tile索引
     int _xmlTileIndex;
     
-    //! tmx filename
+    //! tmx文件名
     std::string _TMXFileName;
-    // tmx resource path
+    // tmx资源路径
     std::string _resources;
-    //! current string
+    //! 当前所处理的字符信息
     std::string _currentString;
-    //! tile properties
+    //! tile属性
     ValueMapIntKey _tileProperties;
     int _currentFirstGID;
     bool _recordFirstGID;

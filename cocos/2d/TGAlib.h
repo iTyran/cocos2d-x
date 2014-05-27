@@ -37,38 +37,38 @@ enum {
     TGA_ERROR_COMPRESSED_FILE,
 };
 
-/** TGA format */
+/** TGA 格式 */
 typedef struct sImageTGA {
     int status;
     unsigned char type, pixelDepth;
     
-    /** map width */
+    /** 地图宽度 */
     signed short width;
     
-    /** map height */
+    /** 地图高度 */
     signed short height;
     
-    /** raw data */
+    /** 原始数据 */
     unsigned char *imageData;
     int flipped;
 } tImageTGA;
 
-/// load the image header fields. We only keep those that matter!
+/// 读取图片头字段. 我们只需要保存这些数据。
 bool tgaLoadHeader(unsigned char *buffer, unsigned long bufSize, tImageTGA *info);
 
-/// loads the image pixels. You shouldn't call this function directly
+/// 读取图片数据（像素）. 不要直接调用该方法
 bool tgaLoadImageData(unsigned char *buffer, unsigned long bufSize, tImageTGA *info);
 
-/// this is the function to call when we want to load an image buffer.
+/// 在我们读取图片缓存时调用该方法
 tImageTGA* tgaLoadBuffer(unsigned char* buffer, long size);
 
-/// this is the function to call when we want to load an image
+/// 在我们读取图片时会调用该方法
 tImageTGA * tgaLoad(const char *filename);
 
-// /converts RGB to grayscale
+// /转换RGB为灰度
 void tgaRGBtogreyscale(tImageTGA *info);
 
-/// releases the memory used for the image
+/// 释放图片占用的内存
 void tgaDestroy(tImageTGA *info);
 
 }//namespace cocos2d 

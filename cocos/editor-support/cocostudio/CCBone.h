@@ -41,15 +41,15 @@ class Bone : public cocos2d::Node
 {
 public:
     /**
-     * Allocates and initializes a bone.
-     * @return A initialized bone which is marked as "autorelease".
+     * 分配空间并初始化一个骨架（bone）
+     * @return 一个经过初始化并被标记为"autorelease"的骨架（bone）
      */
     static Bone *create();
     /**
-     * Allocates and initializes a bone.
+     * 分配空间并初始化一个骨架（bone）
      *
-     * @param  name If name is not null, then set name to the bone's name
-     * @return A initialized bone which is marked as "autorelease".
+     * @param  name 如果该名字参数非空，就将该参数设置为骨架（bone）的名字
+     * @return 一个经过初始化并被标记为"autorelease"的骨架（bone）
      */
     static Bone *create(const std::string& name);
 
@@ -65,26 +65,25 @@ public:
     virtual ~Bone(void);
 
     /**
-     * Initializes an empty Bone with nothing init.
+     * 初始化一个内部细节没有初始化的空骨架（bone）
      */
     virtual bool init() override;
 
     /**
-     * Initializes a Bone with the specified name
-     * @param name Bone's name.
+     * 用一个特定的名字参数来初始化该骨架（bone）
+     * @param name 骨架（bone）的名字
      */
     virtual bool init(const std::string& name);
 
     /**
-     * Add display and use displayData to init the display.
-     * If index already have a display, then replace it.
-     * If index is current display index, then also change display to _index
+     * 添加display并使用displayData初始化该display
+     * 如果参数所示索引（index）下已经有一个display，就替换该display
+     * 如果参数所示索引（index）是当前display的索引，仍然改变该display至_index
      *
-     * @param displayData it include the display information, like DisplayType.
-     *          If you want to create a sprite display, then create a SpriteDisplayData param
+     * @param displayData 该参数包括display的基本信息，比如DisplayType。如果你希望创建一个精灵display，那么就创建一个SpriteDisplayData参数
      *
-     * @param index the index of the display you want to replace or add to
-     *          -1 : append display from back
+     * @param index 你希望用来替换或者添加的display的索引（index）
+     *          －1:从后追加display
      */
     void addDisplay(DisplayData *displayData, int index);
 
@@ -99,37 +98,37 @@ public:
     void changeDisplayWithName(const std::string& name, bool force);
 
     /**
-     * Add a child to this bone, and it will let this child call setParent(Bone *parent) function to set self to it's parent
-     * @param 	child  the child you want to add
+     * 向骨架（bone）中增加一个子节点，并且允许该子节点通过调用 setParent(Bone *parent) 函数方法来设置其自身的父节点
+     * @param 	child  你希望添加的子节点
      */
     void addChildBone(Bone *child);
 
     /**
-     * Set parent bone.
-     * If parent is NUll, then also remove this bone from armature.
-     * It will not set the Armature, if you want to add the bone to a Armature, you should use Armature::addBone(Bone *bone, const char* parentName).
+     * 设置父骨架（bone）
+     * 如果将父节点设置为空，会将该骨架从Armature中清除
+     * 这个方法不会对Armature进行设置，如果你希望向Armature中添加骨架（bone），你应该使用Armature::addBone(Bone *bone, const char* parentName)
      *
-     * @param parent  the parent bone.
-     *          nullptr : remove this bone from armature
+     * @param parent  父骨架（bone）
+     *          nullptr : 从Armature中清除该骨架
      */
     void setParentBone(Bone *parent);
 
     /**
-     * Get parent bone
-     * @return parent bone
+     * 获取父骨架（bone）
+     * @return 父骨架（bone）
      */
     Bone *getParentBone();
 
     using Node::removeFromParent;
     /**
-     * Remove itself from its parent.
-     * @param recursion    whether or not to remove childBone's display
+     * 从其父节点中清除其自身
+     * @param recursion    是否清除该子骨架（bone）的display
      */
     void removeFromParent(bool recursion);
 
     /**
-     * Removes a child Bone
-     * @param 	bone   the bone you want to remove
+     * 清除一个子骨架（bone）
+     * @param 	bone   你希望清除的骨架（bone）
      */
     void removeChildBone(Bone *bone, bool recursion);
 
@@ -138,10 +137,10 @@ public:
     void updateDisplayedColor(const cocos2d::Color3B &parentColor) override;
     void updateDisplayedOpacity(GLubyte parentOpacity) override;
 
-    //! Update color to render display
+    //! 更新颜色，渲染display
     virtual void updateColor() override;
 
-    //! Update zorder
+    //! 更新zorder
     void updateZOrder();
 
     virtual void setLocalZOrder(int zOrder) override;
@@ -149,7 +148,7 @@ public:
     Tween *getTween();
 
     /*
-     * Whether or not the bone's transform property changed. if true, the bone will update the transform.
+     * 检查该骨架（bone）的变换属性是否发生改变。如果变化属性发生了变化，该骨架（bone）会依据该变化更新其自身
      */
     virtual void setTransformDirty(bool dirty) { _boneTransformDirty = dirty; }
     virtual bool isTransformDirty() { return _boneTransformDirty; }
@@ -161,7 +160,7 @@ public:
     DisplayType getDisplayRenderNodeType();
 
     /*
-     * Get the ColliderBody list in this bone. The object in the Array is ColliderBody.
+     * 获取该骨架中的ColliderBody表。序列中的对象为ColliderBody
      */
     virtual ColliderDetector* getColliderDetector() const;
 
@@ -187,20 +186,20 @@ public:
     virtual bool isIgnoreMovementBoneData() const { return _ignoreMovementBoneData; }
 
     /*
-     * This function is deprecated, please use isIgnoreMovementBoneData()
+     * 该函数已被弃用，请使用isIgnoreMovementBoneData()
      * @lua NA
      */
     CC_DEPRECATED_ATTRIBUTE virtual bool getIgnoreMovementBoneData() const { return isIgnoreMovementBoneData(); }
 
     
     /*
-     * Set blend function
+     * 设置blend函数
      */
     virtual void setBlendFunc(const cocos2d::BlendFunc& blendFunc);
     virtual cocos2d::BlendFunc getBlendFunc(void) { return _blendFunc; }
 
     /*
-     * Set if blend function is dirty 
+     * 设置是否blend函数已经过期
      */
     virtual void setBlendDirty(bool dirty) { _blendDirty = dirty; }
     virtual bool isBlendDirty(void) { return _blendDirty; }
@@ -215,31 +214,31 @@ protected:
     void applyParentTransform(Bone *parent);
 
     /*
-     *  The origin state of the Bone. Display's state is effected by _boneData, m_pNode, _tweenData
-     *  when call setData function, it will copy from the BoneData.
+     *  骨架（bone）的起始状态。display的状态会受到_boneData, m_pNode, _tweenData的影响
+     *  当调用setData函数时，它会在BoneData处进行复制
      */
     BoneData *_boneData;
 
-    //! A weak reference to the Armature
+    //! 指向Armature的弱引用
     Armature *_armature;
 
-    //! A weak reference to the child Armature
+    //! 指向子Armature的弱引用
     Armature *_childArmature;
 
     DisplayManager *_displayManager;
 
     /*
-     *	When Armature play an animation, if there is not a MovementBoneData of this bone in this MovementData, this bone will be hidden.
-     *	Set IgnoreMovementBoneData to true, then this bone will also be shown.
+     *	当Armature播放动画时，如果在这个MovementData中没有这个骨架（bone）的MovementBoneData，这个骨架（bone）会被隐藏
+     *	将IgnoreMovementBoneData设置为true，那么这个骨架（bone）也会被显示出来
      */
     bool _ignoreMovementBoneData;
 
     cocos2d::BlendFunc _blendFunc;
     bool _blendDirty;
 
-    Tween *_tween;				//! Calculate tween effect
+    Tween *_tween;				//! 计算tween效果
 
-    //! Used for making tween effect in every frame
+    //! 用来在每一个框架中制造tween效果
     FrameData *_tweenData;
 
     std::string _name;
@@ -247,15 +246,15 @@ protected:
     Bone *_parentBone;	               //! A weak reference to its parent
     bool _boneTransformDirty;          //! Whether or not transform dirty
 
-    //! self Transform, use this to change display's state
+    //! 自变换（self transform）, 用这个方法来改变display的状态
     cocos2d::Mat4 _worldTransform;
 
     BaseData *_worldInfo;
     
-    //! Armature's parent bone
+    //! Armature的父骨架（bone）
     Bone *_armatureParentBone;
     
-    //! Data version
+    //! 数据的版本
     float _dataVersion;
 };
 

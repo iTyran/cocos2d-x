@@ -43,7 +43,7 @@ class GLProgram;
  */
 
 /** GLProgramCache
- Singleton that stores manages GLProgram objects (shaders)
+ 单例的用于存储管理GL编程对象(shaders着色器)
  @since v2.0
  */
 class CC_DLL GLProgramCache : public Ref
@@ -59,33 +59,33 @@ public:
      */
     ~GLProgramCache();
 
-    /** returns the shared instance */
+    /** 返回着色器实例 */
     static GLProgramCache* getInstance();
 
-    /** purges the cache. It releases the retained instance. */
+    /** 净化缓存. 释放对该实例的引用. */
     static void destroyInstance();
 
-    /** @deprecated Use getInstance() instead */
+    /** @deprecated 用 getInstance() 替代 */
     CC_DEPRECATED_ATTRIBUTE static GLProgramCache* sharedShaderCache();
 
-    /** @deprecated Use destroyInstance() instead */
+    /** @deprecated 用 destroyInstance() 替代 */
     CC_DEPRECATED_ATTRIBUTE static void purgeSharedShaderCache();
 
-    /** loads the default shaders */
+    /** 加载默认着色器(shaders) */
     void loadDefaultGLPrograms();
     CC_DEPRECATED_ATTRIBUTE void loadDefaultShaders() { loadDefaultGLPrograms(); }
 
-    /** reload the default shaders */
+    /** 重加载加载默认着色器(shaders) */
     void reloadDefaultGLPrograms();
     CC_DEPRECATED_ATTRIBUTE void reloadDefaultShaders() { reloadDefaultGLPrograms(); }
 
-    /** returns a GL program for a given key 
+    /** 返回指定key的 GL编程对象
      */
     GLProgram * getGLProgram(const std::string &key);
     CC_DEPRECATED_ATTRIBUTE GLProgram * getProgram(const std::string &key) { return getGLProgram(key); }
     CC_DEPRECATED_ATTRIBUTE GLProgram * programForKey(const std::string &key){ return getGLProgram(key); }
 
-    /** adds a GLProgram to the cache for a given name */
+    /** 添加一个(GL编程对象)GLProgram到缓存中，并指定名字 */
     void addGLProgram(GLProgram* program, const std::string &key);
     CC_DEPRECATED_ATTRIBUTE void addProgram(GLProgram* program, const std::string &key) { addGLProgram(program, key); }
 

@@ -39,9 +39,9 @@ class Event;
 class Node;
 
 /**
- *  The base class of event listener.
- *  If you need custom listener which with different callback, you need to inherit this class.
- *  For instance, you could refer to EventListenerAcceleration, EventListenerKeyboard, EventListenerTouchOneByOne, EventListenerCustom.
+ *  事件监听器( event listener)的基类.
+ *  如果你需要使用不同的回调自定义监听时，你需要继承这个类
+ *  例如你可以参考 AccelerationEventListener, KeyboardEventListener or TouchEventListener, CustomEventListener.
  */
 class EventListener : public Ref
 {
@@ -61,95 +61,95 @@ public:
     typedef std::string ListenerID;
 
 protected:
-    /** Constructor */
+    /** 构造函数 */
     EventListener();
 
-    /** Initializes event with type and callback function */
+    /**使用 事件类型和回调函数 初始化事件 */
     bool init(Type t, const ListenerID& listenerID, const std::function<void(Event*)>& callback);
 public:
-    /** Destructor */
+    /** 析构函数 */
     virtual ~EventListener();
 
-    /** Checks whether the listener is available. */
+    /** 检查监听器(listener)是否可用. */
     virtual bool checkAvailable() = 0;
 
-    /** Clones the listener, its subclasses have to override this method. */
+    /** 克隆监听器(listener)，它的子类必须重写此. */
     virtual EventListener* clone() = 0;
 
-    /** Enables or disables the listener
-     *  @note Only listeners with `enabled` state will be able to receive events.
-     *        When an listener was initialized, it's enabled by default.
-     *        An event listener can receive events when it is enabled and is not paused.
-     *        paused state is always false when it is a fixed priority listener.
+    /** 启用或禁用监听器(listener)
+     *  @note 仅当监听器"启用"(`enabled`)状态才能接收到事件.
+     *        当一个监听器初始化后，它默认是启用的.
+     *        当一个监听器处于启用状态且没被暂停，它可以收到事件.
+     *        暂停状态时总是false的，当它是一个固定优先级的侦听器.
      */
     inline void setEnabled(bool enabled) { _isEnabled = enabled; };
 
-    /** Checks whether the listener is enabled */
+    /** 检查监听器是否可用 */
     inline bool isEnabled() const { return _isEnabled; };
 
 protected:
 
-    /** Sets paused state for the listener
-     *  The paused state is only used for scene graph priority listeners.
-     *  `EventDispatcher::resumeAllEventListenersForTarget(node)` will set the paused state to `true`,
-     *  while `EventDispatcher::pauseAllEventListenersForTarget(node)` will set it to `false`.
-     *  @note 1) Fixed priority listeners will never get paused. If a fixed priority doesn't want to receive events,
-     *           call `setEnabled(false)` instead.
-     *        2) In `Node`'s onEnter and onExit, the `paused state` of the listeners which associated with that node will be automatically updated.
+    /** 设置监听器的暂停状态
+     *  暂停状态仅被用于场景图像优先级监听器.
+     *  `EventDispatcher::resumeAllEventListenersForTarget(node)` 将会设置暂停状态为 `true`,
+     *  然而 `EventDispatcher::pauseAllEventListenersForTarget(node)` 将会设置暂停状态为 `false`.
+     *  @note 1) 固定优先级的监听器不会有暂停.  如果个一个固定优先级的监听器不想接收事件,调用
+     *           `setEnabled(false)` 代替.
+     *        2) 在节点(`Node`)的 onEnter 和 onExit 方法中, 和暂停状态的监听器  关联的节点将会自动更新.
      */
     inline void setPaused(bool paused) { _paused = paused; };
 
-    /** Checks whether the listener is paused */
+    /** 检查监听器是否被暂停 */
     inline bool isPaused() const { return _paused; };
 
-    /** Marks the listener was registered by EventDispatcher */
+    /** 标记监听器已经被加入到事件派发器(EventDispatcher) */
     inline void setRegistered(bool registered) { _isRegistered = registered; };
 
-    /** Checks whether the listener was registered by EventDispatcher */
+    /** 检查监听器是否被注册到事件派发器(EventDispatcher) */
     inline bool isRegistered() const { return _isRegistered; };
 
-    /** Gets the type of this listener
-     *  @note It's different from `EventType`, e.g. TouchEvent has two kinds of event listeners - EventListenerOneByOne, EventListenerAllAtOnce
+    /**获取监听器(listener)的类型
+     *  @note 它不同于`EventType`, 例如. TouchEvent有两种事件监听器 - EventListenerOneByOne, EventListenerAllAtOnce
      */
     inline Type getType() const { return _type; };
 
-    /** Gets the listener ID of this listener
-     *  When event is being dispatched, listener ID is used as key for searching listeners according to event type.
+    /** 获取监听器的ID 
+     *  当事件派发,监听器ID是用于查找符合事件类型的监听器的关键字.
      */
     inline const ListenerID& getListenerID() const { return _listenerID; };
 
-    /** Sets the fixed priority for this listener
-     *  @note This method is only used for `fixed priority listeners`, it needs to access a non-zero value.
-     *  0 is reserved for scene graph priority listeners
+    /** 为监听器设置固定优先级
+     *  @note 此方法仅用于 `fixed priority listeners`, 它需要传人一个非零(non-zero)值.
+     *  0 被保留用于场景图像监听器的优先级
      */
     inline void setFixedPriority(int fixedPriority) { _fixedPriority = fixedPriority; };
 
-    /** Gets the fixed priority of this listener
-     *  @return 0 if it's a scene graph priority listener, non-zero for fixed priority listener
+    /** 获取监听器的优先级
+     *  @return 如果是场景图像监听器则返回0,其他固定优先级的监听器返回非零(non-zero)值
      */
     inline int getFixedPriority() const { return _fixedPriority; };
 
-    /** Sets the node associated with this listener */
+    /**设置和监听器关联的节点 */
     inline void setAssociatedNode(Node* node) { _node = node; };
 
-    /** Gets the node associated with this listener
-     *  @return nullptr if it's a fixed priority listener, otherwise return non-nullptr
+    /** 获取和监听器关联的节点
+     *  @return 如果是固定优先级的监听器则返回空指针(nullptr),否则返回非空指针(non-nullptr)
      */
     inline Node* getAssociatedNode() const { return _node; };
 
     ///////////////
     // Properties
     //////////////
-    std::function<void(Event*)> _onEvent;   /// Event callback function
+    std::function<void(Event*)> _onEvent;   /// 事件回调函数
 
-    Type _type;                             /// Event listener type
-    ListenerID _listenerID;                 /// Event listener ID
-    bool _isRegistered;                     /// Whether the listener has been added to dispatcher.
+    Type _type;                             /// Event listener 事件监听器的类型
+    ListenerID _listenerID;                 /// Event listener 事件监听器的ID
+    bool _isRegistered;                     /// 监听器(listener)是否被加入到派发器(dispatcher) .
 
-    int   _fixedPriority;   // The higher the number, the higher the priority, 0 is for scene graph base priority.
-    Node* _node;            // scene graph based priority
-    bool _paused;           // Whether the listener is paused
-    bool _isEnabled;        // Whether the listener is enabled
+    int   _fixedPriority;   // 数值越高，优先级越高. 0 是场景图像的基础优先级.
+    Node* _node;            // 事件监听器关联的节点
+    bool _paused;           // 监听器是否暂停
+    bool _isEnabled;        // 监听器是否启用
     friend class EventDispatcher;
 };
 

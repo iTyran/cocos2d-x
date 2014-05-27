@@ -146,27 +146,27 @@ public:
     /**
      * @js NA
      */
-    float getMinX() const; /// return the leftmost x-value of current rect
+    float getMinX() const; /// 返回rect的最左的x值
     /**
      * @js NA
      */
-    float getMidX() const; /// return the midpoint x-value of current rect
+    float getMidX() const; /// 返回rect的中点的x值
     /**
      * @js NA
      */
-    float getMaxX() const; /// return the rightmost x-value of current rect
+    float getMaxX() const; /// 返回rect的最右的x值
     /**
      * @js NA
      */
-    float getMinY() const; /// return the bottommost y-value of current rect
+    float getMinY() const; /// 返回rect的底部的y值
     /**
      * @js NA
      */
-    float getMidY() const; /// return the midpoint y-value of current rect
+    float getMidY() const; /// 返回rect的中部的y值
     /**
      * @js NA
      */
-    float getMaxY() const; /// return the topmost y-value of current rect
+    float getMaxY() const; /// 返回rect的顶部的y值
     /**
      * @js NA
      */

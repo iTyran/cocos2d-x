@@ -58,7 +58,7 @@ struct spAttachmentLoader {
 
 void spAttachmentLoader_dispose (spAttachmentLoader* self);
 
-/* Returns 0 to not load an attachment. If 0 is returned and spAttachmentLoader.error1 is set, an error occurred. */
+/* 加载新的附件（atttachment）如果没有加载成功则返回0，如果返回0时spAttachmentLoader.error1被设置了值表示有错误发生. */
 spAttachment* spAttachmentLoader_newAttachment (spAttachmentLoader* self, spSkin* skin, spAttachmentType type, const char* name);
 
 #ifdef SPINE_SHORT_NAMES

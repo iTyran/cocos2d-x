@@ -36,10 +36,9 @@ NS_CC_BEGIN
  */
 
 /**
- @brief This action simulates a page turn from the bottom right hand corner of the screen.
- It's not much use by itself but is used by the PageTurnTransition.
+ @brief 3D翻页动画
  
- Based on an original paper by L Hong et al.
+ 机遇L Hong et al的论文.
  http://www.parc.com/publication/1638/turning-pages-of-3d-electronic-books.html
   
  @since v0.8.2
@@ -47,7 +46,7 @@ NS_CC_BEGIN
 class CC_DLL PageTurn3D : public Grid3DAction
 {
 public:
-    /** create the action */
+    /** 创建一个3D翻页特效*/
     static PageTurn3D* create(float duration, const Size& gridSize);
 
     // Overrides

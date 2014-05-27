@@ -29,36 +29,29 @@ NS_CC_MATH_BEGIN
 //class Plane;
 
 /**
- * Defines a 4 x 4 floating point matrix representing a 3D transformation.
+ * 定义一个4*4的浮点矩阵来表示一个3D转换。
  *
- * Vectors are treated as columns, resulting in a matrix that is represented as follows,
- * where x, y and z are the translation components of the matrix:
+ * 用向量作为列，结果一个矩阵表示如下，x,y,z作为矩阵的转换部件。
  *
  * 1  0  0  x
  * 0  1  0  y
  * 0  0  1  z
  * 0  0  0  1
  *
- * This matrix class is directly compatible with OpenGL since its elements are
- * laid out in memory exactly as they are expected by OpenGL.
- * The matrix uses column-major format such that array indices increase down column first.
- * Since matrix multiplication is not commutative, multiplication must be done in the
- * correct order when combining transformations. Suppose we have a translation
- * matrix T and a rotation matrix R. To first rotate an object around the origin
- * and then translate it, you would multiply the two matrices as TR.
+ * 由于这个矩阵类(Mat4)的元素是在内存的形式正如OpenGL盼望的一样，所以这个矩阵类(Mat4)是直接兼容OpenGL的。
+ * 该矩阵使用列为主(column-major)的格式，以致数组下标优先往下增长。
+ * 由于矩阵乘法是不可交换的，所以乘法必须在合并时进行正序转换。
+ * 假设我们有一个转换矩阵T和一个旋转矩阵R。首先把对象围绕原点旋转然后再转换它，你可以使两个矩阵相乘得到TR。
  *
- * Likewise, to first translate the object and then rotate it, you would do RT.
- * So generally, matrices must be multiplied in the reverse order in which you
- * want the transformations to take place (this also applies to
- * the scale, rotate, and translate methods below; these methods are convenience
- * methods for post-multiplying by a matrix representing a scale, rotation, or translation).
+ * 同样，首先转换那对象然后再旋转它，你会得到一个RT。
  *
- * In the case of repeated local transformations (i.e. rotate around the Z-axis by 0.76 radians,
- * then translate by 2.1 along the X-axis, then ...), it is better to use the Transform class
- * (which is optimized for that kind of usage).
+ * 所以通常，矩阵转换发生时必须进行倒序转换。(这也适用于缩放，旋转和平移方法；这些方法都是处理矩阵缩放，旋转和转换的便利方法)
+ *
+ * 在多次局部转换的情况下（围绕z轴旋转0.76弧度，然后没x轴平移2.1,然后...）,这比使用转换类处理更好（这是对那种用法的优化）。
  *
  * @see Transform
  */
+
 class Mat4
 {
 public:
@@ -75,12 +68,12 @@ public:
     //     set(mat.mat);
     // }
     /**
-     * Stores the columns of this 4x4 matrix.
+	 * 储存这个4*4的矩阵
      * */
     float m[16];
 
     /**
-     * Constructs a matrix initialized to the identity matrix:
+	 * 构造一个矩阵并初始化为单位矩阵
      *
      * 1  0  0  0
      * 0  1  0  0
@@ -90,166 +83,156 @@ public:
     Mat4();
 
     /**
-     * Constructs a matrix initialized to the specified value.
+	 * 构造一个矩阵并使用给定的值初始化
      *
-     * @param m11 The first element of the first row.
-     * @param m12 The second element of the first row.
-     * @param m13 The third element of the first row.
-     * @param m14 The fourth element of the first row.
-     * @param m21 The first element of the second row.
-     * @param m22 The second element of the second row.
-     * @param m23 The third element of the second row.
-     * @param m24 The fourth element of the second row.
-     * @param m31 The first element of the third row.
-     * @param m32 The second element of the third row.
-     * @param m33 The third element of the third row.
-     * @param m34 The fourth element of the third row.
-     * @param m41 The first element of the fourth row.
-     * @param m42 The second element of the fourth row.
-     * @param m43 The third element of the fourth row.
-     * @param m44 The fourth element of the fourth row.
+     * @param m11 第一行的第一个元素.
+     * @param m12 第一行的第二个元素.
+     * @param m13 第一行的第三个元素.
+     * @param m14 第一行的第四个元素.
+     * @param m21 第二行的第一个元素.
+     * @param m22 第二行的第二个元素.
+     * @param m23 第二行的第三个元素.
+     * @param m24 第二行的第四个元素.
+     * @param m31 第三行的第一个元素.
+     * @param m32 第三行的第二个元素.
+     * @param m33 第三行的第三个元素.
+     * @param m34 第三行的第四个元素.
+     * @param m41 第四行的第一个元素.
+     * @param m42 第四行的第二个元素.
+     * @param m43 第四行的第三个元素.
+     * @param m44 第四行的第四个元素.
      */
     Mat4(float m11, float m12, float m13, float m14, float m21, float m22, float m23, float m24,
            float m31, float m32, float m33, float m34, float m41, float m42, float m43, float m44);
 
     /**
-     * Creates a matrix initialized to the specified column-major array.
+	 * 创建一个矩阵并使用指定的列优先数组时行初始化。
      *
-     * The passed-in array is in column-major order, so the memory layout of the array is as follows:
+	 * 传入的​​数组是列优先的顺序，所以数组的储存布局如下所示：
      *
      *     0   4   8   12
      *     1   5   9   13
      *     2   6   10  14
      *     3   7   11  15
      *
-     * @param mat An array containing 16 elements in column-major order.
+     * @param mat 一个含有16个元素并且以列优先的数组。
      */
     Mat4(const float* mat);
 
     /**
-     * Constructs a new matrix by copying the values from the specified matrix.
+	 * 复制指定的矩阵构造一个新的矩阵。
      *
-     * @param copy The matrix to copy.
+     * @param copy 要复制的矩阵。
      */
     Mat4(const Mat4& copy);
 
     /**
-     * Destructor.
+	 * 析构函数
      */
     ~Mat4();
 
     /**
-     * Creates a view matrix based on the specified input parameters.
+	 * 根据输入参数的创建一个视图矩阵。
      *
-     * @param eyePosition The eye position.
-     * @param targetPosition The target's center position.
-     * @param up The up vector.
-     * @param dst A matrix to store the result in.
+     * @param eyePosition 视点。
+     * @param targetPosition 目标的中心点。
+     * @param up 向上向量。
+     * @param dst 储存结果的矩阵。
      */
     static void createLookAt(const Vec3& eyePosition, const Vec3& targetPosition, const Vec3& up, Mat4* dst);
 
     /**
-     * Creates a view matrix based on the specified input parameters.
+	 * 根据输入参数的创建一个视图矩阵。
      *
-     * @param eyePositionX The eye x-coordinate position.
-     * @param eyePositionY The eye y-coordinate position.
-     * @param eyePositionZ The eye z-coordinate position.
-     * @param targetCenterX The target's center x-coordinate position.
-     * @param targetCenterY The target's center y-coordinate position.
-     * @param targetCenterZ The target's center z-coordinate position.
-     * @param upX The up vector x-coordinate value.
-     * @param upY The up vector y-coordinate value.
-     * @param upZ The up vector z-coordinate value.
-     * @param dst A matrix to store the result in.
+     * @param eyePositionX x坐标视点。
+     * @param eyePositionY y坐标视点。
+     * @param eyePositionZ z坐标视点。
+     * @param targetCenterX 目标在x坐标的中心点。
+     * @param targetCenterY 目标在y坐标的中心点。
+     * @param targetCenterZ 目标在z坐标的中心点。
+     * @param upX 向上向量在x坐标的值。
+     * @param upY 向上向量在y坐标的值。
+     * @param upZ 向上向量在z坐标的值。
+     * @param dst 储存结果的矩阵。
      */
     static void createLookAt(float eyePositionX, float eyePositionY, float eyePositionZ,
                              float targetCenterX, float targetCenterY, float targetCenterZ,
                              float upX, float upY, float upZ, Mat4* dst);
 
     /**
-     * Builds a perspective projection matrix based on a field of view and returns by value.
+     * 根据视野和返回的值构建一个透视投影矩阵
      *
-     * Projection space refers to the space after applying projection transformation from view space.
-     * After the projection transformation, visible content has x- and y-coordinates ranging from -1 to 1,
-     * and a z-coordinate ranging from 0 to 1. To obtain the viewable area (in world space) of a scene,
-     * create a BoundingFrustum and pass the combined view and projection matrix to the constructor.
      *
-     * @param fieldOfView The field of view in the y direction (in degrees).
-     * @param aspectRatio The aspect ratio, defined as view space width divided by height.
-     * @param zNearPlane The distance to the near view plane.
-     * @param zFarPlane The distance to the far view plane.
-     * @param dst A matrix to store the result in.
+     * 投影空间指的是空间应用的视图空间投影变换后。
+     * 投影变换后，可见内容具有范围都是从-1到1的x和y坐标的，范围从0到1的和z坐标的。
+     * 为了获得一个场景的可视区域（在世界空间中）中，创建一个BoundingFrustum和通过组合视图和投影矩阵的构造函数。
+     *
+     * @param fieldOfView 视图在y方向的值（度为单位）。
+     * @param aspectRatio 宽高比，定义为视图空间宽度除以高度。
+     * @param zNearPlane 离视图平面最近的距离。
+     * @param zFarPlane 离视图平面最远的距离。
+     * @param dst 储存结果的矩阵。
      */
     static void createPerspective(float fieldOfView, float aspectRatio, float zNearPlane, float zFarPlane, Mat4* dst);
 
     /**
-     * Creates an orthographic projection matrix.
+     * 创建一个正交投影矩阵。
      *
-     * @param width The width of the view.
-     * @param height The height of the view.
-     * @param zNearPlane The minimum z-value of the view volume.
-     * @param zFarPlane The maximum z-value of the view volume.
-     * @param dst A matrix to store the result in.
+     * @param width 视图的宽度。
+     * @param height 视图的高度。
+     * @param zNearPlane 视图的最小z值。
+     * @param zFarPlane 视图的最大z值。
+     * @param dst 储存结果的矩阵。
      */
     static void createOrthographic(float width, float height, float zNearPlane, float zFarPlane, Mat4* dst);
 
     /**
-     * Creates an orthographic projection matrix.
+     * 创建一个正交投影矩阵。
      *
-     * Projection space refers to the space after applying
-     * projection transformation from view space. After the
-     * projection transformation, visible content has
-     * x and y coordinates ranging from -1 to 1, and z coordinates
-     * ranging from 0 to 1.
+     * 投影空间指的是空间从视图应用投影变换后的空间。
+     * 投影变换后,可见内容有x和y坐标的范围为1至-1,和z坐标的范围为0至1。
      *
-     * Unlike perspective projection, in orthographic projection
-     * there is no perspective foreshortening.
+     * 在正射投影和透视投影没有视角透视收缩。
      *
-     * The viewable area of this orthographic projection extends
-     * from left to right on the x-axis, bottom to top on the y-axis,
-     * and zNearPlane to zFarPlane on the z-axis. These values are
-     * relative to the position and x, y, and z-axes of the view.
-     * To obtain the viewable area (in world space) of a scene,
-     * create a BoundingFrustum and pass the combined view and
-     * projection matrix to the constructor.
+     * 正投影的可视区域的范围是从左至右的x轴，从下到上的y轴，和zNearPlane到zFarPlane于z轴。
+     * 这些值是相对于所述位置以及x，y和视图的z轴。
+     * 为了获得场景的可视区域（在世界空间中），创建一个BoundingFrustum，并通过组合视图和投影矩阵的构造函数。
      *
-     * @param left The minimum x-value of the view volume.
-     * @param right The maximum x-value of the view volume.
-     * @param bottom The minimum y-value of the view volume.
-     * @param top The maximum y-value of the view volume.
-     * @param zNearPlane The minimum z-value of the view volume.
-     * @param zFarPlane The maximum z-value of the view volume.
-     * @param dst A matrix to store the result in.
+     * @param left 视体的最小x值。
+     * @param right 视体的最大x值。
+     * @param bottom 视体的最小y值。
+     * @param top 视体的最大y值。
+     * @param zNearPlane 视体的最小z值。
+     * @param zFarPlane 视体的最大z值。
+     * @param dst 储存结果的矩阵。
      */
     static void createOrthographicOffCenter(float left, float right, float bottom, float top,
                                             float zNearPlane, float zFarPlane, Mat4* dst);
 
     /**
-     * Creates a spherical billboard that rotates around a specified object position.
+     * 创建一个围绕指定对象的位置旋转的球形广告牌(Billboard)。
      *
-     * This method computes the facing direction of the billboard from the object position
-     * and camera position. When the object and camera positions are too close, the matrix
-     * will not be accurate. To avoid this problem, this method defaults to the identity
-     * rotation if the positions are too close. (See the other overload of createBillboard
-     * for an alternative approach).
+     * 该方法计算广告牌(Billboard)从对象位置和摄像机的位置的面对方向。
+     * 当对象和摄像机位置太近,矩阵将不准确。为了避免这个问题,如果位置太近该方法默认单位旋转处理。(见createBillboard重载的另一种方法)。
      *
-     * @param objectPosition The position of the object the billboard will rotate around.
-     * @param cameraPosition The position of the camera.
-     * @param cameraUpVector The up vector of the camera.
-     * @param dst A matrix to store the result in.
+     * @param objectPosition 广告牌(Billboard)围绕旋转的对象位置。
+     * @param cameraPosition 相机的位置。
+     * @param cameraUpVector 相机的向量。
+     * @param dst 储存结果的矩阵。
      */
     static void createBillboard(const Vec3& objectPosition, const Vec3& cameraPosition,
                                 const Vec3& cameraUpVector, Mat4* dst);
 
     /**
-     * Creates a spherical billboard that rotates around a specified object position with
-     * provision for a safe default orientation.
+     * 创建一个球形的广告牌(Billboard),并围绕提供的安全默认指定对象的位置旋转。
      *
      * This method computes the facing direction of the billboard from the object position
      * and camera position. When the object and camera positions are too close, the matrix
      * will not be accurate. To avoid this problem, this method uses the specified camera
      * forward vector if the positions are too close. (See the other overload of createBillboard
      * for an alternative approach).
+     * 该方法计算广告牌(Billboard)从对象位置和摄像机的位置的面对方向。
+     * 当对象和摄像机位置太近,矩阵将不准确。为了避免这个问题,这种方法使用指定的相机向前向量是否太近的位置。(见createBillboard重载的另一种方法)。
      *
      * @param objectPosition The position of the object the billboard will rotate around.
      * @param cameraPosition The position of the camera.
@@ -263,60 +246,61 @@ public:
 
     /**
      * Fills in an existing Mat4 so that it reflects the coordinate system about a specified Plane.
+     * 填补了现有MAT4（矩阵），以便反映对特定平面的坐标系。
      *
-     * @param plane The Plane about which to create a reflection.
-     * @param dst A matrix to store the result in.
+     * @param plane 反射平面。
+     * @param dst 储存结果的矩阵。
      */
     //static void createReflection(const Plane& plane, Mat4* dst);
 
     /**
-     * Creates a scale matrix.
+     * 创建一个缩放矩阵。
      *
-     * @param scale The amount to scale.
-     * @param dst A matrix to store the result in.
+     * @param scale 缩放量。
+     * @param dst 储存结果的矩阵。
      */
     static void createScale(const Vec3& scale, Mat4* dst);
 
     /**
-     * Creates a scale matrix.
+     * 创建一个缩放矩阵。
      *
-     * @param xScale The amount to scale along the x-axis.
-     * @param yScale The amount to scale along the y-axis.
-     * @param zScale The amount to scale along the z-axis.
-     * @param dst A matrix to store the result in.
+     * @param xScale x轴上的缩放量。
+     * @param yScale y轴上的缩放量。
+     * @param zScale z轴上的缩放量。
+     * @param dst 储存结果的矩阵。
      */
     static void createScale(float xScale, float yScale, float zScale, Mat4* dst);
 
     /**
-     * Creates a rotation matrix from the specified quaternion.
+     * 根据指定的四元数创建一个旋转矩阵。
      *
-     * @param quat A quaternion describing a 3D orientation.
-     * @param dst A matrix to store the result in.
+     * @param quat 描述三给方向的四元数。
+     * @param dst 储存结果的矩阵。
      */
     static void createRotation(const Quaternion& quat, Mat4* dst);
 
     /**
-     * Creates a rotation matrix from the specified axis and angle.
+     * 根据指定的旋转轴和角度创建一个旋转矩阵。
      *
-     * @param axis A vector describing the axis to rotate about.
-     * @param angle The angle (in radians).
-     * @param dst A matrix to store the result in.
+     * @param axis 矢量描述的旋转轴。
+     * @param angle 角度（以弧度为单位）。
+     * @param dst 储存结果的矩阵。
      */
     static void createRotation(const Vec3& axis, float angle, Mat4* dst);
 
     /**
-     * Creates a matrix describing a rotation around the x-axis.
+     * 根据指定的角度围绕x轴旋转创建一个矩阵。
      *
-     * @param angle The angle of rotation (in radians).
-     * @param dst A matrix to store the result in.
+     * @param angle 旋转角度（以弧度为单位）。
+     * @param dst 储存结果的矩阵。
      */
     static void createRotationX(float angle, Mat4* dst);
 
     /**
-     * Creates a matrix describing a rotation around the y-axis.
+     * 根据指定角度矩阵围绕y轴旋转创建一个矩阵。
      *
-     * @param angle The angle of rotation (in radians).
-     * @param dst A matrix to store the result in.
+     * @param angle 旋转角度（以弧度为单位）。
+     * @param dst 储存结果的矩阵。
      */
     static void createRotationY(float angle, Mat4* dst);
 

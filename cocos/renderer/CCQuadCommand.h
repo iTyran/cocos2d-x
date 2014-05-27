@@ -31,7 +31,7 @@
 
 NS_CC_BEGIN
 
-/** Command used to render one or more Quads */
+/** 使用一个或多个Quad去渲染的命令 */
 class QuadCommand : public RenderCommand
 {
 public:
@@ -40,8 +40,8 @@ public:
     QuadCommand();
     ~QuadCommand();
 
-    /** Initializes the command with a globalZOrder, a texture ID, a `GLProgram`, a blending function, a pointer to quads,
-     * quantity of quads, and the Model View transform to be used for the quads */
+    /** 使用一个全局ZOrder(globalZOrder), 一个纹理ID(texture ID), 一个GL编程(`GLProgram`), 一个混合函数, 一个quads指针,
+     * quads的质量, 和用于quads模型视图转换初始化命令. */
     void init(float globalOrder, GLuint texutreID, GLProgramState* shader, BlendFunc blendType, V3F_C4B_T2F_Quad* quads, ssize_t quadCount,
               const Mat4& mv);
 

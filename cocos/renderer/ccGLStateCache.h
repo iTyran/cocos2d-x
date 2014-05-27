@@ -44,7 +44,7 @@ class GLProgram;
 
 namespace GL {
 
-/** vertex attrib flags */
+/** 顶点(vertex)的属性标志 */
 enum {
     VERTEX_ATTRIB_FLAG_NONE       = 0,
 
@@ -58,87 +58,87 @@ enum {
 /** @file ccGLStateCache.h
 */
 
-/** Invalidates the GL state cache.
- If CC_ENABLE_GL_STATE_CACHE it will reset the GL state cache.
+/** 使GL 的状态缓存作废.
+ 如果启用 CC_ENABLE_GL_STATE_CACHE 会重置 GL 状态缓存.
  @since v2.0.0
  */
 void CC_DLL invalidateStateCache(void);
 
-/** Uses the GL program in case program is different than the current one.
- If CC_ENABLE_GL_STATE_CACHE is disabled, it will the glUseProgram() directly.
+/** 使用GL编程传人参数(in case)program不同于当前.
+ 如果 CC_ENABLE_GL_STATE_CACHE 被禁用, 它会直接使用 glUseProgram()方法.
  @since v2.0.0
  */
 void CC_DLL useProgram(GLuint program);
 
-/** Deletes the GL program. If it is the one that is being used, it invalidates it.
- If CC_ENABLE_GL_STATE_CACHE is disabled, it will the glDeleteProgram() directly.
+/** 删除 GL编程. 如果program正在使用，该方法是program无效.
+ 如果 CC_ENABLE_GL_STATE_CACHE 被禁用, 他会直接执行 glDeleteProgram() 方法.
  @since v2.0.0
  */
 void CC_DLL deleteProgram(GLuint program);
 
-/** Uses a blending function in case it not already used.
- If CC_ENABLE_GL_STATE_CACHE is disabled, it will the glBlendFunc() directly.
+/** 使用混合方法，传人参数(in case)是没有被使用的.
+ 如果 CC_ENABLE_GL_STATE_CACHE 被禁用, 它会直接执行 glBlendFunc()方法.
  @since v2.0.0
  */
 void CC_DLL blendFunc(GLenum sfactor, GLenum dfactor);
 
-/** Resets the blending mode back to the cached state in case you used glBlendFuncSeparate() or glBlendEquation().
- If CC_ENABLE_GL_STATE_CACHE is disabled, it will just set the default blending mode using GL_FUNC_ADD.
+/** 重设混合模式恢复缓存状态，假使你使用glBlendFuncSeparate() 或者 glBlendEquation()方法.
+ 如果 CC_ENABLE_GL_STATE_CACHE 被禁用, 它将仅仅使用GL_FUNC_ADD设置默认混合模式.
  @since v2.0.0
  */
 void CC_DLL blendResetToCache(void);
 
-/** sets the projection matrix as dirty
+/** 设置投影矩阵暗淡(dirty)
  @since v2.0.0
  */
 void CC_DLL setProjectionMatrixDirty(void);
 
-/** Will enable the vertex attribs that are passed as flags.
- Possible flags:
+/** 将会使顶点属性像标记一样传递.
+ 可能的标记(flags):
 
     * VERTEX_ATTRIB_FLAG_POSITION
     * VERTEX_ATTRIB_FLAG_COLOR
     * VERTEX_ATTRIB_FLAG_TEX_COORDS
 
- These flags can be ORed. The flags that are not present, will be disabled.
+ 这些标记可以是ORed. 标记没有指定, 将会被禁用.
 
  @since v2.0.0
  */
 void CC_DLL enableVertexAttribs(uint32_t flags);
 
-/** If the texture is not already bound to texture unit 0, it binds it.
- If CC_ENABLE_GL_STATE_CACHE is disabled, it will call glBindTexture() directly.
+/** 如果纹理(texture)没有绑定到纹理单位0,绑定它.
+ 如果 CC_ENABLE_GL_STATE_CACHE 被禁用, 它将直接调用 glBindTexture()方法.
  @since v2.0.0
  */
 void CC_DLL bindTexture2D(GLuint textureId);
 
 
-/** If the texture is not already bound to a given unit, it binds it.
- If CC_ENABLE_GL_STATE_CACHE is disabled, it will call glBindTexture() directly.
+/** 如果纹理(texture)没有被绑定到指定的单位，绑定它.
+ 如果 CC_ENABLE_GL_STATE_CACHE 被禁用,它将直接调用 glBindTexture() 方法.
  @since v2.1.0
  */
 void CC_DLL bindTexture2DN(GLuint textureUnit, GLuint textureId);
 
-/** It will delete a given texture. If the texture was bound, it will invalidate the cached.
- If CC_ENABLE_GL_STATE_CACHE is disabled, it will call glDeleteTextures() directly.
+/** 它将删除指定的textureId的纹理. 如果该纹理已经绑定,此方法会是它的缓存无效.
+ 如果 CC_ENABLE_GL_STATE_CACHE 被禁用, 它将直接调用glDeleteTextures()方法.
  @since v2.0.0
  */
 void CC_DLL deleteTexture(GLuint textureId);
 
-/** It will delete a given texture. If the texture was bound, it will invalidate the cached for the given texture unit.
- If CC_ENABLE_GL_STATE_CACHE is disabled, it will call glDeleteTextures() directly.
+/** 它将删除指定的textureId的纹理.如果该纹理已经绑定, 它将使缓存从给定的纹理单元失效.
+ 如果 CC_ENABLE_GL_STATE_CACHE 被禁用, 它将直接调用 glDeleteTextures() 方法.
  @since v2.1.0
  */
 void CC_DLL deleteTextureN(GLuint textureUnit, GLuint textureId);
 
-/** Select active texture unit.
- If CC_ENABLE_GL_STATE_CACHE is disabled, it will call glActiveTexture() directly.
+/** 选取活动的纹理单元(texture unit).
+ 如果 CC_ENABLE_GL_STATE_CACHE 被禁用, 它将直接调用 glActiveTexture() 方法.
  @since v3.0
  */
 void CC_DLL activeTexture(GLenum texture);
 
-/** If the vertex array is not already bound, it binds it.
- If CC_ENABLE_GL_STATE_CACHE is disabled, it will call glBindVertexArray() directly.
+/** 如果顶点(vertex)数组没有绑定, 绑定它.
+ 如果 CC_ENABLE_GL_STATE_CACHE 被禁用, 它将直接调用 glBindVertexArray() 方法.
  @since v2.0.0
  */
 void CC_DLL bindVAO(GLuint vaoId);

@@ -51,7 +51,7 @@ typedef struct {
 spSlotData* spSlotData_create (const char* name, spBoneData* boneData);
 void spSlotData_dispose (spSlotData* self);
 
-/* @param attachmentName May be 0 for no setup pose attachment. */
+/* @param attachmentName 可以是0 用于没有初始姿势（setup pose）的附件. */
 void spSlotData_setAttachmentName (spSlotData* self, const char* attachmentName);
 
 #ifdef SPINE_SHORT_NAMES

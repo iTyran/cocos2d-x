@@ -92,7 +92,7 @@ protected:
 class SchedulerScriptHandlerEntry : public ScriptHandlerEntry
 {
 public:
-    // nHandler return by tolua_ref_function(), called from LuaCocos2d.cpp
+    // nHandler 由tolua_ref_function()函数返回，在LuaCocos2d.cpp中调用
     /**
      * @js NA
      * @lua NA
@@ -216,12 +216,12 @@ enum ScriptEventType
 
 struct BasicScriptData
 {
-    // nativeobject:to get handler for lua or to get jsobject for js
+    // nativeobject:为lua获得句柄(handler)或者为js获得js对象(jsobject)
     void* nativeObject;
-    // value: a pointer to a object that already defined
+    // value: 一个指向已定义对象的指针
     void* value;
     
-    // Constructor
+    // 构造函数
     /**
      * @js NA
      * @lua NA
@@ -234,13 +234,13 @@ struct BasicScriptData
 
 struct SchedulerScriptData
 {
-    // lua use
+    // lua 使用
     int handler;
     float elapse;
-    // js use
+    // js 使用
     void* node;
     
-    // Constructor
+    // 构造函数
     /**
      * @js NA
      * @lua NA
@@ -260,7 +260,7 @@ struct TouchesScriptData
     const std::vector<Touch*>& touches;
     Event* event;
     
-    // Constructor
+    // 构造函数
     /**
      * @js NA
      * @lua NA
@@ -281,7 +281,7 @@ struct TouchScriptData
     Touch* touch;
     Event* event;
     
-    // Constructor
+    // 构造函数
     /**
      * @js NA
      * @lua NA
@@ -300,7 +300,7 @@ struct KeypadScriptData
     EventKeyboard::KeyCode actionType;
     void* nativeObject;
     
-    // Constructor
+    // 构造函数
     /**
      * @js NA
      * @lua NA
@@ -313,13 +313,13 @@ struct KeypadScriptData
 
 struct CommonScriptData
 {
-    // Now this struct is only used in LuaBinding.
+    // 现在这个结构体只应用于Lua绑定(LuaBinding).
     int handler;
     char eventName[64];
     Ref* eventSource;
     char eventSourceClassName[64];
     
-    // Constructor
+    // 构造函数
     /**
      * @js NA
      * @lua NA
@@ -346,7 +346,7 @@ struct ScriptEvent
     ScriptEventType type;
     void* data;
     
-    // Constructor
+    // 构造函数
     /**
      * @js NA
      * @lua NA
@@ -358,9 +358,9 @@ struct ScriptEvent
     }
 };
 
-// Don't make ScriptEngineProtocol inherits from Object since setScriptEngine is invoked only once in AppDelegate.cpp,
-// It will affect the lifecycle of ScriptCore instance, the autorelease pool will be destroyed before destructing ScriptCore.
-// So a crash will appear on Win32 if you click the close button.
+// 不要从对象中继承ScriptEngineProtocol，因为setScriptEngine只在AppDelegate.cpp中调用一次
+// 这么做会影响脚本核心(ScriptCore)实例的生命周期，自动释放池会在脚本核心(ScriptCore)析构之前被销毁。
+// 这样的话如果你点击关闭按钮程序会发生崩溃
 class CC_DLL ScriptEngineProtocol
 {
 public:
@@ -373,66 +373,66 @@ public:
      */
     virtual ~ScriptEngineProtocol() {};
     
-    /** Get script type 
+    /** 获得脚本类型
      * @js NA
      * @lua NA
      */
     virtual ccScriptType getScriptType() { return kScriptTypeNone; };
 
-    /** Remove script object. 
+    /** 移除脚本对象.
      * @js NA
      * @lua NA
      */
     virtual void removeScriptObjectByObject(Ref* obj) = 0;
     
-    /** Remove script function handler, only LuaEngine class need to implement this function. 
+    /** 移除脚本函数句柄，只有Lua引擎类需要实现这个函数
      * @js NA
      * @lua NA
      */
     virtual void removeScriptHandler(int handler) {};
     
-    /** Reallocate script function handler, only LuaEngine class need to implement this function. 
+    /** 重新分配函数句柄，只有Lua引擎类需要实现这个函数
      * @js NA
      * @lua NA
      */
     virtual int reallocateScriptHandler(int handler) { return 0;}
     
     /**
-     @brief Execute script code contained in the given string.
-     @param codes holding the valid script code that should be executed.
-     @return 0 if the string is executed correctly.
-     @return other if the string is executed wrongly.
+     @brief         执行给定字符串中包含的脚本代码
+     @param         参数codes持有应该被执行的有效的脚本代码
+     @return        如果字符串执行正确返回 0.
+     @return        如果字符串执行错误返回其它
      * @js NA
      * @lua NA
      */
     virtual int executeString(const char* codes) = 0;
     
     /**
-     @brief Execute a script file.
-     @param filename String object holding the filename of the script file that is to be executed
+     @brief  执行一个脚本文件。
+     @param  参数filename是字符串对象，持有需要被执行的脚本文件的文件名
      * @js NA
      * @lua NA
      */
     virtual int executeScriptFile(const char* filename) = 0;
     
     /**
-     @brief Execute a scripted global function.
-     @brief The function should not take any parameters and should return an integer.
-     @param functionName String object holding the name of the function, in the global script environment, that is to be executed.
-     @return The integer value returned from the script function.
+     @brief   执行一个脚本全局函数
+     @brief   该函数不应该带任何参数，应该返回一个整型值
+     @param   要执行的函数包含在全局脚本环境中，参数functionName持有该函数的函数名
+     @return  该全局脚本函数返回整型值
      * @js NA
      * @lua NA
      */
     virtual int executeGlobalFunction(const char* functionName) = 0;
     
-    /**when trigger a script event ,call this func,add params needed into ScriptEvent object.nativeObject is object triggering the event, can be nullptr in lua
+     /** 当触发一个脚本时调用这个函数，在ScriptEvent对象中添加需要的参数。 nativeObject是触发该事件的对象，在lua中可以是置空指针(nullptr)
      * @js NA
      * @lua NA
      */
     virtual int sendEvent(ScriptEvent* evt) = 0;
     
-    /** called by CCAssert to allow scripting engine to handle failed assertions
-     * @return true if the assert was handled by the script engine, false otherwise.
+    /** 被CCAssert调用，用来允许脚本引擎处理失败的断言
+     * @return  如果断言(assert)被脚本引擎处理则返回true，否则返回false。
      * @js NA
      * @lua NA
      */
@@ -446,13 +446,14 @@ public:
         NONE,
         COCOSTUDIO
     };
-    /** Parse configuration file */
+    
+    /** 解析配置文件 */
     virtual bool parseConfig(ConfigType type, const std::string& str) = 0;
 };
 
 /**
- ScriptEngineManager is a singleton which holds an object instance of ScriptEngineProtocl
- It helps cocos2d-x and the user code to find back LuaEngine object
+ ScriptEngineManager是一个单例(singleton)，它持有ScriptEngineProtocl的一个对象实例
+ ScriptEngineManager帮助cocos2d-x和用户代码获得和返回Lua引擎(LuaEngine)对象
  @since v0.99.5-x-0.8.5
  */
 class CC_DLL ScriptEngineManager

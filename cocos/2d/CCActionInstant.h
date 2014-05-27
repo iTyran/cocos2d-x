@@ -42,8 +42,7 @@ NS_CC_BEGIN
  */
 
 /** 
-@brief Instant actions are immediate actions. They don't have a duration like
-the IntervalAction actions.
+@brief 即时动作. 不同于IntervalAction，即时动作没有持续时间。
 */ 
 class CC_DLL ActionInstant : public FiniteTimeAction //<NSCopying>
 {
@@ -58,7 +57,7 @@ public:
     virtual void update(float time) override;
 };
 
-/** @brief Show the node
+/** @brief 显示节点
 */
 class CC_DLL Show : public ActionInstant
 {
@@ -83,7 +82,7 @@ private:
 };
 
 /** 
-@brief Hide the node
+@brief 隐藏节点
 */
 class CC_DLL Hide : public ActionInstant
 {
@@ -106,7 +105,7 @@ private:
     CC_DISALLOW_COPY_AND_ASSIGN(Hide);
 };
 
-/** @brief Toggles the visibility of a node
+/** @brief 切换节点的可视属性
 */
 class CC_DLL ToggleVisibility : public ActionInstant
 {
@@ -130,7 +129,7 @@ private:
 };
 
 /** 
-@brief Remove the node
+@brief 移除节点
 */
 class CC_DLL RemoveSelf : public ActionInstant
 {
@@ -160,7 +159,7 @@ private:
 };
 
 /** 
-@brief Flips the sprite horizontally
+@brief 精灵水平翻转
 @since v0.99.0
 */
 class CC_DLL FlipX : public ActionInstant
@@ -191,7 +190,7 @@ private:
 };
 
 /** 
-@brief Flips the sprite vertically
+@brief 精灵垂直翻转
 @since v0.99.0
 */
 class CC_DLL FlipY : public ActionInstant
@@ -221,7 +220,7 @@ private:
     CC_DISALLOW_COPY_AND_ASSIGN(FlipY);
 };
 
-/** @brief Places the node in a certain position
+/** @brief 放置节点到某个位置
 */
 class CC_DLL Place : public ActionInstant //<NSCopying>
 {
@@ -252,7 +251,7 @@ private:
 };
 
 
-/** @brief Calls a 'callback'
+/** @brief 调用一个 'callback' 函数
 */
 class CC_DLL CallFunc : public ActionInstant //<NSCopying>
 {
@@ -310,7 +309,7 @@ CC_CONSTRUCTOR_ACCESS:
 
 	/** 用回调函数初始化动作
      typedef void (Ref::*SEL_CallFunc)();
-     @deprecated Use the std::function API instead.
+     @deprecated 使用 std::function 替代
      */
     CC_DEPRECATED_ATTRIBUTE bool initWithTarget(Ref* target);
     
@@ -338,7 +337,7 @@ private:
 };
 
 /** 
-@brief Calls a 'callback' with the node as the first argument
+@brief 调用节点的 'callback' 函数
 N means Node
 */
 class CC_DLL CallFuncN : public CallFunc
@@ -352,7 +351,7 @@ public:
     /** 以回调函数为参数创建动作 
 
     typedef void (Ref::*SEL_CallFuncN)(Node*);
-     @deprecated Use the std::function API instead.
+     @deprecated 使用 std::function API 替代
     */
     CC_DEPRECATED_ATTRIBUTE static CallFuncN * create(Ref* target, SEL_CallFuncN selector);
 
@@ -372,7 +371,7 @@ CC_CONSTRUCTOR_ACCESS:
     /** 以回调函数为参数初始化动作
      
      typedef void (Ref::*SEL_CallFuncN)(Node*);
-     @deprecated Use the std::function API instead.
+     @deprecated 使用 std::function API 替代
      */
     CC_DEPRECATED_ATTRIBUTE bool initWithTarget(Ref* target, SEL_CallFuncN selector);
 
@@ -385,9 +384,8 @@ private:
 };
 
 /**
- @deprecated Please use CallFuncN instead.
- @brief Calls a 'callback' with the node as the first argument and the 2nd argument is data
- * ND means: Node and Data. Data is void *, so it could be anything.
+ @deprecated 使用 CallFuncN 替代
+ @brief 调用节点的 'callback' 函数，并用d作为参数。
  */
 
 class CC_DLL  __CCCallFuncND : public CallFunc
@@ -418,9 +416,8 @@ private:
 
 
 /**
- @deprecated Please use CallFuncN instead.
- @brief Calls a 'callback' with an object as the first argument.
- O means Object.
+ @deprecated 使用 CallFuncN 替代。
+ @brief 调用target的 'callback' 函数，并用object作为参数传入。
  @since v0.99.5
  */
 

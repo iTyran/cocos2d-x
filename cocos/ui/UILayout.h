@@ -65,34 +65,34 @@ public:
     };
     
     /**
-     * Default constructor
+     * 默认构造函数（constructor）
      */
     Layout();
     
     /**
-     * Default destructor
+     * 默认析构函数（destructor）
      */
     virtual ~Layout();
     
     /**
-     * Allocates and initializes a layout.
+     * 分配（Allocates）并初始化（initializes）一个布局（layout）.
      */
     static Layout* create();
     
-    //background
+    //背景
     /**
-     * Sets a background image for layout
+     * 为layout设置一个背景图片
      *
-     * @param fileName image file path.
+     * @param 图片路径及文件名.
      *
-     * @param texType @see TextureResType. UI_TEX_TYPE_LOCAL means local file, UI_TEX_TYPE_PLIST means sprite frame.
+     * @param texType @see TextureResType. UI_TEX_TYPE_LOCAL 意为本地文件, UI_TEX_TYPE_PLIST 意为精灵帧（sprite frame）.
      */
     void setBackGroundImage(const std::string& fileName,TextureResType texType = TextureResType::LOCAL);
     
     /**
-     * Sets a background image capinsets for layout, if the background image is a scale9 render.
+     * 如果背景图使用九宫（scale9）渲染（render）,为layout的背景图片设置一个capinsets.
      *
-     * @param capinsets of background image.
+     * @param 背景图片的capinsets.
      *
      */
     void setBackGroundImageCapInsets(const Rect& capInsets);
@@ -100,7 +100,7 @@ public:
     const Rect& getBackGroundImageCapInsets();
     
     /**
-     * Sets Color Type for layout.
+     * 为layout设置颜色类型（Color Type）.
      *
      * @param type   @see LayoutBackGroundColorType.
      */
@@ -109,16 +109,16 @@ public:
     BackGroundColorType getBackGroundColorType();
     
     /**
-     * Sets background iamge use scale9 renderer.
+     * 使用九宫渲染器（scale9 renderer）设置背景图片.
      *
-     * @param enabled   true that use scale9 renderer, false otherwise.
+     * @param enabled   true 为使用九宫渲染器（scale9 renderer）, false 为不使用.
      */
     void setBackGroundImageScale9Enabled(bool enabled);
     
     bool isBackGroundImageScale9Enabled();
     
     /**
-     * Sets background color for layout, if color type is LAYOUT_COLOR_SOLID
+     * 如果颜色类型（color type）为LAYOUT_COLOR_SOLID，为layout设置背景颜色.
      *
      * @param color
      */
@@ -127,11 +127,11 @@ public:
     const Color3B& getBackGroundColor();
     
     /**
-     * Sets background color for layout, if color type is LAYOUT_COLOR_GRADIENT
+     * 如果颜色类型（color type）为LAYOUT_COLOR_GRADIENT，为layout设置背景颜色.
      *
-     * @param start color
+     * @param 起始颜色
      *
-     * @param end color
+     * @param 结束颜色
      */
     void setBackGroundColor(const Color3B &startColor, const Color3B &endColor);
     
@@ -140,7 +140,7 @@ public:
     const Color3B& getBackGroundEndColor();
     
     /**
-     * Sets background opacity layout.
+     * 为layout的背景设置不透明度（opacity）.
      *
      * @param opacity
      */
@@ -149,7 +149,7 @@ public:
     GLubyte getBackGroundColorOpacity();
     
     /**
-     * Sets background color vector for layout, if color type is LAYOUT_COLOR_GRADIENT
+     * 如果颜色类型（color type）是 LAYOUT_COLOR_GRADIENT，为layout设置矢量（vector）背景色 
      *
      * @param vector
      */
@@ -166,23 +166,23 @@ public:
     GLubyte getBackGroundImageOpacity();
     
     /**
-     * Remove the background image of layout.
+     * 删除layout的背景图片.
      */
     void removeBackGroundImage();
     
     /**
-     * Gets background image texture size.
+     * 获取背景纹理（texture）贴图的尺寸.
      *
-     * @return background image texture size.
+     * @return 背景纹理（texture）贴图尺寸.
      */
     const Size& getBackGroundImageTextureSize() const;
     
     /**
-     * Changes if layout can clip it's content and child.
+     * 改变layout可裁剪（clip）其内容（content）及child.
      *
-     * If you really need this, please enable it. But it would reduce the rendering efficiency. 
+     * 如果真的需要此方法，请使其为可用（enable）.但此方法会影响渲染效率（rendering efficiency）.
      *
-     * @param clipping enabled.
+     * @param  使裁剪（clipping）可用.
      */
     virtual void setClippingEnabled(bool enabled);
     
@@ -191,14 +191,14 @@ public:
     ClippingType getClippingType();
     
     /**
-     * Gets if layout is clipping enabled.
+     * 获取layout的裁剪（clipping）是否为可用.
      *
-     * @return if layout is clipping enabled.
+     * @return layout的裁剪（clipping）是否为可用.
      */
     virtual bool isClippingEnabled();
     
     /**
-     * Returns the "class name" of widget.
+     * 返回widget的“类名（class name）”
      */
     virtual std::string getDescription() const override;
     
@@ -209,22 +209,22 @@ public:
 
     virtual void addChild(Node * child) override;
     /**
-     * Adds a child to the container with a z-order
+     * 添加一个child（定义其z轴次序（z-order））到容器（container）中.
      *
-     * If the child is added to a 'running' node, then 'onEnter' and 'onEnterTransitionDidFinish' will be called immediately.
+     * 如果child被添加到一个“运行中（running）”的节点（node），则'onEnter'和'onEnterTransitionDidFinish'方法将被立即调用.
      *
-     * @param child     A child node
-     * @param zOrder    Z order for drawing priority. Please refer to setLocalZOrder(int)
+     * @param child     一个子节点（child node）
+     * @param zOrder    z轴次序（Z order）决定绘制优先级. 请参照setLocalZOrder(int)
      */
     virtual void addChild(Node * child, int zOrder) override;
     /**
-     * Adds a child to the container with z order and tag
+     * 添加一个child（定义其z order及tag）到容器（container）中.
      *
-     * If the child is added to a 'running' node, then 'onEnter' and 'onEnterTransitionDidFinish' will be called immediately.
+     * 如果child被添加到一个“运行中（running）”的节点（node），则'onEnter'和'onEnterTransitionDidFinish'方法将被立即调用.
      *
-     * @param child     A child node
-     * @param zOrder    Z order for drawing priority. Please refer to setLocalZOrder(int)
-     * @param tag       A interger to identify the node easily. Please refer to setTag(int)
+     * @param child     一个子节点（child node）
+     * @param zOrder   z轴次序（Z order）决定绘制优先级. 请参照setLocalZOrder(int)
+     * @param tag       tag指定node的id，一般为整数. 请参照setTag(int)
      */
     virtual void addChild(Node* child, int zOrder, int tag) override;
     
@@ -233,15 +233,15 @@ public:
     virtual void removeChild(Node* child, bool cleanup = true) override;
     
     /**
-     * Removes all children from the container with a cleanup.
+     * 使用cleanup清空容器（container）中的所有子节点（children）
      *
      * @see `removeAllChildrenWithCleanup(bool)`
      */
     virtual void removeAllChildren() override;
     /**
-     * Removes all children from the container, and do a cleanup to all running actions depending on the cleanup parameter.
+    * 清空容器（container）中的所有子节点（children），同时也清空所有运行中的动作（取决于cleanup的参数）.
      *
-     * @param cleanup   true if all running actions on all children nodes should be cleanup, false oterwise.
+     * @param cleanup   为 true 时所有运行中的动作及容器中的子节点都将被清空, 为 false 则不会.
      * @js removeAllChildren
      * @lua removeAllChildren
      */
@@ -255,52 +255,52 @@ public:
     virtual void onExit() override;
     
     /**
-     * If a layout is loop focused which means that the focus movement will be inside the layout
-     *@param loop  pass true to let the focus movement loop inside the layout
+     * 如果一个layout开启了循环集中（loop focused），则意味着此焦点（focus）将在此layout内部运动.
+     *@param loop pass  为 true 时使焦点（focus）在layout内部循环运动（movement loop）.
      */
     void setLoopFocus(bool loop);
     
     /**
-     *@return If focus loop is enabled, then it will return true, otherwise it returns false. The default value is false.
+     *@return  如果焦点循环（focus loop）是可用的（enabled），则返回true，否则将返回 false. 默认值是 false.
      */
     bool isLoopFocus();
     
     /**
-     *@param pass To specify whether the layout pass its focus to its child
+     *@param pass 指定是否将layout的焦点（focus）传递给其child.
      */
     void setPassFocusToChild(bool pass);
     
     /**
-     * @return To query whether the layout will pass the focus to its children or not. The default value is true
+     * @return  查询（query）是否layout将传递其焦点（focus）给其children.默认值为true.
      */
     bool isPassFocusToChild();
     
     /**
-     *  When a widget is in a layout, you could call this method to get the next focused widget within a specified direction.
-     *  If the widget is not in a layout, it will return itself
-     *@param dir the direction to look for the next focused widget in a layout
-     *@param current  the current focused widget
-     *@return the next focused widget in a layout
+     * 当一个widget在一个layout中，你可以调用此方法在指定的方向（specified direction）来获取下一个被聚焦的（focused）widget.
+     * 如果此widget不在layout中，它将返回它自己（itself）.
+     *@param  指示出在layout中寻找下一个被聚焦（focused）的widget的方向.
+     *@param current  现在正被聚焦（focused）的widget
+     *@return   layout中下一个被聚焦（focused）的widget
      */
     virtual Widget* findNextFocusedWidget(FocusDirection direction, Widget* current) override;
     
     /**
-     * To specify a user-defined functor to decide which child widget of the layout should get focused
-     * @param FocusDirection the finding direction
-     * @param this previous focused widget
-     * @return return the index of widget in the layout
+     * 指定一个用户定义函数（user-defined functor），以确定哪个layout的子widget将被聚焦（focused）.
+     * @param  FocusDirection 查找方向.
+     * @param  上一个被聚焦（focused）的 widget
+     * @return  返回layout中widget的索引（index）.
      */
     std::function<int(FocusDirection, Widget*)> onPassFocusToChild;
 
 CC_CONSTRUCTOR_ACCESS:
-    //override "init" method of widget.
+    //重写 widget 的 "init" 方法.
     virtual bool init() override;
     
 protected:
-    //override "onSizeChanged" method of widget.
+    //重写 widget 的 "onSizeChanged" 方法.
     virtual void onSizeChanged() override;
     
-    //init background image renderer.
+    //初始化背景图像渲染器.
     void addBackGroundImage();
     
     void supplyTheLayoutParameterLackToChild(Widget* child);
@@ -328,105 +328,104 @@ protected:
     LayoutExecutant* createCurrentLayoutExecutant();
     
     /**
-     *get the content size of the layout, it will accumulate all its children's content size
+     * 获取layout的内容大小（size），它将积累（accumulate）所有子节点（children）的内容大小.
      */
     Size getLayoutContentSize() const;
     
     /**
-     * When the layout get focused, it the layout pass the focus to its child, it will use this method to determine which child 
-     * will get the focus.  The current algorithm to determine which child will get focus is nearest-distance-priority algorithm
-     *@param dir next focused widget direction
-     *@return The index of child widget in the container
+     * 当layout获得焦点，layout要传递焦点（focus）给其child，它将使用此方法判定传递给哪个child.
+     * 将得到焦点（focus）.当前的算法（algorithm）决定哪个child 将得到焦点（focus）是最近距离优先算法（nearest-distance-priority algorithm）.
+     * @param 指出下一个聚焦的（focused） widget 的方向（direction）.
+     * @return 容器（container）中child widget的索引（index）.
      */
      int findNearestChildWidgetIndex(FocusDirection direction, Widget* baseWidget);
     
     /**
-     * When the layout get focused, it the layout pass the focus to its child, it will use this method to determine which child
-     * will get the focus.  The current algorithm to determine which child will get focus is farest-distance-priority algorithm
-     *@param dir next focused widget direction
-     *@return The index of child widget in the container
+     * 当layout获得焦点，layout要传递焦点（focus）给其child，它将使用此方法判定传递给哪个child.
+     * 将得到焦点（focus）.当前的算法（algorithm）决定哪个child 将得到焦点（focus）是最近距离优先算法（nearest-distance-priority algorithm）.
+     *@param 指出下一个聚焦的（focused） widget 的方向（direction）.
+     *@return 容器（container）中child widget的索引（index）.
      */
     int findFarestChildWidgetIndex(FocusDirection direction, Widget* baseWidget);
     
     /**
-     * caculate the nearest distance between the baseWidget and the children of the layout
-     *@param the base widget which will be used to caculate the distance between the layout's children and itself
-     *@return return the nearest distance between the baseWidget and the layout's children
+     * 计算 baseWidget 和 layout 的 children 之间的最近距离.
+     *@param  base widget被用来计算layout的children和它自己（指base widget.译者注）间的距离.
+     *@return  返回 baseWidget 和 layout 的 children 之间的最近距离.
      */
     float caculateNearestDistance(Widget* baseWidget);
     
     /**
-     * caculate the farest distance between the baseWidget and the children of the layout
-     *@param the base widget which will be used to caculate the distance between the layout's children and itself
-     *@return return the farest distance between the baseWidget and the layout's children
+     * 计算 baseWidget 和 layout 的 children 之间的最远距离.
+     *@param base widget被用来计算layout的children和它自己（指base widget.译者注）间的距离.
+     *@return 返回 baseWidget 和 layout 的 children 之间的最远距离.
      */
 
     float caculateFarestDistance(Widget* baseWidget);
     
     /**
-     *  when a layout pass the focus to it's child, use this method to determine which algorithm to use, nearest or farest distance algorithm or not
+     *  当layout传递焦点（focus）给其child，使用此方法确定使用哪种算法（algorithm），使用最近距离（nearest）或者最远距离（farest）算法，或者都不使用.
      */
     void findProperSearchingFunctor(FocusDirection dir, Widget* baseWidget);
     
     /**
-     * find the first non-layout widget in this layout
+     * 在此layout中查找第一个 non-layout widget 
      */
     Widget *findFirstNonLayoutWidget();
     
     /**
-     * find the fisrt focus enabled widget index in the layout, it will recusive searching the child widget
+     * 在layout中查找第一个焦点可用（focus enabled）的 widget 索引（index）, 它将递回（recusive） 搜索到的 child widget
      */
     int findFirstFocusEnabledWidgetIndex();
     
     /**
-     * find a focus enabled child Widget in the layout by index
+     * 通过索引（index）在layout中查找焦点可用（focus enabled）的child Widget
      */
     Widget* findFocusEnabledChildWidgetByIndex(ssize_t index);
     
     /**
-     * get the center point of a widget in world space
+     * 在世界坐标空间（world space）中获取一个widget的中点（center point）
      */
     Vec2 getWorldCenterPoint(Widget* node);
     
     /**
-     * this method is called internally by nextFocusedWidget. When the dir is Right/Down, then this method will be called
-     *@param dir  the direction.
-     *@param current  the current focused widget
-     *@return the next focused widget
+     * 这个方法将被nextFocusedWidget立即调用. 当方向为右/下（Right/Down）时, 此方法将被调用.
+     *@param dir  方向.
+     *@param current  当前聚焦的widget
+     *@return  下一个聚焦的widget
      */
     Widget* getNextFocusedWidget(FocusDirection direction,Widget *current);
     
     /**
-     * this method is called internally by nextFocusedWidget. When the dir is Left/Up, then this method will be called
-     *@param dir  the direction.
-     *@param current  the current focused widget
-     *@return the next focused widget
+     * 这个方法将被nextFocusedWidget立即调用. 当方向为左/上（Left/Up）时, 此方法将被调用.
+     *@param dir  方向.
+     *@param current  当前聚焦的widget
+     *@return  下一个聚焦的widget
      */
     Widget* getPreviousFocusedWidget(FocusDirection direction, Widget *current);
     
     /**
-     * find the nth elment in the _children array. Only the Widget descendant object will be returned
-     *@param index  The index of a element in the _children array
+     * 在 _children 数组中找到第n个元素. 仅返回 Widget 的子孙（descendant）对象.
+     *@param index  _children 数组中元素的索引.
      */
     Widget* getChildWidgetByIndex(ssize_t index);
     /**
-     * whether it is the last element according to all their parents
+     * 根据所有父元素（parents）判断是否为最后的元素.
      */
     bool  isLastWidgetInContainer(Widget* widget, FocusDirection direction);
     
-    /**Lookup any parent widget with a layout type as the direction,
-     * if the layout is loop focused, then return true, otherwise
-     * It returns false
+    /**查找任何使用布局（layout）类型作为方向的父 widget .
+     * 如果layout循环获得焦点（loop focused），则返回true，否则返回false
      */
     bool  isWidgetAncestorSupportLoopFocus(Widget* widget, FocusDirection direction);
     
     /**
-     * pass the focus to the layout's next focus enabled child
+     * 传递焦点（focus）给layout的下一个焦点可用（focus enabled）的child
      */
     Widget* passFocusToChild(FocusDirection direction, Widget* current);
     
     /**
-     * If there are no focus enabled child in the layout, it will return false, otherwise it returns true
+     * 如果在layout中没有焦点可用（focus enabled）的child，它将返回false，否则返回true.
      */
     bool checkFocusEnabledChild();
     
@@ -487,8 +486,8 @@ protected:
     CustomCommand _beforeVisitCmdScissor;
     CustomCommand _afterVisitCmdScissor;
     
-    bool _loopFocus; //whether enable loop focus or not
-    bool _passFocusToChild;  //on default, it will pass the focus to the next nearest widget
+    bool _loopFocus; //是否启用循环集中(loop focus)
+    bool _passFocusToChild;  //默认会传递焦点(focus)给下一个最近的widget
 };
     
 }

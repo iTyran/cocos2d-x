@@ -42,110 +42,108 @@ class EventCustom;
  */
 
 /**
-@brief RenderTexture is a generic rendering target. To render things into it,
-simply construct a render target, call begin on it, call visit on any cocos
-scenes or objects to render them, and call end. For convenience, render texture
-adds a sprite as it's display child with the results, so you can simply add
-the render texture to your scene and treat it like any other CocosNode.
-There are also functions for saving the render texture to disk in PNG or JPG format.
-
+@brief RenderTexture是通用的渲染目标。执行以下步骤，可以把相应的节点渲染到该目标上。
+创建一个渲染目标，执行它的begin方法，对想要渲染的cocos场景（scenes）或对象，执行visit，
+然后执行渲染目标的end方法。
+为方便使用，RenderTexture使用Sprite来展示结果，因此，你可以直接将RenderTexture的对象添加到场景中，像使用其他的cocos Node一样使用它。
+RenderTexture类也提供了将纹理以PNG或者JPG格式保存到硬盘的方法。
 @since v0.8.1
 */
 class CC_DLL RenderTexture : public Node 
 {
 public:
-    /** initializes a RenderTexture object with width and height in Points and a pixel format( only RGB and RGBA formats are valid ) and depthStencil format*/
+    /** 指定宽、高（以point为单位）、像素格式（仅支持RGB和RGBA格式）以及深度模版格式，创建RenderTexture对象。*/
     static RenderTexture * create(int w ,int h, Texture2D::PixelFormat format, GLuint depthStencilFormat);
 
-    /** creates a RenderTexture object with width and height in Points and a pixel format, only RGB and RGBA formats are valid */
+    /** 指定宽、高（以point为单位）以及像素格式（仅支持RGB和RGBA格式），创建RenderTexture对象。 */
     static RenderTexture * create(int w, int h, Texture2D::PixelFormat format);
 
-    /** creates a RenderTexture object with width and height in Points, pixel format is RGBA8888 */
+    /** 指定以point为单位的宽、高以及RGBA8888像素格式，创建RenderTexture对象。 */
     static RenderTexture * create(int w, int h);
 
-    /** starts grabbing */
+    /** 开始抓取屏幕*/
     virtual void begin();
 
-    /** starts rendering to the texture while clearing the texture first.
-    This is more efficient then calling -clear first and then -begin */
+    /** 先清除纹理，然后再渲染纹理。
+	 比先调用-clear然后再调用-begin更高效。*/
     virtual void beginWithClear(float r, float g, float b, float a);
 
-    /** starts rendering to the texture while clearing the texture first.
-     This is more efficient then calling -clear first and then -begin */
+    /** 先清除纹理，然后再渲染纹理。
+	 比先调用-clear然后再调用-begin更高效。*/
     virtual void beginWithClear(float r, float g, float b, float a, float depthValue);
 
-    /** starts rendering to the texture while clearing the texture first.
-     This is more efficient then calling -clear first and then -begin */
+    /** 先清除纹理，然后再渲染纹理。
+	 比先调用-clear然后再调用-begin更高效。 */
     virtual void beginWithClear(float r, float g, float b, float a, float depthValue, int stencilValue);
 
-    /** end is key word of lua, use other name to export to lua. */
+    /** “end”是lua语言的关键字，因此当绑定到lua时，需要使用其他的名字*/
     inline void endToLua(){ end();};
 
-    /** ends grabbing*/
+    /** 抓取结束*/
     virtual void end();
 
-    /** clears the texture with a color */
+    /** 指定颜色清除纹理*/
     void clear(float r, float g, float b, float a);
 
-    /** clears the texture with a specified depth value */
+    /** 指定深度模版值清除纹理。*/
     virtual void clearDepth(float depthValue);
 
-    /** clears the texture with a specified stencil value */
+    /** 指定模版值清除纹理。*/
     virtual void clearStencil(int stencilValue);
-    /* creates a new Image from with the texture's data.
-       Caller is responsible for releasing it by calling delete.
+    /* 根据纹理数据创建新的Image对象。
+	   需要手动调用delete来释放该对象。
      */
     
     Image* newImage(bool flipImage = true);
     
     CC_DEPRECATED_ATTRIBUTE Image* newCCImage(bool flipImage = true) { return newImage(flipImage); };
 
-    /** saves the texture into a file using JPEG format. The file will be saved in the Documents folder.
-        Returns true if the operation is successful.
+    /** 将纹理以JPG格式保存到Documents文件夹下指定的文件。
+		当保存成功后，返回true。
      */
     bool saveToFile(const std::string& filename);
 
-    /** saves the texture into a file. The format could be JPG or PNG. The file will be saved in the Documents folder.
-        Returns true if the operation is successful.
+    /** 将纹理保存到Documents文件夹下指定的文件。支持JPG和PNG格式。
+		当保存成功后，返回true。
      */
     bool saveToFile(const std::string& filename, Image::Format format);
     
-    /** Listen "come to background" message, and save render texture.
-     It only has effect on Android.
+    /** 监听“进入后台”的消息，并保存纹理。
+	 仅在Android平台使用。
      */
     void listenToBackground(EventCustom *event);
     
-    /** Listen "come to foreground" message and restore the frame buffer object
-     It only has effect on Android.
+    /** 监听“返回到前台”的消息，然后恢复帧缓冲区。
+	 仅在Android平台使用。
      */
     void listenToForeground(EventCustom *event);
     
-    /** Valid flags: GL_COLOR_BUFFER_BIT, GL_DEPTH_BUFFER_BIT, GL_STENCIL_BUFFER_BIT. They can be OR'ed. Valid when "autoDraw" is true. */
+    /** 有效的标志：GL_COLOR_BUFFER_BIT, GL_DEPTH_BUFFER_BIT, GL_STENCIL_BUFFER_BIT。多个标志可以通过“或”的方式同时使用。仅当"autoDraw"为true时有效。*/
     inline unsigned int getClearFlags() const { return _clearFlags; };
     inline void setClearFlags(unsigned int clearFlags) { _clearFlags = clearFlags; };
     
-    /** Clear color value. Valid only when "autoDraw" is true. */
+    /** 颜色清除的值。仅当"autoDraw"为true时有效。*/
     inline const Color4F& getClearColor() const { return _clearColor; };
     inline void setClearColor(const Color4F &clearColor) { _clearColor = clearColor; };
     
-    /** Value for clearDepth. Valid only when "autoDraw" is true. */
+    /** 深度缓冲区值。仅当"autoDraw"为true时有效。*/
     inline float getClearDepth() const { return _clearDepth; };
     inline void setClearDepth(float clearDepth) { _clearDepth = clearDepth; };
     
-    /** Value for clear Stencil. Valid only when "autoDraw" is true */
+    /** 模版清除的值。仅当"autoDraw"为true时有效。*/
     inline int getClearStencil() const { return _clearStencil; };
     inline void setClearStencil(int clearStencil) { _clearStencil = clearStencil; };
     
-    /** When enabled, it will render its children into the texture automatically. Disabled by default for compatiblity reasons.
-     Will be enabled in the future.
+    /** 当使能时，自动将其所有子结点绘制到纹理中。为保持兼容性，默认不使能。
+	 未来版本中将默认使能。
      */
     inline bool isAutoDraw() const { return _autoDraw; };
     inline void setAutoDraw(bool isAutoDraw) { _autoDraw = isAutoDraw; };
 
-    /** Gets the Sprite being used. */
+    /** 获取使用的Sprite */
     inline Sprite* getSprite() const { return _sprite; };
     
-    /** Sets the Sprite being used. */
+    /** 设置使用的Sprite */
     inline void setSprite(Sprite* sprite) {
         CC_SAFE_RETAIN(sprite);
         CC_SAFE_RELEASE(_sprite);
@@ -158,10 +156,10 @@ public:
 
     //flag: use stack matrix computed from scene hierarchy or generate new modelView and projection matrix
     void setKeepMatrix(bool keepMatrix);
-    /**Used for grab part of screen to a texture. 
-    //rtBegin: the position of renderTexture on the fullRect
-    //fullRect: the total size of screen
-    //fullViewport: the total viewportSize
+    /**抓取屏幕部分内容保存为纹理。
+	//rtBegin: renderTexture在整个屏幕上的起始位置。
+	//fullRect: 整个屏幕的大小
+	//fullViewport: 整个viewport的大小。
     */
     void setVirtualViewport(const Vec2& rtBegin, const Rect& fullRect, const Rect& fullViewport);
 
@@ -171,9 +169,9 @@ public:
     // the constructor is public again
     RenderTexture();
     virtual ~RenderTexture();
-    /** initializes a RenderTexture object with width and height in Points and a pixel format, only RGB and RGBA formats are valid */
+    /** 指定宽、高（以point为单位）以及像素格式（仅支持RGB和RGBA模式），初始化RenderTexture对象 */
     bool initWithWidthAndHeight(int w, int h, Texture2D::PixelFormat format);
-    /** initializes a RenderTexture object with width and height in Points and a pixel format( only RGB and RGBA formats are valid ) and depthStencil format*/
+    /** 指定宽、高（以point为单位）、像素格式（仅支持RGB和RGBA模式）以及深度模版(depthStencil)格式，初始化RenderTexture对象 */
     bool initWithWidthAndHeight(int w, int h, Texture2D::PixelFormat format, GLuint depthStencilFormat);
 
 protected:
@@ -200,9 +198,9 @@ protected:
     GLint        _clearStencil;
     bool         _autoDraw;
 
-    /** The Sprite being used.
-     The sprite, by default, will use the following blending function: GL_ONE, GL_ONE_MINUS_SRC_ALPHA.
-     The blending function can be changed in runtime by calling:
+    /** 使用的Sprite
+	 Sprite默认使用下面的混合函数（blending function）：GL_ONE, GL_ONE_MINUS_SRC_ALPHA。
+	 运行过程中，可以通过调用下面的方法来改变混合函数：
      - renderTexture->getSprite()->setBlendFunc((BlendFunc){GL_ONE, GL_ONE_MINUS_SRC_ALPHA});
      */
     Sprite* _sprite;
