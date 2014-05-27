@@ -68,6 +68,7 @@ public:
 
     /**
      * Constructs a new vector initialized to all zeros.
+     * 构造一个初始值为零的向量
      */
     Vec3();
 
