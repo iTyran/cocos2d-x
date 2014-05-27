@@ -31,52 +31,52 @@ class b2Body;
 
 NS_CC_EXT_BEGIN
 
-/** A Sprite subclass that is bound to a physics body.
- It works with:
- - Chipmunk: Preprocessor macro CC_ENABLE_CHIPMUNK_INTEGRATION should be defined
- - Objective-Chipmunk: Preprocessor macro CC_ENABLE_CHIPMUNK_INTEGRATION should be defined
- - Box2d: Preprocessor macro CC_ENABLE_BOX2D_INTEGRATION should be defined
+/** 精灵(Sprite)的子类，绑定到一个物理Body.
+ 它和下面的宏一起使用:
+ - Chipmunk: 预处理宏 CC_ENABLE_CHIPMUNK_INTEGRATION 应该被定义
+ - Objective-Chipmunk: 预处理宏 CC_ENABLE_CHIPMUNK_INTEGRATION 应该被定义
+ - Box2d: 预处理宏 CC_ENABLE_BOX2D_INTEGRATION 应该被定义
 
- Features and Limitations:
- - Scale and Skew properties are ignored.
- - Position and rotation are going to updated from the physics body
- - If you update the rotation or position manually, the physics body will be updated
- - You can't enble both Chipmunk support and Box2d support at the same time. Only one can be enabled at compile time
+ 特性和限制:
+ - 缩放和偏移属性被忽略.
+ - 位置和旋转将更新物理Body
+ - 如果你手动的更新旋转和位置，Body将被更新.
+ - 你不能同时启用Chipmunk支持和Box2d 支持. 在编译时只能启用一种物理引擎
  */
 class PhysicsSprite : public Sprite
 {
 public:
 
     static PhysicsSprite* create();
-    /** Creates an sprite with a texture.
-     The rect used will be the size of the texture.
-     The offset will be (0,0).
+    /** 用纹理(texture)创建一个精灵.
+     精灵的矩形大小将使用纹理(texture)的大小.
+     偏移将会是(0,0).
      */
     static PhysicsSprite* createWithTexture(Texture2D *pTexture);
 
-    /** Creates an sprite with a texture and a rect.
-     The offset will be (0,0).
+    /** 指定纹理(texture)和矩形创建一个精灵.
+     偏移将会是(0,0).
      */
     static PhysicsSprite* createWithTexture(Texture2D *pTexture, const Rect& rect);
 
-    /** Creates an sprite with an sprite frame. */
+    /** 用精灵帧(sprite frame)创建一个精灵. */
     static PhysicsSprite* createWithSpriteFrame(SpriteFrame *pSpriteFrame);
 
-    /** Creates an sprite with an sprite frame name.
-     An SpriteFrame will be fetched from the SpriteFrameCache by name.
-     If the SpriteFrame doesn't exist it will raise an exception.
+    /** 用指定精灵帧名创建一个精灵.
+     一个精灵帧将会通过名字从精灵帧缓存中获取.
+     如果该精灵帧不存在将会产生异常.
      @since v0.9
      */
     static PhysicsSprite* createWithSpriteFrameName(const char *pszSpriteFrameName);
 
-    /** Creates an sprite with an image filename.
-     The rect used will be the size of the image.
-     The offset will be (0,0).
+    /** 使用指定的图片文件名创建一个精灵.
+     精灵的矩形将使用图片的大小.
+     偏移将会是(0,0).
      */
     static PhysicsSprite* create(const char *pszFileName);
 
-    /** Creates an sprite with an image filename and a rect.
-     The offset will be (0,0).
+    /** 使用指定的图片文件名和矩形创建一个精灵.
+     偏移将会是(0,0).
      */
     static PhysicsSprite* create(const char *pszFileName, const Rect& rect);
 
@@ -84,28 +84,28 @@ public:
 
     virtual bool isDirty() const;
 
-    /** Keep the sprite's rotation separate from the body. */
+    /** 保持精灵的旋转和Body分开. */
     bool isIgnoreBodyRotation() const;
     void setIgnoreBodyRotation(bool bIgnoreBodyRotation);
 
     //
-    // Chipmunk specific
+    // Chipmunk 特有
     //
-    /** Body accessor when using regular Chipmunk */
+    /** 访问使用常规Chipmunk物理引擎时的精灵Body */
     cpBody* getCPBody() const;
     void setCPBody(cpBody *pBody);
 
     //
-    // Box2d specific
+    // Box2d 特有
     //
-    /** Body accessor when using box2d */
+    /** 访问使用常规box2d物理引擎时的精灵Body */
     b2Body* getB2Body() const;
     void setB2Body(b2Body *pBody);
 
     float getPTMRatio() const;
     void setPTMRatio(float fPTMRatio);
 
-    // overrides
+    // 重写
     virtual const Vec2& getPosition() const override;
     virtual void getPosition(float* x, float* y) const override;
     virtual float getPositionX() const override;
@@ -124,10 +124,10 @@ protected:
 protected:
     bool    _ignoreBodyRotation;
 
-    // chipmunk specific
+    // chipmunk 特有
     cpBody  *_CPBody;
 
-    // box2d specific
+    // box2d 特有
     b2Body  *_pB2Body;
     float   _PTMRatio;
 };

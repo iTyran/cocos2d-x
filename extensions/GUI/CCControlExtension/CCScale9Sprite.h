@@ -44,12 +44,11 @@ NS_CC_EXT_BEGIN
  */
 
 /**
- * A 9-slice sprite for cocos2d.
+ * Cocos2d-x的九宫格精灵
  *
- * 9-slice scaling allows you to specify how scaling is applied
- * to specific areas of a sprite. With 9-slice scaling (3x3 grid),
- * you can ensure that the sprite does not become distorted when
- * scaled.
+ * 九宫格分割机制可以让你指定如何划分Sprite区域
+ * 因为九宫格将Sprite分成了3x3的9个格子，所以在放大时不会变形
+ * （译者注）事实上只有四个角不会拉伸变形，边缘和中心部分还是会被拉伸
  *
  * @see http://yannickloriot.com/library/ios/cccontrolextension/Classes/CCScale9Sprite.html
  */
@@ -70,171 +69,163 @@ public:
     static Scale9Sprite* create();
 
     /**
-     * Creates a 9-slice sprite with a texture file, a delimitation zone and
-     * with the specified cap insets.
+     * 根据纹理文件名、裁剪区域以及分割位置创建九宫格Sprite
      *
      * @see initWithFile(const char *file, const Rect& rect, const Rect& capInsets)
      */
     static Scale9Sprite* create(const std::string& file, const Rect& rect,  const Rect& capInsets);
 
     /**
-     * Creates a 9-slice sprite with a texture file. The whole texture will be
-     * broken down into a 3×3 grid of equal blocks.
+     * 根据分割位置以及纹理文件名创建九宫格Sprite
+     * 因为没有裁剪区域参数，所以使用整张纹理图片
      *
      * @see initWithFile(const Rect& capInsets, const char *file)
      */
     static Scale9Sprite* create(const Rect& capInsets, const std::string& file);
 
     /**
-     * Creates a 9-slice sprite with a texture file and a delimitation zone. The
-     * texture will be broken down into a 3×3 grid of equal blocks.
+     * 根据纹理文件名以及裁剪区域创建九宫格Sprite
+     * 因为没有分割位置参数，所以等分成3x3网格
      *
      * @see initWithFile(const char *file, const Rect& rect)
      */
     static Scale9Sprite* create(const std::string& file, const Rect& rect);
 
     /**
-     * Creates a 9-slice sprite with a texture file. The whole texture will be
-     * broken down into a 3×3 grid of equal blocks.
+     * 根据纹理文件名创建九宫格Sprite
+     * 使用整张纹理且等分为3x3网格
      *
      * @see initWithFile(const char *file)
      */
     static Scale9Sprite* create(const std::string& file);
 
     /**
-     * Creates a 9-slice sprite with an sprite frame.
-     * Once the sprite is created, you can then call its "setContentSize:" method
-     * to resize the sprite will all it's 9-slice goodness intract.
-     * It respects the anchorPoint too.
+     * 根据SpriteFrame创建九宫格Sprite
+     * 创建完成后，可以通过"setContentSize"方法来修改尺寸
+     * 修改尺寸会使所有九个部件的参数重新计算
+     * 锚点设置也是有效的
      *
      * @see initWithSpriteFrame(SpriteFrame *spriteFrame)
      */
     static Scale9Sprite* createWithSpriteFrame(SpriteFrame* spriteFrame);
 
     /**
-     * Creates a 9-slice sprite with an sprite frame and the centre of its zone.
-     * Once the sprite is created, you can then call its "setContentSize:" method
-     * to resize the sprite will all it's 9-slice goodness intract.
-     * It respects the anchorPoint too.
+     * 根据SpriteFrame以及分割中心区域矩形的位置尺寸创建九宫格Sprite
+     * 创建完成后，可以通过"setContentSize"方法来修改尺寸
+     * 修改尺寸会使所有九个部件的参数重新计算
+     * 锚点设置也是有效的
      *
      * @see initWithSpriteFrame(SpriteFrame *spriteFrame, const Rect& capInsets)
      */
     static Scale9Sprite* createWithSpriteFrame(SpriteFrame* spriteFrame, const Rect& capInsets);
 
     /**
-     * Creates a 9-slice sprite with an sprite frame name.
-     * Once the sprite is created, you can then call its "setContentSize:" method
-     * to resize the sprite will all it's 9-slice goodness intract.
-     * It respects the anchorPoint too.
+     * 根据SpriteFrame名创建九宫格Sprite
+     * 创建完成后，可以通过"setContentSize"方法来修改尺寸
+     * 修改尺寸会使所有九个部件的参数重新计算
+     * 锚点设置也是有效的
      *
      * @see initWithSpriteFrameName(const char *spriteFrameName)
      */
     static Scale9Sprite* createWithSpriteFrameName(const std::string& spriteFrameName);
 
     /**
-     * Creates a 9-slice sprite with an sprite frame name and the centre of its
-     * zone.
-     * Once the sprite is created, you can then call its "setContentSize:" method
-     * to resize the sprite will all it's 9-slice goodness intract.
-     * It respects the anchorPoint too.
+     * 根据SpriteFrame名以及分割中心区域矩形的位置尺寸创建九宫格Sprite
+     * 创建完成后，可以通过"setContentSize"方法来修改尺寸
+     * 修改尺寸会使所有九个部件的参数重新计算
+     * 锚点设置也是有效的
      *
      * @see initWithSpriteFrameName(const char *spriteFrameName, const Rect& capInsets)
      */
     static Scale9Sprite* createWithSpriteFrameName(const std::string& spriteFrameName, const Rect& capInsets);
 
     /**
-     * Initializes a 9-slice sprite with a texture file, a delimitation zone and
-     * with the specified cap insets.
-     * Once the sprite is created, you can then call its "setContentSize:" method
-     * to resize the sprite will all it's 9-slice goodness intract.
-     * It respects the anchorPoint too.
+     * 根据纹理文件名、裁剪区域以及分割中心区域矩形的位置尺寸初始化九宫格Sprite
+     * 创建完成后，可以通过"setContentSize"方法来修改尺寸
+     * 修改尺寸会使所有九个部件的参数重新计算
+     * 锚点设置也是有效的
      *
-     * @param file The name of the texture file.
-     * @param rect The rectangle that describes the sub-part of the texture that
-     * is the whole image. If the shape is the whole texture, set this to the 
-     * texture's full rect.
-     * @param capInsets The values to use for the cap insets.
+     * @param file 纹理文件名
+     * @param rect 用于指定需要使用纹理的哪一部分的矩形
+     * 如果整个纹理都要使用则传入完整尺寸
+     * @param capInsets 用于确定分割位置
      */
     virtual bool initWithFile(const std::string& file, const Rect& rect,  const Rect& capInsets);
     
     /**
-     * Initializes a 9-slice sprite with a texture file and a delimitation zone. The
-     * texture will be broken down into a 3×3 grid of equal blocks.
-     * Once the sprite is created, you can then call its "setContentSize:" method
-     * to resize the sprite will all it's 9-slice goodness intract.
-     * It respects the anchorPoint too.
+     * 根据纹理文件名以及裁剪区域初始化九宫格Sprite
+     * 因为没有分割位置参数，所以等分成3x3网格
+     * 创建完成后，可以通过"setContentSize"方法来修改尺寸
+     * 修改尺寸会使所有九个部件的参数重新计算
+     * 锚点设置也是有效的
      *
-     * @param file The name of the texture file.
-     * @param rect The rectangle that describes the sub-part of the texture that
-     * is the whole image. If the shape is the whole texture, set this to the 
-     * texture's full rect.
+     * @param file 纹理文件名
+     * @param rect 用于指定需要使用纹理的哪一部分的矩形
+     * 如果整个纹理都要使用则传入完整尺寸
      */
     virtual bool initWithFile(const std::string& file, const Rect& rect);
     
     /**
-     * Initializes a 9-slice sprite with a texture file and with the specified cap
-     * insets.
-     * Once the sprite is created, you can then call its "setContentSize:" method
-     * to resize the sprite will all it's 9-slice goodness intract.
-     * It respects the anchorPoint too.
+     * 根据分割位置以及纹理文件名初始化九宫格Sprite
+     * 创建完成后，可以通过"setContentSize"方法来修改尺寸
+     * 修改尺寸会使所有九个部件的参数重新计算
+     * 锚点设置也是有效的
      *
-     * @param file The name of the texture file.
-     * @param capInsets The values to use for the cap insets.
+     * @param capInsets 用于确定分割位置
+     * @param file 纹理文件名
      */
     virtual bool initWithFile(const Rect& capInsets, const std::string& file);
     
     /**
-     * Initializes a 9-slice sprite with a texture file. The whole texture will be
-     * broken down into a 3×3 grid of equal blocks.
-     * Once the sprite is created, you can then call its "setContentSize:" method
-     * to resize the sprite will all it's 9-slice goodness intract.
-     * It respects the anchorPoint too.
+     * 根据纹理文件名初始化九宫格Sprite，使用整张纹理且等分为3x3网格
+     * 创建完成后，可以通过"setContentSize"方法来修改尺寸
+     * 修改尺寸会使所有九个部件的参数重新计算
+     * 锚点设置也是有效的
      *
-     * @param file The name of the texture file.
+     * @param capInsets 用于确定分割位置
+     * @param file 纹理文件名
      */
     virtual bool initWithFile(const std::string& file);
     
     /**
-     * Initializes a 9-slice sprite with an sprite frame and with the specified 
-     * cap insets.
-     * Once the sprite is created, you can then call its "setContentSize:" method
-     * to resize the sprite will all it's 9-slice goodness intract.
-     * It respects the anchorPoint too.
+     * 根据SpriteFrame以及分割中心区域矩形的位置尺寸初始化九宫格Sprite
+     * 创建完成后，可以通过"setContentSize"方法来修改尺寸
+     * 修改尺寸会使所有九个部件的参数重新计算
+     * 锚点设置也是有效的
      *
-     * @param spriteFrame The sprite frame object.
-     * @param capInsets The values to use for the cap insets.
+     * @param spriteFrame SpriteFrame对象
+     * @param capInsets 用于确定分割位置
      */
     virtual bool initWithSpriteFrame(SpriteFrame* spriteFrame, const Rect& capInsets);
 
     /**
-     * Initializes a 9-slice sprite with an sprite frame.
-     * Once the sprite is created, you can then call its "setContentSize:" method
-     * to resize the sprite will all it's 9-slice goodness intract.
-     * It respects the anchorPoint too.
+     * 根据SpriteFrame初始化九宫格Sprite
+     * 创建完成后，可以通过"setContentSize"方法来修改尺寸
+     * 修改尺寸会使所有九个部件的参数重新计算
+     * 锚点设置也是有效的
      *
-     * @param spriteFrame The sprite frame object.
+     * @param spriteFrame SpriteFrame对象
      */
     virtual bool initWithSpriteFrame(SpriteFrame* spriteFrame);
 
     /**
-     * Initializes a 9-slice sprite with an sprite frame name and with the specified 
-     * cap insets.
-     * Once the sprite is created, you can then call its "setContentSize:" method
-     * to resize the sprite will all it's 9-slice goodness intract.
-     * It respects the anchorPoint too.
+     * 根据SpriteFrame名以及分割中心区域矩形的位置尺寸初始化九宫格Sprite
+     * 创建完成后，可以通过"setContentSize"方法来修改尺寸
+     * 修改尺寸会使所有九个部件的参数重新计算
+     * 锚点设置也是有效的
      *
-     * @param spriteFrameName The sprite frame name.
-     * @param capInsets The values to use for the cap insets.
+     * @param spriteFrameName SpriteFrame名
+     * @param capInsets 用于确定分割位置
      */
     virtual bool initWithSpriteFrameName(const std::string& spriteFrameName, const Rect& capInsets);
 
     /**
-     * Initializes a 9-slice sprite with an sprite frame name.
-     * Once the sprite is created, you can then call its "setContentSize:" method
-     * to resize the sprite will all it's 9-slice goodness intract.
-     * It respects the anchorPoint too.
+     * 根据SpriteFrame名初始化九宫格Sprite
+     * 创建完成后，可以通过"setContentSize"方法来修改尺寸
+     * 修改尺寸会使所有九个部件的参数重新计算
+     * 锚点设置也是有效的
      *
-     * @param spriteFrameName The sprite frame name.
+     * @param spriteFrameName SpriteFrame名
      */
     virtual bool initWithSpriteFrameName(const std::string& spriteFrameName);
 
@@ -243,12 +234,11 @@ public:
     virtual bool initWithBatchNode(SpriteBatchNode* batchnode, const Rect& rect, const Rect& capInsets);
 
     /**
-     * Creates and returns a new sprite object with the specified cap insets.
-     * You use this method to add cap insets to a sprite or to change the existing
-     * cap insets of a sprite. In both cases, you get back a new image and the 
-     * original sprite remains untouched.
+     * 根据给定分割区域创建并返回一个新的九宫格Sprite
+     * 此方法用于新增或者修改现有对象的分割区域
+     * 返回值为新建对象，原始九宫格不会发生改变
      *
-     * @param capInsets The values to use for the cap insets.
+     * @param capInsets 用于确定分割位置
      */
     Scale9Sprite* resizableSpriteWithCapInsets(const Rect& capInsets);
     
@@ -292,25 +282,25 @@ protected:
 
     bool _opacityModifyRGB;
 
-    /** Original sprite's size. */
+    /** Sprite原始尺寸 */
     CC_SYNTHESIZE_READONLY(Size, _originalSize, OriginalSize);
-    /** Prefered sprite's size. By default the prefered size is the original size. */
+    /** 期望的Sprite尺寸，默认为原始尺寸 */
 
-    //if the preferredSize component is given as -1, it is ignored
+    //如果值为-1则忽略
     CC_PROPERTY(Size, _preferredSize, PreferredSize);
     /**
-     * The end-cap insets.
-     * On a non-resizeable sprite, this property is set to CGRect::ZERO; the sprite
-     * does not use end caps and the entire sprite is subject to stretching.
+     * 九宫格分割的中心区域
+     * 对于不能使用九宫格机制的Sprite，将此参数设置为原图尺寸，
+     * 则会将精灵直接整体拉伸到目标尺寸。
      */
     CC_PROPERTY(Rect, _capInsets, CapInsets);
-    /** Sets the left side inset */
+    /** 设置左边距 */
     CC_PROPERTY(float, _insetLeft, InsetLeft);
-    /** Sets the top side inset */
+    /** 设置上边距 */
     CC_PROPERTY(float, _insetTop, InsetTop);
-    /** Sets the right side inset */
+    /** 设置右边距 */
     CC_PROPERTY(float, _insetRight, InsetRight);
-    /** Sets the bottom side inset */
+    /** 设置下边距 */
     CC_PROPERTY(float, _insetBottom, InsetBottom);
 };
 
