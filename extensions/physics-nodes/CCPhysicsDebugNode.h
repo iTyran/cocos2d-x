@@ -31,9 +31,9 @@ struct cpSpace;
 NS_CC_EXT_BEGIN
 
 /**
- A BaseData that draws the components of a physics engine.
+ 基础数据用于绘制物理引擎组件
  
- Supported physics engines:
+ 支持的物理引擎:
  - Chipmunk
  - Objective-Chipmunk
  
@@ -44,7 +44,7 @@ class PhysicsDebugNode : public DrawNode
 {
 
 public:
-    /** Create a debug node for a regular Chipmunk space. */
+    /** 为普通的物理空间Chipmunk空间创建一个调试. */
     static PhysicsDebugNode* create(cpSpace *space);
     /**
      * @js ctor
@@ -60,7 +60,7 @@ public:
     cpSpace* getSpace() const;
     void setSpace(cpSpace *space);
     
-    // Overrides
+    // 重写
     virtual void draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated) override;
 
 protected:
