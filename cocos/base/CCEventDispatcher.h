@@ -45,106 +45,101 @@ class EventCustom;
 class EventListenerCustom;
 
 /**
-This class manages event listener subscriptions
-and event dispatching.
+这个类管理事件侦听器的订阅和事件的分发
 
-The EventListener list is managed in such a way that
-event listeners can be added and removed even
-from within an EventListener, while events are being
-dispatched.
+ 
+事件侦听器列表以这样的方式来进行管理：当事件正在分发的过程中，事件侦听器可以被添加或者移除，包括事件侦听器内部的侦听器
 */
 class EventDispatcher : public Ref
 {
 public:
-    // Adds event listener
+    // 添加事件侦听器  Adds event listener
     
-    /** Adds a event listener for a specified event with the priority of scene graph.
-     *  @param listener The listener of a specified event.
-     *  @param node The priority of the listener is based on the draw order of this node.
-     *  @note  The priority of scene graph will be fixed value 0. So the order of listener item
-     *          in the vector will be ' <0, scene graph (0 priority), >0'.
+    /** 给一个指定的事件添加一个事件侦听器，该侦听器带有基于场景图的优先级 .
+     *  @param listener 指定事件的侦听器.
+     *  @param node     侦听器的优先级基于此节点的绘制顺序.
+     *  @note  场景图的优先级会被设置为固定值0，因此在容器(vector)中的侦听器的次序将会是：' <0, scene graph (0 priority), >0' .
      */
     void addEventListenerWithSceneGraphPriority(EventListener* listener, Node* node);
 
-    /** Adds a event listener for a specified event with the fixed priority.
-     *  @param listener The listener of a specified event.
-     *  @param fixedPriority The fixed priority of the listener.
-     *  @note A lower priority will be called before the ones that have a higher value.
-     *        0 priority is forbidden for fixed priority since it's used for scene graph based priority.
+    /** 给一个事件添加一个固定优先级的时间侦听器.
+     *  @param listener        给定事件的侦听器
+     *  @param fixedPriority   侦听器的固定优先级.
+     *  @note  低优先级的侦听器在高优先级的侦听器之前被调用
+     *        0用来作为场景图的基础优先级，禁止被设置为一个固定优先级值
      */
     void addEventListenerWithFixedPriority(EventListener* listener, int fixedPriority);
 
-    /** Adds a Custom event listener.
-     It will use a fixed priority of 1.
-     @return the generated event. Needed in order to remove the event from the dispather
+    /** 添加一个自定义事件侦听器.
+     该侦听器会使用值为1的一个固定优先级.
+     @return  返回产生的事件，需要返回值以便从调度程序中移除这个事件
      */
     EventListenerCustom* addCustomEventListener(const std::string &eventName, const std::function<void(EventCustom*)>& callback);
 
     /////////////////////////////////////////////
     
-    // Removes event listener
+    // 移除事件侦听器
     
-    /** Remove a listener
-     *  @param listener The specified event listener which needs to be removed.
+    /** 移除一个侦听器
+     *  @param listener  需要被移除的指定事件侦听器.
      */
     void removeEventListener(EventListener* listener);
 
-    /** Removes all listeners with the same event listener type */
+    /** 移除所有使用相同事件侦听器类型的侦听器 */
     void removeEventListenersForType(EventListener::Type listenerType);
 
-    /** Removes all listeners which are associated with the specified target. */
+    /** 移除所有与指定目标相关联的侦听器 */
     void removeEventListenersForTarget(Node* target, bool recursive = false);
     
-    /** Removes all custom listeners with the same event name */
+    /** 移除所有使用相同事件名称的自定义侦听器 */
     void removeCustomEventListeners(const std::string& customEventName);
 
-    /** Removes all listeners */
+    /** 移除所有侦听器 */
     void removeAllEventListeners();
 
     /////////////////////////////////////////////
     
-    // Pauses / Resumes event listener
+    // 暂停/恢复事件侦听器
     
-    /** Pauses all listeners which are associated the specified target. */
+    /** 暂停所有与指定目标相关联的侦听器. */
     void pauseEventListenersForTarget(Node* target, bool recursive = false);
     
-    /** Resumes all listeners which are associated the specified target. */
+    /** 恢复所有与指定目标相关联的侦听器. */
     void resumeEventListenersForTarget(Node* target, bool recursive = false);
     
     /////////////////////////////////////////////
     
-    /** Sets listener's priority with fixed value. */
+    /** 设置侦听器的优先级为固定值. */
     void setPriority(EventListener* listener, int fixedPriority);
 
-    /** Whether to enable dispatching events */
+    /** 是否启用调度事件 */
     void setEnabled(bool isEnabled);
 
-    /** Checks whether dispatching events is enabled */
+    /** 检查是否启用了调度事件 */
     bool isEnabled() const;
 
     /////////////////////////////////////////////
     
-    /** Dispatches the event
-     *  Also removes all EventListeners marked for deletion from the
-     *  event dispatcher list.
+    /** 事件分发
+     *  还移除在事件分发列表中所有标记为删除的事件侦听器
      */
     void dispatchEvent(Event* event);
 
-    /** Dispatches a Custom Event with a event name an optional user data */
+    /** 分发一个带有事件名称和可选用户数据的自定义事件 */
     void dispatchCustomEvent(const std::string &eventName, void *optionalUserData = nullptr);
 
     /////////////////////////////////////////////
     
-    /** Constructor of EventDispatcher */
+    /** 事件调度类的构造函数 */
     EventDispatcher();
-    /** Destructor of EventDispatcher */
+    /** 事件调度类的析构函数 */
     ~EventDispatcher();
 
 #if CC_NODE_DEBUG_VERIFY_EVENT_LISTENERS && COCOS2D_DEBUG > 0
     
     /**
-     * To help track down event listener issues in debug builds.
-     * Verifies that the node has no event listeners associated with it when destroyed.
+     * 这个函数帮助在调试版本中跟踪调试事件侦听器的相关问题。.
+     * 验证给定节点在销毁时没有事件侦听器与其相关联.
      */
     void debugCheckNodeHasNoEventListenersOnDestruction(Node* node);
     
@@ -153,11 +148,12 @@ public:
 protected:
     friend class Node;
     
-    /** Sets the dirty flag for a node. */
+    /** 给一个节点设置一个'脏标记'(dirty flag) */
     void setDirtyForNode(Node* node);
     
     /**
-     *  The vector to store event listeners with scene graph based priority and fixed priority.
+     *  该容器(vector)用来存储带有基于场景图优先级和固定优先级的事件侦听器
+     *
      */
     class EventListenerVector
     {
@@ -182,55 +178,55 @@ protected:
         ssize_t _gt0Index;
     };
     
-    /** Adds an event listener with item
-     *  @note if it is dispatching event, the added operation will be delayed to the end of current dispatch
+    /** 为某一项添加一个事件侦听器 Adds an event listener with item
+     *  @note  如果是正在分发中的事件，添加操作会被延迟到当前分发操作的结束
      *  @see forceAddEventListener
      */
     void addEventListener(EventListener* listener);
     
-    /** Force adding an event listener
-     *  @note force add an event listener which will ignore whether it's in dispatching.
+    /** 强制添加一个事件侦听器 Force adding an event listener
+     *  @note 强制添加一个事件侦听器，该事件无论是否在调度过程中都会忽略
      *  @see addEventListener
      */
     void forceAddEventListener(EventListener* listener);
     
-    /** Gets event the listener list for the event listener type. */
+    /** 获取指定侦听器类型的事件监听器列表 . */
     EventListenerVector* getListeners(const EventListener::ListenerID& listenerID);
     
-    /** Update dirty flag */
+    /** 更新'脏标记'(dirty flag) */
     void updateDirtyFlagForSceneGraph();
     
-    /** Removes all listeners with the same event listener ID */
+    /** 移除所有使用相同事件侦听器ID的侦听器*/
     void removeEventListenersForListenerID(const EventListener::ListenerID& listenerID);
     
-    /** Sort event listener */
+    /** 事件侦听器排序 */
     void sortEventListeners(const EventListener::ListenerID& listenerID);
     
-    /** Sorts the listeners of specified type by scene graph priority */
+    /** 通过场景图的优先级排序指定类型的侦听器 */
     void sortEventListenersOfSceneGraphPriority(const EventListener::ListenerID& listenerID, Node* rootNode);
     
-    /** Sorts the listeners of specified type by fixed priority */
+    /** 通过固定优先级排序指定类型的侦听器 */
     void sortEventListenersOfFixedPriority(const EventListener::ListenerID& listenerID);
     
-    /** Updates all listeners
-     *  1) Removes all listener items that have been marked as 'removed' when dispatching event.
-     *  2) Adds all listener items that have been marked as 'added' when dispatching event.
+    /** 更新所有侦听器
+     *  1) 在事件分发过程中移除所有已经标记为'移除'的侦听器项.
+     *  2) 在事件分发过程中添加所有已经标记为'添加'的侦听器项.
      */
     void updateListeners(Event* event);
 
-    /** Touch event needs to be processed different with other events since it needs support ALL_AT_ONCE and ONE_BY_NONE mode. */
+    /** 触摸事件的处理与其它事件不同，因为触摸事件需要支持ALL_AT_ONCE和ONE_BY_NONE模式 */
     void dispatchTouchEvent(EventTouch* event);
     
-    /** Associates node with event listener */
+    /** 关联节点和事件侦听器 */
     void associateNodeAndEventListener(Node* node, EventListener* listener);
     
-    /** Dissociates node with event listener */
+    /** 分离节点和事件侦听器 */
     void dissociateNodeAndEventListener(Node* node, EventListener* listener);
     
-    /** Dispatches event to listeners with a specified listener type */
+    /** 分发事件给带有指定侦听器类型的侦听器 */
     void dispatchEventToListeners(EventListenerVector* listeners, const std::function<bool(EventListener*)>& onEvent);
     
-    /// Priority dirty flag
+    /// 带优先级的'脏标记'(dirty flag)
     enum class DirtyFlag
     {
         NONE = 0,
@@ -239,37 +235,37 @@ protected:
         ALL = FIXED_PRIORITY | SCENE_GRAPH_PRIORITY
     };
     
-    /** Sets the dirty flag for a specified listener ID */
+    /** 为一个指定的侦听器ID设置一个'脏标志'(dirty flag) */
     void setDirty(const EventListener::ListenerID& listenerID, DirtyFlag flag);
     
-    /** Walks though scene graph to get the draw order for each node, it's called before sorting event listener with scene graph priority */
+    /** 遍历场景图获取每一个节点的绘制顺序，该函数在以场景图优先级排序的事件侦听器之前被调用 */
     void visitTarget(Node* node, bool isRootNode);
     
-    /** Listeners map */
+    /** 侦听器映射图 */
     std::unordered_map<EventListener::ListenerID, EventListenerVector*> _listenerMap;
     
-    /** The map of dirty flag */
+    /** '脏标志'(dirty flag)映射图 */
     std::unordered_map<EventListener::ListenerID, DirtyFlag> _priorityDirtyFlagMap;
     
-    /** The map of node and event listeners */
+    /** 节点和事件侦听器的映射图 */
     std::unordered_map<Node*, std::vector<EventListener*>*> _nodeListenersMap;
     
-    /** The map of node and its event priority */
+    /** 节点映射和它的事件优先级 */
     std::unordered_map<Node*, int> _nodePriorityMap;
     
-    /** key: Global Z Order, value: Sorted Nodes */
+    /** key: 全局Z轴次序, value: 排好序的节点 */
     std::unordered_map<float, std::vector<Node*>> _globalZOrderNodeMap;
     
-    /** The listeners to be added after dispatching event */
+    /** 在事件分发后需要被添加的侦听器 */
     std::vector<EventListener*> _toAddedListeners;
     
-    /** The nodes were associated with scene graph based priority listeners */
+    /** 这些节点与基于场景图优先级的侦听器相关联 */
     std::set<Node*> _dirtyNodes;
     
-    /** Whether the dispatcher is dispatching event */
+    /** 调度程序是否正在进行事件分发 */
     int _inDispatch;
     
-    /** Whether to enable dispatching event */
+    /** 是否要使分发事件可用 */
     bool _isEnabled;
     
     int _nodePriorityIndex;

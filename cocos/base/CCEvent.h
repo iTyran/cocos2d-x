@@ -53,36 +53,36 @@ public:
     };
     
 protected:
-    /** Constructor */
+    /** 构造函数 */
     Event(Type type);
 public:
-    /** Destructor */
+    /** 析构函数 */
     virtual ~Event();
 
-    /** Gets the event type */
+    /** 获取事件类型 */
 	inline Type getType() const { return _type; };
     
-    /** Stops propagation for current event */
+    /** 停止当前事件传播 */
     inline void stopPropagation() { _isStopped = true; };
     
-    /** Checks whether the event has been stopped */
+    /** 检查指定事件是否已经停止 */
     inline bool isStopped() const { return _isStopped; };
     
-    /** @brief Gets current target of the event
-     *  @return The target with which the event associates.
-     *  @note It onlys be available when the event listener is associated with node. 
-     *        It returns 0 when the listener is associated with fixed priority.
+    /** @brief  获取事件的当前目标
+     *  @return 返回与指定事件相关的目标
+     *  @note   只有当事件侦听器与节点相关联时可用
+     *          当侦听器与一个固定优先级相关联时返回0 
      */
     inline Node* getCurrentTarget() { return _currentTarget; };
     
 protected:
-    /** Sets current target */
+    /** 设置当前目标 */
     inline void setCurrentTarget(Node* target) { _currentTarget = target; };
     
-	Type _type;     ///< Event type
+	Type _type;     ///< 事件类型
     
-    bool _isStopped;       ///< whether the event has been stopped.
-    Node* _currentTarget;  ///< Current target
+    bool _isStopped;       ///< 事件是否已经停止.
+    Node* _currentTarget;  ///< 当前目标
     
     friend class EventDispatcher;
 };
