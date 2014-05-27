@@ -40,11 +40,11 @@ NS_CC_BEGIN
 
 class Ref;
 
-/** Interface that defines how to clone an Ref */
+/** 如何克隆一个Ref对象的接口定义 */
 class CC_DLL Clonable
 {
 public:
-    /** returns a copy of the Ref */
+    /** 返回Ref对象的一份拷贝 */
     virtual Clonable* clone() const = 0;
     /**
      * @js NA
@@ -52,12 +52,12 @@ public:
      */
     virtual ~Clonable() {};
 
-    /** returns a copy of the Ref.
-     * @deprecated Use clone() instead
+    /** 返回Ref对象的一份拷贝.
+     * @deprecated 使用 clone() 替代
      */
     CC_DEPRECATED_ATTRIBUTE Ref* copy() const
     {
-        // use "clone" instead
+        // 使用 "clone" 替代
         CC_ASSERT(false);
         return nullptr;
     }
@@ -67,9 +67,9 @@ class CC_DLL Ref
 {
 public:
     /**
-     * Retains the ownership.
+     * 保留所有权.
      *
-     * This increases the Ref's reference count.
+     * 该方法会增加Ref对象的引用计数.
      *
      * @see release, autorelease
      * @js NA
@@ -77,12 +77,11 @@ public:
     void retain();
 
     /**
-     * Releases the ownership immediately.
+     * 立即释放所有权.
      *
-     * This decrements the Ref's reference count.
+     * 该方法会减少Ref对象的引用计数.
      *
-     * If the reference count reaches 0 after the descrement, this Ref is
-     * destructed.
+     * 如果引用计数被减少到0,该Ref对象将被销毁.
      *
      * @see retain, autorelease
      * @js NA
@@ -90,15 +89,13 @@ public:
     void release();
 
     /**
-     * Releases the ownership sometime soon automatically.
+     * 自动释放所有权在不久的将来.
      *
-     * This descrements the Ref's reference count at the end of current
-     * autorelease pool block.
+     * 结束当前pool池时,减少Ref对象的引用计数
      *
-     * If the reference count reaches 0 after the descrement, this Ref is
-     * destructed.
+     * 如果引用计数被减少到0,该Ref对象将被销毁.
      *
-     * @returns The Ref itself.
+     * @returns 返回Ref对象自己.
      *
      * @see AutoreleasePool, retain, release
      * @js NA
@@ -107,18 +104,18 @@ public:
     Ref* autorelease();
 
     /**
-     * Returns the Ref's current reference count.
+     *返回Ref对象当前的引用计数.
      *
-     * @returns The Ref's reference count.
+     * @returns 返回Ref对象的引用计数.
      * @js NA
      */
     unsigned int getReferenceCount() const;
 
 protected:
     /**
-     * Constructor
+     * 构造函数
      *
-     * The Ref's reference count is 1 after construction.
+     * 构造完成后,Ref对象的引用计数为1.
      * @js NA
      */
     Ref();
@@ -131,20 +128,20 @@ public:
     virtual ~Ref();
 
 protected:
-    /// count of references
+    ///引用计数
     unsigned int _referenceCount;
 
     friend class AutoreleasePool;
 
 #if CC_ENABLE_SCRIPT_BINDING
 public:
-    /// object id, ScriptSupport need public _ID
+    /// 对象 id, 脚本支持需要 public _ID
     unsigned int        _ID;
-    /// Lua reference id
+    /// Lua 引用 id
     int                 _luaID;
 #endif
 
-    // Memory leak diagnostic data (only included when CC_USE_MEM_LEAK_DETECTION is defined and its value isn't zero)
+    // 内存泄漏诊断数据 (仅包括 CC_USE_MEM_LEAK_DETECTION被定义且值不为0)
 #if CC_USE_MEM_LEAK_DETECTION
 public:
     static void printLeaks();
