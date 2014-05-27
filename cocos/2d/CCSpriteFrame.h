@@ -45,7 +45,9 @@ class Texture2D;
 /** @brief A SpriteFrame has:
     - texture: A Texture2D that will be used by the Sprite
     - rectangle: A rectangle of the texture
-
+一个精灵帧包括：
+    - 纹理：
+    - 矩形：
 
  You can modify the frame of a Sprite by doing:
  
