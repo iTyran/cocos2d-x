@@ -47,47 +47,47 @@ class ParticleSystem;
 
 #define kParticleDefaultCapacity 500
 
-/** ParticleBatchNode is like a batch node: if it contains children, it will draw them in 1 single OpenGL call
- * (often known as "batch draw").
+/** ParticleBatchNode是一个批处理节点: 如果它包含很多子节点, 它将只调用1次OpenGL把它们全部绘制出来.
+ * (就是大家熟知的“批处理绘制”).
  *
- * A ParticleBatchNode can reference one and only one texture (one image file, one texture atlas).
- * Only the ParticleSystems that are contained in that texture can be added to the SpriteBatchNode.
- * All ParticleSystems added to a SpriteBatchNode are drawn in one OpenGL ES draw call.
- * If the ParticleSystems are not added to a ParticleBatchNode then an OpenGL ES draw call will be needed for each one, which is less efficient.
+ * 一个ParticleBatchNode只能引用一个纹理(一个图像文件或者一个纹理贴图集).
+ * 只有ParticleSystems包含在那个纹理中才能被添加到SpriteBatchNode.
+ * 所有添加到SpriteBatchNode中的ParticleSystems将通过一个OpenGL ES绘制调用来绘制.
+ * 如果ParticleSystems没有被添加到某个ParticleBatchNode中，那么每绘制一个ParticleSystem都将需要一次OpenGL ES绘制调用,这会导致效率降低.
  *
  *
- * Limitations:
- * - At the moment only ParticleSystemQuad is supported
- * - All systems need to be drawn with the same parameters, blend function, aliasing, texture
+ * 限制:
+ * - 目前只支持ParticleSystemQuad
+ * - 所有系统必须在相同的参数、混合方式、别名和纹理下绘制
  *
- * Most efficient usage
- * - Initialize the ParticleBatchNode with the texture and enough capacity for all the particle systems
- * - Initialize all particle systems and add them as child to the batch node
+ * 最高效的用法
+ * - 使用纹理来初始化ParticleBatchNode，并且确保所有的粒子系统有足够的容量
+ * - 初始化所有粒子系统，然后把它们作为子节点添加到批处理节点中。
  * @since v1.1
  */
 
 class CC_DLL ParticleBatchNode : public Node, public TextureProtocol
 {
 public:
-    /** initializes the particle system with Texture2D, a capacity of particles, which particle system to use */
+    /** 初始化粒子系统的批处理结点，参数一为对应的纹理，参数二为创建批处理结点所能容纳的最大粒子数量 */
     static ParticleBatchNode* createWithTexture(Texture2D *tex, int capacity = kParticleDefaultCapacity);
 
-    /** initializes the particle system with the name of a file on disk (for a list of supported formats look at the Texture2D class), a capacity of particles */
+    /** 初始化粒子系统的批处理结点，参数一为保存到磁盘上的图片文件名(Texture2D类中列出了支持的格式)，参数二为创建批处理结点所能容纳的最大粒子数量 */
     static ParticleBatchNode* create(const std::string& fileImage, int capacity = kParticleDefaultCapacity);
 
-    /** Inserts a child into the ParticleBatchNode */
+    /** 将一个粒子系统按照指定的索引位置做为子结点加入批处理结点 */
     void insertChild(ParticleSystem* system, int index);
 
     void removeChildAtIndex(int index, bool doCleanup);
     void removeAllChildrenWithCleanup(bool doCleanup);
 
-    /** disables a particle by inserting a 0'd quad into the texture atlas */
+    /** 设置对应索引的粒子失效不显示 */
     void disableParticle(int particleIndex);
 
-    /** Gets the texture atlas used for drawing the quads */
+    /** 获取用来绘制矩形区域的纹理 */
     inline TextureAtlas* getTextureAtlas() const { return _textureAtlas; };
     
-    /** Sets the texture atlas used for drawing the quads */
+    /** 设置用来绘制矩形区域的纹理 */
     inline void setTextureAtlas(TextureAtlas* atlas) { _textureAtlas = atlas; };
     
     // Overrides
@@ -102,7 +102,7 @@ public:
     virtual void setTexture(Texture2D *texture) override;
     /**
     * @code
-    * When this function bound into js or lua,the parameter will be changed
+    * 在js或者lua下使用这个函数,需要改变传递的参数
     * In js: var setBlendFunc(var src, var dst)
     * @endcode
     * @lua NA
@@ -125,10 +125,10 @@ CC_CONSTRUCTOR_ACCESS:
      */
     virtual ~ParticleBatchNode();
     
-    /** initializes the particle system with Texture2D, a capacity of particles */
+    /** 初始化粒子系统，参数一为对应的二维纹理，参数二为粒子系统所能容纳的最大粒子数量 */
     bool initWithTexture(Texture2D *tex, int capacity);
     
-    /** initializes the particle system with the name of a file on disk (for a list of supported formats look at the Texture2D class), a capacity of particles */
+    /**  初始化粒子系统，参数一为保存到磁盘上的图片文件名(Texture2D类中列出了支持的格式)，参数二为粒子系统所能容纳的最大粒子数量 */
     bool initWithFile(const std::string& fileImage, int capacity);
     
 private:
@@ -138,12 +138,12 @@ private:
     void getCurrentIndex(int* oldIndex, int* newIndex, Node* child, int z);
     int addChildHelper(ParticleSystem* child, int z, int aTag);
     void updateBlendFunc(void);
-    /** the texture atlas used for drawing the quads */
+    /** 用来绘制矩形区域的纹理 */
     TextureAtlas* _textureAtlas;
 
-    /** the blend function used for drawing the quads */
+    /** 用来绘制矩形区域的混合方式 */
     BlendFunc _blendFunc;
-    // quad command
+    // 矩阵命令
     BatchCommand _batchCommand;
 };
 
