@@ -439,7 +439,6 @@ public:
      * 平滑更新向量的当前位置，指向目标向量target
      * responseTime定义了平滑时间量，该值越大结果越平滑，相应的延迟时间越长。如果希望向量紧跟target向量，提供一个相对elapsedTime小很多的responseTime值即可。
      */
-     */
     void smooth(const Vec3& target, float elapsedTime, float responseTime);
 
     /**
