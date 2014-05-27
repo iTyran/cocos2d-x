@@ -65,24 +65,24 @@ class Console;
 #endif
 
 /**
-@brief Class that creates and handles the main Window and manages how
-and when to execute the Scenes.
+@brief 此类负责创建和操作主窗口，同时管理如何和何时执行场景(Scenes)
  
- The Director is also responsible for:
-  - initializing the OpenGL context
-  - setting the OpenGL pixel format (default on is RGB565)
-  - setting the OpenGL buffer depth (default one is 0-bit)
-  - setting the projection (default one is 3D)
-  - setting the orientation (default one is Portrait)
+ Director 也负责以下:
+  - 初始化 OpenGL 上下文
+  - 设置 OpenGL像素格式 (默认值时 RGB565)
+  - 设置 OpenGL 缓存大小 (默认是 0-bit)
+  - 设置 投影 (默认是一个 3D)
+  - 设置 方向 (默认是 Portrait)    //竖屏
  
- Since the Director is a singleton, the standard way to use it is by calling:
-  _ Director::getInstance()->methodName();
+ 自从 Director 是一个 singleton, 标准的调用方法是:
+ _ Director::getInstance()->methodName();
  
- The Director also sets the default OpenGL context:
-  - GL_TEXTURE_2D is enabled
-  - GL_VERTEX_ARRAY is enabled
-  - GL_COLOR_ARRAY is enabled
-  - GL_TEXTURE_COORD_ARRAY is enabled
+ Director 也设置默认的 OpenGL 上下文:
+ - GL_TEXTURE_2D 可行的
+ - GL_VERTEX_ARRAY 可行的
+ - GL_COLOR_ARRAY 可行的
+ - GL_TEXTURE_COORD_ARRAY 可行的
+
 */
 enum class MATRIX_STACK_TYPE
 {
@@ -115,27 +115,27 @@ public:
 
 
     /** @typedef ccDirectorProjection
-     Possible OpenGL projections used by director
+     导演(director)可能使用 OpenGL 的投影
      */
     enum class Projection
     {
-        /// sets a 2D projection (orthogonal projection)
+        /// 设定的二维投影（正投影orthogonal projection)
         _2D,
         
-        /// sets a 3D projection with a fovy=60, znear=0.5f and zfar=1500.
+        /// 使用 fovy=60, znear=0.5f and zfar=1500 设置一个3D投影.sets a 3D projection with a fovy=60, znear=0.5f and zfar=1500.
         _3D,
         
-        /// it calls "updateProjection" on the projection delegate.
+        /// 投影委托里面它调用 "updateProjection".
         CUSTOM,
         
-        /// Default projection is 3D projection
+        /// 默认投影是 3D 投影
         DEFAULT = _3D,
     };
     
-    /** returns a shared instance of the director */
+    /** 返回导演(Director)的共享实例 */
     static Director* getInstance();
 
-    /** @deprecated Use getInstance() instead */
+    /** @deprecated 使用 getInstance() 替代 */
     CC_DEPRECATED_ATTRIBUTE static Director* sharedDirector() { return Director::getInstance(); }
     /**
      * @js ctor
@@ -148,25 +148,25 @@ public:
     virtual ~Director();
     virtual bool init();
 
-    // attribute
+    // 属性
 
-    /** Get current running Scene. Director can only run one Scene at a time */
+    /** 获取当前运行的场景(Scene). Director 在这个时候只能运行一个场景. */
     inline Scene* getRunningScene() { return _runningScene; }
 
-    /** Get the FPS value */
+    /** Get  FPS 值 */
     inline double getAnimationInterval() { return _animationInterval; }
-    /** Set the FPS value. */
+    /** Set FPS 值. */
     virtual void setAnimationInterval(double interval) = 0;
 
-    /** Whether or not to display the FPS on the bottom-left corner */
+    /**是否在左下角显示 FPS */
     inline bool isDisplayStats() { return _displayStats; }
-    /** Display the FPS on the bottom-left corner */
+    /** 在左下角显示 FPS */
     inline void setDisplayStats(bool displayStats) { _displayStats = displayStats; }
     
-    /** seconds per frame */
+    /** 每帧秒 */
     inline float getSecondsPerFrame() { return _secondsPerFrame; }
 
-    /** Get the GLView, where everything is rendered
+    /**  获取渲染所有东西的 EGLView
     * @js NA
     * @lua NA
     */
@@ -178,13 +178,13 @@ public:
     inline bool isNextDeltaTimeZero() { return _nextDeltaTimeZero; }
     void setNextDeltaTimeZero(bool nextDeltaTimeZero);
 
-    /** Whether or not the Director is paused */
+    /** Director 是否被暂停 */
     inline bool isPaused() { return _paused; }
 
-    /** How many frames were called since the director started */
+    /** director 开始到现在持续了多少帧 */
     inline unsigned int getTotalFrames() { return _totalFrames; }
     
-    /** Sets an OpenGL projection
+    /** 设置一个 OpenGL 投影
      @since v0.8.2
      * @js NA
      * @lua NA
@@ -192,221 +192,219 @@ public:
     inline Projection getProjection() { return _projection; }
     void setProjection(Projection projection);
     
-    /** Sets the glViewport*/
+    /** 设置 glViewport*/
     void setViewport();
 
-    /** How many frames were called since the director started */
+    /** director 开始到现在持续了多少帧 */
     
     
-    /** Whether or not the replaced scene will receive the cleanup message.
-     If the new scene is pushed, then the old scene won't receive the "cleanup" message.
-     If the new scene replaces the old one, the it will receive the "cleanup" message.
+    /** 场景是否收到替换清楚的消息
+     如果新的场景已经被 pushed （推出），那么旧的场景将不会收到“执行清理”("cleanup")的消息。
+     如果新的场景替换了旧的，它会收到“执行清理”("cleanup")消息。
      @since v0.99.0
      */
     inline bool isSendCleanupToScene() { return _sendCleanupToScene; }
 
-    /** This object will be visited after the main scene is visited.
-     This object MUST implement the "visit" selector.
-     Useful to hook a notification object, like Notifications (http://github.com/manucorporat/CCNotifications)
+    /** 主场景访问后这个对象将被访问
+     这个对象必须实现"访问"("visit") 选择器.
+     和通知对象挂钩, 像这个 Notifications (http://github.com/manucorporat/CCNotifications)
      @since v0.99.5
      */
     Node* getNotificationNode() const { return _notificationNode; }
     void setNotificationNode(Node *node);
     
-    // window size
+    //窗口大小
 
-    /** returns the size of the OpenGL view in points.
+    /** 返回以点为单位的 OpenGL 视图的大小.
     */
     const Size& getWinSize() const;
 
-    /** returns the size of the OpenGL view in pixels.
+    /** 返回以像素为单位的 OpenGL 视图的大小.
     */
     Size getWinSizeInPixels() const;
     
-    /** returns visible size of the OpenGL view in points.
-     *  the value is equal to getWinSize if don't invoke
-     *  GLView::setDesignResolutionSize()
+    /** returns 以点为单位的 OpenGL 视图的可见大小.
+     *  如果不调用 EGLView::setDesignResolutionSize() 值等于 getWinSize
      */
     Size getVisibleSize() const;
     
-    /** returns visible origin of the OpenGL view in points.
+    /** returns 以点为单位的 OpenGL 视图的初始化时的可见大小
      */
     Vec2 getVisibleOrigin() const;
 
-    /** converts a UIKit coordinate to an OpenGL coordinate
-     Useful to convert (multi) touch coordinates to the current layout (portrait or landscape)
+    /** UIKit的坐标转换到一个OpenGL坐标
+     *  使用当前布局（横向或纵向）有效的（多）触摸坐标
      */
     Vec2 convertToGL(const Vec2& point);
 
-    /** converts an OpenGL coordinate to a UIKit coordinate
-     Useful to convert node points to window points for calls such as glScissor
+    /** 一个OpenGL坐标转换到UIKit的坐标
+     点组成的窗口调用有效的节点上面的点，例如 glScissor
      */
     Vec2 convertToUI(const Vec2& point);
 
-    /// XXX: missing description 
+    /// XXX: 缺少描述
     float getZEye() const;
 
-    // Scene Management
+    //场景管理
 
-    /** Enters the Director's main loop with the given Scene.
-     * Call it to run only your FIRST scene.
-     * Don't call it if there is already a running scene.
+    /** 根据给定的场景进入 Director的主循环
+     * 只能调用他运行你的第一个场景.
+     * 如果已经有一个场景在运行了就不要在调用他来
      *
-     * It will call pushScene: and then it will call startAnimation
+     * 它将调用pushScene：然后它会调用startAnimation
      */
     void runWithScene(Scene *scene);
 
-    /** Suspends the execution of the running scene, pushing it on the stack of suspended scenes.
-     * The new scene will be executed.
-     * Try to avoid big stacks of pushed scenes to reduce memory allocation. 
-     * ONLY call it if there is a running scene.
+    /** 暂停执行正在运行的场景中，pushing一个在堆栈上推暂停的场景。
+     * 新的场景将被执行.
+     * 尽量避免在堆栈上存放一个很大的场景以减少内存非陪，
+     * 仅在有一个正在运行的场景的时候调用他.
      */
     void pushScene(Scene *scene);
 
-    /** Pops out a scene from the stack.
-     * This scene will replace the running one.
-     * The running scene will be deleted. If there are no more scenes in the stack the execution is terminated.
-     * ONLY call it if there is a running scene.
+    /** 从队列中弹出一个场景。
+     * 这个场景将替换正在运行的场景.
+     * 正在运行的场景将被删除。如果有堆栈中没有其它的场景那么 popScene 的执行会被终止。
+     * 仅在有一个正在运行的场景的时候调用他.
      */
     void popScene();
 
-    /** Pops out all scenes from the stack until the root scene in the queue.
-     * This scene will replace the running one.
-     * Internally it will call `popToSceneStackLevel(1)`
+    /** 从队列中弹出所有的场景，直到只有根场景在队列中
+     * 这个场景将替换正在运行的场景.
+     * 在内部塌毁调用 `popToSceneStackLevel(1)`
      */
     void popToRootScene();
 
-    /** Pops out all scenes from the stack until it reaches `level`.
-     If level is 0, it will end the director.
-     If level is 1, it will pop all scenes until it reaches to root scene.
-     If level is <= than the current stack level, it won't do anything.
+    /** 弹出从队列中的所有场景，直到它到达 `level`.
+     如果 level 是 0,它将结束 director.
+     如果 level 是 1, 从队列中弹出所有的场景，直到只有根场景在队列中
+     如果 level <= 当前的堆栈水平，它不会做任何事情。
      */
  	void popToSceneStackLevel(int level);
 
-    /** Replaces the running scene with a new one. The running scene is terminated.
-     * ONLY call it if there is a running scene.
+    /** 用一个新的替换正在运行的场景。终止正在运行的场景。
+     * 仅在有一个正在运行的场景的时候调用他.
      */
     void replaceScene(Scene *scene);
 
-    /** Ends the execution, releases the running scene.
-     It doesn't remove the OpenGL view from its parent. You have to do it manually.
+    /** 结束执行，释放正在运行的场景。
+     它不会从其父视图中删除的OpenGL视图。你有做手工。
      * @lua endToLua
      */
     void end();
 
-    /** Pauses the running scene.
-     The running scene will be _drawed_ but all scheduled timers will be paused
-     While paused, the draw rate will be 4 FPS to reduce CPU consumption
+    /** 暂停正在运行的场景。.
+     正在运行的场景将被绘制，的所有预定的定时器将被暂停
+     暂停时，绘制周期将只有4个FPS，以降低CPU消耗
      */
     void pause();
 
-    /** Resumes the paused scene
-     The scheduled timers will be activated again.
-     The "delta time" will be 0 (as if the game wasn't paused)
+    /** 恢复暂停的场景
+     预定的定时器将被再次激活。
+     “推迟执行”的时间将是0（如果游戏没有暂停）
      */
     void resume();
 
-    /** Stops the animation. Nothing will be drawn. The main loop won't be triggered anymore.
-     If you don't want to pause your animation call [pause] instead.
+    /** 停止动画，什么也不画. 主循环线程再也不会被触发.
+     如果你不希望那样，那么就用暂停你的游戏代替
      */
     virtual void stopAnimation() = 0;
 
-    /** The main loop is triggered again.
-     Call this function only if [stopAnimation] was called earlier
-     @warning Don't call this function to start the main loop. To run the main loop call runWithScene
+    /** 主循环线程重新被触发发.
+     这个函数只在你已经调用 [stopAnimation] 函数的时候调用
+     @warning 不要使用这个函数启动主线程循环. 请使用 主线程调用 runWithScene
      */
     virtual void startAnimation() = 0;
 
-    /** Draw the scene.
-    This method is called every frame. Don't call it manually.
-    */
+    /** 绘制场景.
+     这个方法每一帧都会调用，不要手动调用这个方法.
+     */
     void drawScene();
 
-    // Memory Helper
-
-    /** Removes all cocos2d cached data.
-     It will purge the TextureCache, SpriteFrameCache, LabelBMFont cache
+    // 内存助手
+    /** 移除所有 cocos2d 缓存数据.
+     他将清楚 TextureCache, SpriteFrameCache, LabelBMFont 缓存
      @since v0.99.3
      */
     void purgeCachedData();
 
-	/** sets the default values based on the Configuration info */
+	/** 设置配置信息的默认值 */
     void setDefaultValues();
 
-    // OpenGL Helper
+    // OpenGL 助手
 
-    /** sets the OpenGL default values */
+    /** 设置 OpenGL 默认值 */
     void setGLDefaultValues();
 
-    /** enables/disables OpenGL alpha blending */
+    /** 启用/禁用 OpenGL alpha 混合 */
     void setAlphaBlending(bool on);
 
-    /** enables/disables OpenGL depth test */
+    /** 启用/禁用 OpenGL 深度测试 */
     void setDepthTest(bool on);
 
     virtual void mainLoop() = 0;
 
-    /** The size in pixels of the surface. It could be different than the screen size.
-    High-res devices might have a higher surface size than the screen size.
-    Only available when compiled using SDK >= 4.0.
-    @since v0.99.4
-    */
+    /** 基于像素的 surface 尺寸. 它可以和屏幕尺寸不同        //表面
+     High-res 设备或许有一个高于屏幕尺寸的 surface 尺寸
+     只在编译 SDK >= 4.0 时有效.
+     @since v0.99.4
+     */
     void setContentScaleFactor(float scaleFactor);
     float getContentScaleFactor() const { return _contentScaleFactor; }
 
-    /** Gets the Scheduler associated with this director
+    /** 获取和这个 director 关联的调度器
      @since v2.0
      */
     Scheduler* getScheduler() const { return _scheduler; }
     
-    /** Sets the Scheduler associated with this director
+    /** 设置和这个 director 关联的调度器
      @since v2.0
      */
     void setScheduler(Scheduler* scheduler);
 
-    /** Gets the ActionManager associated with this director
+    /** 获取和这个 director 关联的 ActionManager
      @since v2.0
      */
     ActionManager* getActionManager() const { return _actionManager; }
     
-    /** Sets the ActionManager associated with this director
+    /** 设置和这个 director 关联的 ActionManager
      @since v2.0
      */
     void setActionManager(ActionManager* actionManager);
     
-    /** Gets the EventDispatcher associated with this director 
+    /** 获取和这个director 关联的EventDispatcher
      @since v3.0
      */
     EventDispatcher* getEventDispatcher() const { return _eventDispatcher; }
     
-    /** Sets the EventDispatcher associated with this director 
+    /** 设置和这个director 关联的EventDispatcher
      @since v3.0
      */
     void setEventDispatcher(EventDispatcher* dispatcher);
 
-    /** Returns the Renderer
+    /** 返回渲染器(Renderer)
      @since v3.0
      */
     Renderer* getRenderer() const { return _renderer; }
 
-    /** Returns the Console 
+    /** 返回控制台(Console)
      @since v3.0
      */
 #if  (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
     Console* getConsole() const { return _console; }
 #endif
 
-    /* Gets delta time since last tick to main loop */
+    /* 获取主循环线程之间的延迟时间 */
 	float getDeltaTime() const;
     
     /**
-     *  get Frame Rate
+     *  获取帧频率(Frame Rate)
      */
     float getFrameRate() const { return _frameRate; }
 
 protected:
     void purgeDirector();
-    bool _purgeDirectorInNextLoop; // this flag will be set to true in end()
+    bool _purgeDirectorInNextLoop; // 在 end() 这个参数将会被设置成
     
     void setNextScene();
     
@@ -415,42 +413,42 @@ protected:
     void calculateMPF();
     void getFPSImageData(unsigned char** datapointer, ssize_t* length);
     
-    /** calculates delta time since last time it was called */    
+    /**计算上次和这次主循环线程之间的延迟时间 */
     void calculateDeltaTime();
 
-    //textureCache creation or release
+    //纹理缓存(textureCache)创建和释放
     void initTextureCache();
     void destroyTextureCache();
 
-    /** Scheduler associated with this director
+    /** 和 director 关联的调度器(Scheduler)
      @since v2.0
      */
     Scheduler *_scheduler;
     
-    /** ActionManager associated with this director
+    /** 和 director 关联的ActionManager
      @since v2.0
      */
     ActionManager *_actionManager;
     
-    /** EventDispatcher associated with this director
+    /** 和 director 关联的事件派发器(EventDispatcher)
      @since v3.0
      */
     EventDispatcher* _eventDispatcher;
     EventCustom *_eventProjectionChanged, *_eventAfterDraw, *_eventAfterVisit, *_eventAfterUpdate;
         
-    /* delta time since last tick to main loop */
+    /* 自从上次触发主循环线程的延迟时间 */
 	float _deltaTime;
     
-    /* The GLView, where everything is rendered */
+    /* GLView, 渲染一切东西地方 */
     GLView *_openGLView;
 
-    //texture cache belongs to this director
+    //属于该director的纹理缓存(texture cache)
     TextureCache *_textureCache;
 
     double _animationInterval;
     double _oldAnimationInterval;
 
-    /* landscape mode ? */
+    /* 横屏模式 ? */
     bool _landscape;
     
     bool _displayStats;
@@ -461,63 +459,63 @@ protected:
     LabelAtlas *_drawnBatchesLabel;
     LabelAtlas *_drawnVerticesLabel;
     
-    /** Whether or not the Director is paused */
+    /** Director 是否暂停了 */
     bool _paused;
 
-    /* How many frames were called since the director started */
+    /* director 启动后到现在经过了多少帧 */
     unsigned int _totalFrames;
     unsigned int _frames;
     float _secondsPerFrame;
     
-    /* The running scene */
+    /* 正在运行的场景 */
     Scene *_runningScene;
     
-    /* will be the next 'runningScene' in the next frame
-     nextScene is a weak reference. */
+    /* 下一帧将要运行的场景，下一帧将要运行的场景是弱引用. */
     Scene *_nextScene;
     
-    /* If true, then "old" scene will receive the cleanup message */
+    /* true, 那么 "old" 旧的场景会收到清除消息 */
     bool _sendCleanupToScene;
 
-    /* scheduled scenes */
+    /* 调度场景scenes的集合 */
     Vector<Scene*> _scenesStack;
     
-    /* last time the main loop was updated */
+    /* 主循环线程上次更新但时间 */
     struct timeval *_lastUpdate;
 
-    /* whether or not the next delta time will be zero */
+    /*是否将下次但延迟时间设置为0 */
     bool _nextDeltaTimeZero;
     
-    /* projection used */
+    /* 使用的投影 */
     Projection _projection;
 
-    /* window size in points */
+    /* 点组成的窗口尺寸 */
     Size _winSizeInPoints;
     
-    /* content scale factor */
+    /* 内容比例因子 */
     float _contentScaleFactor;
 
-    /* This object will be visited after the scene. Useful to hook a notification node */
+    /* 主场景访问后这个对象将被访问，和通知对象挂钩 */
     Node *_notificationNode;
 
-    /* Renderer for the Director */
+    /* Director的渲染器(Renderer) */
     Renderer *_renderer;
 
 #if  (CC_TARGET_PLATFORM != CC_PLATFORM_WINRT)
-    /* Console for the director */
+    /* director的控制台Console */
     Console *_console;
 #endif
 
-    // GLViewProtocol will recreate stats labels to fit visible rect
+    // GLViewProtocol 将重新创建状态标签，以适应可见部分矩形
     friend class GLViewProtocol;
 };
 
-/** 
- @brief DisplayLinkDirector is a Director that synchronizes timers with the refresh rate of the display.
+
+/**
+ @brief DisplayLinkDirector是一个Director的子类, 表示屏幕刷新速率的同步定时器
  
- Features and Limitations:
-  - Scheduled timers & drawing are synchronizes with the refresh rate of the display
-  - Only supports animation intervals of 1/60 1/30 & 1/15
+ 特点和局限性:
+ - 调度定时器(Scheduled timers) & 绘制和屏幕刷新速率保持同步
+ - 只支持动画间隔时 1/60 1/30 & 1/15 的情况
  
  @since v0.8.2
  */
