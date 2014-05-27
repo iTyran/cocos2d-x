@@ -29,6 +29,8 @@
 NS_CC_MATH_BEGIN
 
 /** Clamp a value between from and to.
+ * 
+ * 将value的大小限制在min_inclusive与max_inclusive之间
  */
 
 inline float clampf(float value, float min_inclusive, float max_inclusive)
@@ -299,7 +301,9 @@ public:
      * 
      * @return This vector, after the normalization occurs.
      * 
+     * 求向量的标准化向量
      * 
+     * 这个方法标准化一个Vec2向量为单位长度（调用这个方法后向量长度为1.0f）。如果向量已经是单位长度或者长度为零，这个方法不起任何作用。
      */
     void normalize();
 
@@ -311,6 +315,10 @@ public:
      * current vector into dst.
      *
      * @param dst The destination vector.
+     * 
+     * 标准化这个向量并将结果保存在dst中
+     * 
+     * 如果向量已经是单位长度或者长度为零，这个方法将简单的把当前向量值拷贝到dst中。
      */
     Vec2 getNormalized() const;
 
@@ -318,6 +326,8 @@ public:
      * Scales all elements of this vector by the specified value.
      *
      * @param scalar The scalar value.
+     * 
+     * 用指定的放缩系数对向量的各分量进行放缩
      */
     void scale(float scalar);
 
@@ -325,6 +335,8 @@ public:
      * Scales each element of this vector by the matching component of scale.
      *
      * @param scale The vector to scale by.
+     * 
+     * 用scale向量的x分量来放缩本向量的x分量，用scale向量的y分量来放缩本向量的y分量。
      */
     void scale(const Vec2& scale);
 
@@ -333,6 +345,8 @@ public:
      *
      * @param point The point to rotate around.
      * @param angle The angle to rotate by (in radians).
+     * 
+     * 向量绕指定点point旋转angle度，其中angle的单位为弧度。
      */
     void rotate(const Vec2& point, float angle);
 
@@ -341,6 +355,8 @@ public:
      *
      * @param xx The new x coordinate.
      * @param yy The new y coordinate.
+     * 
+     * 设置向量的x分量值为xx，y分量值为yy。
      */
     void set(float xx, float yy);
 
@@ -348,6 +364,8 @@ public:
      * Sets the elements of this vector from the values in the specified array.
      *
      * @param array An array containing the elements of the vector in the order x, y.
+     * 
+     * 给定array序列，依序设置向量各分量的值。
      */
     void set(const float* array);
 
@@ -355,6 +373,8 @@ public:
      * Sets the elements of this vector to those in the specified vector.
      *
      * @param v The vector to copy.
+     * 
+     * 将指定向量v的值赋给本向量
      */
     void set(const Vec2& v);
 
@@ -363,6 +383,8 @@ public:
      * 
      * @param p1 The first point.
      * @param p2 The second point.
+     * 
+     * 得到p1指向p2的一个有向向量
      */
     void set(const Vec2& p1, const Vec2& p2);
 
@@ -371,6 +393,8 @@ public:
      * and stores the result in this vector.
      *
      * @param v The vector to subtract.
+     * 
+     * 本向量减去向量v
      */
     void subtract(const Vec2& v);
 
@@ -381,6 +405,8 @@ public:
      * @param v1 The first vector.
      * @param v2 The second vector.
      * @param dst The destination vector.
+     * 
+     * 向量v1减去v2，把结果保存在dst中
      */
     static void subtract(const Vec2& v1, const Vec2& v2, Vec2* dst);
 
@@ -394,6 +420,9 @@ public:
      * @param target target value.
      * @param elapsedTime elapsed time between calls.
      * @param responseTime response time (in the same units as elapsedTime).
+     * 
+     * 平滑更新向量的当前位置，指向目标向量target
+     * responseTime定义了平滑时间量，该值越大结果越平滑，相应的延迟时间越长。如果希望向量紧跟target向量，提供一个相对elapsedTime小很多的responseTime值即可。
      */
     void smooth(const Vec2& target, float elapsedTime, float responseTime);
 
@@ -404,6 +433,9 @@ public:
      * 
      * @param v The vector to add.
      * @return The vector sum.
+     * 
+     * 向量加法，求向量与给定向量v的和
+     * 注意：这个加法并不改变原向量的值，返回值单独保存
      */
     inline const Vec2 operator+(const Vec2& v) const;
 
@@ -412,6 +444,8 @@ public:
      * 
      * @param v The vector to add.
      * @return This vector, after the addition occurs.
+     * 
+     * 向量加法，求向量与给定向量v的和，将结果保存在该向量中，并返回。
      */
     inline Vec2& operator+=(const Vec2& v);
 
@@ -422,6 +456,9 @@ public:
      * 
      * @param v The vector to add.
      * @return The vector sum.
+     * 
+     * 向量减法，求向量与给定向量v的差
+     * 注意：这个减法并不改变原向量的值，返回值单独保存
      */
     inline const Vec2 operator-(const Vec2& v) const;
 
@@ -430,6 +467,8 @@ public:
      * 
      * @param v The vector to subtract.
      * @return This vector, after the subtraction occurs.
+     * 
+     * 向量减法，求向量与给定向量v的差，将结果保存在该向量中，并返回。
      */
     inline Vec2& operator-=(const Vec2& v);
 
@@ -439,6 +478,9 @@ public:
      * Note: this does not modify this vector.
      * 
      * @return The negation of this vector.
+     * 
+     * 求反向量
+     * 注意：这个方法并不改变原向量的值，返回值单独保存
      */
     inline const Vec2 operator-() const;
 
@@ -449,6 +491,9 @@ public:
      * 
      * @param s The value to scale by.
      * @return The scaled vector.
+     * 
+     * 向量乘法，给定浮点数s，求向量各分量分别乘以s后的值。
+     * 注意：这个方法并不改变原向量的值，返回值单独保存。
      */
     inline const Vec2 operator*(float s) const;
 
@@ -457,6 +502,8 @@ public:
      * 
      * @param s The value to scale by.
      * @return This vector, after the scale occurs.
+     * 
+     * 向量乘法，给定浮点数s，求向量各分量分别乘以s后的值，将所得结果保存在原向量中。
      */
     inline Vec2& operator*=(float s);
     
@@ -467,6 +514,9 @@ public:
      *
      * @param s the constant to divide this vector with
      * @return a smaller vector
+     * 
+     * 向量除法，给定浮点数s，求向量各分量分别除以s后的值。
+     * 注意：这个方法并不改变原向量的值，返回值单独保存。
      */
     inline const Vec2 operator/(float s) const;
 
@@ -476,6 +526,9 @@ public:
      * @param v The vector to compare against.
      * 
      * @return True if this vector is less than the given vector, false otherwise.
+     * 
+     * 判断该向量是否小于给定向量v，如果小于则返回true，否则返回false。
+     * 
      */
     inline bool operator<(const Vec2& v) const;
 
@@ -485,6 +538,8 @@ public:
      * @param v The vector to compare against.
      * 
      * @return True if this vector is equal to the given vector, false otherwise.
+     * 
+     * 判断该向量是否等于给定向量v，如果等于则返回True，否则返回false。
      */
     inline bool operator==(const Vec2& v) const;
 
@@ -494,10 +549,13 @@ public:
      * @param v The vector to compare against.
      * 
      * @return True if this vector is not equal to the given vector, false otherwise.
+     * 
+     * 判断该向量是否不等于给定向量v，如果不等则返回True，否则返回False。
      */
     inline bool operator!=(const Vec2& v) const;
 
     //code added compatible for Point
+    //增加的一些与点相关的代码
 public:
       /**
      * @js NA
@@ -513,6 +571,8 @@ public:
      @since v2.1.4
      * @js NA
      * @lua NA
+     * 
+     * 如果点有fuzzy equality意味着与某种方差是相等的。
      */
     bool fuzzyEquals(const Vec2& target, float variance) const;
 
@@ -521,6 +581,8 @@ public:
      @since v2.1.4
      * @js NA
      * @lua NA
+     * 
+     * 计算点到原点的距离，返回一个浮点数
      */
     inline float getLength() const {
         return sqrtf(x*x + y*y);
@@ -531,6 +593,8 @@ public:
      @since v2.1.4
      * @js NA
      * @lua NA
+     * 
+     * 计算该向量长度的平方，不调用sqrt().
      */
     inline float getLengthSq() const {
         return dot(*this); //x*x + y*y;
@@ -541,6 +605,7 @@ public:
      @since v2.1.4
      * @js NA
      * @lua NA
+     * 计算到另一个向量的长度的平方，不调用sqrt().
      */
     inline float getDistanceSq(const Vec2& other) const {
         return (*this - other).getLengthSq();
@@ -551,6 +616,8 @@ public:
      @since v2.1.4
      * @js NA
      * @lua NA
+     * 
+     * 计算两点之间的距离
      */
     inline float getDistance(const Vec2& other) const {
         return (*this - other).getLength();
@@ -560,6 +627,8 @@ public:
      @since v2.1.4
      * @js NA
      * @lua NA
+     * 
+     * 返回向量与x轴夹角，单位是弧度。
      */
     inline float getAngle() const {
         return atan2f(y, x);
@@ -569,6 +638,8 @@ public:
      @since v2.1.4
      * @js NA
      * @lua NA
+     * 
+     * 返回两个向量的夹角，单位是弧度。
      */
     float getAngle(const Vec2& other) const;
 
@@ -577,6 +648,8 @@ public:
      @since v2.1.4
      * @js NA
      * @lua NA
+     * 
+     * 计算两个二维向量的叉乘
      */
     inline float cross(const Vec2& other) const {
         return x*other.y - y*other.x;
@@ -587,6 +660,8 @@ public:
      @since v2.1.4
      * @js NA
      * @lua NA
+     * 
+     * 计算v逆时针旋转90度的垂线--cross(v,perp(v))>=0
      */
     inline Vec2 getPerp() const {
         return Vec2(-y, x);
@@ -597,6 +672,8 @@ public:
      @since v3.0
      * @js NA
      * @lua NA
+     * 
+     * 用向量计算两点间的中点
      */
     inline Vec2 getMidpoint(const Vec2& other) const
     {
@@ -607,6 +684,8 @@ public:
      @since v3.0
      * @js NA
      * @lua NA
+     * 
+     * 将一个点限制在min_inclusive和max_inclusive之间，返回该点的二维向量形式
      */
     inline Vec2 getClampPoint(const Vec2& min_inclusive, const Vec2& max_inclusive) const
     {
@@ -621,6 +700,9 @@ public:
      @since v3.0
      * @js NA
      * @lua NA
+     * 
+     * 对该点向量形式的各分量进行function参数来指定的运算，如absf,floorf,ceilf,roundf等，任何函数拥有如下形式：float func(float)均可。
+     * 例如：我们对x,y进行floor运算，则调用方法为p.compOp(floorf);
      */
     inline Vec2 compOp(std::function<float(float)> function) const
     {
@@ -632,6 +714,8 @@ public:
      @since v2.1.4
      * @js NA
      * @lua NA
+     * 
+     * 计算向量v顺时针旋转90度后的值---cross(v,rperp(v))<=0
      */
     inline Vec2 getRPerp() const {
         return Vec2(y, -x);
@@ -642,6 +726,8 @@ public:
      @since v2.1.4
      * @js NA
      * @lua NA
+     * 
+     * 计算该向量在另一向量other上的投影。
      */
     inline Vec2 project(const Vec2& other) const {
         return other * (dot(other)/other.dot(other));
@@ -653,6 +739,9 @@ public:
      @since v2.1.4
      * @js NA
      * @lua NA
+     * 
+     * 绕other向量旋转。
+     * 返回向量的角度为this.getAngle()+other.getAngle(),长度为this.getLength()*other.getLength().
      */
     inline Vec2 rotate(const Vec2& other) const {
         return Vec2(x*other.x - y*other.y, x*other.y + y*other.x);
@@ -664,6 +753,9 @@ public:
      @since v2.1.4
      * @js NA
      * @lua NA
+     * 
+     * 绕other向量旋转前的向量值
+     * 返回向量的角度为this.getAngle()-other.getAngle(),长度为this.getLength()*other.getLength().(这里是不是有点问题，难道不应该是this.getLength()/other.getLength()么？)
      */
     inline Vec2 unrotate(const Vec2& other) const {
         return Vec2(x*other.x + y*other.y, y*other.x - x*other.y);
@@ -677,6 +769,11 @@ public:
      @since v2.1.4
      * @js NA
      * @lua NA
+     * 
+     * 两个点a和b之间的线性插值
+     * 返回 alpha ==0 ? a
+     *      alpha ==1 ? b
+     *      否则为a和b之间的一个值
      */
     inline Vec2 lerp(const Vec2& other, float alpha) const {
         return *this * (1.f - alpha) + other * alpha;
@@ -689,6 +786,8 @@ public:
      @since v2.1.4
      * @js NA
      * @lua NA
+     * 
+     * 以pivot为轴逆时针旋转angle度（单位为弧度），返回结果向量
      */
     Vec2 rotateByAngle(const Vec2& pivot, float angle) const;
 
@@ -717,6 +816,16 @@ public:
      @since 3.0
      * @js NA
      * @lua NA
+     * 
+     * 
+     * 一个通用的线段相交检测
+     * A为线段L1起点，B为L1终点
+     * C为线段L2起点，D为L2终点
+     * 
+     * S为L1上计算各点的插值参数，计算方法为：p = A + S*(B - A)
+     * T为L2上计算各点的插值参数，计算方法为：p = C + T*(D - C)
+     * 
+     * 注意要准确测试出线段是否相交我们需要确保S&T的值在[0..1]区间范围内
      */
     static bool isLineIntersect(const Vec2& A, const Vec2& B,
                                  const Vec2& C, const Vec2& D,
@@ -727,6 +836,8 @@ public:
      @since v3.0
      * @js NA
      * @lua NA
+     * 
+     * 如果直线AB与线段CD重叠，返回True。
      */
     static bool isLineOverlap(const Vec2& A, const Vec2& B,
                                 const Vec2& C, const Vec2& D);
@@ -736,6 +847,8 @@ public:
      @since v3.0
      * @js NA
      * @lua NA
+     * 
+     * 如果直线AB与线段CD平行，返回True。
      */
     static bool isLineParallel(const Vec2& A, const Vec2& B,
                    const Vec2& C, const Vec2& D);
@@ -745,6 +858,8 @@ public:
      @since v3.0
      * @js NA
      * @lua NA
+     * 
+     * 如果线段AB与线段CD重叠，返回True。
      */
     static bool isSegmentOverlap(const Vec2& A, const Vec2& B,
                                  const Vec2& C, const Vec2& D,
@@ -755,6 +870,8 @@ public:
      @since v3.0
      * @js NA
      * @lua NA
+     * 
+     * 如果线段AB与线段CD交叉，返回True。
      */
     static bool isSegmentIntersect(const Vec2& A, const Vec2& B, const Vec2& C, const Vec2& D);
     
@@ -763,6 +880,8 @@ public:
      @since v3.0
      * @js NA
      * @lua NA
+     * 
+     * 返回直线AB，CD的交叉点。
      */
     static Vec2 getIntersectPoint(const Vec2& A, const Vec2& B, const Vec2& C, const Vec2& D);
     
@@ -800,6 +919,8 @@ public:
  * @param x The value to scale by.
  * @param v The vector to scale.
  * @return The scaled vector.
+ * 
+ * 计算向量与给定浮点数的乘积。
  */
 inline const Vec2 operator*(float x, const Vec2& v);
 
