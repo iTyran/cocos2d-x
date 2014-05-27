@@ -1,4 +1,4 @@
-    /****************************************************************************
+/****************************************************************************
  Copyright (c) 2013 Chukong Technologies Inc.
  
  http://www.cocos2d-x.org
@@ -50,11 +50,10 @@ const PhysicsMaterial PHYSICSBODY_MATERIAL_DEFAULT(0.1f, 0.5f, 0.5f);
  * 一个被物理反应影响的body
  * 可以跟一个或多个形状关联
  * 如果你使用createXXX的函数创建body,它会使用你指定的密度(默认由PHYSICSBODY_MATERIAL_DEFAULT指定，默认值为0.1f)自动计算质量和力矩，基于计算公式：质量 = 密度 x 体积。
- * if you create body with createXXX, it will automatically compute mass and moment with density your specified(which is PHYSICSBODY_MATERIAL_DEFAULT by default, and the density value is 0.1f), and it based on the formular: mass = density * area.
+
  * 如果你使用createEdgeXXX创建body，质量和力矩将默认为PHYSICS_INFINITY的值，body将成为一个静态的body。
- * if you create body with createEdgeXXX, the mass and moment will be PHYSICS_INFINITY by default. and it's a static body.
+
  * 你可以改变质量和力矩 使用setMass 和 setMoment 函数，你可以通过setDynamic改变body使其成为静态的或是动态的。
- * you can change mass and moment with setMass() and setMoment(). and you can change the body to be dynamic or static by use function setDynamic().
  */
 class PhysicsBody : public Ref
 {
@@ -162,7 +161,7 @@ public:
      * 默认值是0xFFFFFFFF (所有位被设成1)。
      */
     void setCategoryBitmask(int bitmask);
-    /** 
+    /**
      * 定义哪种分类的body导致和这个物理body发生交叉通知的一个mask
      * 当两个body共享同一片控件，每个body的分类mask会跟对方的contact mask通过“逻辑和”（即&&）操作。如果任意一个的结果是一个非0值，一个PhysicsContact的对象会被生成和传送到物理世界的委托。为了最好的表现，仅设置在contact mask里设置 你感兴趣的交互 所对应的bit。
      * 默认值是0x00000000 (所有位被设成0)。
@@ -181,7 +180,7 @@ public:
     /** 获取 冲突（collsion） mask bit */
     inline int getCollisionBitmask() const { return _collisionBitmask; }
     
-    /** 
+    /**
      * 设置body的分组
      * 冲突分组让你可以指定一个整数的分组的索引。你可以通过指定相同的index，（正数代表总是冲突，负数代表从不冲突）完成上述的操作。
      * 它比bit masks有更多的优先度
@@ -251,7 +250,7 @@ public:
     void addMoment(float moment);
     /** 获取线性阻尼 */
     inline float getLinearDamping() const { return _linearDamping; }
-    /** 
+    /**
      * 设置线性阻尼
      * 被用作模拟作用在body上的流体或是空气摩擦力
      * 值的范围是0.0f到1.0f
@@ -270,7 +269,7 @@ public:
     bool isResting() const;
     /** 设置body休止 */
     void setResting(bool rest) const;
-    /** 
+    /**
      * 获取body是否激活的
      * 如果body没有被激活，它不会被世界模拟。
      */
