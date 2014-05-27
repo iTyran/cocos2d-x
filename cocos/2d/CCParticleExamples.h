@@ -36,7 +36,7 @@ NS_CC_BEGIN
  * @{
  */
 
-//! @brief A fire particle system
+//! @brief 火焰粒子系统
 class CC_DLL ParticleFire : public ParticleSystemQuad
 {
 public:
@@ -61,7 +61,7 @@ private:
     CC_DISALLOW_COPY_AND_ASSIGN(ParticleFire);
 };
 
-//! @brief A fireworks particle system
+//! @brief 烟花粒子系统
 class CC_DLL ParticleFireworks : public ParticleSystemQuad
 {
 public:
@@ -87,7 +87,7 @@ private:
 
 };
 
-//! @brief A sun particle system
+//! @brief 太阳粒子系统
 class CC_DLL ParticleSun : public ParticleSystemQuad
 {
 public:
@@ -113,7 +113,7 @@ private:
 
 };
 
-//! @brief A galaxy particle system
+//! @brief 星系粒子系统
 class CC_DLL ParticleGalaxy : public ParticleSystemQuad
 {
 public:
@@ -139,7 +139,7 @@ private:
 
 };
 
-//! @brief A flower particle system
+//! @brief 开花粒子系统
 class CC_DLL ParticleFlower : public ParticleSystemQuad
 {
 public:
@@ -164,7 +164,7 @@ private:
     CC_DISALLOW_COPY_AND_ASSIGN(ParticleFlower);
 };
 
-//! @brief A meteor particle system
+//! @brief 流星粒子系统
 class CC_DLL ParticleMeteor : public ParticleSystemQuad
 {
 public:
@@ -189,7 +189,7 @@ private:
     CC_DISALLOW_COPY_AND_ASSIGN(ParticleMeteor);
 };
 
-//! @brief An spiral particle system
+//! @brief 螺旋粒子系统
 class CC_DLL ParticleSpiral : public ParticleSystemQuad
 {
 public:
@@ -215,7 +215,7 @@ private:
 
 };
 
-//! @brief An explosion particle system
+//! @brief 爆炸粒子系统
 class CC_DLL ParticleExplosion : public ParticleSystemQuad
 {
 public:
@@ -240,7 +240,7 @@ private:
     CC_DISALLOW_COPY_AND_ASSIGN(ParticleExplosion);
 };
 
-//! @brief An smoke particle system
+//! @brief 烟雾粒子系统
 class CC_DLL ParticleSmoke : public ParticleSystemQuad
 {
 public:
@@ -265,7 +265,7 @@ private:
     CC_DISALLOW_COPY_AND_ASSIGN(ParticleSmoke);
 };
 
-//! @brief An snow particle system
+//! @brief 雪花粒子系统
 class CC_DLL ParticleSnow : public ParticleSystemQuad
 {
 public:
@@ -290,7 +290,7 @@ private:
     CC_DISALLOW_COPY_AND_ASSIGN(ParticleSnow);
 };
 
-//! @brief A rain particle system
+//! @brief 下雨粒子系统
 class CC_DLL ParticleRain : public ParticleSystemQuad
 {
 public:
