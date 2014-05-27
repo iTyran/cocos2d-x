@@ -44,31 +44,24 @@ struct _ccCArray;
  * @{
  */
 
-/** @brief TMXLayer represents the TMX layer.
+/** @brief TMXLayer用来表示TMX layer，继承自SpriteBatchNode。tiles使用TextureAtlas进行渲染。
+如果运行时修改一个tile，那么tile将变成一个Sprite，反之，则不会有Sprite对象被创建。
+使用Sprite对象作为tiles有如下好处：
+- tiles(即Sprite)可以通过完善的API进行旋转/缩放/移动
 
-It is a subclass of SpriteBatchNode. By default the tiles are rendered using a TextureAtlas.
-If you modify a tile on runtime, then, that tile will become a Sprite, otherwise no Sprite objects are created.
-The benefits of using Sprite objects as tiles are:
-- tiles (Sprite) can be rotated/scaled/moved with a nice API
+如果layer包含一个属性名为"cc_vertexz"的整数(整数/负数)，那么属于layer的tiles将使用该属性值作为它们OpenGL用来渲染显示层次的Z值。
 
-If the layer contains a property named "cc_vertexz" with an integer (in can be positive or negative),
-then all the tiles belonging to the layer will use that value as their OpenGL vertex Z for depth.
-
-On the other hand, if the "cc_vertexz" property has the "automatic" value, then the tiles will use an automatic vertex Z value.
-Also before drawing the tiles, GL_ALPHA_TEST will be enabled, and disabled after drawing them. The used alpha func will be:
-
+在另一方面，如果"cc_vertexz"属性拥有 "automatic"值，那么这些tiles将使用一个自分配的Z值。
+同样，在绘制这些tiles时，在绘制前，必须设置GL_ALPHA_TEST为可用，绘制后设置为禁用。使用的Alpha函数如下：
 glAlphaFunc( GL_GREATER, value )
 
-"value" by default is 0, but you can change it from Tiled by adding the "cc_alpha_func" property to the layer.
-The value 0 should work for most cases, but if you have tiles that are semi-transparent, then you might want to use a different
-value, like 0.5.
-
-For further information, please see the programming guide:
-
+"value"默认值是0，也可通过添加"cc_alpha_func"属性给转换成tile的layer来进行改变。
+大多数情况是value的值是0，但如果有些tiles是半透明的，那么这值则可能会有不同，如是0.5
+进一步的信息，请查看相关说明(译者注：此链接已不可用)：
 http://www.cocos2d-iphone.org/wiki/doku.php/prog_guide:tiled_maps
 
 @since v0.8.1
-Tiles can have tile flags for additional properties. At the moment only flip horizontal and flip vertical are used. These bit flags are defined in TMXXMLParser.h.
+Tiles可以有额外属性tile flags，这些属性只当水平翻转和垂直翻转时使用，它们的bit flags定义在TMXXMLParser.h头文件中。
 
 @since 1.1
 */
@@ -76,7 +69,7 @@ Tiles can have tile flags for additional properties. At the moment only flip hor
 class CC_DLL TMXLayer : public SpriteBatchNode
 {
 public:
-    /** creates a TMXLayer with an tileset info, a layer info and a map info */
+    /** 通过指定TMXTilesetInfo,TMXLayerInfo和TMXMapInfo创建一个TMXLayer */
     static TMXLayer * create(TMXTilesetInfo *tilesetInfo, TMXLayerInfo *layerInfo, TMXMapInfo *mapInfo);
     /**
      * @js ctor
@@ -88,81 +81,81 @@ public:
      */
     virtual ~TMXLayer();
 
-    /** initializes a TMXLayer with a tileset info, a layer info and a map info */
+    /** 使用指定TMXTilesetInfo,TMXLayerInfo和TMXMapInfo初始化一个TMXLayer */
     bool initWithTilesetInfo(TMXTilesetInfo *tilesetInfo, TMXLayerInfo *layerInfo, TMXMapInfo *mapInfo);
 
-    /** dealloc the map that contains the tile position from memory.
-    Unless you want to know at runtime the tiles positions, you can safely call this method.
-    If you are going to call layer->tileGIDAt() then, don't release the map
+    /** 从内存中释放包含tile位置信息的地图。
+    除知道在运行时知道tiles的位置信息外，你都可安全的调用此方法。
+    如果即将调用layer->tileGIDAt()，那么不能释放地图。
     */
     void releaseMap();
 
-    /** returns the tile (Sprite) at a given a tile coordinate.
-    The returned Sprite will be already added to the TMXLayer. Don't add it again.
-    The Sprite can be treated like any other Sprite: rotated, scaled, translated, opacity, color, etc.
-    You can remove either by calling:
+    /** 通过指定的tile坐标获取对应的tile(Sprite)。
+    返回的tile(Sprite)应是已经添加到TMXLayer，不能被重复添加。
+    这个tile(Sprite)如同其他的Sprite一样，可以旋转、缩放、翻转、透明化、设置颜色等。
+    可通过调用如下对其进行删除：
     - layer->removeChild(sprite, cleanup);
-    - or layer->removeTileAt(Vec2(x,y));
+    - 或 layer->removeTileAt(Vec2(x,y));
     */
     Sprite* getTileAt(const Vec2& tileCoordinate);
     CC_DEPRECATED_ATTRIBUTE Sprite* tileAt(const Vec2& tileCoordinate) { return getTileAt(tileCoordinate); };
     
-    /** returns the tile gid at a given tile coordinate. It also returns the tile flags.
-     This method requires the the tile map has not been previously released (eg. don't call [layer releaseMap])
+    /** 通过指定的tile坐标获取对应的tile grid，也返回对应的tile flags
+     这个方法要求tile地图之前没有被释放掉(如，不能调用layer->releaseMap())
      */
     uint32_t getTileGIDAt(const Vec2& tileCoordinate, TMXTileFlags* flags = nullptr);
     CC_DEPRECATED_ATTRIBUTE uint32_t tileGIDAt(const Vec2& tileCoordinate, TMXTileFlags* flags = nullptr){
         return getTileGIDAt(tileCoordinate, flags);
     };
 
-    /** sets the tile gid (gid = tile global id) at a given tile coordinate.
-    The Tile GID can be obtained by using the method "tileGIDAt" or by using the TMX editor -> Tileset Mgr +1.
-    If a tile is already placed at that position, then it will be removed.
+    /** 设置一个指定坐标的tile的grid(gid = tile global id)。
+    Tile GID可以通过调用tileGIDAt方法或使用TMX editor -> Tileset Mgr +1得到。
+    如果该位置上已有一个tile，那么该位置上已有的tile将会被移除。
     */
     void setTileGID(uint32_t gid, const Vec2& tileCoordinate);
 
-    /** sets the tile gid (gid = tile global id) at a given tile coordinate.
-     The Tile GID can be obtained by using the method "tileGIDAt" or by using the TMX editor -> Tileset Mgr +1.
-     If a tile is already placed at that position, then it will be removed.
+    /** 设置一个指定坐标的tile的grid(gid = tile global id)。
+      Tile GID可以通过调用tileGIDAt方法或使用TMX editor -> Tileset Mgr +1得到。
+     如果该位置上已有一个tile，那么该位置上已有的tile将会被移除。
      
-     Use withFlags if the tile flags need to be changed as well
+     如果tile flags也需要改变，则使用withFlags。
      */
 
     void setTileGID(uint32_t gid, const Vec2& tileCoordinate, TMXTileFlags flags);
 
-    /** removes a tile at given tile coordinate */
+    /** 移除指定坐标上的tile */
     void removeTileAt(const Vec2& tileCoordinate);
 
-    /** returns the position in points of a given tile coordinate */
+    /** 获取指定坐标的位置(以点为单位) */
     Vec2 getPositionAt(const Vec2& tileCoordinate);
     CC_DEPRECATED_ATTRIBUTE Vec2 positionAt(const Vec2& tileCoordinate) { return getPositionAt(tileCoordinate); };
 
-    /** return the value for the specific property name */
+    /** 获取指定属性名(propertyName)的value */
     Value getProperty(const std::string& propertyName) const;
     CC_DEPRECATED_ATTRIBUTE Value propertyNamed(const std::string& propertyName) const { return getProperty(propertyName); };
 
-    /** Creates the tiles */
+    /** 创建tiles */
     void setupTiles();
 
     inline const std::string& getLayerName(){ return _layerName; }
     inline void setLayerName(const std::string& layerName){ _layerName = layerName; }
 
-    /** size of the layer in tiles */
+    /** 获取在tiles中layer的尺寸 */
     inline const Size& getLayerSize() const { return _layerSize; };
     inline void setLayerSize(const Size& size) { _layerSize = size; };
     
-    /** size of the map's tile (could be different from the tile's size) */
+    /** 获取地图tile的尺寸(与tile尺寸不同) */
     inline const Size& getMapTileSize() const { return _mapTileSize; };
     inline void setMapTileSize(const Size& size) { _mapTileSize = size; };
     
-    /** pointer to the map of tiles 
+    /** 指针:指向tiles地图 
      * @js NA
      * @lua NA
      */
     uint32_t* getTiles() const { return _tiles; };
     void setTiles(uint32_t* tiles) { _tiles = tiles; };
     
-    /** Tileset information for the layer */
+    /** 获取layer的Tileset信息 */
     inline TMXTilesetInfo* getTileSet() const { return _tileSet; };
     inline void setTileSet(TMXTilesetInfo* info) {
         CC_SAFE_RETAIN(info);
@@ -170,11 +163,11 @@ public:
         _tileSet = info;
     };
     
-    /** Layer orientation, which is the same as the map orientation */
+    /** Layer定向(同地图定向) */
     inline int getLayerOrientation() const { return _layerOrientation; };
     inline void setLayerOrientation(int orientation) { _layerOrientation = orientation; };
     
-    /** properties from the layer. They can be added using Tiled */
+    /** layer的属性，可以被当作Tile添加 */
     inline const ValueMap& getProperties() const { return _properties; };
     inline ValueMap& getProperties() { return _properties; };
     inline void setProperties(const ValueMap& properties) {
@@ -183,12 +176,12 @@ public:
     //
     // Override
     //
-    /** TMXLayer doesn't support adding a Sprite manually.
-     @warning addchild(z, tag); is not supported on TMXLayer. Instead of setTileGID.
+    /** TMXLayer不支持手动添加
+     @warning addchild(z, tag); 不能在TMXLayer中使用，用setTileGID代替
      */
     using SpriteBatchNode::addChild;
     virtual void addChild(Node * child, int zOrder, int tag) override;
-    // super method
+    // 父方法
     void removeChild(Node* child, bool cleanup) override;
     virtual std::string getDescription() const override;
 
@@ -199,12 +192,12 @@ private:
 
     Vec2 calculateLayerOffset(const Vec2& offset);
 
-    /* optimization methods */
+    /* 优化的方法 */
     Sprite* appendTileForGID(uint32_t gid, const Vec2& pos);
     Sprite* insertTileForGID(uint32_t gid, const Vec2& pos);
     Sprite* updateTileForGID(uint32_t gid, const Vec2& pos);
 
-    /* The layer recognizes some special properties, like cc_vertez */
+    /* layer所用到的一些属性，如cc_vertez */
     void parseInternalProperties();
     void setupTileSprite(Sprite* sprite, Vec2 pos, int gid);
     Sprite* reusedTileWithRect(Rect rect);
@@ -215,33 +208,33 @@ private:
     ssize_t atlasIndexForNewZ(int z);
     
 protected:
-    //! name of the layer
+    //! layer名
     std::string _layerName;
-    //! TMX Layer supports opacity
+    //! 透明度(TMX Layer支持该属性)
     unsigned char        _opacity;
     
-    //! Only used when vertexZ is used
+    //! 当且仅当vertexZ被使用时使用
     int                    _vertexZvalue;
     bool                _useAutomaticVertexZ;
 
-    //! used for optimization
+    //! 用于优化
     Sprite            *_reusedTile;
     ccCArray            *_atlasIndexArray;
     
-    // used for retina display
+    // 用于Retina屏的显示
     float               _contentScaleFactor;
     
-    /** size of the layer in tiles */
+    /** tiles中的layer尺寸 */
     Size _layerSize;
-    /** size of the map's tile (could be different from the tile's size) */
+    /** 地图tile的尺寸(与tile尺寸不同) */
     Size _mapTileSize;
-    /** pointer to the map of tiles */
+    /** tiles地图指针 */
     uint32_t* _tiles;
-    /** Tileset information for the layer */
+    /** layer的Tileset信息 */
     TMXTilesetInfo* _tileSet;
-    /** Layer orientation, which is the same as the map orientation */
+    /** Layer定向(同地图定向) */
     int _layerOrientation;
-    /** properties from the layer. They can be added using Tiled */
+    /** layer的属性，可以被当作Tile添加 */
     ValueMap _properties;
 };
 

@@ -32,9 +32,9 @@
 
 NS_CC_BEGIN
 
-/** Base class of the `RenderCommand` hierarchy.
+/** `RenderCommand`体系的基类.
 *
- The `Renderer` knows how to render `RenderCommands` objects.
+  渲染器(`Renderer`) 指定如何渲染`RenderCommands`对象.
  */
 class RenderCommand
 {
@@ -49,10 +49,10 @@ public:
         GROUP_COMMAND,
     };
 
-    /** Get Render Command Id */
+    /** 获取渲染器指令Id */
     inline float getGlobalOrder() const { return _globalOrder; }
 
-    /** Returns the Command type */
+    /** 返回指令类型 */
     inline Type getType() const { return _type; }
 
 protected:
@@ -61,10 +61,10 @@ protected:
 
     void printID();
 
-    // Type used in order to avoid dynamic cast, faster
+    // 类型(Type)用于避免动态转换，快速的
     Type _type;
 
-    // commands are sort by depth
+    // 命令通过深度排序
     float _globalOrder;
 };
 

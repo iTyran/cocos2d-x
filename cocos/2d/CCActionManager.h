@@ -43,14 +43,7 @@ struct _hashElement;
  */
 
 /** 
- @brief ActionManager is a singleton that manages all the actions.
- Normally you won't need to use this singleton directly. 99% of the cases you will use the Node interface,
- which uses this singleton.
- But there are some cases where you might need to use this singleton.
- Examples:
-    - When you want to run an action where the target is different from a Node. 
-    - When you want to pause / resume the actions
- 
+ @brief ActionManager是一个管理动作的单例类。 
  @since v0.8
  */
 class CC_DLL ActionManager : public Ref
@@ -103,7 +96,7 @@ public:
      */
     ssize_t getNumberOfRunningActionsInTarget(const Node *target) const;
 
-    /** @deprecated use getNumberOfRunningActionsInTarget() instead*/
+    /** @deprecated 使用getNumberOfRunningActionsInTarget() 代替*/
     CC_DEPRECATED_ATTRIBUTE inline ssize_t numberOfRunningActionsInTarget(Node *target) const { return getNumberOfRunningActionsInTarget(target); }
 
     /** 暂停目标动作：所有正在该目标执行的动作或者新加入的动作都将被暂停。

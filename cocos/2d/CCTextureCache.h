@@ -53,34 +53,34 @@ NS_CC_BEGIN
  * @{
  */
 /*
-* from version 3.0, TextureCache will never to treated as a singleton, it will be owned by director.
-* all call by TextureCache::getInstance() should be replaced by Director::getInstance()->getTextureCache()
+* 从3.0版本开始，TextureCache不再被看作独立的类，它会被认为是director的一部分
+* 所有对TextureCache::getInstance()的调用应使用Director::getInstance()->getTextureCache()进行替代
 */
 
-/** @brief Singleton that handles the loading of textures
-* Once the texture is loaded, the next time it will return
-* a reference of the previously loaded texture reducing GPU & CPU memory
+/** @brief 用来处理纹理贴图（texture）的加载的独立的类
+* 一旦纹理贴图（texture）被加载，它会在下一次返回
+* 一个用来节省GPU和CPU内存的，指向之前被加载的纹理贴图（texture）的引用（reference）
 */
 class CC_DLL TextureCache : public Ref
 {
 public:
-    /** Returns the shared instance of the cache */
+    /** 返回缓存的共享的实例 */
     CC_DEPRECATED_ATTRIBUTE static TextureCache * getInstance();
 
-    /** @deprecated Use getInstance() instead */
+    /** @deprecated 使用getInstance()作为替代 */
     CC_DEPRECATED_ATTRIBUTE static TextureCache * sharedTextureCache();
 
-    /** purges the cache. It releases the retained instance.
+    /** 清除缓存。释放保留的实例
      @since v0.99.0
      */
     CC_DEPRECATED_ATTRIBUTE static void destroyInstance();
 
-    /** @deprecated Use destroyInstance() instead */
+    /** @deprecated 使用destroyInstance()作为替代 */
     CC_DEPRECATED_ATTRIBUTE static void purgeSharedTextureCache();
 
-    /** Reload all textures
-    should not call it, called by frame work
-    now the function do nothing, use VolatileTextureMgr::reloadAllTextures
+    /** 重新加载所有纹理贴图（texture）
+     避免调用该函数，应在框架工作时由框架调用
+     目前这个函数不会做任何事，请使用VolatileTextureMgr::reloadAllTextures
      */
     CC_DEPRECATED_ATTRIBUTE static void reloadAllTextures();
 
@@ -102,79 +102,79 @@ public:
 
 //    Dictionary* snapshotTextures();
 
-    /** Returns a Texture2D object given an filename.
-    * If the filename was not previously loaded, it will create a new Texture2D
-    *  object and it will return it. It will use the filename as a key.
-    * Otherwise it will return a reference of a previously loaded image.
-    * Supported image extensions: .png, .bmp, .tiff, .jpeg, .pvr
+    /** 返回与给定文件名相对应的Texture2D对象
+    * 如果该文件名没有被预加载，这个方法会创建一个新的Texture2D对象，并返回该Texture2D对象
+    * 文件名会被用作key
+    * 否则会返回一个指向预加载图像的引用（reference）
+    * 支持的图像文件的类型有: .png, .bmp, .tiff, .jpeg, .pvr
     */
     Texture2D* addImage(const std::string &filepath);
 
-    /* Returns a Texture2D object given a file image
-    * If the file image was not previously loaded, it will create a new Texture2D object and it will return it.
-    * Otherwise it will load a texture in a new thread, and when the image is loaded, the callback will be called with the Texture2D as a parameter.
-    * The callback will be called from the main thread, so it is safe to create any cocos2d object from the callback.
-    * Supported image extensions: .png, .jpg
+    /* 返回与给定文件映像（file image）相对应的Texture2D对象
+    * 如果该图像文件没有被预加载，这个方法会创建一个新的Texture2D对象，并返回该Texture2D对象
+    * 否则该方法会在新的thread中加载一个纹理贴图（texture），并且当图像被加载后，回调函数将会被调用，并且该Texture2D对象会被用作回调函数的参数
+    * 回调函数会被从主thread中调用，所以通过回调函数创建任何cocos2d对象都是安全的。
+    * 支持的图像文件的类型有: .png, .jpg
     * @since v0.8
     */
     virtual void addImageAsync(const std::string &filepath, const std::function<void(Texture2D*)>& callback);
 
-    /** Returns a Texture2D object given an Image.
-    * If the image was not previously loaded, it will create a new Texture2D object and it will return it.
-    * Otherwise it will return a reference of a previously loaded image.
-    * The "key" parameter will be used as the "key" for the cache.
-    * If "key" is nil, then a new texture will be created each time.
+    /** 返回与给定图像相对应的Texture2D对象
+    * 如果该图像没有被预加载，这个方法会创建一个新的Texture2D对象，并返回该Texture2D对象
+    * 否则会返回一个指向预加载图像的引用（reference）
+    * 参数“key”会被用作缓存中的储存关键字
+    * 如果“key”为空值，每次都会创建一个新的纹理贴图（texture）
     */
     Texture2D* addImage(Image *image, const std::string &key);
     CC_DEPRECATED_ATTRIBUTE Texture2D* addUIImage(Image *image, const std::string& key) { return addImage(image,key); }
 
-    /** Returns an already created texture. Returns nil if the texture doesn't exist.
+    /** 返回一个已经被创建的纹理贴图（texture）。如果该纹理贴图不存在则返回nil
     @since v0.99.5
     */
     Texture2D* getTextureForKey(const std::string& key) const;
     CC_DEPRECATED_ATTRIBUTE Texture2D* textureForKey(const std::string& key) const { return getTextureForKey(key); }
 
-    /** Reload texture from the image file
-    * If the file image hasn't loaded before, load it.
-    * Otherwise the texture will be reloaded from the file image.
-    * The "filenName" parameter is the related/absolute path of the file image.
-    * Return true if the reloading is succeed, otherwise return false.
+    /** 从图像文件重新加载纹理贴图（texture）
+    * 如果这个图像文件没有被加载过，就加载该图像文件。
+    * 否则会从文件映像（file image）中重新加载该纹理贴图（texture）
+    * 参数“filenName”是文件映像（file image）的相对或绝对路径
+    * 如果重新加载成功就返回true，否则返回false
     */
     bool reloadTexture(const std::string& fileName);
 
-    /** Purges the dictionary of loaded textures.
-    * Call this method if you receive the "Memory Warning"
-    * In the short term: it will free some resources preventing your app from being killed
-    * In the medium term: it will allocate more resources
-    * In the long term: it will be the same
+    /** 清除加载纹理贴图的记录
+    * 如果你收到“内存警告”请调用该方法
+    * 在短期内: 会释放一些资源文件来防止你的app出现闪退现象
+    * 在中期: 会分配更多资源
+    * 从长远来看: 没有区别
     */
     void removeAllTextures();
 
-    /** Removes unused textures
-    * Textures that have a retain count of 1 will be deleted
-    * It is convenient to call this method after when starting a new Scene
+    /** 清除所有没有在使用中的纹理贴图（texture）
+    * 保留计数（retain count）为1的纹理贴图（texture）会被删除
+    * 在进入一个新场景后，调用本方法会带来不少方便
     * @since v0.8
     */
     void removeUnusedTextures();
 
-    /** Deletes a texture from the cache given a texture
+    /** 通过给定的纹理贴图（texture）从缓存中删除该纹理贴图
     */
     void removeTexture(Texture2D* texture);
 
-    /** Deletes a texture from the cache given a its key name
+    /** 通过给定的纹理贴图（texture）的关键名（key name）从缓存中删除该纹理贴图
     @since v0.99.4
     */
     void removeTextureForKey(const std::string &key);
 
-    /** Output to CCLOG the current contents of this TextureCache
-    * This will attempt to calculate the size of each texture, and the total texture memory in use
+    /** 将该TextureCache目前的内容输出到CCLog
+    * 这个方法会尝试去计算每一个纹理贴图（texture）的size和当前使用中的所有纹理贴图（texture）所占用内存的总和
     *
     * @since v1.0
     */
     std::string getCachedTextureInfo() const;
 
-    //wait for texture cahe to quit befor destroy instance
-    //called by director, please do not called outside
+    //在销毁实例前，等待纹理贴图缓存的退出
+    //由director调用，请不要在外部调用
     void waitForQuit();
 
 private:
@@ -273,8 +273,8 @@ public:
     static std::list<VolatileTexture*> _textures;
     static bool _isReloading;
 private:
-    // find VolatileTexture by Texture2D*
-    // if not found, create a new one
+    // 通过 Texture2D* 寻找VolatileTexture
+    // 如果没有找到，就重新创建一个
     static VolatileTexture* findVolotileTexture(Texture2D *tt);
 };
 

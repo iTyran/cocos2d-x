@@ -66,94 +66,94 @@ public:
     typedef std::function<void(Ref*, EventType)> ccListViewCallback;
     
     /**
-     * Default constructor
+     * Default constructor(默认构造函数)
      */
     ListView();
     
     /**
-     * Default destructor
+     * Default destructor(默认虚构函数)
      */
     virtual ~ListView();
     
     /**
-     * Allocates and initializes.
+     * 分配并初始化.
      */
     static ListView* create();
     
     /**
-     * Sets a item model for listview
+     * 设置listview的(item model)项模型
      *
-     * A model will be cloned for adding default item.
+     * 添加一个默认项时一个模型将会被克隆.
      *
-     * @param model  item model for listview
+     * @param model listview的项模型
      */
     void setItemModel(Widget* model);
     
     /**
-     * Push back a default item(create by a cloned model) into listview.
+     * 压栈一个默认项(通过克隆创建的)进listView.
      */
     void pushBackDefaultItem();
     
     /**
-     * Insert a default item(create by a cloned model) into listview.
+     * 插入一个默认项(通过克隆创建的)进listView.
      */
     void insertDefaultItem(ssize_t index);
     
     /**
-     * Push back custom item into listview.
+     * 压栈一个自定义项(通过克隆创建的)进listView.
      */
     void pushBackCustomItem(Widget* item);
     
     /**
-     * Insert custom item into listview.
+     * 插入一个自定义项(通过克隆创建的)进listView.
      */
     void insertCustomItem(Widget* item, ssize_t index);
     
     /**
-     *  Removes the last item of listview.
+     *  移除listview的最后项.
      */
     void removeLastItem();
     
     /**
-     * Removes a item whose index is same as the parameter.
+     * 移除一个索引和参数相同的项.
      *
-     * @param index of item.
+     * @param index 项的索引.
      */
     void removeItem(ssize_t index);
     
     void removeAllItems();
     
     /**
-     * Returns a item whose index is same as the parameter.
+     * 返回一个索引和参数相同的项.
      *
-     * @param index of item.
+     * @param index 项的索引.
      *
-     * @return the item widget.
+     * @return 返回widget 项.
      */
     Widget* getItem(ssize_t index);
     
     /**
-     * Returns the item container.
+     * 返回项的集合.
      */
     Vector<Widget*>& getItems();
     
     /**
-     * Returns the index of item.
+     * 返回项的索引.
      *
-     * @param item  the item which need to be checked.
+     * @param item  需要被.
      *
-     * @return the index of item.
+     * @return 项的索引
      */
     ssize_t getIndex(Widget* item) const;
     
     /**
-     * Changes the gravity of listview.
+     * 改变listview的重力.
      * @see ListViewGravity
      */
     void setGravity(Gravity gravity);
     
     /**
-     * Changes the margin between each item.
+     * 改变各项之间的边距(margin).
      *
      * @param margin
      */
@@ -169,9 +169,9 @@ public:
     void addEventListener(const ccListViewCallback& callback);
     
     /**
-     * Changes scroll direction of scrollview.
+     * 改变scrollview的滑动方向.
      *
-     * @see SCROLLVIEW_DIR      SCROLLVIEW_DIR_VERTICAL means vertical scroll, SCROLLVIEW_DIR_HORIZONTAL means horizontal scroll
+     * @see SCROLLVIEW_DIR      SCROLLVIEW_DIR_VERTICAL垂直方向滑动, SCROLLVIEW_DIR_HORIZONTAL 水平方向滑动
      *
      * @param SCROLLVIEW_DIR
      */

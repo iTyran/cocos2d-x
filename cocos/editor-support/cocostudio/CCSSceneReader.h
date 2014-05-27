@@ -37,7 +37,7 @@ public:
 
     enum class AttachComponentType
     {
-        ///parent: Empty Node
+        ///parent: 空节点
         ///            ComRender(Sprite, Armature, TMXTiledMap, ParticleSystemQuad, GUIComponent)
         ///            ComAttribute
         ///            ComAudio
@@ -50,7 +50,7 @@ public:
         ///          .....
         RENDER_NODE,
         
-        /// Default AttachComponentType is _EmptyNode
+        /// 默认的 AttachComponentType 是 _EmptyNode
         DEFAULT = EMPTY_NODE,
     };
 

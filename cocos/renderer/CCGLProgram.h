@@ -67,8 +67,8 @@ struct Uniform
     std::string name;
 };
 
-/** GLProgram
- Class that implements a glProgram
+/** GLProgram类
+ 实现一个glProgram
  
  
  @since v2.0.0
@@ -87,7 +87,7 @@ public:
 
         VERTEX_ATTRIB_MAX,
 
-        // backward compatibility
+        // 向后兼容
         VERTEX_ATTRIB_TEX_COORDS = VERTEX_ATTRIB_TEX_COORD,
     };
     
@@ -127,7 +127,7 @@ public:
     static const char* SHADER_NAME_LABEL_DISTANCEFIELD_GLOW;
     
     
-    // uniform names
+    // 制服(uniform)名
     static const char* UNIFORM_NAME_P_MATRIX;
     static const char* UNIFORM_NAME_MV_MATRIX;
     static const char* UNIFORM_NAME_MVP_MATRIX;
@@ -141,7 +141,7 @@ public:
     static const char* UNIFORM_NAME_SAMPLER3;
     static const char* UNIFORM_NAME_ALPHA_TEST_VALUE;
     
-    // Attribute names
+    // 属性名
     static const char* ATTRIBUTE_NAME_COLOR;
     static const char* ATTRIBUTE_NAME_POSITION;
     static const char* ATTRIBUTE_NAME_TEX_COORD;
@@ -149,25 +149,25 @@ public:
 
     GLProgram();
     virtual ~GLProgram();
-    /** Initializes the GLProgram with a vertex and fragment with bytes array 
+    /** 使用顶点(vertex)和片段字节数组初始化GLProgram
      * @js initWithString
      * @lua initWithString
      */
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
-    /** Initializes the CCGLProgram with precompiled shader program */
+    /** 使用预编译着色器编程初始化CCGLProgram */
     static GLProgram* createWithPrecompiledProgramByteArray(const GLchar* vShaderByteArray, const GLchar* fShaderByteArray);
     bool initWithPrecompiledProgramByteArray(const GLchar* vShaderByteArray, const GLchar* fShaderByteArray);
 #endif
 
-    /** Initializes the GLProgram with a vertex and fragment with bytes array 
+    /**  使用顶点(vertex)和字节数组片段初始化GLProgram
      * @js initWithString
      * @lua initWithString
      */
     static GLProgram* createWithByteArrays(const GLchar* vShaderByteArray, const GLchar* fShaderByteArray);
     bool initWithByteArrays(const GLchar* vShaderByteArray, const GLchar* fShaderByteArray);
 
-    /** Initializes the GLProgram with a vertex and fragment with contents of filenames 
+    /**  使用顶点(vertex)和文件名的内容片段初始化GLProgram
      * @js init
      * @lua init
      */
@@ -178,117 +178,117 @@ public:
 	Uniform* getUniform(const std::string& name);
     VertexAttrib* getVertexAttrib(const std::string& name);
 
-    /**  It will add a new attribute to the shader by calling glBindAttribLocation */
+    /**  通过调用glBindAttribLocation方法添加新的属性到着色器(shader) */
     void bindAttribLocation(const std::string& attributeName, GLuint index) const;
 
-    /** calls glGetAttribLocation */
+    /** 调用 glGetAttribLocation方法 */
     GLint getAttribLocation(const std::string& attributeName) const;
 
-    /** calls glGetUniformLocation() */
+    /** 调用 glGetUniformLocation()方法 */
     GLint getUniformLocation(const std::string& attributeName) const;
 
-    /** links the glProgram */
+    /** 链接 glProgram */
     bool link();
-    /** it will call glUseProgram() */
+    /** 它将调用glUseProgram()方法 */
     void use();
-/** It will create 4 uniforms:
+/** 它将创建4种制式(uniforms):
     - kUniformPMatrix
     - kUniformMVMatrix
     - kUniformMVPMatrix
     - GLProgram::UNIFORM_SAMPLER
 
- And it will bind "GLProgram::UNIFORM_SAMPLER" to 0
+ 且会绑定"GLProgram::UNIFORM_SAMPLER" 到0
 
  */
     void updateUniforms();
     
-    /** calls retrieves the named uniform location for this shader program. */
+    /** 调用(retrieves)检索此着色器编程的指定名字制式的位置. */
     GLint getUniformLocationForName(const char* name) const;
     
-    /** calls glUniform1i only if the values are different than the previous call for this same shader program. 
+    /** 仅当该值不同于前一个调用相同的着色器(shader)编程,调用 glUniform1i.
      * @js setUniformLocationI32
      * @lua setUniformLocationI32
      */
     void setUniformLocationWith1i(GLint location, GLint i1);
     
-    /** calls glUniform2i only if the values are different than the previous call for this same shader program. */
+    /** 仅当该值不同于前一个调用相同的着色器(shader)编程,调用 glUniform2i. */
     void setUniformLocationWith2i(GLint location, GLint i1, GLint i2);
     
-    /** calls glUniform3i only if the values are different than the previous call for this same shader program. */
+    /** 仅当该值不同于前一个调用相同的着色器(shader)编程,调用 glUniform3i. */
     void setUniformLocationWith3i(GLint location, GLint i1, GLint i2, GLint i3);
     
-    /** calls glUniform4i only if the values are different than the previous call for this same shader program. */
+    /** 仅当该值不同于前一个调用相同的着色器(shader)编程,调用 glUniform4i,仅仅当该值不同于前一个,相同的着色器(shader)编程才调. */
     void setUniformLocationWith4i(GLint location, GLint i1, GLint i2, GLint i3, GLint i4);
     
-    /** calls glUniform2iv only if the values are different than the previous call for this same shader program. */
+    /** 仅当该值不同于前一个调用相同的着色器(shader)编程,调用 glUniform2iv. */
     void setUniformLocationWith2iv(GLint location, GLint* ints, unsigned int numberOfArrays);
     
-    /** calls glUniform3iv only if the values are different than the previous call for this same shader program. */
+    /** 仅当该值不同于前一个调用相同的着色器(shader)编程,调用 glUniform3iv. */
     void setUniformLocationWith3iv(GLint location, GLint* ints, unsigned int numberOfArrays);
     
-    /** calls glUniform4iv only if the values are different than the previous call for this same shader program. */
+    /** 仅当该值不同于前一个调用相同的着色器(shader)编程,调用 glUniform4iv. */
     
     void setUniformLocationWith4iv(GLint location, GLint* ints, unsigned int numberOfArrays);
 
-    /** calls glUniform1f only if the values are different than the previous call for this same shader program. 
-     * In js or lua,please use setUniformLocationF32
+    /** 仅当该值不同于前一个调用相同的着色器(shader)编程,调用 glUniform1f .
+     * 在 js 或 lua中, 请使用 setUniformLocationF32
      * @js NA
      */
     void setUniformLocationWith1f(GLint location, GLfloat f1);
 
-    /** calls glUniform2f only if the values are different than the previous call for this same shader program. 
-     * In js or lua,please use setUniformLocationF32
+    /** 仅当该值不同于前一个调用相同的着色器(shader)编程,调用 glUniform2f .
+     * 在 js 或 lua中, 请使用setUniformLocationF32
      * @js NA
      */
     void setUniformLocationWith2f(GLint location, GLfloat f1, GLfloat f2);
 
-    /** calls glUniform3f only if the values are different than the previous call for this same shader program. 
-     * In js or lua,please use setUniformLocationF32
+    /** 仅当该值不同于前一个调用相同的着色器(shader)编程,调用 glUniform3f.
+     *在 js 或 lua中, 请使用 setUniformLocationF32
      * @js NA
      */
     void setUniformLocationWith3f(GLint location, GLfloat f1, GLfloat f2, GLfloat f3);
 
-    /** calls glUniform4f only if the values are different than the previous call for this same shader program. 
-     * In js or lua,please use setUniformLocationF32
+    /** 仅当该值不同于前一个调用相同的着色器(shader)编程,调用 glUniform4f.
+     * I在 js 或 lua中, 请使用setUniformLocationF32
      * @js NA
      */
     void setUniformLocationWith4f(GLint location, GLfloat f1, GLfloat f2, GLfloat f3, GLfloat f4);
 
-    /** calls glUniform2fv only if the values are different than the previous call for this same shader program. */
+    /** 仅当该值不同于前一个调用相同的着色器(shader)编程,调用 glUniform2fv. */
     void setUniformLocationWith2fv(GLint location, const GLfloat* floats, unsigned int numberOfArrays);
 
-    /** calls glUniform3fv only if the values are different than the previous call for this same shader program. */
+    /** 仅当该值不同于前一个调用相同的着色器(shader)编程,调用 glUniform3fv. */
     void setUniformLocationWith3fv(GLint location, const GLfloat* floats, unsigned int numberOfArrays);
 
-    /** calls glUniform4fv only if the values are different than the previous call for this same shader program. */
+    /** 仅当该值不同于前一个调用相同的着色器(shader)编程,调用 glUniform4fv. */
     void setUniformLocationWith4fv(GLint location, const GLfloat* floats, unsigned int numberOfArrays);
 
-    /** calls glUniformMatrix2fv only if the values are different than the previous call for this same shader program. */
+    /** 仅当该值不同于前一个调用相同的着色器(shader)编程,调用 glUniformMatrix2fv. */
     void setUniformLocationWithMatrix2fv(GLint location, const GLfloat* matrixArray, unsigned int numberOfMatrices);
     
-    /** calls glUniformMatrix3fv only if the values are different than the previous call for this same shader program. */
+    /** 仅当该值不同于前一个调用相同的着色器(shader)编程,调用 glUniformMatrix3fv. */
     void setUniformLocationWithMatrix3fv(GLint location, const GLfloat* matrixArray, unsigned int numberOfMatrices);
     
-    /** calls glUniformMatrix4fv only if the values are different than the previous call for this same shader program. */
+    /** 仅当该值不同于前一个调用相同的着色器(shader)编程,调用 glUniformMatrix4fv. */
     void setUniformLocationWithMatrix4fv(GLint location, const GLfloat* matrixArray, unsigned int numberOfMatrices);
     
-    /** will update the builtin uniforms if they are different than the previous call for this same shader program. */
+    /** 如果他们不同于前一个调用相同的着色器(shader),将会更新内键的制式. */
     void setUniformsForBuiltins();
     void setUniformsForBuiltins(const Mat4 &modelView);
 
     // Attribute
 
-    /** returns the vertexShader error log */
+    /** 返回vertexShader错误记录 */
     std::string getVertexShaderLog() const;
 
-    /** returns the fragmentShader error log */
+    /** 返回fragmentShader错误记录 */
     std::string getFragmentShaderLog() const;
 
-    /** returns the program error log */
+    /** 返回编程错误记录 */
     std::string getProgramLog() const;
     
-    // reload all shaders, this function is designed for android
-    // when opengl context lost, so don't call it.
+    // 重加载所有的着色器（shaders）, 该方法转为android设计
+    // 当 opengl 内容丢失,不调用它.
     void reset();
     
     inline const GLuint getProgram() const { return _program; }

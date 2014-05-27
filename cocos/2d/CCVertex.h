@@ -37,10 +37,10 @@ NS_CC_BEGIN
 
 /** @file CCVertex.h */
 
-/** converts a line to a polygon */
+/** 转换一条线为一个多边形 */
 void CC_DLL ccVertexLineToPolygon(Vec2 *points, float stroke, Vec2 *vertices, unsigned int offset, unsigned int nuPoints);
 
-/** returns whether or not the line intersects */
+/** 返回所给的线是否是相交的 */
 bool CC_DLL ccVertexLineIntersect(float Ax, float Ay,
                              float Bx, float By,
                              float Cx, float Cy,

@@ -43,7 +43,7 @@ class EventMouse : public Event
 {
 public:
     /**
-    * Different types of MouseEvent
+    * 不用的鼠标事件Different types of MouseEvent
     */
     enum class MouseEventType
     {
@@ -56,7 +56,7 @@ public:
 
     EventMouse(MouseEventType mouseEventCode);
 
-    /** Set mouse scroll data */
+    /** 设置鼠标滚动 */
     inline void setScrollData(float scrollX, float scrollY) { _scrollX = scrollX; _scrollY = scrollY; };
     inline float getScrollX() { return _scrollX; };
     inline float getScrollY() { return _scrollY; };
