@@ -32,41 +32,41 @@ NS_CC_BEGIN
 class EventCustom;
 
 /**
- *  Usage:
+ *  用法:
  *        auto dispatcher = Director::getInstance()->getEventDispatcher();
- *     Adds a listener:
+ *     添加一个监听器:
  *
  *        auto callback = [](EventCustom* event){ do_some_thing(); };
  *        auto listener = EventListenerCustom::create(callback);
  *        dispatcher->addEventListenerWithSceneGraphPriority(listener, one_node);
  *
- *     Dispatchs a custom event:
+ *     派发一个自定义事件:
  *
  *        EventCustom event("your_event_type");
  *        dispatcher->dispatchEvent(&event);
  *
- *     Removes a listener
+ *     移除一个监听器
  *
  *        dispatcher->removeEventListener(listener);
  */
 class EventListenerCustom : public EventListener
 {
 public:
-    /** Creates an event listener with type and callback.
-     *  @param eventType The type of the event.
-     *  @param callback The callback function when the specified event was emitted.
+    /** 指定事件类型和回调函数创建一个事件监听器.
+     *  @param eventType 事件类型.
+     *  @param callback 特定的事件被触发时执行该回调函数.
      */
     static EventListenerCustom* create(const std::string& eventName, const std::function<void(EventCustom*)>& callback);
     
-    /// Overrides
+    /// 重写
     virtual bool checkAvailable() override;
     virtual EventListenerCustom* clone() override;
     
 CC_CONSTRUCTOR_ACCESS:
-    /** Constructor */
+    /** 构造函数 */
     EventListenerCustom();
     
-    /** Initializes event with type and callback function */
+    /** 指定事件类型和回调函数初始化事件监听器 */
     bool init(const ListenerID& listenerId, const std::function<void(EventCustom*)>& callback);
     
 protected:
