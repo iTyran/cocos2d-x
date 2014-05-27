@@ -39,13 +39,6 @@ class Label;
  * @{
  */
 
-/** @brief LabelTTF is a subclass of TextureNode that knows how to render text labels
- *
- * All features from TextureNode are valid in LabelTTF
- *
- * LabelTTF objects are slow. Consider using LabelAtlas or LabelBMFont instead.
- *
- * Custom ttf file can be put in assets/ or external storage that the Application can access.**/
 
 /** @brief LabelTTF是TextureNode的一个子类，它懂得如何渲染文本标签。
 *
@@ -79,9 +72,6 @@ public:
      */
     virtual ~LabelTTF();
 
-    /** creates a Label from a fontname, alignment, dimension in points and font size in points
-     @since v2.0.1
-     */
     /**通过字体名称，对齐方式，维度(以点为单位)和字体大小（以点为单位）来创建标签。
      @since v2.0.1
      */
@@ -90,59 +80,44 @@ public:
                              TextVAlignment vAlignment = TextVAlignment::TOP);
     
     
-    /** Create a lable with string and a font definition*/
     /** 通过字符串和一个字体定义来创建标签。*/
     static LabelTTF * createWithFontDefinition(const std::string& string, FontDefinition &textDefinition);
     
-    /** initializes the LabelTTF with a font name, alignment, dimension and font size */ 
     /** 通过字体名称，对齐方式，维度和字体大小来初始化LabelTTF类。 */
     bool initWithString(const std::string& string, const std::string& fontName, float fontSize,
                         const Size& dimensions = Size::ZERO, TextHAlignment hAlignment = TextHAlignment::LEFT, 
                         TextVAlignment vAlignment = TextVAlignment::TOP);
     
-    /** initializes the LabelTTF with a font name, alignment, dimension and font size */
     /** 通过字体名称，对齐方式，维度和字体大小来初始化LabelTTF类。*/
     bool initWithStringAndTextDefinition(const std::string& string, FontDefinition &textDefinition);
     
-    /** set the text definition used by this label */
     /**用这个标签设置文本定义 */
     void setTextDefinition(const FontDefinition& theDefinition);
     
-    /** get the text definition used by this label */
     /** 用这个标签获取文本定义*/
     const FontDefinition& getTextDefinition() const;
     
     
     
-    /** enable or disable shadow for the label */
     /** 添加或者取消标签阴影 */
     void enableShadow(const Size &shadowOffset, float shadowOpacity, float shadowBlur, bool mustUpdateTexture = true);
     
-    /** disable shadow rendering */
     /**取消阴影渲染 */
     void disableShadow(bool mustUpdateTexture = true);
     
-    /** enable or disable stroke */
     /**添加或者取消空心效果 */
     void enableStroke(const Color3B &strokeColor, float strokeSize, bool mustUpdateTexture = true);
     
-    /** disable stroke */
     /**取消空心效果*/
     void disableStroke(bool mustUpdateTexture = true);
     
-    /** set text tinting */
     /**给文本着色*/
     void setFontFillColor(const Color3B &tintColor, bool mustUpdateTexture = true);
 
-    /** Creates an label.
-     */
     /** 创建一个标签
      */
     static LabelTTF * create();
 
-    /** changes the string to render
-    * @warning Changing the string is as expensive as creating a new LabelTTF. To obtain better performance use LabelAtlas
-    */
     /** 修改字符串来渲染
     * @warning 修改字符串和创建一个新的LabelTTF类一样麻烦。可以通过使用LabelAtlas类来获得更好的性能。
     */
