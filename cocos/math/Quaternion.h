@@ -30,32 +30,32 @@ NS_CC_MATH_BEGIN
 class Mat4;
 
 /**
- * Defines a 4-element quaternion that represents the orientation of an object in space.
+ * 在空间中定义一个四元数代码一个对象的方向
  *
- * Quaternions are typically used as a replacement for euler angles and rotation matrices as a way to achieve smooth interpolation and avoid gimbal lock.
+ * 四元数通常用来替换欧拉角，旋转矩阵，以此来实现平滑插补，避免万向节死锁。
  *
- * Note that this quaternion class does not automatically keep the quaternion normalized. Therefore, care must be taken to normalize the quaternion when necessary, by calling the normalize method.
- * This class provides three methods for doing quaternion interpolation: lerp, slerp, and squad.
+ * 要注意四元数类(Quaternion)不会自动保持四元数归一化。因此，必要时必需通过调用归一的方法把四元数归一化。
  *
- * lerp (linear interpolation): the interpolation curve gives a straight line in quaternion space. It is simple and fast to compute. The only problem is that it does not provide constant angular velocity. Note that a constant velocity is not necessarily a requirement for a curve;
- * slerp (spherical linear interpolation): the interpolation curve forms a great arc on the quaternion unit sphere. Slerp provides constant angular velocity;
- * squad (spherical spline interpolation): interpolating between a series of rotations using slerp leads to the following problems:
- * - the curve is not smooth at the control points;
- * - the angular velocity is not constant;
- * - the angular velocity is not continuous at the control points.
+ * lerp（线性插值）:它的插补曲线给出了在四元数空间中的直线。这是简单和快速地计算。唯一的问题是，它不提供恒角速度。注意一个恒定的速度不一定是一条曲线的要求;
+ * slerp（球形线性插值）：它的插补曲线构成的四元数单位球面上有很大的弧线。 Slerp提供恒定角速度;
+ * squad（球形样条插值）：在使用slerp(球形线性插值)一系列的旋转进行插值时导致了以下问题：
+ * - 曲线的控制点不平滑
+ * - 角速度不是恒定的;
+ * - 角速度的控制点不是连续的
  *
- * Since squad is continuously differentiable, it remedies the first and third problems mentioned above.
- * The slerp method provided here is intended for interpolation of principal rotations. It treats +q and -q as the same principal rotation and is at liberty to use the negative of either input. The resulting path is always the shorter arc.
+ * 由于squad（球形样条插值是连续可微的，它可以补救上面提到的第一个和第三个问题。
+ * 这里提供的slerp（球形线性插值）方法用于主旋转的插值。它把+q和-q作为同一主转动，并且可以随意地输入负数。由此产生的路径总是短弧。
  *
- * The lerp method provided here interpolates strictly in quaternion space. Note that the resulting path may pass through the origin if interpolating between a quaternion and its exact negative.
+ * 这里提供的lerp(线性插值)方法在四元数空间严格插值。需要注意的是如果一个四元数和它的确切负数之间进行插值,产生的路径可能经过原点。
  *
- * As an example, consider the following quaternions:
+ * 例如，考虑下面的四元数：
  *
  * q1 = (0.6, 0.8, 0.0, 0.0),
  * q2 = (0.0, 0.6, 0.8, 0.0),
- * q3 = (0.6, 0.0, 0.8, 0.0), and
+ * q3 = (0.6, 0.0, 0.8, 0.0), 和
  * q4 = (-0.8, 0.0, -0.6, 0.0).
  * For the point p = (1.0, 1.0, 1.0), the following figures show the trajectories of p using lerp, slerp, and squad.
+ * 对于点p = (1.0, 1.0, 1.0), 以下数据显示了点p使用lerp（线性插值）,slerp（球形线性插值）和squad（球形样条插值）的轨迹。
  */
 class Quaternion
 {
@@ -65,336 +65,312 @@ class Quaternion
 public:
 
     /**
-     * The x-value of the quaternion's vector component.
+	 * 四元数的向量分量x值
      */
     float x;
     /**
-     * The y-value of the quaternion's vector component.
+	 * 四元数的向量分量y值
      */
     float y;
     /**
-     * The z-value of the quaternion's vector component.
+	 * 四元数的向量分量z值
      */
     float z;
     /**
-     * The scalar component of the quaternion.
+	 * 四元数的标量分量
      */
     float w;
 
     /**
-     * Constructs a quaternion initialized to (0, 0, 0, 1).
+	 * 构造一个四元数并初始化为（0，0，0，1）。
      */
     Quaternion();
 
     /**
-     * Constructs a quaternion initialized to (0, 0, 0, 1).
+	 * 构造一个四元数并用给定的值进行初始化
      *
-     * @param xx The x component of the quaternion.
-     * @param yy The y component of the quaternion.
-     * @param zz The z component of the quaternion.
-     * @param ww The w component of the quaternion.
+     * @param xx 四元数的x分量
+     * @param yy 四元数的y分量
+     * @param zz 四元数的z分量
+     * @param ww 四元数的w分量
      */
     Quaternion(float xx, float yy, float zz, float ww);
 
     /**
-     * Constructs a new quaternion from the values in the specified array.
+	 * 根据指定数组的值构造一个新的四元数。
      *
-     * @param array The values for the new quaternion.
+     * @param array 构造四元数的数组
      */
     Quaternion(float* array);
 
     /**
-     * Constructs a quaternion equal to the rotational part of the specified matrix.
+	 * 根据指定矩阵的旋转部分构造一个四元数
      *
      * @param m The matrix.
      */
     Quaternion(const Mat4& m);
 
     /**
-     * Constructs a quaternion equal to the rotation from the specified axis and angle.
+	 * 根据指定的旋转轴和角度的旋转构造一个四元数
      *
-     * @param axis A vector describing the axis of rotation.
-     * @param angle The angle of rotation (in radians).
+     * @param axis 描述旋转轴的矢量。
+     * @param angle 旋转角度(弧度)。
      */
     Quaternion(const Vec3& axis, float angle);
 
     /**
-     * Constructs a new quaternion that is a copy of the specified one.
+	 * 根据指定的四元数复制一个新的四元数
      *
-     * @param copy The quaternion to copy.
+     * @param copy 要复制的四元数
      */
     Quaternion(const Quaternion& copy);
 
     /**
-     * Destructor.
+     * 析构函数.
      */
     ~Quaternion();
 
     /**
-     * Returns the identity quaternion.
+     * 返回单位四元数.
      *
-     * @return The identity quaternion.
+     * @return 单位四元数。
      */
     static const Quaternion& identity();
 
     /**
-     * Returns the quaternion with all zeros.
+     * 返回全是零的四元数.
      *
-     * @return The quaternion.
+     * @return 全是零的四元数.
      */
     static const Quaternion& zero();
 
     /**
-     * Determines if this quaternion is equal to the identity quaternion.
+     * 判断当前四元数是否单位四元数
      *
-     * @return true if it is the identity quaternion, false otherwise.
+     * @return 如果是单位四元数返回true，否则返回false。
      */
     bool isIdentity() const;
 
     /**
-     * Determines if this quaternion is all zeros.
+	 * 判断当前四元数是否全部为零
      *
-     * @return true if this quaternion is all zeros, false otherwise.
+     * @return 如果四元数全部为零返回true，否则返回false。
      */
     bool isZero() const;
 
     /**
-     * Creates a quaternion equal to the rotational part of the specified matrix
-     * and stores the result in dst.
+	 * 根据指定矩阵的旋转部分创建一个四元数，并储存在指定的四元数中
      *
-     * @param m The matrix.
-     * @param dst A quaternion to store the conjugate in.
+     * @param m 矩阵。
+     * @param dst 储存结果的四元数。
      */
     static void createFromRotationMatrix(const Mat4& m, Quaternion* dst);
 
     /**
-     * Creates this quaternion equal to the rotation from the specified axis and angle
-     * and stores the result in dst.
+	 * 根据指定旋转轴和角度创建一个四元数，并储存在指定的四元数中
      *
-     * @param axis A vector describing the axis of rotation.
-     * @param angle The angle of rotation (in radians).
-     * @param dst A quaternion to store the conjugate in.
+     * @param axis 描述旋转轴的矢量。
+     * @param angle 旋转角度(弧度)。
+     * @param dst 储存结果的四元数。
      */
     static void createFromAxisAngle(const Vec3& axis, float angle, Quaternion* dst);
 
     /**
-     * Sets this quaternion to the conjugate of itself.
+	 * 设置当前四元数与自身共轭.
      */
     void conjugate();
 
     /**
-     * Gets the conjugate of this quaternion in dst.
+	 * 获取当前四元数的共轭.
      *
-     * @param dst A quaternion to store the conjugate in.
      */
     Quaternion getConjugated() const;
 
     /**
-     * Sets this quaternion to the inverse of itself.
+	 * 设置当前四元数与自身相反.
      *
-     * Note that the inverse of a quaternion is equal to its conjugate
-     * when the quaternion is unit-length. For this reason, it is more
-     * efficient to use the conjugate method directly when you know your
-     * quaternion is already unit-length.
+	 * 需要注意的是四元数的倒数等于它的共轭时，四元数是单位长度。出于这个原因，当四元数已经单位长度时，它是使用共轭方法时更直接有效的。
      *
-     * @return true if the inverse can be computed, false otherwise.
+     * @return 如果当前四元数是可以倒置计算的返回true，否则返回false。
      */
     bool inverse();
 
     /**
-     * Gets the inverse of this quaternion in dst.
+	 * 获取四元数的倒数
      *
-     * Note that the inverse of a quaternion is equal to its conjugate
-     * when the quaternion is unit-length. For this reason, it is more
-     * efficient to use the conjugate method directly when you know your
-     * quaternion is already unit-length.
-     *
-     * @param dst A quaternion to store the inverse in.
+	 * 需要注意的是四元数的倒数等于它的共轭时，四元数是统一单位长度。出于这个原因，当四元数已经统一单位长度时，它是使用共轭方法时更直接有效的。
      * 
-     * @return true if the inverse can be computed, false otherwise.
+     * @return 获取四元数的倒数
      */
     Quaternion getInversed() const;
 
     /**
-     * Multiplies this quaternion by the specified one and stores the result in this quaternion.
+     * 与指定的四元数相乘，并把结果储存到指定传入的四元数中。
      *
-     * @param q The quaternion to multiply.
+     * @param q 相乘的四元数。
      */
     void multiply(const Quaternion& q);
 
     /**
-     * Multiplies the specified quaternions and stores the result in dst.
+	 * 把两个指定的四元数相乘，并把结果储存到dst（指定的四元数引用）
      *
-     * @param q1 The first quaternion.
-     * @param q2 The second quaternion.
-     * @param dst A quaternion to store the result in.
+     * @param q1 第一个四元数。
+     * @param q2 第二个四元数。
+     * @param dst 储存结果的四元数引用。
      */
     static void multiply(const Quaternion& q1, const Quaternion& q2, Quaternion* dst);
 
     /**
-     * Normalizes this quaternion to have unit length.
+	 * 归一化四元数有利于它有统一的单位长度
      *
-     * If the quaternion already has unit length or if the length
-     * of the quaternion is zero, this method does nothing.
+     * 如果四元数已经有单位长度或者四元数的长度为零，则此方法不执行任何操作。
      */
     void normalize();
 
     /**
-     * Normalizes this quaternion and stores the result in dst.
+     * 获取归一处理的四元数
      *
-     * If the quaternion already has unit length or if the length
-     * of the quaternion is zero, this method simply copies
-     * this vector into dst.
+     * 如果这个四元数是有单位长度或者为零，只是返回该四元数.
      *
-     * @param dst A quaternion to store the result in.
      */
     Quaternion getNormalized() const;
 
     /**
-     * Sets the elements of the quaternion to the specified values.
+     * 根据指定的值设置四元数的元素
      *
-     * @param xx The new x-value.
-     * @param yy The new y-value.
-     * @param zz The new z-value.
-     * @param ww The new w-value.
+     * @param xx 新的x值
+     * @param yy 新的y值
+     * @param zz 新的z值
+     * @param ww 新的w值
      */
     void set(float xx, float yy, float zz, float ww);
 
     /**
-     * Sets the elements of the quaternion from the values in the specified array.
+     * 根据指定的数组设置四元数的元素
      *
-     * @param array An array containing the elements of the quaternion in the order x, y, z, w.
+     * @param array 一个包含四元数x,y,z,w分量的数组
      */
     void set(float* array);
 
     /**
-     * Sets the quaternion equal to the rotational part of the specified matrix.
+     * 设置四元数等于指定矩阵的旋转部分
      *
-     * @param m The matrix.
+     * @param m 矩阵。
      */
     void set(const Mat4& m);
 
     /**
-     * Sets the quaternion equal to the rotation from the specified axis and angle.
+     * 设置四元数等于指定指定旋转轴和角度的旋转
      * 
-     * @param axis The axis of rotation.
-     * @param angle The angle of rotation (in radians).
+     * @param axis 旋转轴。
+     * @param angle 旋转的角度（以弧度为单位）。
      */
     void set(const Vec3& axis, float angle);
 
     /**
-     * Sets the elements of this quaternion to a copy of the specified quaternion.
+     * 复制四元数的元素到指定的四元数的副本。
      *
-     * @param q The quaternion to copy.
+     * @param q 四元数的副本。
      */
     void set(const Quaternion& q);
 
     /**
-     * Sets this quaternion to be equal to the identity quaternion.
+     * 设置四元数为该单位四元数
      */
     void setIdentity();
 
     /**
-     * Converts this Quaternion4f to axis-angle notation. The axis is normalized.
+     * 把四元数转换为转角符号。该轴是归一化的。
      *
-     * @param e The Vec3f which stores the axis.
+     * @param e 储存该轴的Vec3f。
      * 
-     * @return The angle (in radians).
+     * @return 角度（以弧度为单位）
      */
     float toAxisAngle(Vec3* e) const;
 
     /**
-     * Interpolates between two quaternions using linear interpolation.
+     * 把两个四元数使用线性插值进行插值。
      *
-     * The interpolation curve for linear interpolation between
-     * quaternions gives a straight line in quaternion space.
+     * 四元数之间线性插值的插值曲线给出了在四元数空间中的直线。
      *
-     * @param q1 The first quaternion.
-     * @param q2 The second quaternion.
-     * @param t The interpolation coefficient.
-     * @param dst A quaternion to store the result in.
+     * @param q1 第一个四元数。
+     * @param q2 第二个四元数。
+     * @param t 内插系数。
+     * @param dst 储存结果的四元数。
      */
     static void lerp(const Quaternion& q1, const Quaternion& q2, float t, Quaternion* dst);
     
     /**
-     * Interpolates between two quaternions using spherical linear interpolation.
+     * 把两个四元数使用球形线性插值进行插值。
      *
-     * Spherical linear interpolation provides smooth transitions between different
-     * orientations and is often useful for animating models or cameras in 3D.
+     * 球形线性插值提供不同方向的平滑过渡往往在动画的三维模型或摄像机非常有用。
      *
-     * Note: For accurate interpolation, the input quaternions must be at (or close to) unit length.
-     * This method does not automatically normalize the input quaternions, so it is up to the
-     * caller to ensure they call normalize beforehand, if necessary.
+     * 注：为了精确插值，输入四元数必须在（或接近）单位长度。此方法不会自动归一化牏输入的四元数，如有必要，它是由调用者来确保他们都归一化。
      *
-     * @param q1 The first quaternion.
-     * @param q2 The second quaternion.
-     * @param t The interpolation coefficient.
-     * @param dst A quaternion to store the result in.
+     * @param q1 第一个四元数。
+     * @param q2 第二个四元数。
+     * @param t 内插系数。
+     * @param dst 储存结果的四元数。
      */
     static void slerp(const Quaternion& q1, const Quaternion& q2, float t, Quaternion* dst);
     
     /**
-     * Interpolates over a series of quaternions using spherical spline interpolation.
+     * 使用球形样条插值修改一系列的四元数。
      *
-     * Spherical spline interpolation provides smooth transitions between different
-     * orientations and is often useful for animating models or cameras in 3D.
+     * 球形样条插值提供不同方向平滑的过渡往往在动画的三维模型或摄像机非常有用。
      *
-     * Note: For accurate interpolation, the input quaternions must be unit.
-     * This method does not automatically normalize the input quaternions,
-     * so it is up to the caller to ensure they call normalize beforehand, if necessary.
+     * 注：为了精确插值，输入四元数必须是单位。
+     * 此方法不会自动归一化处理输入的四元数，如果必要，它是由调用者来确保他们都归一化。
      *
-     * @param q1 The first quaternion.
-     * @param q2 The second quaternion.
-     * @param s1 The first control point.
-     * @param s2 The second control point.
-     * @param t The interpolation coefficient.
-     * @param dst A quaternion to store the result in.
+     * @param q1 第一个四元数。
+     * @param q2 第二个四元数。
+     * @param s1 第一个控制点。
+     * @param s2 第丙个控制点。
+     * @param t 内插系数。
+     * @param dst 储存结果的四元数。
      */
     static void squad(const Quaternion& q1, const Quaternion& q2, const Quaternion& s1, const Quaternion& s2, float t, Quaternion* dst);
 
     /**
-     * Calculates the quaternion product of this quaternion with the given quaternion.
+     * 计算当前四元数与指定四元数的乘积的四元数。
+     *
+     * 注意：该方法不修改当此四元数。
      * 
-     * Note: this does not modify this quaternion.
-     * 
-     * @param q The quaternion to multiply.
-     * @return The quaternion product.
+     * @param q 要相乘的四元数。
+     * @return 两个四元数的乘积的四元数。
      */
     inline const Quaternion operator*(const Quaternion& q) const;
 
     /**
-     * Multiplies this quaternion with the given quaternion.
+     * 计算当前四元数与指定四元数的乘积。
      * 
-     * @param q The quaternion to multiply.
-     * @return This quaternion, after the multiplication occurs.
+     * @param q 要相乘的四元数。
+     * @return 相乘之后的四元数。
      */
     inline Quaternion& operator*=(const Quaternion& q);
 
 private:
 
     /**
-     * Interpolates between two quaternions using spherical linear interpolation.
+     * 把两个四元数使用球形线性插值进行插值。
      *
-     * Spherical linear interpolation provides smooth transitions between different
-     * orientations and is often useful for animating models or cameras in 3D.
+     * 球形线性插值提供不同方向平滑的过渡往往在动画的三维模型或摄像机非常有用。
      *
-     * Note: For accurate interpolation, the input quaternions must be at (or close to) unit length.
-     * This method does not automatically normalize the input quaternions, so it is up to the
-     * caller to ensure they call normalize beforehand, if necessary.
+     * 注：为了精确插值，输入四元数必须在（或接近）单位长度。此方法不会自动归一化牏输入的四元数，如有必要，它是由调用者来确保他们都归一化。
      *
-     * @param q1x The x component of the first quaternion.
-     * @param q1y The y component of the first quaternion.
-     * @param q1z The z component of the first quaternion.
-     * @param q1w The w component of the first quaternion.
-     * @param q2x The x component of the second quaternion.
-     * @param q2y The y component of the second quaternion.
-     * @param q2z The z component of the second quaternion.
-     * @param q2w The w component of the second quaternion.
-     * @param t The interpolation coefficient.
-     * @param dstx A pointer to store the x component of the slerp in.
-     * @param dsty A pointer to store the y component of the slerp in.
-     * @param dstz A pointer to store the z component of the slerp in.
-     * @param dstw A pointer to store the w component of the slerp in.
+     * @param q1x 第一个四元数的x分量。
+     * @param q1y 第一个四元数的y分量。
+     * @param q1z 第一个四元数的z分量。
+     * @param q1w 第一个四元数的w分量。
+     * @param q2x 第二个四元数的x分量。
+     * @param q2y 第二个四元数的y分量。
+     * @param q2z 第二个四元数的z分量。
+     * @param q2w 第二个四元数的w分量。
+     * @param t 内插系数。slerp（球形线性插值）
+     * @param dstx 指向储存slerp（球形线性插值）x分量的指针。
+     * @param dsty 指向储存slerp（球形线性插值）y分量的指针。
+     * @param dstz 指向储存slerp（球形线性插值）z分量的指针。
+     * @param dstw 指向储存slerp（球形线性插值）w分量的指针。
      */
     static void slerp(float q1x, float q1y, float q1z, float q1w, float q2x, float q2y, float q2z, float q2w, float t, float* dstx, float* dsty, float* dstz, float* dstw);
 
