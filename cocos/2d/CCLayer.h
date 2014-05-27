@@ -114,8 +114,8 @@ public:
     CC_DEPRECATED_ATTRIBUTE virtual void registerWithTouchDispatcher() final {};
 
     /** 它是否将接收触屏事件。
-你可以通过这个属性来开启或关闭触屏事件。
-只有这个节点的触屏事件被影响。这个“方法”不会传播给它的孩子节点。
+    你可以通过这个属性来开启或关闭触屏事件。
+    只有这个节点的触屏事件被影响。这个“方法”不会传播给它的孩子节点。
     @since v0.8.1
     */
     CC_DEPRECATED_ATTRIBUTE bool isTouchEnabled() const;
@@ -136,10 +136,10 @@ public:
     CC_DEPRECATED_ATTRIBUTE virtual void setAccelerometerEnabled(bool value);
     CC_DEPRECATED_ATTRIBUTE virtual void setAccelerometerInterval(double interval);
 
-/**
-它是否接收键盘或者平板的键盘事件。
-你可以通过这个属性来开启或者关闭键盘或者平板的键盘事件。
-这是cocos2d-x中的新特性。
+    /**
+    它是否接收键盘或者平板的键盘事件。
+    你可以通过这个属性来开启或者关闭键盘或者平板的键盘事件。
+    这是cocos2d-x中的新特性。
     */
     CC_DEPRECATED_ATTRIBUTE virtual bool isKeyboardEnabled() const;
     CC_DEPRECATED_ATTRIBUTE virtual void setKeyboardEnabled(bool value);
@@ -282,7 +282,7 @@ public:
     virtual const BlendFunc& getBlendFunc() const override;
     /**
     *@code
-当这个函数绑定到js或者lua,参数将改变。
+    当这个函数绑定到js或者lua,参数将改变。
     *In js: var setBlendFunc(var src, var dst)
     *In lua: local setBlendFunc(local src, local dst)
     *@endcode
@@ -342,8 +342,8 @@ public:
     static LayerGradient* create(const Color4B& start, const Color4B& end, const Vec2& v);
     
     /** 
-不管插值是否被压缩，最终都为了呈现包括规范向量和不规范向量渐变的所有颜色。
-默认：true
+    不管插值是否被压缩，最终都为了呈现包括规范向量和不规范向量渐变的所有颜色。
+    默认：true
      */
     void setCompressedInterpolation(bool compressedInterpolation);
     bool isCompressedInterpolation() const;
