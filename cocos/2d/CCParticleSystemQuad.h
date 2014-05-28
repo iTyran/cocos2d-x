@@ -41,47 +41,46 @@ class EventCustom;
  * @{
  */
 
-/** @brief ParticleSystemQuad is a subclass of ParticleSystem
+/** @brief ParticleSystemQuad 是 ParticleSystem 的子类
 
-It includes all the features of ParticleSystem.
+它包含ParticleSystem的所有特性
 
-Special features and Limitations:    
-- Particle size can be any float number.
-- The system can be scaled
-- The particles can be rotated
-- It supports subrects
-- It supports batched rendering since 1.1
+额外的特性和局限:    
+- 粒子大小可以是任意浮点数
+- 系统可缩放
+- 粒子可旋转
+- 支持子区域
+- 支持批量渲染 （从1.1开始）
 @since v0.8
 */
 class CC_DLL ParticleSystemQuad : public ParticleSystem
 {
 public:
 
-    /** creates a Particle Emitter */
+    /** 创建粒子发生器 */
     static ParticleSystemQuad * create();
-    /** creates a Particle Emitter with a number of particles */
+    /** 创建一定数量粒子的发生器 */
     static ParticleSystemQuad * createWithTotalParticles(int numberOfParticles);
-    /** creates an initializes a ParticleSystemQuad from a plist file.
-     This plist files can be created manually or with Particle Designer:
+    /** 从plist创建粒子发生器
      */
     static ParticleSystemQuad * create(const std::string& filename);
-    /** creates a Particle Emitter with a dictionary */
+    /** 从字典创建粒子发生器 */
     static ParticleSystemQuad * create(ValueMap &dictionary);
 
-    /** Sets a new SpriteFrame as particle.
-    WARNING: this method is experimental. Use setTextureWithRect instead.
+    /** 为粒子设置一个新的帧.
+    WARNING: 实验接口。用setTextureWithRect代替。
     @since v0.99.4
     */
     void setDisplayFrame(SpriteFrame *spriteFrame);
 
-    /** Sets a new texture with a rect. The rect is in Points.
+    /** 设置新的纹理和区域
      @since v0.99.4
      * @js NA
      * @lua NA
      */
     void setTextureWithRect(Texture2D *texture, const Rect& rect);
 
-    /** listen the event that coming to foreground on Android
+    /** 监听Android从后台切换到前台的事件
      * @js NA
      * @lua NA
      */
@@ -140,13 +139,13 @@ CC_CONSTRUCTOR_ACCESS:
     virtual bool initWithTotalParticles(int numberOfParticles) override;
 
 protected:
-    /** initializes the indices for the vertices*/
+    /** 初始化顶点数组*/
     void initIndices();
     
-    /** initializes the texture with a rectangle measured Points */
+    /** 初始化纹理区域 */
     void initTexCoordsWithRect(const Rect& rect);
     
-    /** Updates texture coords */
+    /** 更新纹理坐标 */
     void updateTexCoords();
 
     void setupVBOandVAO();
