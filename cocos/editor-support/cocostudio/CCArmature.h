@@ -73,16 +73,16 @@ class  Armature : public cocos2d::Node, public cocos2d::BlendProtocol
 public:
 
     /**
-    * Allocates and initializes an armature.
-    * @return An initialized armature which is marked as "autorelease".
+    * 分配并初始化骨骼动画
+    * @return 分配病初始化过的骨骼动画
     */
     static Armature *create();
 
     /**
-    * Allocates an armature, and use the ArmatureData named name in ArmatureDataManager to initializes the armature.
+    * 分配一个骨骼动画,并且给它一个存放到ArmatureDataManage中作为索引的名称
     *
-    * @param  name Armature will use the name to find the ArmatureData to initializes it.
-    * @return A initialized armature which is marked as "autorelease".
+    * @param  name 骨骼动画的名称
+    * @return 分配并初始化过的骨骼动画
     */
     static Armature *create(const std::string& name);
 
@@ -100,53 +100,54 @@ public:
     virtual ~Armature(void);
 
     /**
-     * Init the empty armature
+     * 初始化创建好的骨骼动画
      */
     virtual bool init() override;
 
     /**
-     * Init an armature with specified name
-     * @param name Armature name
+     * 初始化创建好的骨骼动画，并命名
+     * @param name 骨骼动画名称
      */
     virtual bool init(const std::string& name);
 
     virtual bool init(const std::string& name, Bone *parentBone);
     /**
-     * Add a Bone to this Armature,
+     * 在骨骼动画中增加一个骨骼
      *
-     * @param bone  The Bone you want to add to Armature
-     * @param parentName   The parent Bone's name you want to add to . If it's  nullptr, then set Armature to its parent
+     * @param bone  想要加入骨骼动画中的骨骼
+     * @param parentName   想要骨骼加入的骨骼动画名称
      */
     virtual void addBone(Bone *bone, const std::string& parentName);
     /**
-     * Get a bone with the specified name
+     * 通过指定名称获取骨骼
      *
-     * @param name The bone's name you want to get
+     * @param name 想要获取的骨骼的名称
      */
     virtual Bone *getBone(const std::string& name) const;
     /**
-     * Change a bone's parent with the specified parent name.
+     * 改变骨骼的挂靠父节点到指定名称的父节点上
      *
-     * @param bone The bone you want to change parent
-     * @param parentName The new parent's name.
+     * @param bone 要改变的骨骼
+     * @param parentName 新的父节点的名称
      */
     virtual void changeBoneParent(Bone *bone, const std::string& parentName);
     /**
      * Remove a bone with the specified name. If recursion it will also remove child Bone recursionly.
+     * 移除指定名称的骨骼。如果recursion为true，有子骨骼的话，会一同移除
      *
-     * @param bone The bone you want to remove
-     * @param recursion Determine whether remove the bone's child  recursion.
+     * @param bone 要移除的骨骼
+     * @param recursion 是否要移除子骨骼
      */
     virtual void removeBone(Bone *bone, bool recursion);
 
     /**
-     * Get Armature's bone dictionary
-     * @return Armature's bone dictionary
+     * 获取骨骼动画的骨骼字典
+     * @return 骨骼动画的骨骼字典
      */
     const cocos2d::Map<std::string, Bone*>& getBoneDic() const;
 
     /**
-     * This boundingBox will calculate all bones' boundingBox every time
+     * 获取的boundingBox是根据骨骼动画的变化而一直变化的
      */
     virtual cocos2d::Rect getBoundingBox() const override;
 
@@ -178,7 +179,7 @@ public:
 	
 
     /**
-     * Set contentsize and Calculate anchor point.
+     * 设置ContentSize和AnchorPoint
      */
     virtual void updateOffsetPoint();
     virtual void setAnchorPoint(const cocos2d::Vec2& point) override;
@@ -246,7 +247,7 @@ public:
 protected:
 
     /*
-     * Used to create Bone internal
+     * 创建骨骼
      * @js NA
      * @lua NA
      */
@@ -263,11 +264,11 @@ protected:
 
     mutable bool _armatureTransformDirty;
 
-    cocos2d::Map<std::string, Bone*> _boneDic;                    //! The dictionary of the bones, include all bones in the armature, no matter it is the direct bone or the indirect bone. It is different from m_pChindren.
+    cocos2d::Map<std::string, Bone*> _boneDic;                    //! 骨骼的字典，包含骨骼动画中所有的骨骼，包括直接的骨骼和间接的骨骼。同m_pChildren不同。
 
     cocos2d::Vector<Bone*> _topBoneList;
 
-    cocos2d::BlendFunc _blendFunc;                    //! It's required for CCTextureProtocol inheritance
+    cocos2d::BlendFunc _blendFunc;                    //! 为了CCTextureProtocol继承
 
     cocos2d::Vec2 _offsetPoint;
     cocos2d::Vec2 _realAnchorPointInPoints;

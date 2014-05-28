@@ -69,8 +69,8 @@ class  ArmatureAnimation : public ProcessBase
 {
 public:
     /**
-     * Create with a Armature
-     * @param armature The Armature ArmatureAnimation will bind to
+     * 通过Armature创建ArmatureAnimation
+     * @param armature 创建的ArmatureAnimation
      */
     static ArmatureAnimation *create(Armature *armature);
 public:
@@ -85,50 +85,50 @@ public:
     virtual ~ArmatureAnimation(void);
 
     /**
-     * Init with a Armature
+     * 通过Armature来初始化ArmatureAnimation
      * @param armature The Armature ArmatureAnimation will bind to
      */
     virtual bool init(Armature *armature);
 
     /**
-     * Scale animation play speed.
-     * This method is deprecated, please use setSpeedScale.
-     * @param animationScale Scale value
+     * 缩放动作速度
+     * 不推荐使用该方法,请使用setSpeedScale
+     * @param animationScale 缩放值
      */
     CC_DEPRECATED_ATTRIBUTE virtual void setAnimationScale(float animationScale);
     CC_DEPRECATED_ATTRIBUTE virtual float getAnimationScale() const;
 
     /**
-     * Scale animation play speed.
-     * @param animationScale Scale value
+     * 缩放动画播放速度
+     * @param animationScale 缩放值
      */
     virtual void setSpeedScale(float speedScale);
     virtual float getSpeedScale() const;
 
-    //! The animation update speed
+    //! 设置动画更新速度
     CC_DEPRECATED_ATTRIBUTE virtual void setAnimationInternal(float animationInternal) {}
 
     using ProcessBase::play;
     /**
-     * Play animation by animation name.
+     * 播放指定名称的动画
      *
-     * @param  animationName  The animation name you want to play
-     * @param  durationTo The frames between two animation changing-over.
-     *         It's meaning is changing to this animation need how many frames
+     * @param  animationName  想要播放的动画名称
+     * @param  durationTo 两个动画之间的切换帧数量
+     *         
      *
-     *         -1 : use the value from MovementData get from flash design panel
-     * @param  loop   Whether the animation is loop
+     *         -1 : 使用MovementData中的值
+     * @param  loop   是否循环播放
      *
-     *         loop < 0 : use the value from MovementData get from flash design panel
-     *         loop = 0 : this animation is not loop
-     *         loop > 0 : this animation is loop
+     *         loop < 0 : 使用MovementData中的值
+     *         loop = 0 : 不循环
+     *         loop > 0 : 循环指定次数
      */
     virtual void play(const std::string& animationName, int durationTo = -1,  int loop = -1);
 
     /**
-     * Play animation by index, the other param is the same to play.
-     * @deprecated, please use playWithIndex
-     * @param  animationIndex  the animation index you want to play
+     * 播放指定索引的动作，其他参数的意思同play函数相同
+     * @deprecated, 请使用playByIndex
+     * @param  animationIndex  想要播放的动画索引
      */
     CC_DEPRECATED_ATTRIBUTE virtual void playByIndex(int animationIndex,  int durationTo = -1, int loop = -1);
     virtual void playWithIndex(int animationIndex,  int durationTo = -1, int loop = -1);
@@ -137,8 +137,8 @@ public:
     virtual void playWithIndexes(const std::vector<int>& movementIndexes, int durationTo = -1, bool loop = true);
 
     /**
-     * Go to specified frame and play current movement.
-     * You need first switch to the movement you want to play, then call this function.
+     * 跳转到指定的帧并播放
+     * 你需要先切换到你想要播放的movement，然后再调用该函数
      * 
      * example : playByIndex(0);
      *           gotoAndPlay(0);
@@ -149,46 +149,46 @@ public:
     virtual void gotoAndPlay(int frameIndex);
 
     /**
-     * Go to specified frame and pause current movement.
+     * 跳转到指定帧，并暂停当前动作
      */
     virtual void gotoAndPause(int frameIndex);
 
     /**
-     * Pause the Process
+     * 暂停处理
      */
     virtual void pause();
     /**
-     * Resume the Process
+     * 恢复处理
      */
     virtual void resume();
     /**
-     * Stop the Process
+     * 停止处理
      */
     virtual void stop();
 
 
     /**
-     * Get movement count
+     * 获取movement的数量
      */
     ssize_t getMovementCount() const;
 
     void update(float dt);
 
     /**
-     * Get current movementID
-     * @return The name of current movement
+     * 获取当前movement的id
+     * @return 当前movement的名称
      */
     std::string getCurrentMovementID() const;
 
     /**
-     * Set armature's movement event callback function
-     * To disconnect this event, just setMovementEventCallFunc(nullptr, nullptr);
+     * 设置armature的movment时间处理回调函数
+     * 断开当前事件，调用setMovementEventCallFunc(nullptr, nullptr);
      */
     CC_DEPRECATED_ATTRIBUTE void setMovementEventCallFunc(cocos2d::Ref *target, SEL_MovementEventCallFunc callFunc);
 
     /**
-     * Set armature's frame event callback function
-     * To disconnect this event, just setFrameEventCallFunc(nullptr, nullptr);
+     * 设置armature的frame时间处理回调函数
+     * setFrameEventCallFunc(nullptr, nullptr);
      */
     CC_DEPRECATED_ATTRIBUTE void setFrameEventCallFunc(cocos2d::Ref *target, SEL_FrameEventCallFunc callFunc);
     
@@ -208,11 +208,11 @@ public:
 
 
     /** 
-     * Returns a user assigned Object
+     * 返回用户赋值对象
      * 
-     * Similar to userData, but instead of holding a void* it holds an object
+     * 类似userData,但是保存的是一个对象
      *
-     * @return A user assigned Object
+     * @return 用户赋值对象
      * @js NA
      * @lua NA
      */
@@ -224,12 +224,10 @@ public:
     virtual const Ref* getUserObject() const { return _userObject; }
 
     /**
-     * Returns a user assigned Object
+     * 设置用户赋值对象
      *
-     * Similar to UserData, but instead of holding a void* it holds an object.
-     * The UserObject will be retained once in this method,
-     * and the previous UserObject (if existed) will be relese.
-     * The UserObject will be released in Node's destructure.
+     * 类似UserData,但是保持的是一个对象。
+     * UserObject会在该函数中retain一次，并且释放上一个UserObject
      *
      * @param userObject    A user assigned Object
      */
@@ -237,28 +235,28 @@ public:
 protected:
 
     /**
-     * Update(float dt) will call this handler, you can handle your logic here
+     * Update(float dt) 会调用该函数，可以添加自己需要的一些功能
      * @js NA
      * @lua NA
      */
     void updateHandler();
 
     /**
-     * Update current key frame, and process auto stop, pause
+     * 更新当前关键帧，并且处理会自动的停止或暂停
      * @js NA
      * @lua NA
      */
     void updateFrameData(float currentPercent);
 
     /**
-     * Emit a frame event
+     * 发生一次frame事件
      * @js NA
      * @lua NA
      */
     void frameEvent(Bone *bone, const std::string& frameEventName, int originFrameIndex, int currentFrameIndex);
 
     /**
-     * Emit a movement event
+     * 发生一次movement事件
      */
     void movementEvent(Armature *armature, MovementEventType movementType, const std::string& movementID);
 
@@ -268,19 +266,19 @@ protected:
 
     friend class Tween;
 protected:
-    //! AnimationData save all MovementDatas this animation used.
+    //! AnimationData保存动画使用的所有的Movement数据
     AnimationData *_animationData;
 
-    //! Scale the animation speed
+    //! 缩放动画速度
     float _speedScale;
 
-    MovementData *_movementData;				//! MovementData save all MovementFrameDatas this animation used.
+    MovementData *_movementData;				//! MovementData保存动画所有的MovementFrameDatas
 
-    Armature *_armature;						//! A weak reference of armature
+    Armature *_armature;						//! armature的弱引用
 
-    std::string _movementID;				//! Current movment's name
+    std::string _movementID;				//! 当前movement的名称
 
-    int _toIndex;								//! The frame index in MovementData->m_pMovFrameDataArr, it's different from m_iFrameIndex.
+    int _toIndex;								//! 当前帧在MovementData->m_pMovFrameDataArr中的索引
 
     cocos2d::Vector<Tween*> _tweenList;
 
@@ -299,19 +297,19 @@ protected:
     cocos2d::Ref *_userObject;
 protected:
     /**
-     * MovementEvent CallFunc.
-     * @param Armature* a Armature
-     * @param MovementEventType, Event Type, like START, COMPLETE.
-     * @param const char*, Movement ID, also called Movement Name
+     * MovementEvent回调函数
+     * @param Armature* 骨骼动画
+     * @param MovementEventType, 事件类型, 比如：START,COMPLETE
+     * @param const char*, Movement Id, Movement名称
      */
     SEL_MovementEventCallFunc _movementEventCallFunc;
 
     /**
-     * FrameEvent CallFunc.
-     * @param Bone*, a Bone
-     * @param const char*, the name of this frame event
-     * @param int, origin frame index
-     * @param int, current frame index, animation may be delayed
+     * FrameEvent回调函数
+     * @param Bone*, 骨骼
+     * @param const char*, 帧事件的名称
+     * @param int, 原始Frame索引
+     * @param int, 当前frame的索引，动画可能被延迟
      */
     SEL_FrameEventCallFunc _frameEventCallFunc;
 
