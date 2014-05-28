@@ -40,12 +40,11 @@ class NodeGrid;
  */
 
 /**
-@brief A transition which peels back the bottom right hand corner of a scene
-to transition to the scene beneath it simulating a page turn.
-
-This uses a 3DAction so it's strongly recommended that depth buffering
-is turned on in Director using:
-
+@brief 一个过渡效果这个剥落卷页场景的右下角过渡
+ 过渡到场景下方模拟翻页。
+ 
+ 这将使用一个3DAction,所以强烈建议在Director中开启深度缓冲区
+ 用法：
  Director::getInstance()->setDepthBufferFormat(kDepthBuffer16);
 
  @since v0.8.2
@@ -54,9 +53,9 @@ class CC_DLL TransitionPageTurn : public TransitionScene
 {
 public:
     /**
-     * Creates a base transition with duration and incoming scene.
-     * If back is true then the effect is reversed to appear as if the incoming
-     * scene is being turned from left over the outgoing scene.
+     * 使用 duration、传入的scene 创建一个基础过渡.
+     * 如果返回 true 传入效果会出现反转
+     * scene 从左覆盖传入 scene.
      */
     static TransitionPageTurn* create(float t,Scene* scene,bool backwards);
     /**
@@ -70,21 +69,21 @@ public:
     virtual ~TransitionPageTurn();
     
     //
-    // Overrides
+    // 重写
     //
     virtual void draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated) override;
 
     /**
-    * Creates a base transition with duration and incoming scene.
-    * If back is true then the effect is reversed to appear as if the incoming 
-    * scene is being turned from left over the outgoing scene.
-    */
+     * 使用 duration、传入的scene 初始化一个基础过渡.
+     * 如果返回 true 传入效果会出现反转
+     * scene 从左覆盖传入 scene.
+     */
     bool initWithDuration(float t,Scene* scene,bool backwards);
 
     ActionInterval* actionWithSize(const Size& vector);
 
     //
-    // Overrides
+    // 重写
     //
     virtual void onEnter() override;
     virtual void onExit() override;

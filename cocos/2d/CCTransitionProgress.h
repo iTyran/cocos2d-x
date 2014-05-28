@@ -47,7 +47,7 @@ public:
     TransitionProgress();
 
     //
-    // Overrides
+    // 重写
     //
     virtual void onEnter() override;
     virtual void onExit() override;
@@ -67,7 +67,7 @@ protected:
 
 
 /** TransitionRadialCCW transition.
- A counter clock-wise radial transition to the next scene
+ 逆时针放射状过渡到下一个场景
  */
 class CC_DLL TransitionProgressRadialCCW : public TransitionProgress
 {
@@ -76,7 +76,7 @@ public:
 
 protected:
     //
-    // Overrides
+    // 重写
     //
     virtual ProgressTimer* progressTimerNodeWithRenderTexture(RenderTexture* texture) override;
   
@@ -84,8 +84,8 @@ protected:
 
 
 /** TransitionRadialCW transition.
- A counter clock-wise radial transition to the next scene
-*/
+ 逆时针放射状过渡到下一个场景
+ */
 class CC_DLL TransitionProgressRadialCW : public TransitionProgress
 {
 public:
@@ -93,14 +93,14 @@ public:
 
 protected:
     //
-    // Overrides
+    // 重写
     //
     virtual ProgressTimer* progressTimerNodeWithRenderTexture(RenderTexture* texture) override;
 
 };
 
 /** TransitionProgressHorizontal transition.
- A  clock-wise radial transition to the next scene
+ 顺时针放射状过渡到下一个场景
  */
 class CC_DLL TransitionProgressHorizontal : public TransitionProgress
 {
@@ -109,7 +109,7 @@ public:
 
 protected:
     //
-    // Overrides
+    // 重写
     //
     virtual ProgressTimer* progressTimerNodeWithRenderTexture(RenderTexture* texture) override;
 };
@@ -121,7 +121,7 @@ public:
 
 protected:
     //
-    // Overrides
+    // 重写
     //
     virtual ProgressTimer* progressTimerNodeWithRenderTexture(RenderTexture* texture) override;
 };
@@ -133,7 +133,7 @@ public:
 
 protected:
     //
-    // Overrides
+    // 重写
     //
     virtual ProgressTimer* progressTimerNodeWithRenderTexture(RenderTexture* texture) override;
     virtual void sceneOrder() override;
@@ -147,7 +147,7 @@ public:
 
 protected:
     //
-    // Overrides
+    // 重写
     //
     virtual ProgressTimer* progressTimerNodeWithRenderTexture(RenderTexture* texture) override;
 
