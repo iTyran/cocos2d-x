@@ -260,15 +260,6 @@ namespace cocos2d
         bool fileExists(const std::string &fileName) const;
 
         /**
-        * Get resource file data from a zip file.
-        * @param fileName File name
-        * @param[out] pSize If the file read operation succeeds, it will be the data size, otherwise 0.
-        * @return Upon success, a pointer to the data is returned, otherwise nullptr.
-        * @warning 注意内存释放: you are responsible for calling free() on any Non-nullptr pointer returned.
-        *
-        * @since v2.0.5
-        */
-        /**
         *从一个zip文件获取资源文件中的数据。
         *@param fileName 文件名
         *@param[out] pSize 如果文件读取操作成功，这将是数据的大小，否则为0。
