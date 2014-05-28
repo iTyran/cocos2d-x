@@ -40,9 +40,12 @@ class CC_DLL Touch : public Ref
 {
 public:
     /** how the touches are dispathced */
+	/** 触摸事件是如何分发的 */
     enum class DispatchMode {
         /** All at once */
+		/** 一次分发所有的触摸事件 */
         ALL_AT_ONCE,
+		/** 一次分发一个触摸事件 */
         /** one by one */
         ONE_BY_ONE,
     };
@@ -52,19 +55,19 @@ public:
         _startPointCaptured(false)
     {}
 
-    /** returns the current touch location in OpenGL coordinates */
+    /** 返回当前触摸点在OpenGL坐标系下的位置 */
     Vec2 getLocation() const;
-    /** returns the previous touch location in OpenGL coordinates */
+    /** 返回前一个触摸点在OpenGL坐标系下的位置 */
     Vec2 getPreviousLocation() const;
-    /** returns the start touch location in OpenGL coordinates */
+    /** 返回起始触摸点在OpenGL坐标系下的位置 */
     Vec2 getStartLocation() const;
-    /** returns the delta of 2 current touches locations in screen coordinates */
+    /** 返回两个当前触摸点在屏幕坐标系下的位置增量 */
     Vec2 getDelta() const;
-    /** returns the current touch location in screen coordinates */
+    /** 返回当前触摸点在屏幕坐标系下的位置 */
     Vec2 getLocationInView() const;
-    /** returns the previous touch location in screen coordinates */
+    /** 返回前一个触摸点在屏幕坐标系下的位置 */
     Vec2 getPreviousLocationInView() const;
-    /** returns the start touch location in screen coordinates */
+    /** 返回起始触摸点在屏幕坐标系下的位置 */
     Vec2 getStartLocationInView() const;
     
     void setTouchInfo(int id, float x, float y)
