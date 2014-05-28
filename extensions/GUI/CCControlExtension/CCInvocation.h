@@ -25,7 +25,7 @@
  */
 /*
  *
- * Helper class to store targets and selectors (and eventually, params?) in the same MutableArray. Basically a very crude form of a NSInvocation
+ * 用于存放目标对象与selector的辅助类（把回调参数封装成一个对象便于统一放入容器管理）NSInvocation的简化版
  */
 #ifndef __CCINVOCATION_H__
 #define __CCINVOCATION_H__
