@@ -38,15 +38,16 @@ NS_CC_BEGIN
  * @{
  */
 
-//static creation function macro
-//c/c++ don't support object creation of using class name
-//so, all classes need creation method.
+
+//静态创建函数宏
+// C/C++不支持使用类名创建对象
+//所以，所有的类都需要创建方法。
 
 class ActionInterval;
 class Node;
 class NodeGrid;
 
-/** @brief TransitionEaseScene can ease the actions of the scene protocol.
+/** @brief TransitionEaseScene类可以使场景动画协议更灵活.
 @since v0.8.2
 */
 class CC_DLL TransitionEaseScene// : public Ref
@@ -54,42 +55,42 @@ class CC_DLL TransitionEaseScene// : public Ref
 public:
     virtual ~TransitionEaseScene() {}
 
-    /** returns the Ease action that will be performed on a linear action.
+    /** 返回在一个线性动作上执行更灵活的动作.
     @since v0.8.2
     */
     virtual ActionInterval * easeActionWithAction(ActionInterval * action) = 0;
 };
 
-/** @brief Base class for Transition scenes
+/** @brief 场景转换的基类
 */
 class CC_DLL TransitionScene : public Scene
 {
 public:
-    /** Orientation Type used by some transitions
+    /** 一些用于转换的方向类型
      */
     enum class Orientation
     {
-        /// An horizontal orientation where the Left is nearer
+        /// 水平方向，接近左边
         LEFT_OVER = 0,
-        /// An horizontal orientation where the Right is nearer
+        /// 水平方向,接近右边
         RIGHT_OVER = 1,
-        /// A vertical orientation where the Up is nearer
+        /// 垂直方向,接近上边
         UP_OVER = 0,
-        /// A vertical orientation where the Bottom is nearer
+        /// 垂直方向,接近底边
         DOWN_OVER = 1,
     };
     
-    /** creates a base transition with duration and incoming scene */
+    /** 创建一个基本的具有持续时间和进入场景的转换(transition) */
     static TransitionScene * create(float t, Scene *scene);
 
-    /** called after the transition finishes */
+    /** 转换结束调用此方法 */
     void finish(void);
 
-    /** used by some transitions to hide the outer scene */
+    /** 用于一些转换去隐藏淡出的场景 */
     void hideOutShowIn(void);
 
     //
-    // Overrides
+    // 重写
     //
     virtual void draw(Renderer *renderer, const Mat4 &transform, bool transformUpdated) override;
     virtual void onEnter() override;
@@ -100,7 +101,7 @@ CC_CONSTRUCTOR_ACCESS:
     TransitionScene();
     virtual ~TransitionScene();
 
-    /** initializes a transition with duration and incoming scene */
+    /** 初始化一个具有持续时间和进入的场景 转换 */
     bool initWithDuration(float t,Scene* scene);
     
 protected:
@@ -117,20 +118,21 @@ private:
     CC_DISALLOW_COPY_AND_ASSIGN(TransitionScene);
 };
 
-/** @brief A Transition that supports orientation like.
-* Possible orientation: LeftOver, RightOver, UpOver, DownOver
-*/
+
+/**@brief 支持方向的转换
+ *可能的方向：LeftOver，RightOver，UpOver，DownOver
+ */
 class CC_DLL TransitionSceneOriented : public TransitionScene
 {
 public:
-    /** creates a base transition with duration and incoming scene */
+    /** 创建一个基本的具有持续时间和进入场景的转换(transition) */
     static TransitionSceneOriented * create(float t,Scene* scene, Orientation orientation);
     
 CC_CONSTRUCTOR_ACCESS:
     TransitionSceneOriented();
     virtual ~TransitionSceneOriented();
 
-    /** initializes a transition with duration and incoming scene */
+    /** 初始化一个具有持续时间和进入的场景 转换 */
     bool initWithDuration(float t,Scene* scene,Orientation orientation);
 
 protected:
@@ -141,7 +143,7 @@ private:
 };
 
 /** @brief TransitionRotoZoom:
-Rotate and zoom out the outgoing scene, and then rotate and zoom in the incoming 
+ 旋转和缩放外出的场景，同时旋转缩放进入的场景
 */
 class CC_DLL TransitionRotoZoom : public TransitionScene
 {
@@ -149,7 +151,7 @@ public:
     static TransitionRotoZoom* create(float t, Scene* scene);
 
     //
-    // Overrides
+    // 重写
     //
     virtual void onEnter() override;
 
@@ -163,7 +165,7 @@ private:
 };
 
 /** @brief TransitionJumpZoom:
-Zoom out and jump the outgoing scene, and then jump and zoom in the incoming 
+ 缩小跳着切出场景, 同时跳着放大传人场景
 */
 class CC_DLL TransitionJumpZoom : public TransitionScene
 {
@@ -171,7 +173,7 @@ public:
     static TransitionJumpZoom* create(float t, Scene* scene);
 
     //
-    // Overrides
+    // 重写
     //
     virtual void onEnter() override;
 
@@ -184,20 +186,20 @@ private:
 };
 
 /** @brief TransitionMoveInL:
-Move in from to the left the incoming scene.
+从左侧传人场景.
 */
 class CC_DLL TransitionMoveInL : public TransitionScene, public TransitionEaseScene
 {
 public:
     static TransitionMoveInL* create(float t, Scene* scene);
 
-    /** returns the action that will be performed */
+    /** 返回将要执行的动作 */
     virtual ActionInterval* action(void);
 
     virtual ActionInterval* easeActionWithAction(ActionInterval * action);
 
     //
-    // Overrides
+    // 重写
     //
     virtual void onEnter() override;
 
@@ -213,7 +215,7 @@ private:
 };
 
 /** @brief TransitionMoveInR:
-Move in from to the right the incoming scene.
+从右侧传人场景.
 */
 class CC_DLL TransitionMoveInR : public TransitionMoveInL
 {
@@ -231,8 +233,8 @@ private:
 };
 
 /** @brief TransitionMoveInT:
-Move in from to the top the incoming scene.
-*/
+从顶部传人场景.
+ */
 class CC_DLL TransitionMoveInT : public TransitionMoveInL 
 {
 public:
@@ -249,8 +251,8 @@ private:
 };
 
 /** @brief TransitionMoveInB:
-Move in from to the bottom the incoming scene.
-*/
+从底部传人场景.
+ */
 class CC_DLL TransitionMoveInB : public TransitionMoveInL
 {
 public:
@@ -267,7 +269,7 @@ private:
 };
 
 /** @brief TransitionSlideInL:
-Slide in the incoming scene from the left border.
+从左边滑入传人场景.
 */
 class CC_DLL TransitionSlideInL : public TransitionScene, public TransitionEaseScene
 {
@@ -276,11 +278,11 @@ public:
 
     virtual ActionInterval* easeActionWithAction(ActionInterval * action);
 
-    /** returns the action that will be performed by the incoming and outgoing scene */
+    /** 返回传入/传出 scene 要执行的 action */
     virtual ActionInterval* action(void);
 
     //
-    // Overrides
+    // 重写
     //
     virtual void onEnter() override;
 
@@ -288,7 +290,7 @@ protected:
     TransitionSlideInL();
     virtual ~TransitionSlideInL();
 
-    /** initializes the scenes */
+    /** 初始化scenes */
     virtual void initScenes(void);
 
     virtual void sceneOrder() override;
@@ -298,21 +300,21 @@ private:
 };
 
 /** @brief TransitionSlideInR:
-Slide in the incoming scene from the right border.
+从右边滑入传入场景.
 */
 class CC_DLL TransitionSlideInR : public TransitionSlideInL 
 {
 public:
     static TransitionSlideInR* create(float t, Scene* scene);
 
-    /** returns the action that will be performed by the incoming and outgoing scene */
+    /** 返回传入/传出 scene 要执行的 action */
     virtual ActionInterval* action(void);
 
 protected:
     TransitionSlideInR();
     virtual ~TransitionSlideInR();
 
-    /** initializes the scenes */
+    /** 初始化 scenes */
     virtual void initScenes(void);
 
     virtual void sceneOrder() override;
@@ -322,21 +324,21 @@ private:
 };
 
 /** @brief TransitionSlideInB:
-Slide in the incoming scene from the bottom border.
+从底部滑入传入场景.
 */
 class CC_DLL TransitionSlideInB : public TransitionSlideInL
 {
 public:
     static TransitionSlideInB* create(float t, Scene* scene);
 
-    /** returns the action that will be performed by the incoming and outgoing scene */
+    /** 返回传入/传出 scene 要执行的 action */
     virtual ActionInterval* action(void);
 
 protected:
     TransitionSlideInB();
     virtual ~TransitionSlideInB();
 
-    /** initializes the scenes */
+    /** 初始化 scenes */
     virtual void initScenes();
 
     virtual void sceneOrder() override;
@@ -346,21 +348,21 @@ private:
 };
 
 /** @brief TransitionSlideInT:
-Slide in the incoming scene from the top border.
+从顶部滑入传入场景.
 */
 class CC_DLL TransitionSlideInT : public TransitionSlideInL
 {
 public:
     static TransitionSlideInT* create(float t, Scene* scene);
 
-    /** returns the action that will be performed by the incoming and outgoing scene */
+    /** 返回传入/传出 scene 要执行的 action */
     virtual ActionInterval* action(void);
 
 protected:
     TransitionSlideInT();
     virtual ~TransitionSlideInT();
 
-    /** initializes the scenes */
+    /**  初始化 scenes */
     virtual void initScenes(void);
 
     virtual void sceneOrder() override;
@@ -370,7 +372,7 @@ private:
 };
 
 /**
-@brief Shrink the outgoing scene while grow the incoming scene
+@brief 当增长传入scene的时候，收缩传出的scene
 */
 class CC_DLL TransitionShrinkGrow : public TransitionScene , public TransitionEaseScene
 {
@@ -378,7 +380,7 @@ public:
     static TransitionShrinkGrow* create(float t, Scene* scene);
 
     //
-    // Overrides
+    // 重写
     //
     /**
      * @js NA
@@ -396,9 +398,9 @@ private:
 };
 
 /** @brief TransitionFlipX:
-Flips the screen horizontally.
-The front face is the outgoing scene and the back face is the incoming scene.
-*/
+ 水平翻转屏幕。
+ 正面是传出的场景，背面是传入的场景
+ */
 class CC_DLL TransitionFlipX : public TransitionSceneOriented
 {
 public:
@@ -406,7 +408,7 @@ public:
     static TransitionFlipX* create(float t, Scene* s);
 
     //
-    // Overrides
+    // 重写
     //
     /**
      * @js NA
@@ -423,9 +425,9 @@ private:
 };
 
 /** @brief TransitionFlipY:
-Flips the screen vertically.
-The front face is the outgoing scene and the back face is the incoming scene.
-*/
+ 垂直翻转屏幕。.
+ 正面是传出的场景，背面是传入的场景。 
+ */
 class CC_DLL TransitionFlipY : public TransitionSceneOriented
 {
 public:
@@ -433,7 +435,7 @@ public:
     static TransitionFlipY* create(float t, Scene* s);
 
     //
-    // Overrides
+    // 重写
     //
     /**
      * @js NA
@@ -450,8 +452,8 @@ private:
 };
 
 /** @brief TransitionFlipAngular:
-Flips the screen half horizontally and half vertically.
-The front face is the outgoing scene and the back face is the incoming scene.
+ 水平垂直翻转一半屏幕.（类似一种镜面）
+ 正面是传出的场景，背面是传入的场景。
 */
 class CC_DLL TransitionFlipAngular : public TransitionSceneOriented
 {
@@ -460,7 +462,7 @@ public:
     static TransitionFlipAngular* create(float t, Scene* s);
 
     //
-    // Overrides
+    // 重写
     //
     /**
      * @js NA
@@ -477,9 +479,9 @@ private:
 };
 
 /** @brief TransitionZoomFlipX:
-Flips the screen horizontally doing a zoom out/in
-The front face is the outgoing scene and the back face is the incoming scene.
-*/
+ 水平翻转屏幕，做一个 传入/穿出 缩放
+ 正面是传出的场景，背面是传入的场景。
+ */
 class CC_DLL TransitionZoomFlipX : public TransitionSceneOriented
 {
 public:
@@ -487,7 +489,7 @@ public:
     static TransitionZoomFlipX* create(float t, Scene* s);
 
     //
-    // Overrides
+    // 重写
     //
     /**
      * @js NA
@@ -504,8 +506,8 @@ private:
 };
 
 /** @brief TransitionZoomFlipY:
-Flips the screen vertically doing a little zooming out/in
-The front face is the outgoing scene and the back face is the incoming scene.
+ 垂直翻转屏幕，做一个 传入/穿出 缩放
+ 正面是传出的场景，背面是传入的场景。
 */
 class CC_DLL TransitionZoomFlipY : public TransitionSceneOriented
 {
@@ -514,7 +516,7 @@ public:
     static TransitionZoomFlipY* create(float t, Scene* s);
 
     //
-    // Overrides
+    // 重写
     //
     /**
      * @js NA
@@ -531,9 +533,9 @@ private:
 };
 
 /** @brief TransitionZoomFlipAngular:
-Flips the screen half horizontally and half vertically doing a little zooming out/in.
-The front face is the outgoing scene and the back face is the incoming scene.
-*/
+ 一半水平一半垂直  传入/穿出  翻转并一点点的缩放屏幕
+ 正面是传出的场景，背面是传入的场景。 
+ */
 class CC_DLL TransitionZoomFlipAngular : public TransitionSceneOriented
 {
 public:
@@ -541,7 +543,7 @@ public:
     static TransitionZoomFlipAngular* create(float t, Scene* s);
 
     //
-    // Overrides
+    // 重写
     //
     /**
      * @js NA
@@ -558,14 +560,14 @@ private:
 };
 
 /** @brief TransitionFade:
-Fade out the outgoing scene and then fade in the incoming scene.'''
+淡出传出 scene ，淡入传入 scene.'''
 */
 class CC_DLL TransitionFade : public TransitionScene
 {
 public:
-    /** creates the transition with a duration and with an RGB color
-    * Example: FadeTransition::create(2, scene, Color3B(255,0,0); // red color
-    */
+    /** 使用 duration、RGB 颜色 创建一个 transition（过渡）
+     * Example: FadeTransition::create(2, scene, Color3B(255,0,0); //  红色
+     */
     static TransitionFade* create(float duration, Scene* scene, const Color3B& color);
     static TransitionFade* create(float duration, Scene* scene);
 
@@ -584,7 +586,7 @@ CC_CONSTRUCTOR_ACCESS:
     TransitionFade();
     virtual ~TransitionFade();
 
-    /** initializes the transition with a duration and with an RGB color */
+    /** 使用 duration、RGB color 初始化一个 transition（过渡） */
     bool initWithDuration(float t, Scene*scene, const Color3B& color);
     bool initWithDuration(float t, Scene* scene);
 
@@ -597,17 +599,18 @@ private:
 };
 
 class RenderTexture;
+
 /**
-@brief TransitionCrossFade:
-Cross fades two scenes using the RenderTexture object.
-*/
+ @brief TransitionCrossFade:
+ 两个 scenes 使用 RenderTexture 对象交叉淡入淡出
+ */
 class CC_DLL TransitionCrossFade : public TransitionScene
 {
 public :
     static TransitionCrossFade* create(float t, Scene* scene);
 
     //
-    // Overrides
+    // 重写
     //
     /**
      * @js NA
@@ -634,15 +637,15 @@ private:
 };
 
 /** @brief TransitionTurnOffTiles:
-Turn off the tiles of the outgoing scene in random order
-*/
+ 随机顺序关闭淡出场景的 tiles
+ */
 class CC_DLL TransitionTurnOffTiles : public TransitionScene ,public TransitionEaseScene
 {
 public :
     static TransitionTurnOffTiles* create(float t, Scene* scene);
 
     //
-    // Overrides
+    // 重写
     //
     /**
      * @js NA
@@ -665,8 +668,8 @@ private:
 };
 
 /** @brief TransitionSplitCols:
-The odd columns goes upwards while the even columns goes downwards.
-*/
+ 奇数列向上推移而偶数列向下推移.
+ */
 class CC_DLL TransitionSplitCols : public TransitionScene , public TransitionEaseScene
 {
 public:
@@ -675,7 +678,7 @@ public:
     virtual ActionInterval* action();
 
     //
-    // Overrides
+    // 重写
     //
     /**
      * @js NA
@@ -695,15 +698,15 @@ private:
 };
 
 /** @brief TransitionSplitRows:
-The odd rows goes to the left while the even rows goes to the right.
-*/
+奇数行行从左侧推移，偶数行从右侧推移. 
+ */
 class CC_DLL TransitionSplitRows : public TransitionSplitCols
 {
 public:
     static TransitionSplitRows* create(float t, Scene* scene);
 
     //
-    // Overrides
+    // 重写
     //
     virtual ActionInterval* action(void) override;
 
@@ -716,8 +719,8 @@ private:
 };
 
 /** @brief TransitionFadeTR:
-Fade the tiles of the outgoing scene from the left-bottom corner the to top-right corner.
-*/
+从从左下角到右上角淡出 scene 的所有 tiles.
+ */
 class CC_DLL TransitionFadeTR : public TransitionScene , public TransitionEaseScene
 {
 public:
@@ -726,7 +729,7 @@ public:
     virtual ActionInterval* actionWithSize(const Size& size);
 
     //
-    // Overrides
+    // 重写
     //
     /**
      * @js NA
@@ -749,15 +752,15 @@ private:
 };
 
 /** @brief TransitionFadeBL:
-Fade the tiles of the outgoing scene from the top-right corner to the bottom-left corner.
-*/
+从右上角到左下角淡出 scene 的所有 tiles.
+ */
 class CC_DLL TransitionFadeBL : public TransitionFadeTR
 {
 public:
     static TransitionFadeBL* create(float t, Scene* scene);
 
     //
-    // Overrides
+    // 重写
     //
     virtual ActionInterval* actionWithSize(const Size& size) override;
 
@@ -770,7 +773,7 @@ private:
 };
 
 /** @brief TransitionFadeUp:
-* Fade the tiles of the outgoing scene from the bottom to the top.
+* 从下向上淡出 scene 的所有 tiles..
 */
 class CC_DLL TransitionFadeUp : public TransitionFadeTR
 {
@@ -778,7 +781,7 @@ public:
     static TransitionFadeUp* create(float t, Scene* scene);
 
     //
-    // Overrides
+    // 重写
     //
     virtual ActionInterval* actionWithSize(const Size& size) override;
 
@@ -791,7 +794,7 @@ private:
 };
 
 /** @brief TransitionFadeDown:
-* Fade the tiles of the outgoing scene from the top to the bottom.
+* 从上向下淡出 scene 的所有 tiles..
 */
 class CC_DLL TransitionFadeDown : public TransitionFadeTR
 {
@@ -799,7 +802,7 @@ public:
     static TransitionFadeDown* create(float t, Scene* scene);
 
     //
-    // Overrides
+    // 重写
     //
     virtual ActionInterval* actionWithSize(const Size& size) override;
 
