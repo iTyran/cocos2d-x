@@ -32,9 +32,10 @@
 
 NS_CC_BEGIN
 
+
 /**
- * Utility/support macros. Defined to enable RefPtr<T> to contain types like 'const T' because we do not
- * regard retain()/release() as affecting mutability of state.
+ *实用功能/支持宏。定义使RefPtr<T>包含类型，如'常量T'，因为我们不这样做
+ *关于保留（）/释放（）为影响国家的可变性。
  */
 #define CC_REF_PTR_SAFE_RETAIN(ptr)\
     \
@@ -71,14 +72,14 @@ NS_CC_BEGIN
     }   while (0);
 
 /**
- * Wrapper class which maintains a strong reference to a cocos2dx cocos2d::Ref* type object.
- * Similar in concept to a boost smart pointer.
+ *它保持着强劲的引用cocos2dx的cocos2d::Ref*类型的对象包装类。
+ *类似的概念来提高智能指针。
  *
- * Enables the use of the RAII idiom with Cocos2dx objects and helps automate some of the more 
- * mundane tasks of pointer initialization and cleanup.
+ *允许使用的RAII成语与Cocos2dx对象，并有助于自动一些比较
+ *平凡的指针初始化和清理的任务。
  *
- * The class itself is modelled on C++ 11 std::shared_ptr, and trys to keep some of the methods 
- * and functionality consistent with std::shared_ptr.
+ *类本身是仿照C++11的std::shared_ptr的，并改掉保留一些方法
+ *和功能与std::shared_ptr的一致。
  */
 template <typename T> class RefPtr
 {
@@ -153,7 +154,7 @@ public:
         {
             CC_REF_PTR_SAFE_RETAIN(other);
             CC_REF_PTR_SAFE_RELEASE(_ptr);
-            _ptr = const_cast<typename std::remove_const<T>::type*>(other);     // Const cast allows RefPtr<T> to reference objects marked const too.
+            _ptr = const_cast<typename std::remove_const<T>::type*>(other);     //常量转换(Const cast)允许RefPtr<T>引用的对象也标记为const的.
         }
         
         return *this;
@@ -165,11 +166,10 @@ public:
         return *this;
     }
     
-    // Note: using reinterpret_cast<> instead of static_cast<> here because it doesn't require type info.
-    // Since we verify the correct type cast at compile time on construction/assign we don't need to know the type info
-    // here. Not needing the type info here enables us to use these operations in inline functions in header files when
-    // the type pointed to by this class is only forward referenced.
-    
+    //注意：在使用reinterpret_cast<>代替static_cast<>，因为它不需要类型信息。
+    //因为在编译时我们核实正确的类型转换，construction/assign并不需要知道类型信息
+    //这里不需要的类型信息，使我们能够在头文件中的内联函数使用这些操作时，
+    //这个类指向的类型是唯一的向前引用。
     inline operator T * () const { return reinterpret_cast<T*>(_ptr); }
     
     inline T & operator * () const
@@ -259,18 +259,18 @@ public:
     }
     
     /**
-     * This function assigns to this RefPtr<T> but does not increase the reference count of the object pointed to.
-     * Useful for assigning an object created through the 'new' operator to a RefPtr<T>. Basically used in scenarios
-     * where the RefPtr<T> has the initial ownership of the object.
+     *此函数分配给这个RefPtr<T>但不增加指向对象的引用计数。
+     *有用的分配通过new操作符的RefPtr<T>创建的对象。基本上是在场景用来
+     *其中RefPtr<T>有对象的初始所有权。
      *
-     * E.G:
-     *      RefPtr<cocos2d::Image> image;
-     *      image.weakAssign(new cocos2d::Image());
+     * 例如：
+     * RefPtr<cocos2d::Image>image;
+     * image.weakAssign（new cocos2d::Image());
      *
-     * Instead of:
+     代替：
      *      RefPtr<cocos2d::Image> image;
      *      image = new cocos2d::Image();
-     *      image->release();               // Required because new'd object already has a reference count of '1'.
+     *      image->release(); //必需的，因为new创建的对象已经具有'1引用计数“。
      */
     inline void weakAssign(const RefPtr<T> & other)
     {
@@ -283,15 +283,16 @@ private:
 };
     
 /**
- * Cast between RefPtr types statically.
+ *静态转换RefPtr之间类型。
  */
 template<class T, class U> RefPtr<T> static_pointer_cast(const RefPtr<U> & r)
 {
     return RefPtr<T>(static_cast<T*>(r.get()));
 }
 
+
 /**
- * Cast between RefPtr types dynamically.
+ *动态转换RefPtr之间的类型。
  */
 template<class T, class U> RefPtr<T> dynamic_pointer_cast(const RefPtr<U> & r)
 {
@@ -300,6 +301,9 @@ template<class T, class U> RefPtr<T> dynamic_pointer_cast(const RefPtr<U> & r)
 
 /**
  * Done with these macros.
+ */
+/**
+ *用这些宏完成。
  */
 #undef CC_REF_PTR_SAFE_RETAIN
 #undef CC_REF_PTR_SAFE_RELEASE
