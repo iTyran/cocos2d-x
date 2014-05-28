@@ -1,4 +1,4 @@
-/****************************************************************************
+ï»¿/****************************************************************************
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
@@ -57,10 +57,10 @@ protected:
     Timer();
 public:
     /** get interval in seconds */
-    /** »ñµÃÓÃÃë¼ÆÊıµÄÊ±¼ä¼ä¸ô */
+    /** è·å¾—ç”¨ç§’è®¡æ•°çš„æ—¶é—´é—´éš” */
     inline float getInterval() const { return _interval; };
 	/** set interval in seconds */
-    /** ÉèÖÃÓÃÃë¼ÆÊıµÄÊ±¼ä¼ä¸ô */
+    /** è®¾ç½®ç”¨ç§’è®¡æ•°çš„æ—¶é—´é—´éš” */
     inline void setInterval(float interval) { _interval = interval; };
     
     void setupTimerWithInterval(float seconds, unsigned int repeat, float delay);
@@ -69,7 +69,7 @@ public:
     virtual void cancel() = 0;
     
     /** triggers the timer */
-    /** ´¥·¢¼ÆÊ±Æ÷ */
+    /** è§¦å‘è®¡æ—¶å™¨ */
     void update(float dt);
     
 protected:
@@ -91,7 +91,7 @@ public:
     TimerTargetSelector();
 
     /** Initializes a timer with a target, a selector and an interval in seconds, repeat in number of times to repeat, delay in seconds. */
-    /** Í¨¹ı²ÎÊı£ºÒ»¸öÄ¿±ê£¬Ò»¸öÑ¡ÔñÆ÷£¬Ò»¸ö¼ä¸ôÃëÊı£¬ÖØ¸´´ÎÊıÒÔ¼°ÑÓ³ÙµÄÃëÊıÀ´³õÊ¼»¯¼ÆÊ±Æ÷ */
+    /** é€šè¿‡å‚æ•°ï¼šä¸€ä¸ªç›®æ ‡ï¼Œä¸€ä¸ªé€‰æ‹©å™¨ï¼Œä¸€ä¸ªé—´éš”ç§’æ•°ï¼Œé‡å¤æ¬¡æ•°ä»¥åŠå»¶è¿Ÿçš„ç§’æ•°æ¥åˆå§‹åŒ–è®¡æ—¶å™¨ */
     bool initWithSelector(Scheduler* scheduler, SEL_SCHEDULE selector, Ref* target, float seconds, unsigned int repeat, float delay);
     
     inline SEL_SCHEDULE getSelector() const { return _selector; };
@@ -111,7 +111,7 @@ public:
     TimerTargetCallback();
     
     /** Initializes a timer with a target, a lambda and an interval in seconds, repeat in number of times to repeat, delay in seconds. */
-    /** Í¨¹ı²ÎÊı£ºÒ»¸öÄ¿±ê£¬Ò»¸öÑ¡ÔñÆ÷£¬Ò»¸ö¼ä¸ôÃëÊı£¬ÖØ¸´´ÎÊıÒÔ¼°ÑÓ³ÙµÄÃëÊıÀ´³õÊ¼»¯¼ÆÊ±Æ÷. */
+    /** é€šè¿‡å‚æ•°ï¼šä¸€ä¸ªç›®æ ‡ï¼Œä¸€ä¸ªé€‰æ‹©å™¨ï¼Œä¸€ä¸ªé—´éš”ç§’æ•°ï¼Œé‡å¤æ¬¡æ•°ä»¥åŠå»¶è¿Ÿçš„ç§’æ•°æ¥åˆå§‹åŒ–è®¡æ—¶å™¨. */
     bool initWithCallback(Scheduler* scheduler, const ccSchedulerFunc& callback, void *target, const std::string& key, float seconds, unsigned int repeat, float delay);
     
     /**
@@ -158,15 +158,15 @@ struct _hashUpdateEntry;
 class SchedulerScriptHandlerEntry;
 #endif
 
-/** @brief Scheduler¸ºÔğ´¥·¢ÒÑ±»µ÷¶ÈµÄ»Øµ÷º¯Êı
-Äã²»Ó¦¸ÃÔÚÄãµÄÓÎÏ·Âß¼­ÖĞÊ¹ÓÃÏµÍ³µÄ¼ÆÊ±Æ÷. ¶øÊÇÓ¦¸ÃÊ¹ÓÃÕâ¸öÀà.
+/** @brief Schedulerè´Ÿè´£è§¦å‘å·²è¢«è°ƒåº¦çš„å›è°ƒå‡½æ•°
+ä½ ä¸åº”è¯¥åœ¨ä½ çš„æ¸¸æˆé€»è¾‘ä¸­ä½¿ç”¨ç³»ç»Ÿçš„è®¡æ—¶å™¨. è€Œæ˜¯åº”è¯¥ä½¿ç”¨è¿™ä¸ªç±».
 
-ÓĞÁ½ÖÖÀàĞÍµÄ»Øµ÷º¯Êı (selector(Ñ¡ÔñÆ÷) ):
+æœ‰ä¸¤ç§ç±»å‹çš„å›è°ƒå‡½æ•° (selector(é€‰æ‹©å™¨) ):
 
-- update selector: 'update' Ñ¡ÔñÆ÷»áÔÚÃ¿Ö¡±»µ÷ÓÃ. ÄãÄÜ¹»Éè¶¨ÆäÓÅÏÈ¼¶.
-- custom selector: custom Ñ¡ÔñÆ÷»áÔÚÃ¿Ö¡µ÷ÓÃ£¬»òÕßÔÚÒ»¸öÉè¶¨µÄÊ±¼ä¼ä¸ôµ½À´Ê±µ÷ÓÃ
+- update selector: 'update' é€‰æ‹©å™¨ä¼šåœ¨æ¯å¸§è¢«è°ƒç”¨. ä½ èƒ½å¤Ÿè®¾å®šå…¶ä¼˜å…ˆçº§.
+- custom selector: custom é€‰æ‹©å™¨ä¼šåœ¨æ¯å¸§è°ƒç”¨ï¼Œæˆ–è€…åœ¨ä¸€ä¸ªè®¾å®šçš„æ—¶é—´é—´éš”åˆ°æ¥æ—¶è°ƒç”¨
 
-Ó¦¸Ã¾¡Á¿±ÜÃâÊ¹ÓÃ'custom selectors'. Ê¹ÓÃ'update selector'¸ü¼Ó¿ì£¬ÇÒÏûºÄµÄÄÚ´æ¸üÉÙ.
+åº”è¯¥å°½é‡é¿å…ä½¿ç”¨'custom selectors'. ä½¿ç”¨'update selector'æ›´åŠ å¿«ï¼Œä¸”æ¶ˆè€—çš„å†…å­˜æ›´å°‘.
 
 */
 class CC_DLL Scheduler : public Ref
@@ -189,17 +189,17 @@ public:
 
     inline float getTimeScale() { return _timeScale; }
 	
-	/** ¸Ä±äËùÓĞ±»µ÷¶ÈµÄ»Øµ÷º¯ÊıµÄÊ±¼ä.
-    Äã¿ÉÒÔÊ¹ÓÃÕâ¸öÊôĞÔÀ´´´½¨Ò»¸ö'Âı¾µÍ·'»òÕß'¿ì½ø'µÄĞ§¹û.
-    Ä¬ÈÏÖµÊÇ1.0. Ê¹ÓÃµÍÓÚ1.0µÄÖµÀ´´´½¨Ò»¸ö'Âı¾µÍ·'µÄĞ§¹û.
-    Òª´´½¨Ò»¸ö'¿ì½ø'µÄĞ§¹û, Ê¹ÓÃ´óÓÚ1.0µÄÖµ.
+	/** æ”¹å˜æ‰€æœ‰è¢«è°ƒåº¦çš„å›è°ƒå‡½æ•°çš„æ—¶é—´.
+    ä½ å¯ä»¥ä½¿ç”¨è¿™ä¸ªå±æ€§æ¥åˆ›å»ºä¸€ä¸ª'æ…¢é•œå¤´'æˆ–è€…'å¿«è¿›'çš„æ•ˆæœ.
+    é»˜è®¤å€¼æ˜¯1.0. ä½¿ç”¨ä½äº1.0çš„å€¼æ¥åˆ›å»ºä¸€ä¸ª'æ…¢é•œå¤´'çš„æ•ˆæœ.
+    è¦åˆ›å»ºä¸€ä¸ª'å¿«è¿›'çš„æ•ˆæœ, ä½¿ç”¨å¤§äº1.0çš„å€¼.
     @since v0.8
-    @warning Ëü½«Ó°ÏìÃ¿Ò»¸ö±»µ÷¶ÈµÄÑ¡ÔñÆ÷(selector) / ¶¯×÷(action).
+    @warning å®ƒå°†å½±å“æ¯ä¸€ä¸ªè¢«è°ƒåº¦çš„é€‰æ‹©å™¨(selector) / åŠ¨ä½œ(action).
     */
     inline void setTimeScale(float timeScale) { _timeScale = timeScale; }
 
-	/** 'update' µ÷¶ÈÆ÷.
-     ÄãÓÀÔ¶²»Ó¦¸Ãµ÷ÓÃÕâ¸ö·½·¨,³ı·ÇÄãÖªµÀ×Ô¼ºÔÚ×öÊ²Ã´.
+	/** 'update' è°ƒåº¦å™¨.
+     ä½ æ°¸è¿œä¸åº”è¯¥è°ƒç”¨è¿™ä¸ªæ–¹æ³•,é™¤éä½ çŸ¥é“è‡ªå·±åœ¨åšä»€ä¹ˆ.
      * @js NA
      * @lua NA
      */
@@ -209,40 +209,40 @@ public:
     
     // schedule
     
-	/** ±»µ÷¶ÈµÄ·½·¨»áÔÚÃ¿Ò»¸öÊ±¼ä¼ä¸ô'interval'Ö¸¶¨µÄÃëÊıµ½À´Ê±µ÷ÓÃ.
-     Èç¹û±»µ÷¶ÈµÄ·½Ê½´¦ÓÚÔİÍ£×´Ì¬£¬ÄÇÃ´Ö»ÓĞÔÚËü»Ö¸´Ö®ºó²ÅÄÜ±»µ÷ÓÃ.
-     Èç¹ûÊ±¼ä¼ä¸ô'interval'ÊÇ0, Ëü»áÔÚÃ¿Ö¡±»µ÷ÓÃ, Èç¹ûÊÇÕâÑù, ÍÆ¼öÊ¹ÓÃ'scheduleUpdate'º¯Êı´úÌæ.
-     Èç¹û»Øµ÷º¯Êı'callback'ÒÑ¾­±»µ÷¶È,ÄÇÃ´º¯ÊıÖ»»á¸üĞÂ²ÎÊıinterval,²»»áÔÙ´ÎÖØ¸´µ÷¶È.
-     repeat ÈÃ¶¯×÷ÖØ¸´Ö´ĞĞrepeat + 1´Î, Èç¹ûÏëÈÃ¶¯×÷³ÖĞøÖ´ĞĞ¿ÉÒÔÊ¹ÓÃkRepeatForever
-     delay ±íÊ¾º¯Êı±»µ÷ÓÃÖ®Ç°µÈ´ıµÄÊ±¼äÖµ
-     @param key ±êÊ¶»Øµ÷µÄkey
+	/** è¢«è°ƒåº¦çš„æ–¹æ³•ä¼šåœ¨æ¯ä¸€ä¸ªæ—¶é—´é—´éš”'interval'æŒ‡å®šçš„ç§’æ•°åˆ°æ¥æ—¶è°ƒç”¨.
+     å¦‚æœè¢«è°ƒåº¦çš„æ–¹å¼å¤„äºæš‚åœçŠ¶æ€ï¼Œé‚£ä¹ˆåªæœ‰åœ¨å®ƒæ¢å¤ä¹‹åæ‰èƒ½è¢«è°ƒç”¨.
+     å¦‚æœæ—¶é—´é—´éš”'interval'æ˜¯0, å®ƒä¼šåœ¨æ¯å¸§è¢«è°ƒç”¨, å¦‚æœæ˜¯è¿™æ ·, æ¨èä½¿ç”¨'scheduleUpdate'å‡½æ•°ä»£æ›¿.
+     å¦‚æœå›è°ƒå‡½æ•°'callback'å·²ç»è¢«è°ƒåº¦,é‚£ä¹ˆå‡½æ•°åªä¼šæ›´æ–°å‚æ•°interval,ä¸ä¼šå†æ¬¡é‡å¤è°ƒåº¦.
+     repeat è®©åŠ¨ä½œé‡å¤æ‰§è¡Œrepeat + 1æ¬¡, å¦‚æœæƒ³è®©åŠ¨ä½œæŒç»­æ‰§è¡Œå¯ä»¥ä½¿ç”¨kRepeatForever
+     delay è¡¨ç¤ºå‡½æ•°è¢«è°ƒç”¨ä¹‹å‰ç­‰å¾…çš„æ—¶é—´å€¼
+     @param key æ ‡è¯†å›è°ƒçš„key
      @since v3.0
      */
     void schedule(const ccSchedulerFunc& callback, void *target, float interval, unsigned int repeat, float delay, bool paused, const std::string& key);
 
-	/** Í¨¹ı²ÎÊıkRepeatForeverºÍ0Ê±ÑÓµ÷ÓÃscheduleCallbackº¯Êı
+	/** é€šè¿‡å‚æ•°kRepeatForeverå’Œ0æ—¶å»¶è°ƒç”¨scheduleCallbackå‡½æ•°
      @since v3.0
      */
     void schedule(const ccSchedulerFunc& callback, void *target, float interval, bool paused, const std::string& key);
     
     
-	/** ÒÑ±»µ÷¶ÈµÄ·½·¨½«ÔÚÃ¿¸öÊ±¼ä¼ä¸ô'interval'Éè¶¨µÄÃëÊıµ½À´Ê±µ÷ÓÃ.
-     Èç¹û±»µ÷¶ÈµÄ·½·¨ÊÇÔİÍ£×´Ì¬, ÄÇÃ´Ö±µ½Ëü±»»Ö¸´²ÅÄÜ±»µ÷ÓÃ.
-     Èç¹ûÊ±¼ä¼ä¸ô'interval'ÊÇ0,Ëü»áÔÚÃ¿Ö¡µ÷ÓÃ,µ«ÊÇÕâÖÖÇé¿öÍÆ¼öÊ¹ÓÃ'scheduleUpdate'Ìæ»».
-     Èô¹ûselectorÒÑ¾­±»µ÷¶È,ÄÇÃ´Ö»ÓĞ²ÎÊıinterval»á±»¸üĞÂ,²¢²»»áÔÙ´ÎÖØĞÂµ÷¶È
-     repeat ÈÃ¶¯×÷ÖØ¸´Ö´ĞĞ repeat + 1 ´Î, Èç¹ûÏëÈÃ¶¯×÷³ÖĞø²»Í£µÄÖ´ĞĞ£¬Ê¹ÓÃkRepeatForever
-     delay ±íÊ¾º¯Êı±»µ÷ÓÃÖ®Ç°µÈ´ıµÄÊ±¼äÁ¿
+	/** å·²è¢«è°ƒåº¦çš„æ–¹æ³•å°†åœ¨æ¯ä¸ªæ—¶é—´é—´éš”'interval'è®¾å®šçš„ç§’æ•°åˆ°æ¥æ—¶è°ƒç”¨.
+     å¦‚æœè¢«è°ƒåº¦çš„æ–¹æ³•æ˜¯æš‚åœçŠ¶æ€, é‚£ä¹ˆç›´åˆ°å®ƒè¢«æ¢å¤æ‰èƒ½è¢«è°ƒç”¨.
+     å¦‚æœæ—¶é—´é—´éš”'interval'æ˜¯0,å®ƒä¼šåœ¨æ¯å¸§è°ƒç”¨,ä½†æ˜¯è¿™ç§æƒ…å†µæ¨èä½¿ç”¨'scheduleUpdate'æ›¿æ¢.
+     è‹¥æœselectorå·²ç»è¢«è°ƒåº¦,é‚£ä¹ˆåªæœ‰å‚æ•°intervalä¼šè¢«æ›´æ–°,å¹¶ä¸ä¼šå†æ¬¡é‡æ–°è°ƒåº¦
+     repeat è®©åŠ¨ä½œé‡å¤æ‰§è¡Œ repeat + 1 æ¬¡, å¦‚æœæƒ³è®©åŠ¨ä½œæŒç»­ä¸åœçš„æ‰§è¡Œï¼Œä½¿ç”¨kRepeatForever
+     delay è¡¨ç¤ºå‡½æ•°è¢«è°ƒç”¨ä¹‹å‰ç­‰å¾…çš„æ—¶é—´é‡
      
-     @since v3.0, ²ÎÊırepeatºÍdelayÔÚ°æ±¾1.1¼ÓÈë
+     @since v3.0, å‚æ•°repeatå’Œdelayåœ¨ç‰ˆæœ¬1.1åŠ å…¥
      */
     void schedule(SEL_SCHEDULE selector, Ref *target, float interval, unsigned int repeat, float delay, bool paused);
     
-    /** Í¨¹ı²ÎÊıkRepeatForeverºÍ0Ê±ÑÓµ÷ÓÃscheduleSelector */
+    /** é€šè¿‡å‚æ•°kRepeatForeverå’Œ0æ—¶å»¶è°ƒç”¨scheduleSelector */
     void schedule(SEL_SCHEDULE selector, Ref *target, float interval, bool paused);
     
-	/** Í¨¹ı¸ø¶¨µÄÓÅÏÈ¼¶ÔÚÄ¿±êÉÏµ÷ÓÃ'update' Ñ¡ÔñÆ÷(selector).
-     'update' selector »áÔÚÃ¿Ö¡±»µ÷ÓÃ.
-     ÓÅÏÈ¼¶Ô½µÍ£¬Ô½ÈİÒ×±»µ÷ÓÃ.
+	/** é€šè¿‡ç»™å®šçš„ä¼˜å…ˆçº§åœ¨ç›®æ ‡ä¸Šè°ƒç”¨'update' é€‰æ‹©å™¨(selector).
+     'update' selector ä¼šåœ¨æ¯å¸§è¢«è°ƒç”¨.
+     ä¼˜å…ˆçº§è¶Šä½ï¼Œè¶Šå®¹æ˜“è¢«è°ƒç”¨.
      @since v3.0
      @lua NA
      */
@@ -256,10 +256,10 @@ public:
 
 #if CC_ENABLE_SCRIPT_BINDING
     // schedule for script bindings
-	/** ÒÑ±»µ÷¶ÈµÄ½Å±¾»Øµ÷º¯Êı»áÔÚÃ¿¸öÊ±¼ä¼ä¸ô'interval'Ö¸¶¨µÄÃëÊıµ½À´Ê±µ÷ÓÃ.
-     Èç¹û½Å±¾»Øµ÷±»ÉèÖÃÎªÔİÍ£,ÄÇÃ´ÔÚËü±»»Ö¸´Ö®Ç°ÊÇ²»»á±»µ÷ÓÃµÄ.
-     Èç¹û'interval'µÈÓÚ0, Ëü»áÔÚÃ¿Ö¡±»µ÷ÓÃ.
-     ·µ»Øµ÷¶È½Å±¾ÌõÄ¿µÄID, Õâ¸öID¿ÉÒÔÔÚº¯ÊıunscheduleScriptFunc()ÖĞÊ¹ÓÃ.
+	/** å·²è¢«è°ƒåº¦çš„è„šæœ¬å›è°ƒå‡½æ•°ä¼šåœ¨æ¯ä¸ªæ—¶é—´é—´éš”'interval'æŒ‡å®šçš„ç§’æ•°åˆ°æ¥æ—¶è°ƒç”¨.
+     å¦‚æœè„šæœ¬å›è°ƒè¢«è®¾ç½®ä¸ºæš‚åœ,é‚£ä¹ˆåœ¨å®ƒè¢«æ¢å¤ä¹‹å‰æ˜¯ä¸ä¼šè¢«è°ƒç”¨çš„.
+     å¦‚æœ'interval'ç­‰äº0, å®ƒä¼šåœ¨æ¯å¸§è¢«è°ƒç”¨.
+     è¿”å›è°ƒåº¦è„šæœ¬æ¡ç›®çš„ID, è¿™ä¸ªIDå¯ä»¥åœ¨å‡½æ•°unscheduleScriptFunc()ä¸­ä½¿ç”¨.
      */
     unsigned int scheduleScriptFunc(unsigned int handler, float interval, bool paused);
 #endif
@@ -267,45 +267,45 @@ public:
     
     // unschedule
 
-	/** ÔÚ¸ø¶¨µÄkeyºÍtargetÉÏ³·Ïú¶Ô»Øµ÷º¯ÊıµÄµ÷¶È.
-     Èç¹ûÄãÏë³·Ïúµ÷¶È'callbackPerFrame', Ê¹ÓÃunscheduleUpdateº¯Êı.
+	/** åœ¨ç»™å®šçš„keyå’Œtargetä¸Šæ’¤é”€å¯¹å›è°ƒå‡½æ•°çš„è°ƒåº¦.
+     å¦‚æœä½ æƒ³æ’¤é”€è°ƒåº¦'callbackPerFrame', ä½¿ç”¨unscheduleUpdateå‡½æ•°.
      @since v3.0
      */
     void unschedule(const std::string& key, void *target);
 
-	/** ÔÚ¸ø¶¨Ä¿±êÉÏ³·Ïúµ÷¶Èselector.
-     Èç¹ûÄãÏë³·Ïúµ÷¶È "update", Ê¹ÓÃunscheudleUpdateº¯Êı.
+	/** åœ¨ç»™å®šç›®æ ‡ä¸Šæ’¤é”€è°ƒåº¦selector.
+     å¦‚æœä½ æƒ³æ’¤é”€è°ƒåº¦ "update", ä½¿ç”¨unscheudleUpdateå‡½æ•°.
      @since v3.0
      */
     void unschedule(SEL_SCHEDULE selector, Ref *target);
     
-	/** ÔÚ¸ø¶¨µÄÄ¿±êÉÏ³·Ïúupdate selectorµ÷¶È
+	/** åœ¨ç»™å®šçš„ç›®æ ‡ä¸Šæ’¤é”€update selectorè°ƒåº¦
      @since v0.99.3
      */
     void unscheduleUpdate(void *target);
     
-	/** ³·Ïú¸ø¶¨Ä¿±êÉÏµÄËùÓĞselectorµ÷¶È.
-     °üÀ¨"update" selector.
+	/** æ’¤é”€ç»™å®šç›®æ ‡ä¸Šçš„æ‰€æœ‰selectorè°ƒåº¦.
+     åŒ…æ‹¬"update" selector.
      @since v0.99.3
      @js  unscheduleCallbackForTarget
      @lua NA
      */
     void unscheduleAllForTarget(void *target);
     
-	/** ³·ÏúËùÓĞÄ¿±êÉÏµÄËùÓĞselector(Ñ¡ÔñÆ÷).
-     ÄãÓÀÔ¶²»Ó¦¸Ãµ÷ÓÃÕâ¸ö·½·¨,³ı·ÇÄãÖªµÀ×Ô¼ºÔÚ×öÊ²Ã´.
+	/** æ’¤é”€æ‰€æœ‰ç›®æ ‡ä¸Šçš„æ‰€æœ‰selector(é€‰æ‹©å™¨).
+     ä½ æ°¸è¿œä¸åº”è¯¥è°ƒç”¨è¿™ä¸ªæ–¹æ³•,é™¤éä½ çŸ¥é“è‡ªå·±åœ¨åšä»€ä¹ˆ.
      @since v0.99.3
      */
     void unscheduleAll(void);
     
-	/** ÒÔ×îµÍµÄÓÅÏÈ¼¶³·ÏúËùÓĞÄ¿±êÉÏµÄËùÓĞselectorµÄµ÷¶È.
-     µ÷ÓÃÕâ¸öº¯ÊıÊ±ÄãÓ¦µ±Ö»Ê¹ÓÃkPriorityNonSystemMin»òÕß¸ü¸ßÒ»µãµÄÓÅÏÈ¼¶.
+	/** ä»¥æœ€ä½çš„ä¼˜å…ˆçº§æ’¤é”€æ‰€æœ‰ç›®æ ‡ä¸Šçš„æ‰€æœ‰selectorçš„è°ƒåº¦.
+     è°ƒç”¨è¿™ä¸ªå‡½æ•°æ—¶ä½ åº”å½“åªä½¿ç”¨kPriorityNonSystemMinæˆ–è€…æ›´é«˜ä¸€ç‚¹çš„ä¼˜å…ˆçº§.
      @since v2.0.0
      */
     void unscheduleAllWithMinPriority(int minPriority);
     
 #if CC_ENABLE_SCRIPT_BINDING
-    /** È¡Ïû¶ÔÒ»¸ö½Å±¾ÌõÄ¿µÄµ÷¶È. */
+    /** å–æ¶ˆå¯¹ä¸€ä¸ªè„šæœ¬æ¡ç›®çš„è°ƒåº¦. */
     void unscheduleScriptEntry(unsigned int scheduleScriptEntryID);
 #endif
     
@@ -313,60 +313,60 @@ public:
     
     // isScheduled
     
-	 /** ¼ì²éÒ»¸ö¹ØÁªµ½'key'ºÍ'target'µÄ»Øµ÷ÊÇ·ñ±»µ÷¶È.
+	 /** æ£€æŸ¥ä¸€ä¸ªå…³è”åˆ°'key'å’Œ'target'çš„å›è°ƒæ˜¯å¦è¢«è°ƒåº¦.
      @since v3.0.0
      */
     bool isScheduled(const std::string& key, void *target);
     
-	 /** ¼ì²é¸ø¶¨Ä¿±êÉÏµÄÒ»¸öselector(Ñ¡ÔñÆ÷)ÊÇ·ñ±»µ÷¶È.
+	 /** æ£€æŸ¥ç»™å®šç›®æ ‡ä¸Šçš„ä¸€ä¸ªselector(é€‰æ‹©å™¨)æ˜¯å¦è¢«è°ƒåº¦.
      @since v3.0
      */
     bool isScheduled(SEL_SCHEDULE selector, Ref *target);
     
     /////////////////////////////////////
     
-	 /** ÔİÍ£Ä¿±ê.
-     ÔÚ¸ø¶¨Ä¿±êÉÏµÄËùÓĞ±»µ÷¶ÈµÄselector/update²»»á±»¼´Ê±Ö´ĞĞ£¬Ö±µ½Õâ¸öÄ¿±ê±»»Ö¸´
-     Èç¹ûÄ¿±ê²»´æÔÚ,Ê²Ã´ÊÂÇé¶¼²»×ö.
+	 /** æš‚åœç›®æ ‡.
+     åœ¨ç»™å®šç›®æ ‡ä¸Šçš„æ‰€æœ‰è¢«è°ƒåº¦çš„selector/updateä¸ä¼šè¢«å³æ—¶æ‰§è¡Œï¼Œç›´åˆ°è¿™ä¸ªç›®æ ‡è¢«æ¢å¤
+     å¦‚æœç›®æ ‡ä¸å­˜åœ¨,ä»€ä¹ˆäº‹æƒ…éƒ½ä¸åš.
      @since v0.99.3
      */
     void pauseTarget(void *target);
 
-	 /** »Ö¸´Ä¿±ê.
-     Ä¿±ê'target' »á±»»Ö¸´, ÕâÑùËùÓĞµ÷¶ÈµÄselector/update½«»áÖØĞÂ¼ÇÊ±Ö´ĞĞ.
-     Èç¹ûÄ¿±ê²»´æÔÚ,Ê²Ã´ÊÂÇé¶¼²»×ö.
+	 /** æ¢å¤ç›®æ ‡.
+     ç›®æ ‡'target' ä¼šè¢«æ¢å¤, è¿™æ ·æ‰€æœ‰è°ƒåº¦çš„selector/updateå°†ä¼šé‡æ–°è®°æ—¶æ‰§è¡Œ.
+     å¦‚æœç›®æ ‡ä¸å­˜åœ¨,ä»€ä¹ˆäº‹æƒ…éƒ½ä¸åš.
      @since v0.99.3
      */
     void resumeTarget(void *target);
 
 
-	/** ·µ»ØÄ¿±êÊÇ·ñ±»ÔİÍ£
+	/** è¿”å›ç›®æ ‡æ˜¯å¦è¢«æš‚åœ
     @since v1.0.0
     * In js: var isTargetPaused(var jsObject)
     * @lua NA 
     */
     bool isTargetPaused(void *target);
 
-	/** ÔÚËùÓĞµÄÄ¿±êÉÏÔİÍ£ËùÓĞµÄselector(Ñ¡ÔñÆ÷).
-       ÄãÓÀÔ¶²»Ó¦¸Ãµ÷ÓÃÕâ¸ö·½·¨,³ı·ÇÄãÖªµÀ×Ô¼ºÔÚ×öÊ²Ã´.
+	/** åœ¨æ‰€æœ‰çš„ç›®æ ‡ä¸Šæš‚åœæ‰€æœ‰çš„selector(é€‰æ‹©å™¨).
+       ä½ æ°¸è¿œä¸åº”è¯¥è°ƒç”¨è¿™ä¸ªæ–¹æ³•,é™¤éä½ çŸ¥é“è‡ªå·±åœ¨åšä»€ä¹ˆ.
      @since v2.0.0
       */
     std::set<void*> pauseAllTargets();
 
-	/** ÒÔ×îµÍµÄÓÅÏÈ¼¶ÔÚËùÓĞµÄÄ¿±êÉÏÔİÍ£ËùÓĞµÄselector(Ñ¡ÔñÆ÷).
-      ÄãÖ»Ó¦¸ÃÓÃkPriorityNonSystemMin»òÕß¸ü¸ßµÄÓÅÏÈ¼¶À´µ÷ÓÃ´Ëº¯Êı.
+	/** ä»¥æœ€ä½çš„ä¼˜å…ˆçº§åœ¨æ‰€æœ‰çš„ç›®æ ‡ä¸Šæš‚åœæ‰€æœ‰çš„selector(é€‰æ‹©å™¨).
+      ä½ åªåº”è¯¥ç”¨kPriorityNonSystemMinæˆ–è€…æ›´é«˜çš„ä¼˜å…ˆçº§æ¥è°ƒç”¨æ­¤å‡½æ•°.
       @since v2.0.0
       */
     std::set<void*> pauseAllTargetsWithMinPriority(int minPriority);
 
-	/** ÔÚÒ»¸öÄ¿±ê¼¯ºÏÖĞ»Ö¸´selector.
-     Õâ¸öº¯Êı¿ÉÒÔÓÃÀ´È¡Ïû¶ÔpauseAllSelectorsµÄµ÷ÓÃ.
+	/** åœ¨ä¸€ä¸ªç›®æ ‡é›†åˆä¸­æ¢å¤selector.
+     è¿™ä¸ªå‡½æ•°å¯ä»¥ç”¨æ¥å–æ¶ˆå¯¹pauseAllSelectorsçš„è°ƒç”¨.
      @since v2.0.0
       */
     void resumeTargets(const std::set<void*>& targetsToResume);
 
-	 /** ÔÚcocos2dÏß³ÌÖĞµ÷ÓÃ·½·¨. µ±ÄãĞèÒªÔÚÁíÍâÒ»¸öÏß³ÌÖĞµ÷ÓÃÒ»¸öcocos2dº¯ÊıÊ±ÓĞÓÃ.
-     Õâ¸ö·½·¨ÊÇÏß³Ì°²È«µÄ.
+	 /** åœ¨cocos2dçº¿ç¨‹ä¸­è°ƒç”¨æ–¹æ³•. å½“ä½ éœ€è¦åœ¨å¦å¤–ä¸€ä¸ªçº¿ç¨‹ä¸­è°ƒç”¨ä¸€ä¸ªcocos2då‡½æ•°æ—¶æœ‰ç”¨.
+     è¿™ä¸ªæ–¹æ³•æ˜¯çº¿ç¨‹å®‰å…¨çš„.
      @since v3.0
      */
     void performFunctionInCocosThread( const std::function<void()> &function);
@@ -375,62 +375,62 @@ public:
     
     // Deprecated methods:
     
-	/** ±»µ÷¶ÈµÄ·½·¨½«ÔÚÃ¿¸öÊ±¼ä¼ä¸ô'interval'Ö¸¶¨µÄÃëÊıµ½À´Ê±µ÷ÓÃ.
-     Èç¹û½Å±¾»Øµ÷±»ÉèÖÃÎªÔİÍ£,ÄÇÃ´ÔÚËü±»»Ö¸´Ö®Ç°ÊÇ²»»á±»µ÷ÓÃµÄ.
-     Èç¹ûÊ±¼ä¼ä¸ô'interval'ÊÇ0,Ëü»áÔÚÃ¿Ö¡µ÷ÓÃ,µ«ÊÇÕâÖÖÇé¿öÍÆ¼öÊ¹ÓÃ'scheduleUpdate'Ìæ»»..
-     Èô¹ûselectorÒÑ¾­±»µ÷¶È,ÄÇÃ´Ö»ÓĞ²ÎÊıinterval»á±»¸üĞÂ,²¢²»»áÔÙ´ÎÖØĞÂµ÷¶È.
-     repeat ÈÃ¶¯×÷ÖØ¸´Ö´ĞĞrepeat + 1´Î, Èç¹ûÏëÈÃ¶¯×÷³ÖĞøÖ´ĞĞ¿ÉÒÔÊ¹ÓÃkRepeatForever
-     delay ±íÊ¾º¯Êı±»µ÷ÓÃÖ®Ç°µÈ´ıµÄÊ±¼äÁ¿
-     @deprecated ÇëÊ¹ÓÃ'Scheduler::schedule'´úÌæ´Ë·½·¨.
-     @since v0.99.3, ²ÎÊırepeatºÍdelayÔÚ°æ±¾v1.1ÖĞ¼ÓÈë
+	/** è¢«è°ƒåº¦çš„æ–¹æ³•å°†åœ¨æ¯ä¸ªæ—¶é—´é—´éš”'interval'æŒ‡å®šçš„ç§’æ•°åˆ°æ¥æ—¶è°ƒç”¨.
+     å¦‚æœè„šæœ¬å›è°ƒè¢«è®¾ç½®ä¸ºæš‚åœ,é‚£ä¹ˆåœ¨å®ƒè¢«æ¢å¤ä¹‹å‰æ˜¯ä¸ä¼šè¢«è°ƒç”¨çš„.
+     å¦‚æœæ—¶é—´é—´éš”'interval'æ˜¯0,å®ƒä¼šåœ¨æ¯å¸§è°ƒç”¨,ä½†æ˜¯è¿™ç§æƒ…å†µæ¨èä½¿ç”¨'scheduleUpdate'æ›¿æ¢..
+     è‹¥æœselectorå·²ç»è¢«è°ƒåº¦,é‚£ä¹ˆåªæœ‰å‚æ•°intervalä¼šè¢«æ›´æ–°,å¹¶ä¸ä¼šå†æ¬¡é‡æ–°è°ƒåº¦.
+     repeat è®©åŠ¨ä½œé‡å¤æ‰§è¡Œrepeat + 1æ¬¡, å¦‚æœæƒ³è®©åŠ¨ä½œæŒç»­æ‰§è¡Œå¯ä»¥ä½¿ç”¨kRepeatForever
+     delay è¡¨ç¤ºå‡½æ•°è¢«è°ƒç”¨ä¹‹å‰ç­‰å¾…çš„æ—¶é—´é‡
+     @deprecated è¯·ä½¿ç”¨'Scheduler::schedule'ä»£æ›¿æ­¤æ–¹æ³•.
+     @since v0.99.3, å‚æ•°repeatå’Œdelayåœ¨ç‰ˆæœ¬v1.1ä¸­åŠ å…¥
      */
     CC_DEPRECATED_ATTRIBUTE void scheduleSelector(SEL_SCHEDULE selector, Ref *target, float interval, unsigned int repeat, float delay, bool paused)
     {
         schedule(selector, target, interval, repeat, delay, paused);
     };
     
-	/** Í¨¹ı²ÎÊıkRepeatForeverºÍ0ÑÓÊ±µ÷ÓÃscheduleSelector
-     *  @deprecated ÇëÊ¹ÓÃ'Scheduler::schedule'´úÌæ´Ë·½·¨.
+	/** é€šè¿‡å‚æ•°kRepeatForeverå’Œ0å»¶æ—¶è°ƒç”¨scheduleSelector
+     *  @deprecated è¯·ä½¿ç”¨'Scheduler::schedule'ä»£æ›¿æ­¤æ–¹æ³•.
      */
     CC_DEPRECATED_ATTRIBUTE void scheduleSelector(SEL_SCHEDULE selector, Ref *target, float interval, bool paused)
     {
         schedule(selector, target, interval, paused);
     };
     
-	/** ÔÚÖ¸¶¨µÄÄ¿±êÉÏÒÔÖ¸¶¨µÄÓÅÏÈ¼¶µ÷¶È'update' selector.
-     'update' selector»áÔÚÃ¿Ö¡µ÷ÓÃ.
-     ÓÅÏÈ¼¶Ô½µÍ£¬Ô½ÈİÒ×±»µ÷¶È.
-     @deprecated ÇëÊ¹ÓÃ'Scheduler::scheduleUpdate'´úÌæ´Ë·½·¨.
+	/** åœ¨æŒ‡å®šçš„ç›®æ ‡ä¸Šä»¥æŒ‡å®šçš„ä¼˜å…ˆçº§è°ƒåº¦'update' selector.
+     'update' selectorä¼šåœ¨æ¯å¸§è°ƒç”¨.
+     ä¼˜å…ˆçº§è¶Šä½ï¼Œè¶Šå®¹æ˜“è¢«è°ƒåº¦.
+     @deprecated è¯·ä½¿ç”¨'Scheduler::scheduleUpdate'ä»£æ›¿æ­¤æ–¹æ³•.
      @since v0.99.3
      */
     template <class T>
     CC_DEPRECATED_ATTRIBUTE void scheduleUpdateForTarget(T* target, int priority, bool paused) { scheduleUpdate(target, priority, paused); };
     
-	 /** ÔÚ¸ø¶¨Ä¿±êÉÏÈ¡Ïûµ÷¶Èselector.
-     Èç¹ûÄãÏëÈ¡Ïûµ÷¶È "update", Ê¹ÓÃ unscheudleUpdateForTarget.
-     @deprecated ÇëÊ¹ÓÃ'Scheduler::unschedule'´úÌæ´Ë·½·¨.
+	 /** åœ¨ç»™å®šç›®æ ‡ä¸Šå–æ¶ˆè°ƒåº¦selector.
+     å¦‚æœä½ æƒ³å–æ¶ˆè°ƒåº¦ "update", ä½¿ç”¨ unscheudleUpdateForTarget.
+     @deprecated è¯·ä½¿ç”¨'Scheduler::unschedule'ä»£æ›¿æ­¤æ–¹æ³•.
      @since v0.99.3
      */
     CC_DEPRECATED_ATTRIBUTE void unscheduleSelector(SEL_SCHEDULE selector, Ref *target) { unschedule(selector, target); };
     
-	 /** ¼ì²éÔÚÒ»¸öselector(Ñ¡ÔñÆ÷)ÊÇ·ñÔÚ¸ø¶¨µÄtargetÉÏ±»µ÷¶È.
-     @deprecated ÇëÊ¹ÓÃ'Scheduler::isScheduled'´úÌæ´Ë·½·¨.
+	 /** æ£€æŸ¥åœ¨ä¸€ä¸ªselector(é€‰æ‹©å™¨)æ˜¯å¦åœ¨ç»™å®šçš„targetä¸Šè¢«è°ƒåº¦.
+     @deprecated è¯·ä½¿ç”¨'Scheduler::isScheduled'ä»£æ›¿æ­¤æ–¹æ³•.
      @since v0.99.3
      */
     CC_DEPRECATED_ATTRIBUTE bool isScheduledForTarget(Ref *target, SEL_SCHEDULE selector) { return isScheduled(selector, target); };
     
-	 /** ÔÚÖ¸¶¨µÄÄ¿±êÉÏÈ¡Ïûµ÷¶ÈupdateÑ¡ÔñÆ÷
-     @deprecated ÇëÊ¹ÓÃ'Scheduler::unscheduleUpdate'´úÌæ´Ë·½·¨.
+	 /** åœ¨æŒ‡å®šçš„ç›®æ ‡ä¸Šå–æ¶ˆè°ƒåº¦updateé€‰æ‹©å™¨
+     @deprecated è¯·ä½¿ç”¨'Scheduler::unscheduleUpdate'ä»£æ›¿æ­¤æ–¹æ³•.
      @since v0.99.3
      */
     CC_DEPRECATED_ATTRIBUTE void unscheduleUpdateForTarget(Ref *target) { return unscheduleUpdate(target); };
     
 protected:
     
-	 /** ÔÚ¸ø¶¨µÄÄ¿±êÉÏÒÔ¸ø¶¨µÄÓÅÏÈ¼¶µ÷¶È'callback'º¯Êı.
-     'callback' selector(Ñ¡ÔñÆ÷)»áÔÚÃ¿Ö¡µ÷ÓÃ.
-     ÓÅÏÈ¼¶Ô½µÍ,Ô½ÈİÒ×±»µ÷ÓÃ.
-     @note Õâ¸ö·½·¨Ö»ÔÚÄÚ²¿Ê¹ÓÃ.
+	 /** åœ¨ç»™å®šçš„ç›®æ ‡ä¸Šä»¥ç»™å®šçš„ä¼˜å…ˆçº§è°ƒåº¦'callback'å‡½æ•°.
+     'callback' selector(é€‰æ‹©å™¨)ä¼šåœ¨æ¯å¸§è°ƒç”¨.
+     ä¼˜å…ˆçº§è¶Šä½,è¶Šå®¹æ˜“è¢«è°ƒç”¨.
+     @note è¿™ä¸ªæ–¹æ³•åªåœ¨å†…éƒ¨ä½¿ç”¨.
      @since v3.0
      */
     void schedulePerFrame(const ccSchedulerFunc& callback, void *target, int priority, bool paused);
