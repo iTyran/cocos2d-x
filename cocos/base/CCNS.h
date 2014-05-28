@@ -36,38 +36,41 @@ NS_CC_BEGIN
  */
 
 /**
-@brief Returns a Core Graphics rectangle structure corresponding to the data in a given string.
-@param pszContent   A string object whose contents are of the form "{{x,y},{w, h}}",
-                    where x is the x coordinate, y is the y coordinate, w is the width, and h is the height.
-                    These components can represent integer or float values.
-                    An example of a valid string is "{{3,2},{4,5}}".
-                    The string is not localized, so items are always separated with a comma.
-@return A Core Graphics structure that represents a rectangle.
-        If the string is not well-formed, the function returns Rect::ZERO.
+@brief 返回一个核心图形长方形结构对应于给定字符串中的数据.
+@param pszContent   字符串对象，其内容形式 "{{x,y},{w, h}}",
+                    x是坐标系的x,y是坐标系的y,w表示宽,h表示高
+                    这些组件可以代表整型或浮点值.
+                    一个有效的字串形如 "{{3,2},{4,5}}".
+                    字符串没有本地化,各项总是用逗号分隔
+@return 返回一个代表矩形的核心图形结构
+        如果字串不是有效的格式，该方法返回Rect::ZERO.
 */
 Rect CC_DLL RectFromString(const std::string& str);
 
 /**
-@brief Returns a Core Graphics point structure corresponding to the data in a given string.
-@param pszContent   A string object whose contents are of the form "{x,y}",
-                    where x is the x coordinate and y is the y coordinate.
-                    The x and y values can represent integer or float values.
-                    An example of a valid string is "{3.0,2.5}".
-                    The string is not localized, so items are always separated with a comma.
-@return A Core Graphics structure that represents a point.
-        If the string is not well-formed, the function returns Vec2::ZERO.
+@brief 返回一个核心图形点结构对应于给定字符串中的数据.
+@param pszContent   字符串对象，其内容形式 "{x,y}",
+                    x是坐标系的x,y是坐标系的y.
+                    x和y的值可以是整型或浮点型.
+                    一个有效的字串形如 "{3.0,2.5}".
+                    字符串没有本地化,各项总是用逗号分隔
+
+@return 返回一个代表点(point)的核心图形结构.
+        如果字串不是有效的格式，该方法返回Vec2::ZERO.
 */
 Vec2 CC_DLL PointFromString(const std::string& str);
 
 /**
-@brief Returns a Core Graphics size structure corresponding to the data in a given string.
-@param pszContent   A string object whose contents are of the form "{w, h}",
-                    where w is the width and h is the height.
-                    The w and h values can be integer or float values.
-                    An example of a valid string is "{3.0,2.5}".
-                    The string is not localized, so items are always separated with a comma.
-@return A Core Graphics structure that represents a size.
-        If the string is not well-formed, the function returns Size::ZERO.
+@brief 返回一个核心图形的大小结构对应于给定字符串中的数据 
+@param pszContent   字符串对象，其内容形式 "{w,h}",
+                    w表示宽,h表示高.
+                    w和h的值可以是整型或浮点型.
+                    一个有效的字串形如 "{3.0,2.5}".
+                    字符串没有本地化,各项总是用逗号分隔
+ 
+@return 返回一个代表矩形大小(size)的核心图形结构.
+        如果字串不是有效的格式，该方法返回Size::ZERO.
+
 */
 Size CC_DLL SizeFromString(const std::string& str);
 
