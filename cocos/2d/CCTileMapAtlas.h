@@ -39,26 +39,27 @@ struct sImageTGA;
  * @{
  */
 
-/** @brief TileMapAtlas is a subclass of AtlasNode.
+/** @brief CCTileMapAtlas 是一个 CCAtlasNode的子类.
+ 
+ 它知道如何基于瓦片渲染地图
+ 瓦片必须是.PNG格式，地图必须是.TGA文件
+ 
+ 了解更多关于格式的信息，请看这个地址:
+ http://www.cocos2d-iphone.org/archives/27
+ 
+ 所有CCAtlasNode的特性在CCTileMapAtlas都是有效的
+ 
+ 重要提示:
+ 这个类不赞成使用，它的存在只是为了保持一致性
+ 你不应该使用这个类
+ 作为代替，请使用更新的TMX文件格式: CCTMXTiledMap
+ */
 
-It knows how to render a map based of tiles.
-The tiles must be in a .PNG format while the map must be a .TGA file.
-
-For more information regarding the format, please see this post:
-http://www.cocos2d-iphone.org/archives/27
-
-All features from AtlasNode are valid in TileMapAtlas
-
-IMPORTANT:
-This class is deprecated. It is maintained for compatibility reasons only.
-You SHOULD not use this class.
-Instead, use the newer TMX file format: TMXTiledMap
-*/
 class CC_DLL TileMapAtlas : public AtlasNode 
 {
 public:
-    /** creates a TileMap with a tile file (atlas) with a map file and the width and height of each tile in points.
-     The tile file will be loaded using the TextureMgr.
+    /** 用一个在地图文件里指定宽、高的瓦片文件（贴图集）来初始化CCTileMap
+     * 通过使用TextureMgr，瓦片文件将被加载
      */
     static TileMapAtlas * create(const std::string& tile, const std::string& mapFile, int tileWidth, int tileHeight);
     /**
@@ -71,20 +72,21 @@ public:
      */
     virtual ~TileMapAtlas();
     
-    /** initializes a TileMap with a tile file (atlas) with a map file and the width and height of each tile in points.
-    The file will be loaded using the TextureMgr.
-    */
+    /** 用一个在地图文件里指定宽、高的瓦片文件（贴图集）来初始化CCTileMap
+     * 通过使用TextureMgr，文件将被加载
+     */
     bool initWithTileFile(const std::string& tile, const std::string& mapFile, int tileWidth, int tileHeight);
-    /** returns a tile from position x,y.
-    For the moment only channel R is used
-    */
+
+    /** 从x,y位置返回一个瓦片
+     * 此时只有R通道被使用
+     */
     Color3B getTileAt(const Vec2& position) const;
     CC_DEPRECATED_ATTRIBUTE Color3B tileAt(const Vec2& position) const { return getTileAt(position); };
-    /** sets a tile at position x,y.
-    For the moment only channel R is used
-    */
+    /** 在x,y位置设置一个瓦片
+     * 此时只有R通道被使用
+     */
     void setTile(const Color3B& tile, const Vec2& position);
-    /** dealloc the map from memory */
+    /** 从内存里dealloc地图 */
     void releaseMap();
     
     inline struct sImageTGA* getTGAInfo() const { return _TGAInfo; };
@@ -97,11 +99,11 @@ protected:
     void updateAtlasValues();
 
 
-    //! x,y to atlas dictionary
+    //! x,y到贴图集字典
     ValueMap _posToAtlasIndex;
-    //! numbers of tiles to render
+    //! 渲染的瓦片地图
     int _itemsToRender;
-    /** TileMap info */
+    /** TileMap 信息 */
     struct sImageTGA* _TGAInfo;
 };
 
