@@ -33,14 +33,14 @@ namespace cocostudio {
 
 enum AnimationType
 {
-    SINGLE_FRAME = -4,          //! the animation just have one frame
-    ANIMATION_NO_LOOP,          //! the animation isn't loop
+    SINGLE_FRAME = -4,          //! 动画只有一帧
+    ANIMATION_NO_LOOP,          //! 动画不循环
 
-    ANIMATION_TO_LOOP_FRONT,    //! the animation loop from front
-    ANIMATION_TO_LOOP_BACK,     //! the animation loop from back
+    ANIMATION_TO_LOOP_FRONT,    //! 动画往前循环
+    ANIMATION_TO_LOOP_BACK,     //! 动画往后循环
 
-    ANIMATION_LOOP_FRONT,       //! the animation loop from front
-    ANIMATION_LOOP_BACK,        //! the animation loop from back
+    ANIMATION_LOOP_FRONT,       //! 动画从前循环
+    ANIMATION_LOOP_BACK,        //! 动画从后循环
 
     ANIMATION_MAX,
 
@@ -57,53 +57,53 @@ public:
     virtual ~ProcessBase(void);
 
     /**
-     * Play animation by animation name.
+     * 通过动画名称播放动画
      *
-     * @param  durationTo The frames between two animation changing-over.
-     *         It's meaning is changing to this animation need how many frames
+     * @param  durationTo   在两个动画改变-结束之前的那些帧.
+     *         该参数意思是说切换到这个动画需要多少帧
      *
-     *         -1 : use the value from MovementData get from flash design panel
-     * @param  durationTween  The frame count you want to play in the game.
-     *         if  _durationTween is 80, then the animation will played 80 frames in a loop
+     *         -1 : 使用MovementData中得值，MovementData从从flash设计面板得到
+     * @param  durationTween  在游戏中想要播放的帧
+     *         如果_durationTween是80，动画在循环中将会播放80帧
      *
-     *         -1 : use the value from MovementData get from flash design panel
+     *         -1 : 使用MovementData中得值，MovementData从从flash设计面板得到
      *
-     * @param  loop   Whether the animation is loop
+     * @param  loop 动画是否在循环
      *
-     *         loop < 0 : use the value from MovementData get from flash design panel
-     *         loop = 0 : this animation is not loop
-     *         loop > 0 : this animation is loop
+     *         loop < 0 : 使用MovementData中得值，MovementData从从flash设计面板得到
+     *         loop = 0 : 动画不在循环
+     *         loop > 0 : 动画在循环
      *
-     * @param  tweenEasing Tween easing is used for calculate easing effect
+     * @param  tweenEasing 缓动(Tween easing)是用来计算缓冲效果
      *
-     *         TWEEN_EASING_MAX : use the value from MovementData get from flash design panel
-     *         -1 : fade out
-     *         0  : line
-     *         1  : fade in
-     *         2  : fade in and out
+     *         TWEEN_EASING_MAX : 使用MovementData中得值，MovementData从从flash设计面板得到
+     *         -1 : 淡出
+     *         0  : 线性
+     *         1  : 淡入
+     *         2  : 淡入淡出
      *
      */
     virtual void play(int durationTo, int durationTween,  int loop, int tweenEasing);
 
     /**
-     * Pause the Process
+     * 暂停进程
      */
     virtual void pause();
     /**
-     * Resume the Process
+     * 恢复进程
      */
     virtual void resume();
     /**
-     * Stop the Process
+     * 停止进程
      */
     virtual void stop();
 
 
     /**
-     * You should never call this function, unless you know what you do
-     * Update the Process, include current process, current frame and son on
+     * 不应该调用这个函数，除非你知道你做了什么
+     * 更新进程，包括当前进程，当前帧和子帧
      *
-     * @param The duration since last update
+     * @param 自上次更新后的间隔
      */
     virtual void update(float dt);
 
@@ -129,49 +129,49 @@ protected:
     virtual void gotoFrame(int frameIndex);
 
     /**
-     * Update(float dt) will call this handler, you can handle your logic here
+     * Update(float dt)函数将会调用这个处理机(handler),你可以在这里处理你的逻辑
      */
     virtual void updateHandler() {};
 
 protected:
-    //! Scale the process speed
+    //! 缩放进程速度
     float _processScale;
 
-    //! Set and get whether the aniamtion is pause
+    //! 设置和获取动画是否暂停
     bool _isPause;
 
-    //! Set and get whether the aniamtion is complete
+    //! 设置和获取动画是否完成
     bool _isComplete;
 
-    //! Set and get whether the aniamtion is playing
+    //! 设置和获取动画是否正在播放
     bool _isPlaying;
 
-    //! Current percent this process arrived
+    //! 当前进程到达的百分比
     float _currentPercent;
 
-    //! The raw duration
+    //! 原始长度
     int _rawDuration;
 
-    //! The animation whether or not loop
+    //! 动画是否循环
     AnimationType _loopType;
 
-    //! The tween easing effect
+    //! 缓动效果
     cocos2d::tweenfunc::TweenType _tweenEasing;
 
-    //! The animation update speed
+    //! 动画更新速度
     float _animationInternal;
 
 
 protected:
-    //! The durantion frame count will run
+    //! 在动画持续时间内将要播放的帧数
     int _durationTween;
 
-    //! Current frame this process arrived, this frame is tween frame
+    //! 当前进程的当前所处帧，这个帧是中间帧
     float _currentFrame;
-    //! Frame index it the time line
+    //! 在时间线中的帧的索引
     int _curFrameIndex;
 
-    //! Next frame this process need run to
+    //! 当前进程需要运行到的下一帧
     int _nextFrameIndex;
 
 

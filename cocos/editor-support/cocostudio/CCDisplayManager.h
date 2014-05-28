@@ -33,7 +33,7 @@ namespace cocostudio {
 
 class Bone;
 
-/**! DisplayManager manages Bone's display
+/**! DisplayManager管理骨骼(Bone)的显示
  *  @js NA
  *  @lua NA
  */
@@ -49,22 +49,22 @@ public:
     bool init(Bone *bone);
 
     /**
-     * Use BoneData to init the display list.
-     * If display is a sprite, and it have texture info in the TexutreData, then use TexutreData to init the display's anchor point
-     * If the display is a Armature, then create a new Armature
+     * 使用骨骼数据(BoneData)初始化显示列表.
+     * 如果显示的是一个在TexutreData中有纹理信息的精灵，就使用TexutreData去初始化显示的锚点
+     * 如果显示的是骨架(Armature),就创建一个新的骨架
      */
     virtual void initDisplayList(BoneData *boneData);
 
     /**
-     * Add display and use  _DisplayData init the display.
-     * If index already have a display, then replace it.
-     * If index is current display index, then also change display to _index
+     * 添加显示对象，然后用_DisplayData初始化显示对象.
+     * 如果索引位置已经有了显示对象，就替换掉.
+     * 如果索引位置就是当前显示所在的索引，就把当前显示切换为_index
      *
-     *	@param 	displayData it include the display information, like DisplayType.
-     *					If you want to create a sprite display, then create a SpriteDisplayData param
+     *	@param 	displayData 包含显示信息，比如显示类型.
+     *					如果要创建一个精灵显示，就创建一个SpriteDisplayData参数
      *
-     *	@param 	index the index of the display you want to replace or add to
-     *					-1 : append display from back
+     *	@param 	index   需要替换或者添加的显示的索引
+     *					-1 : 从后台添加的显示
      */
     void addDisplay(DisplayData *displayData, int index);
 
@@ -75,19 +75,19 @@ public:
     const cocos2d::Vector<DecorativeDisplay*>& getDecorativeDisplayList() const;
 
     /*
-     * @deprecated, please use changeDisplayWithIndex and changeDisplayWithName
+     * @deprecated, 请使用changeDisplayWithIndex 和 changeDisplayWithName
      */
     CC_DEPRECATED_ATTRIBUTE void changeDisplayByIndex(int index, bool force);
     CC_DEPRECATED_ATTRIBUTE void changeDisplayByName(const std::string& name, bool force);
     
     /**
-     * Change display by index. You can just use this method to change display in the display list.
-     * The display list is just used for this bone, and it is the displays you may use in every frame.
+     * 通过index来切换显示对象，你可以使用这个方法在切换在显示列表中得显示对象
+     * 该显示列表只用于这个骨骼动画，它是可应用在每一帧的显示对象
      *
-     * Note : if index is the same with prev index, the method will not effect
+     * Note : 如果索引(index)与上一个显示对象索引相同，这个方法不会起作用
      *
-     * @param index The index of the display you want to change
-     * @param force If true, then force change display to specified display, or current display will set to  display index edit in the flash every key frame.
+     * @param index 要切换的显示对象索引
+     * @param force 如果是true，就强制切换当前显示到指定的显示对象，或者当前显示会设置为在flash每一个关键帧中编辑的显示对象索引
      */
     void changeDisplayWithIndex(int index, bool force);
     void changeDisplayWithName(const std::string& name, bool force);
@@ -102,17 +102,17 @@ public:
     virtual DecorativeDisplay *getDecorativeDisplayByIndex( int index) const;
 
     /**
-     * Sets whether the display is visible
-     * The default value is true, a node is default to visible
+     * 设置显示对象是否可见
+     * 默认值是true，一个节点默认是可见的
      *
-     * @param visible   true if the node is visible, false if the node is hidden.
+     * @param visible   如果节点是可见的参数visible就是true，如果节点是隐藏的visible是false
      */
     virtual void setVisible(bool visible);
     /**
-     * Determines if the display is visible
+     * 确定显示对象是否可见
      *
      * @see setVisible(bool)
-     * @return true if the node is visible, false if the node is hidden.
+     * @return true 如果节点可见返回true，如果节点隐藏返回false
      */
     virtual bool isVisible() const;
 
@@ -123,12 +123,12 @@ public:
     cocos2d::Vec2 getAnchorPointInPoints() const;
 
     /**
-     * Check if the position is inside the bone.
+     * 检查给定位置是否在骨骼内部.
      */
     virtual bool containPoint(cocos2d::Vec2 &_point);
 
     /**
-     * Check if the position is inside the bone.
+     * 检查给定位置是否在骨骼内部.
      */
     virtual bool containPoint(float x, float y);
 
@@ -136,18 +136,18 @@ public:
     virtual bool isForceChangeDisplay() const { return _forceChangeDisplay; }
 protected:
     cocos2d::Vector<DecorativeDisplay*> _decoDisplayList;
-    //! Display render node.
+    //! 显示渲染节点.
     cocos2d::Node *_displayRenderNode;
-    //! Display render node type
+    //! 显示渲染节点类型
     DisplayType _displayType;
-    //! Include current display information, like contour sprite, etc.
+    //! 包括当前显示信息，比如轮廓，精灵等.
     DecorativeDisplay *_currentDecoDisplay;
-    //! Current display index
+    //! 当前的显示索引
     int _displayIndex;
 
     bool _forceChangeDisplay;
 
-    //! Whether of not the bone is visible. Default is true
+    //! 骨骼是否可见的，默认是true
     bool _visible;
 
     Bone *_bone;
