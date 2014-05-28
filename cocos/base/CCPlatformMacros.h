@@ -33,8 +33,8 @@ Copyright (c) 2013-2014 Chukong Technologies
 #include "CCPlatformDefine.h"
 
 /**
- * define a create function for a specific type, such as Layer
- * @param \__TYPE__  class type to add create(), such as Layer
+ * 定义一个各种类型的工厂方法, 如 Layer 类型
+ * @param \__TYPE__  类类型加入到create(), 如 Layer 类型
  */
 #define CREATE_FUNC(__TYPE__) \
 static __TYPE__* create() \
@@ -54,9 +54,9 @@ static __TYPE__* create() \
 }
 
 /**
- * define a node function for a specific type, such as Layer
- * @param \__TYPE__  class type to add node(), such as Layer
- * @deprecated  This interface will be deprecated sooner or later.
+ * 为特定类型定义一个节点方法,如 Layer 类型
+ * @param \__TYPE__  类类型加入到node(), 如Layer
+ * @deprecated  该接口迟早会被弃用.
  */
 #define NODE_FUNC(__TYPE__) \
 CC_DEPRECATED_ATTRIBUTE static __TYPE__* node() \
@@ -76,11 +76,11 @@ CC_DEPRECATED_ATTRIBUTE static __TYPE__* node() \
 }
 
 /** @def CC_ENABLE_CACHE_TEXTURE_DATA
-Enable it if you want to cache the texture data.
-Not enabling for Emscripten any more -- doesn't seem necessary and don't want
-to be different from other platforms unless there's a good reason.
+如果你想缓存纹理数据则启用它.
+Emscripten不在启用——似乎并不必要,也不是我们想要的
+不同于其他平台,除非有很好的理由
 
-It's new in cocos2d-x since v0.99.5
+从cocos2d-x v0.99.5以来的新版本
 */
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8) 
     #define CC_ENABLE_CACHE_TEXTURE_DATA       1
@@ -89,8 +89,8 @@ It's new in cocos2d-x since v0.99.5
 #endif
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID) || (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32) || (CC_TARGET_PLATFORM == CC_PLATFORM_EMSCRIPTEN)
-    /* Application will crash in glDrawElements function on some win32 computers and some android devices.
-       Indices should be bound again while drawing to avoid this bug.
+    /* 应用会崩溃在glDrawElements方法中,在一些win32计算机和一些Android设备上.
+       表明应该再次绑定当绘制时避免此bug
      */
     #define CC_REBIND_INDICES_BUFFER  1
 #else
@@ -110,14 +110,14 @@ It's new in cocos2d-x since v0.99.5
     #define USING_NS_CC 
 #endif 
 
-/** CC_PROPERTY_READONLY is used to declare a protected variable.
- We can use getter to read the variable.
- @param varType     the type of variable.
- @param varName     variable name.
- @param funName     "get + funName" will be the name of the getter.
- @warning   The getter is a public virtual function, you should rewrite it first.
-            The variables and methods declared after CC_PROPERTY_READONLY are all public.
-            If you need protected or private, please declare.
+/** CC_PROPERTY_READONLY 用于声明保护性变量.
+ 我们可以用 getter读取该变量.
+ @param varType     变量类型.
+ @param varName     变量名.
+ @param funName     形如"get + funName" 将会是getter方法名.
+ @warning   getter是一个公共的虚函数，你首先应该重写它.
+            在CC_PROPERTY_READONLY声明变量和方法后，都是公共的.
+            如果你需要protected 或 private, 请声明.
  */
 #define CC_PROPERTY_READONLY(varType, varName, funName)\
 protected: varType varName;\
@@ -127,15 +127,15 @@ public: virtual varType get##funName(void) const;
 protected: varType varName;\
 public: virtual const varType& get##funName(void) const;
 
-/** CC_PROPERTY is used to declare a protected variable.
- We can use getter to read the variable, and use the setter to change the variable.
- @param varType     the type of variable.
- @param varName     variable name.
- @param funName     "get + funName" will be the name of the getter.
-                    "set + funName" will be the name of the setter.
- @warning   The getter and setter are public virtual functions, you should rewrite them first.
-            The variables and methods declared after CC_PROPERTY are all public.
-            If you need protected or private, please declare.
+/** CC_PROPERTY 用于声明保护性变量.
+ 我们可以使用getter 读取该变量, 和用setter修改该变量.
+ @param varType     变量类型.
+ @param varName     变量名.
+ @param funName     形如"get + funName" 将会是getter方法.
+                    形如"set + funName" 将会是setter方法.
+ @warning   getter 和 setter 是公共的虚函数,你首先应该重写它.
+            在CC_PROPERTY声明变量和方法后，都是公共的.
+            如果你需要protected 或 private, 请声明.
  */
 #define CC_PROPERTY(varType, varName, funName)\
 protected: varType varName;\
@@ -147,14 +147,14 @@ protected: varType varName;\
 public: virtual const varType& get##funName(void) const;\
 public: virtual void set##funName(const varType& var);
 
-/** CC_SYNTHESIZE_READONLY is used to declare a protected variable.
- We can use getter to read the variable.
- @param varType     the type of variable.
- @param varName     variable name.
- @param funName     "get + funName" will be the name of the getter.
- @warning   The getter is a public inline function.
-            The variables and methods declared after CC_SYNTHESIZE_READONLY are all public.
-            If you need protected or private, please declare.
+/** CC_SYNTHESIZE_READONLY 用于声明保护性变量.
+ 我们可以用 getter读取该变量.
+ @param varType     变量类型.
+ @param varName     变量名.
+ @param funName     形如"get + funName" 将会是getter方法名.
+ @warning   getter 是一个公共性的内部函数.
+            在CC_SYNTHESIZE_READONLY声明变量和方法后，都是公共的.
+            如果你需要protected 或 private, 请声明.
  */
 #define CC_SYNTHESIZE_READONLY(varType, varName, funName)\
 protected: varType varName;\
@@ -164,15 +164,15 @@ public: virtual varType get##funName(void) const { return varName; }
 protected: varType varName;\
 public: virtual const varType& get##funName(void) const { return varName; }
 
-/** CC_SYNTHESIZE is used to declare a protected variable.
- We can use getter to read the variable, and use the setter to change the variable.
- @param varType     the type of variable.
- @param varName     variable name.
- @param funName     "get + funName" will be the name of the getter.
-                    "set + funName" will be the name of the setter.
- @warning   The getter and setter are public inline functions.
-            The variables and methods declared after CC_SYNTHESIZE are all public.
-            If you need protected or private, please declare.
+/** CC_SYNTHESIZE 用于声明保护性变量.
+ 我们可以使用getter 读取该变量, 和用setter修改该变量.
+ @param varType     变量类型.
+ @param varName     变量名.
+ @param funName     形如"get + funName" 将会是getter方法.
+ 形如"set + funName" 将会是setter方法.
+ @warning   getter 和 setter 是公共的内部函数.
+            在CC_SYNTHESIZE声明变量和方法后，都是公共的.
+            如果你需要protected 或 private, 请声明.
  */
 #define CC_SYNTHESIZE(varType, varName, funName)\
 protected: varType varName;\
@@ -235,8 +235,8 @@ public: virtual void set##funName(varType var)   \
 #define LUALOG(format, ...)     cocos2d::log(format, ##__VA_ARGS__)
 #endif // Lua engine debug
 
-// A macro to disallow the copy constructor and operator= functions
-// This should be used in the private: declarations for a class
+//宏不允许拷贝构造函数和operator=函数
+//这应该是用在私人：声明一个类
 #if defined(__GNUC__) && ((__GNUC__ >= 5) || ((__GNUG__ == 4) && (__GNUC_MINOR__ >= 4))) \
 	|| (defined(__clang__) && (__clang_major__ >= 3)) || (_MSC_VER >= 1800)
 #define CC_DISALLOW_COPY_AND_ASSIGN(TypeName) \
@@ -248,18 +248,18 @@ public: virtual void set##funName(varType var)   \
     TypeName &operator =(const TypeName &);
 #endif
 
-// A macro to disallow all the implicit constructors, namely the
-// default constructor, copy constructor and operator= functions.
+//宏禁止所有隐式构造函数，即
+//默认构造函数，拷贝构造函数和operator=函数。
 //
-// This should be used in the private: declarations for a class
-// that wants to prevent anyone from instantiating it. This is
-// especially useful for classes containing only static methods.
+//这应该是用在私人：声明一个类
+//是要防止任何人将其实例化。这是
+//仅包含静态方法的类特别有用。
 #define CC_DISALLOW_IMPLICIT_CONSTRUCTORS(TypeName)    \
     TypeName();                                        \
     CC_DISALLOW_COPY_AND_ASSIGN(TypeName)
 
 /*
- * only certain compilers support __attribute__((deprecated))
+ *只有特定的编译器支持 __attribute__((deprecated))
  */
 #if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
     #define CC_DEPRECATED_ATTRIBUTE __attribute__((deprecated))
@@ -270,9 +270,9 @@ public: virtual void set##funName(varType var)   \
 #endif 
 
 /*
- * only certain compiler support __attribute__((format))
- * formatPos - 1-based position of format string argument
- * argPos - 1-based position of first format-dependent argument
+ *只有特定的编译器支持 __attribute__((format))
+ * formatPos - 格式字符串参数1为基础的位置 1-based position of format string argument
+ * argPos - 第一格式相关的参数1为基础的位置
  */
 #if defined(__GNUC__) && (__GNUC__ >= 4)
 #define CC_FORMAT_PRINTF(formatPos, argPos) __attribute__((__format__(printf, formatPos, argPos)))
