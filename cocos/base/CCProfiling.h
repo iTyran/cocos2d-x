@@ -41,12 +41,12 @@ NS_CC_BEGIN
 
 class ProfilingTimer;
 
-/** Profiler
- cocos2d builtin profiler.
 
- To use it, enable set the CC_ENABLE_PROFILERS=1 in the ccConfig.h file
+/**分析器
+ cocos2d的内置分析器。
+ 
+ 要使用它，启用设置CC_ENABLE_PROFILERS= 1 ccConfig.h文件
  */
-
 class CC_DLL Profiler : public Ref
 {
 public:
@@ -67,7 +67,7 @@ public:
     bool init(void);
 
 public:
-    /** returns the singleton 
+    /** 返回单例
      * @js NA
      * @lua NA
      */
@@ -79,17 +79,17 @@ public:
      */
     CC_DEPRECATED_ATTRIBUTE static Profiler* sharedProfiler(void);
 
-    /** Creates and adds a new timer 
+    /** 创建和添加一个新的timer
      * @js NA
      * @lua NA
      */
     ProfilingTimer* createAndAddTimerWithName(const char* timerName);
-    /** releases a timer 
+    /** 释放 timer
      * @js NA
      * @lua NA
      */
     void releaseTimer(const char* timerName);
-    /** releases all timers 
+    /** 释放所有 timers
      * @js NA
      * @lua NA
      */
@@ -127,7 +127,7 @@ public:
      */
     inline const std::chrono::high_resolution_clock::time_point& getStartTime(void) { return _startTime; };
 
-    /** resets the timer properties
+    /** 重置 timer 属性
      * @js NA
      * @lua NA
      */
@@ -148,8 +148,8 @@ extern void ProfilingEndTimingBlock(const char *timerName);
 extern void ProfilingResetTimingBlock(const char *timerName);
 
 /*
- * cocos2d profiling categories
- * used to enable / disable profilers with granularity
+ * cocos2d的分析类别
+ *用于启用/禁用廓线仪与粒度
  */
 
 extern bool kProfilerCategorySprite;
