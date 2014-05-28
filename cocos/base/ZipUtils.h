@@ -39,165 +39,165 @@ THE SOFTWARE.
 
 namespace cocos2d
 {
-    /* XXX: pragma pack ??? */
+    /* XXX: 编译指示包 ??? */
     /** @struct CCZHeader
     */
     struct CCZHeader {
-        unsigned char   sig[4];             // signature. Should be 'CCZ!' 4 bytes
-        unsigned short  compression_type;   // should 0
-        unsigned short  version;            // should be 2 (although version type==1 is also supported)
-        unsigned int    reserved;           // Reserved for users.
-        unsigned int    len;                // size of the uncompressed file
+        unsigned char   sig[4];             // 签名.应该是 'CCZ!' 4 字节
+        unsigned short  compression_type;   // 应该是 0
+        unsigned short  version;            // 应该是 2 (尽管版本 type==1 也支持)
+        unsigned int    reserved;           // 为用户保留
+        unsigned int    len;                // 未压缩文件的大小
     };
 
     enum {
-        CCZ_COMPRESSION_ZLIB,               // zlib format.
-        CCZ_COMPRESSION_BZIP2,              // bzip2 format (not supported yet)
-        CCZ_COMPRESSION_GZIP,               // gzip format (not supported yet)
-        CCZ_COMPRESSION_NONE,               // plain (not supported yet)
+        CCZ_COMPRESSION_ZLIB,               // zlib 格式.
+        CCZ_COMPRESSION_BZIP2,              // bzip2 格式 (还不支持)
+        CCZ_COMPRESSION_GZIP,               // gzip 格式 (还不支持)
+        CCZ_COMPRESSION_NONE,               // plain (还不支持)
     };
 
     class CC_DLL ZipUtils
     {
     public:
-        /** 
-        * Inflates either zlib or gzip deflated memory. The inflated memory is
-        * expected to be freed by the caller.
+        /**
+        *无论是膨胀的zlib或gzip的瘪内存。膨胀的内存
+        *由调用者释放。
         *
-        * It will allocate 256k for the destination buffer. If it is not enough it will multiply the previous buffer size per 2, until there is enough memory.
-        * @returns the length of the deflated buffer
-        *
+        *它会分配256K的目标缓冲区。如果这还不够，将乘2前面的缓冲区大小，直到有足够的存储器。
+        *@returns 返回瘪缓冲区的长度
+        * 
         @since v0.8.1
         */
         CC_DEPRECATED_ATTRIBUTE static ssize_t ccInflateMemory(unsigned char *in, ssize_t inLength, unsigned char **out) { return inflateMemory(in, inLength, out); }
         static ssize_t inflateMemory(unsigned char *in, ssize_t inLength, unsigned char **out);
 
-        /** 
-        * Inflates either zlib or gzip deflated memory. The inflated memory is
-        * expected to be freed by the caller.
+        /**
+        *无论是膨胀的zlib或gzip的瘪内存。膨胀的内存
+        *由调用者释放。
         *
-        * outLenghtHint is assumed to be the needed room to allocate the inflated buffer.
+        * outLenghtHint被假定为所需要的空间分配膨胀的缓冲区。
         *
-        * @returns the length of the deflated buffer
-        *
-        @since v1.0.0
+        *@returns 瘪缓冲区的长度
+        * 
+        @since V1.0.0
         */
         CC_DEPRECATED_ATTRIBUTE static ssize_t ccInflateMemoryWithHint(unsigned char *in, ssize_t inLength, unsigned char **out, ssize_t outLengthHint) { return inflateMemoryWithHint(in, inLength, out, outLengthHint); }
         static ssize_t inflateMemoryWithHint(unsigned char *in, ssize_t inLength, unsigned char **out, ssize_t outLengthHint);
 
-        /** inflates a GZip file into memory
+        /**膨胀一个gzip文件到内存
         *
-        * @returns the length of the deflated buffer
+        *@returns 瘪缓冲区的长度
         *
-        * @since v0.99.5
+        *@since v0.99.5
         */
         CC_DEPRECATED_ATTRIBUTE static int ccInflateGZipFile(const char *filename, unsigned char **out) { return inflateGZipFile(filename, out); }
         static int inflateGZipFile(const char *filename, unsigned char **out);
         
-        /** test a file is a GZip format file or not
+        /**测试的文件是否是一个gzip格式的文件
         *
-        * @returns true is a GZip format file. false is not
+        *@returns true是gzip格式的文件. false则不是
         *
-        * @since v3.0
+        *@since V3.0
         */
         CC_DEPRECATED_ATTRIBUTE static bool ccIsGZipFile(const char *filename) { return isGZipFile(filename); }
         static bool isGZipFile(const char *filename);
 
-        /** test the buffer is GZip format or not
+        /**测试缓冲区是否是gzip格式
         *
-        * @returns true is GZip format. false is not
+        *@returns true是gzip格式。false 则不是
         *
-        * @since v3.0
+        *@since V3.0
         */
         CC_DEPRECATED_ATTRIBUTE static bool ccIsGZipBuffer(const unsigned char *buffer, ssize_t len) { return isGZipBuffer(buffer, len); }
         static bool isGZipBuffer(const unsigned char *buffer, ssize_t len);
 
-        /** inflates a CCZ file into memory
+        /**膨胀一个CCZ文件到内存
         *
-        * @returns the length of the deflated buffer
+        *@returns 瘪缓冲区的长度
         *
-        * @since v0.99.5
+        *@since v0.99.5
         */
         CC_DEPRECATED_ATTRIBUTE static int ccInflateCCZFile(const char *filename, unsigned char **out) { return inflateCCZFile(filename, out); }
         static int inflateCCZFile(const char *filename, unsigned char **out);
 
-        /** inflates a buffer with CCZ format into memory
+        /**一个膨胀的缓冲区CCZ格式转换到内存
         *
-        * @returns the length of the deflated buffer
+        *@returns 瘪缓冲区的长度
         *
-        * @since v3.0
+        *@since V3.0
         */
         CC_DEPRECATED_ATTRIBUTE static int ccInflateCCZBuffer(const unsigned char *buffer, ssize_t len, unsigned char **out) { return inflateCCZBuffer(buffer, len, out); }
         static int inflateCCZBuffer(const unsigned char *buffer, ssize_t len, unsigned char **out);
         
-        /** test a file is a CCZ format file or not
+        /**测试一个文件是否是一个CCZ格式的文件
         *
-        * @returns true is a CCZ format file. false is not
+        *@returns true是CCZ格式的文件。false则不是
         *
-        * @since v3.0
+        *@since V3.0
         */
         CC_DEPRECATED_ATTRIBUTE static bool ccIsCCZFile(const char *filename) { return isCCZFile(filename); }
         static bool isCCZFile(const char *filename);
 
-        /** test the buffer is CCZ format or not
+        /**测试缓冲区是否是CCZ格式
         *
-        * @returns true is CCZ format. false is not
+        *@returns true是CCZ格式。false则不是
         *
-        * @since v3.0
+        *@since V3.0
         */
         CC_DEPRECATED_ATTRIBUTE static bool ccIsCCZBuffer(const unsigned char *buffer, ssize_t len) { return isCCZBuffer(buffer, len); }
         static bool isCCZBuffer(const unsigned char *buffer, ssize_t len);
 
-        /** Sets the pvr.ccz encryption key parts separately for added
-        * security.
+        /**分别设置pvr.ccz加密关键部件增加
+        *安全性。
         *
-        * Example: If the key used to encrypt the pvr.ccz file is
-        * 0xaaaaaaaabbbbbbbbccccccccdddddddd you will call this function 4 
-        * different times, preferably from 4 different source files, as follows
+        *举例：如果该键用来pvr.ccz加密文件是
+        * 0xaaaaaaaabbbbbbbbccccccccdddddddd，你会4次不同的调用这个函数
+        *最好是从4个不同的源文件，如下
         *
-        * ZipUtils::setPvrEncryptionKeyPart(0, 0xaaaaaaaa);
-        * ZipUtils::setPvrEncryptionKeyPart(1, 0xbbbbbbbb);
-        * ZipUtils::setPvrEncryptionKeyPart(2, 0xcccccccc);
-        * ZipUtils::setPvrEncryptionKeyPart(3, 0xdddddddd);
+        * ZipUtils :: setPvrEncryptionKeyPart （0， 0xaaaaaaaa ） ;
+        * ZipUtils :: setPvrEncryptionKeyPart （1， 0xbbbbbbbb ） ;
+        * ZipUtils :: setPvrEncryptionKeyPart （2， 0xcccccccc ） ;
+        * ZipUtils :: setPvrEncryptionKeyPart （3 ， 0xdddddddd ） ;
         *
-        * Splitting the key into 4 parts and calling the function
-        * from 4 different source files increases the difficulty to
-        * reverse engineer the encryption key. Be aware that encrpytion 
-        * is *never* 100% secure and the key code can be cracked by
-        * knowledgable persons.
+        *拆分键分为4部分，并
+        *从4个不同的源文件调用函数增加了难度
+        *逆向工程的加密密钥。请注意， 加密
+        *不是"永远"100%安全的，关键代码可以被有知识的人破解
         *
-        * IMPORTANT: Be sure to call setPvrEncryptionKey or
-        * setPvrEncryptionKeyPart with all of the key parts *before* loading
-        * the spritesheet or decryption will fail and the spritesheet
-        * will fail to load.
         *
-        * @param index part of the key [0..3]
-        * @param value value of the key part
+        *重要提示：请务必调用setPvrEncryptionKey或
+        * setPvrEncryptionKeyPart与所有的关键部位,在此之前
+        *加载spritesheet或解密将失败， spritesheet
+        *将无法加载。
+        *
+        *@param index 部分key[ 0 .. 3]
+        *@param value 关键部分的参数value值
         */
         CC_DEPRECATED_ATTRIBUTE static void ccSetPvrEncryptionKeyPart(int index, unsigned int value) { setPvrEncryptionKeyPart(index, value); }
         static void setPvrEncryptionKeyPart(int index, unsigned int value);
         
-        /** Sets the pvr.ccz encryption key.
+        /**设置pvr.ccz加密密钥。
         *
-        * Example: If the key used to encrypt the pvr.ccz file is
-        * 0xaaaaaaaabbbbbbbbccccccccdddddddd you will call this function with
-        * the key split into 4 parts as follows
+        *例如：如果用来加密pvr.ccz文件是密钥是
+        *0xaaaaaaaabbbbbbbbccccccccdddddddd你会调用这个函数，
+        *密钥拆分成4个部分.如下
         *
-        * ZipUtils::setPvrEncryptionKey(0xaaaaaaaa, 0xbbbbbbbb, 0xcccccccc, 0xdddddddd);
+        * ZipUtils:: setPvrEncryptionKey（0xaaaaaaaa，0xbbbbbbbb，0xcccccccc，0xdddddddd）;
         *
-        * Note that using this function makes it easier to reverse engineer and
-        * discover the complete key because the key parts are present in one 
-        * function call.
+        *请注意，使用此功能可以更容易地进行逆向工程和
+        *发现完整的密钥，因为在关键部位都存在一次
+        *函数调用。
         *
-        * IMPORTANT: Be sure to call setPvrEncryptionKey or
-        * setPvrEncryptionKeyPart with all of the key parts *before* loading
-        * the spritesheet or decryption will fail and the spritesheet
-        * will fail to load.
+        *重要提示：请务必调用setPvrEncryptionKey或
+        * setPvrEncryptionKeyPart与所有的密钥部位,在此之前加载
+        *在spritesheet或解密将失败，spritesheet
+        *将无法加载。
         *
-        * @param keyPart1 the key value part 1.
-        * @param keyPart2 the key value part 2.
-        * @param keyPart3 the key value part 3.
-        * @param keyPart4 the key value part 4.
+        *@param keyPart1 密钥部分1。
+        *@param keyPart2 密钥部分2。
+        *@param keyPart3 密钥部分3。
+        *@param keyPart4 密钥部分4。
         */
         CC_DEPRECATED_ATTRIBUTE static void ccSetPvrEncryptionKey(unsigned int keyPart1, unsigned int keyPart2, unsigned int keyPart3, unsigned int keyPart4) { setPvrEncryptionKey(keyPart1, keyPart2, keyPart3, keyPart4); }
         static void setPvrEncryptionKey(unsigned int keyPart1, unsigned int keyPart2, unsigned int keyPart3, unsigned int keyPart4);
@@ -212,66 +212,66 @@ namespace cocos2d
         static bool s_bEncryptionKeyIsValid;
     };
 
-    // forward declaration
+    // 前向声明
     class ZipFilePrivate;
 
     /**
-    * Zip file - reader helper class.
-    *
-    * It will cache the file list of a particular zip file with positions inside an archive,
-    * so it would be much faster to read some particular files or to check their existance.
-    *
-    * @since v2.0.5
-    */
+     * Zip文件 - 读取的辅助类。
+     *
+     *它会缓存特定zip文件列表在压缩文档中的位置，
+     *所以这将是更快的读取某些特定的文件或检查他们的存在性。
+     *
+     *@since V2.0.5
+     */
     class ZipFile
     {
     public:
         /**
-        * Constructor, open zip file and store file list.
+        *构造函数，打开zip文件，存储文件列表。
         *
-        * @param zipFile Zip file name
-        * @param filter The first part of file names, which should be accessible.
-        *               For example, "assets/". Other files will be missed.
-        *
-        * @since v2.0.5
+        *@param zipFile Zip文件名
+        *@param filter 文件名的第一部分，代表可访问。
+        *例如，"assets/”。其他文件将被错过。
+        * 
+        *@since V2.0.5
         */
         ZipFile(const std::string &zipFile, const std::string &filter = std::string());
         virtual ~ZipFile();
 
         /**
-        * Regenerate accessible file list based on a new filter string.
+        *重新根据新的过滤器字符串生成可访问的文件列表。
         *
-        * @param filter New filter string (first part of files names)
-        * @return true whenever zip file is open successfully and it is possible to locate
-        *              at least the first file, false otherwise
-        *
-        * @since v2.0.5
+        *@param filter 过滤器的新字符串（文件名的第一部分）
+        *@return true时压缩文件打开成功，这时有可能找到
+        *至少在第一个文件，否则返回false
+        * 
+        *@since V2.0.5
         */
         bool setFilter(const std::string &filter);
 
         /**
-        * Check does a file exists or not in zip file
+        *检查一个文件是否不在zip文件中
         *
-        * @param fileName File to be checked on existance
-        * @return true whenever file exists, false otherwise
+        *@param fileName 待检查存在的文件
+        *@return true，文件存在，否则false
         *
-        * @since v2.0.5
+        *@since V2.0.5
         */
         bool fileExists(const std::string &fileName) const;
 
         /**
-        * Get resource file data from a zip file.
-        * @param fileName File name
-        * @param[out] pSize If the file read operation succeeds, it will be the data size, otherwise 0.
-        * @return Upon success, a pointer to the data is returned, otherwise nullptr.
-        * @warning Recall: you are responsible for calling free() on any Non-nullptr pointer returned.
-        *
-        * @since v2.0.5
+        *从一个zip文件获取资源文件中的数据。
+        *@param fileName 文件名
+        *@param[out] pSize 如果文件读取操作成功，这将是数据的大小，否则为0。
+        *@return 成功时，返回一个指向数据的指针，否则返回nullptr。
+        *@warning 召回(Recall)：在返回任何非nullptr指针时你负责调用free()。
+        * 
+        *@since V2.0.5
         */
         unsigned char *getFileData(const std::string &fileName, ssize_t *size);
 
     private:
-        /** Internal data like zip file pointer / file list array and so on */
+        /**内部数据如zip文件指针/文件列表数组等等*/
         ZipFilePrivate *_data;
     };
 } // end of namespace cocos2d
