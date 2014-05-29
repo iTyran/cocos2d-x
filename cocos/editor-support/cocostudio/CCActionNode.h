@@ -39,111 +39,111 @@ class ActionNode : public cocos2d::Ref
 public:
 
 	/**
-	* Default constructor
+	* 默认构造函数
 	*/
 	ActionNode();
 
 	/**
-	* Default destructor
+	* 默认析构函数
 	*/
 	virtual ~ActionNode();
 	/**
-	* Sets the time interval of frame.
+	* 设置帧之间的间隔时间
 	*
-	* @param fTime   the time interval of frame
+	* @param fTime   帧之间的间隔时间
 	*/
 	void setUnitTime(float fTime);
 
 	/**
-	* Gets the time interval of frame.
+	* 获取帧之间的时间间隔
 	*
-	* @return fTime   the time interval of frame
+	* @return fTime   帧之间的时间间隔
 	*/
 	float getUnitTime();
 	/**
-	* Sets tag for ActionNode
+	* 设置ActionNode的tag
 	*
-	* @param tag    tag of ActionNode
+	* @param tag    ActionNode的tag
 	*/
 	void setActionTag(int tag);
 
 	/**
-	* Gets tag for ActionNode
+	* 获取ActionNode的tag
 	*
-	* @return tag    tag of ActionNode
+	* @return tag    ActionNode的tag
 	*/
 	int getActionTag();
 
 	/**
-	* Sets node which will run a action.
+	* 设置执行action的node
 	*
-	* @param  node which will run a action
+	* @param  node 执行action的node
 	*/
 	void setObject(cocos2d::Ref* node);
 
 	/**
-	* Gets node which will run a action.
+	* 获取执行action的node
 	*
-	* @return  node which will run a action
+	* @return  执行action的node
 	*/
 	cocos2d::Ref* getObject();
 
 	/**
-	* Insets a ActionFrame to ActionNode.
+	* 插入ActionFrame到ActionNode中
 	*
-	* @param index  the index of ActionFrame
+	* @param index  ActionFrame的索引
 	*
-	* @param frame  the ActionFrame which will be inserted
+	* @param frame  插入的ActionFrame
 	*/
 	void insertFrame(int index, ActionFrame* frame);
 
 	/**
-	* Pushs back a ActionFrame to ActionNode.
+	* 插入ActionFrame到ActionNode尾部
 	*
-	* @param frame  the ActionFrame which will be added
+	* @param frame  插入的ActionFrame
 	*/
 	void addFrame(ActionFrame* frame);
 
 	/**
-	* Remove a ActionFrame from ActionNode.
+	* 从ActionNode中移除ActionFrame
 	*
-	* @param frame  the ActionFrame which will be removed
+	* @param frame  要移除的ActionFrame
 	*/
 	void deleteFrame(ActionFrame* frame );
 
 	/**
-	* Remove all ActionFrames from ActionNode.
+	* 移除ActionNode中的所有ActionFrame
 	*/
 	void clearAllFrame();
 
 	/**
-	* Gets index of first ActionFrame.
+	* 获取第一个ActionFrame的索引
 	*
-	* @return  index of first ActionFrame
+	* @return  第一个ActionFrame的索引
 	*/
 	int getFirstFrameIndex();
 
 	/**
-	* Gets index of last ActionFrame.
+	* 获取最后一个ActionFrame的索引
 	*
-	* @return  index of last ActionFrame
+	* @return  最后一个ActionFrame的索引
 	*/
 	int getLastFrameIndex();
 
 	/**
-	* Updates action states to some time.
+	* 设置action需要更新状态的时间
 	*
-	* @param fTime   the time when need to update
+	* @param fTime   需要更新状态的时间
 	*/
 	virtual bool updateActionToTimeLine(float fTime);
 
 	/**
-	* Play the action.
+	* 播放动作
 	*/
 	virtual void playAction();
 
 	/**
-	* Stop the action.
+	* 停止动作
 	*/
 	virtual void stopAction();
 
@@ -151,9 +151,9 @@ public:
 	virtual void initWithDictionary(const rapidjson::Value& dic, cocos2d::Ref* root);
 
 	/**
-	* Gets if the action is done once time.
+	* 动作是否已经执行完成
 	*
-	* @return   that if the action is done once time
+	* @return   动作是否已经执行完成
 	*/
 	virtual bool isActionDoneOnce();
 protected:

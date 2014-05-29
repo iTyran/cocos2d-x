@@ -40,15 +40,15 @@ struct RelativeData
 };
 
 /**
- *	@brief	format and manage armature configuration and armature animation
+ *	@brief	格式化和管理骨骼动画的配置和骨骼动画
  */
 class  ArmatureDataManager : public cocos2d::Ref
 {
 public:
-	/** @deprecated Use getInstance() instead */
+	/** @deprecated 用getInstance()替换 */
     CC_DEPRECATED_ATTRIBUTE static ArmatureDataManager *sharedArmatureDataManager() { return ArmatureDataManager::getInstance(); }
 
-    /** @deprecated Use destoryInstance() instead */
+    /** @deprecated 用destoryInstance() 替换*/
     CC_DEPRECATED_ATTRIBUTE static void purge() { ArmatureDataManager::destroyInstance(); };
     
     static ArmatureDataManager *getInstance();
@@ -68,94 +68,94 @@ private:
 public:
 
     /**
-     * Init ArmatureDataManager
+     * 初始化ArmatureDataManager
      */
     virtual bool init();
 
     /**
-     * Add armature data
-     * @param id The id of the armature data
+     * 添加骨骼动画数据
+     * @param id 骨骼动画数据的id
      * @param armatureData ArmatureData *
      */
     void addArmatureData(const std::string& id, ArmatureData *armatureData, const std::string& configFilePath = "");
 
     /**
-     *	@brief	get armature data
-     *	@param	id the id of the armature data you want to get
+     *	@brief	获取骨骼动画数据
+     *	@param	id 骨骼动画数据的id
      *  @return	ArmatureData *
      */
     ArmatureData *getArmatureData(const std::string& id);
 
     /**
-     *	@brief	remove armature data
-     *	@param	id the id of the armature data you want to get
+     *	@brief	移除骨骼动画数据
+     *	@param	id 骨骼动画数据的id
      */
     void removeArmatureData(const std::string& id);
 
     /**
-     *	@brief	add animation data
-     *	@param 	id the id of the animation data
+     *	@brief	添加骨骼动画数据
+     *	@param 	id 骨骼动画数据id
      *  @return AnimationData *
      */
     void addAnimationData(const std::string& id, AnimationData *animationData, const std::string& configFilePath = "");
 
     /**
-     *	@brief	get animation data from _animationDatas(Dictionary)
-     *	@param 	id the id of the animation data you want to get
+     *	@brief	从 _animationDatas(Dictionary)中获取骨骼动画数据
+     *	@param 	id 骨骼动画数据id
      *  @return AnimationData *
      */
     AnimationData *getAnimationData(const std::string& id);
 
     /**
-     *	@brief	remove animation data
-     *	@param 	id the id of the animation data
+     *	@brief	移除骨骼动画数据
+     *	@param 	id 骨骼动画数据id
      */
     void removeAnimationData(const std::string& id);
 
     /**
-     *	@brief	add texture data
-     *	@param 	id the id of the texture data
+     *	@brief	添加纹理数据id
+     *	@param 	id  纹理id
      *  @return TextureData *
      */
     void addTextureData(const std::string& id, TextureData *textureData, const std::string& configFilePath = "");
 
     /**
-     *	@brief	get texture data
-     *	@param 	id the id of the texture data you want to get
+     *	@brief	获取纹理数据
+     *	@param 	id 要获取的纹理数据id
      *  @return TextureData *
      */
     TextureData *getTextureData(const std::string& id);
 
     /**
-     *	@brief	remove texture data
-     *	@param 	id the id of the texture data you want to get
+     *	@brief	移除纹理数据
+     *	@param 	id 要获取的纹理id
      */
     void removeTextureData(const std::string& id);
 
     /**
-     *	@brief	Add ArmatureFileInfo, it is managed by ArmatureDataManager.
+     *	@brief	添加ArmatureFileInfo,由ArmatureDataManager管理
      */
     void addArmatureFileInfo(const std::string& configFilePath);
 
     /**
-     *	@brief	Add ArmatureFileInfo, it is managed by ArmatureDataManager.
-     *			It will load data in a new thread
+     *	@brief	添加ArmatureFileInfo, 由ArmatureDataManager管理
+     *			将会在新的线程中加载
      */
     void addArmatureFileInfoAsync(const std::string& configFilePath, cocos2d::Ref *target, cocos2d::SEL_SCHEDULE selector);
 
     /**
-     *	@brief	Add ArmatureFileInfo, it is managed by ArmatureDataManager.
+     *	@brief	添加ArmatureFileInfo, 由ArmatureDataManager管理
      */
     void addArmatureFileInfo(const std::string& imagePath, const std::string& plistPath, const std::string& configFilePath);
 
     /**
-     *	@brief	Add ArmatureFileInfo, it is managed by ArmatureDataManager.
-     *			It will load data in a new thread
+     *	@brief	添加ArmatureFileInfo, 由ArmatureDataManager管理
+     *			将会在新的线程中加载
      */
     void addArmatureFileInfoAsync(const std::string& imagePath, const std::string& plistPath, const std::string& configFilePath, cocos2d::Ref *target, cocos2d::SEL_SCHEDULE selector);
 
     /**
-     *	@brief	Add sprite frame to CCSpriteFrameCache, it will save display name and it's relative image name
+     *	@brief	添加精灵到CCSpriteFrameCache中, 它将保存现实的名称和对应的图片名称
      */
     void addSpriteFrameFromFile(const std::string& plistPath, const std::string& imagePath, const std::string& configFilePath = "");
 
@@ -163,7 +163,7 @@ public:
 
 
     /**
-     *	@brief	Juge whether or not need auto load sprite file
+     *	@brief	判断是否需要自动加载精灵的图片
      */
     bool isAutoLoadSpriteFile();
 
@@ -177,21 +177,21 @@ protected:
     RelativeData *getRelativeData(const std::string& configFilePath);
 private:
     /**
-     *	@brief	save amature datas
+     *	@brief	保存骨骼数据
      *  @key	std::string
      *  @value	ArmatureData *
      */
     cocos2d::Map<std::string, ArmatureData*> _armarureDatas;
 
     /**
-     *	@brief	save animation datas
+     *	@brief	保存骨骼动画数据
      *  @key	std::string
      *  @value	AnimationData *
      */
     cocos2d::Map<std::string, AnimationData*> _animationDatas;
 
     /**
-     *	@brief	save texture datas
+     *	@brief	保存纹理数据
      *  @key	std::string
      *  @value	TextureData *
      */
