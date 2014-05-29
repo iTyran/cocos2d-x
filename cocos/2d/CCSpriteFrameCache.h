@@ -31,7 +31,7 @@ THE SOFTWARE.
 #define __SPRITE_CCSPRITE_FRAME_CACHE_H__
 
 /*
- * To create sprite frames and texture atlas, use this tool:
+ * 创建精灵帧和纹理图集，用这个工具：
  * http://zwoptex.zwopple.com/
  */
 
@@ -60,16 +60,16 @@ class Sprite;
 class CC_DLL SpriteFrameCache : public Ref
 {
 public:
-    /** Returns the shared instance of the Sprite Frame cache */
+    /** 返回精灵帧缓存的共享实例*/
     static SpriteFrameCache* getInstance(void);
 
-    /** @deprecated Use getInstance() instead */
+    /** @deprecated 用getInstance()来代替 */
     CC_DEPRECATED_ATTRIBUTE static SpriteFrameCache* sharedSpriteFrameCache() { return SpriteFrameCache::getInstance(); }
 
-    /** Destroys the cache. It releases all the Sprite Frames and the retained instance. */
+    /** 清空缓存。释放所有的精灵帧并且保留实例。 */
     static void destroyInstance();
 
-    /** @deprecated Use destroyInstance() instead  */
+    /** @deprecated 用destroyInstance()来代替*/
     CC_DEPRECATED_ATTRIBUTE static void purgeSharedSpriteFrameCache() { return SpriteFrameCache::destroyInstance(); }
 
 protected:
@@ -85,9 +85,11 @@ public:
     bool init(void);
 
 public:
-    /** Adds multiple Sprite Frames from a plist file.
-     * A texture will be loaded automatically. The texture name will composed by replacing the .plist suffix with .png
-     * If you want to use another texture, you should use the addSpriteFramesWithFile(const std::string& plist, const std::string& textureFileName) method.
+    /** 
+      从一个.plist文件添加多个精灵帧。
+     * 一个纹理将被自动加载。纹理名称将把.plist后缀名替换为.png来组成。
+     * 如果你想要用另一个纹理，你应该用
+addSpriteFramesWithFile(const std::string& plist, const std::string& textureFileName) 方法.
      * @js addSpriteFrames
      * @lua addSpriteFrames
      */
