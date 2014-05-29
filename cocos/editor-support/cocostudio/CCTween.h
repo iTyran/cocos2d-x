@@ -43,8 +43,8 @@ class  Tween : public ProcessBase
 {
 public:
     /**
-     * Create with a Bone
-     * @param bone the Bone Tween will bind to
+     * 用骨骼创建
+     * @param bone 骨骼
      */
     static Tween *create(Bone *bone);
 public:
@@ -52,32 +52,32 @@ public:
     virtual ~Tween(void);
 
     /**
-     * Init with a Bone
-     * @param bone the Bone Tween will bind to
+     * 用骨骼初始化
+     * @param bone 骨骼
      */
     virtual bool init(Bone *bone);
 
     using ProcessBase::play;
     /**
-     * Start the Process
+     * 启动进程
      *
-     * @param  movementBoneData  the MovementBoneData include all FrameData
-     * @param  durationTo the number of frames changing to this animation needs.
-     * @param  durationTween  the number of frames this animation actual last.
+     * @param  movementBoneData 包含所有FrameData
+     * @param  durationTo 动画需要的帧数
+     * @param  durationTween  真正持续的帧数
      *
-     * @param  loop   whether the animation is loop
+     * @param  loop   是否循环动画
      *
-     *         loop < 0 : use the value from MovementData get from Action Editor
-     *         loop = 0 : this animation is not loop
-     *         loop > 0 : this animation is loop
+     *         loop < 0 : 从 MovementData 中获取
+     *         loop = 0 : 不循环
+     *         loop > 0 : 循环次数
      *
-     * @param  tweenEasing    tween easing is used for calculate easing effect
+     * @param  tweenEasing  用来计算消失效果
      *
-     *         TWEEN_EASING_MAX : use the value from MovementData get from Action Editor
-     *         -1 : fade out
-     *         0  : line
-     *         1  : fade in
-     *         2  : fade in and out
+     *         TWEEN_EASING_MAX : 从 MovementData 中获取
+     *         -1 : 淡出
+     *         0  : 线性
+     *         1  : 淡入
+     *         2  : 淡入淡出
      *
      */
     virtual void play(MovementBoneData *movementBoneData, int durationTo, int durationTween,  int loop, int tweenEasing);
@@ -93,58 +93,58 @@ public:
 protected:
 
     /**
-     * Update(float dt) will call this handler, you can handle your logic here
+     * 触发Update的调用
      */
     virtual void updateHandler();
 
     /**
-     * Calculate which frame arrived, and if current frame have event, then call the event listener
+     * 计算到达的帧，有事件就派发
      */
     virtual float updateFrameData(float currentPercent);
 
     /**
-     * Calculate the between value of _from and _to, and give it to between frame data
+     * 计算from和to直接的值
      */
     virtual void setBetween(FrameData *from, FrameData *to, bool limit = true);
 
     /**
-     * According to the percent to calculate current FrameData with tween effect
+     * 根据百分比计算tween效果
      */
     virtual FrameData *tweenNodeTo(float percent, FrameData *node = nullptr);
 
     /**
-     * According to the percent to calculate current color with tween effect
+     * 根据百分比计算颜色
      */
     virtual void tweenColorTo(float percent, FrameData *node);
 
     /**
-     * Update display index and process the key frame event when arrived a key frame
+     * 更新关键帧
      */
     virtual void arriveKeyFrame(FrameData *keyFrameData);
 protected:
-    //! A weak reference to the current MovementBoneData. The data is in the data pool
+    //! MovementBoneData的弱引用
     MovementBoneData *_movementBoneData;
 
-    FrameData *_tweenData;          //! The computational tween frame data, //! A weak reference to the Bone's tweenData
-    FrameData *_from;               //! From frame data, used for calculate between value
-    FrameData *_to;                 //! To frame data, used for calculate between value
-    FrameData *_between;            //! Between frame data, used for calculate current FrameData(m_pNode) value
+    FrameData *_tweenData;          //! 弱引用 tweenData
+    FrameData *_from;               //! 用来计算中间值
+    FrameData *_to;                 //! 用来计算中间值
+    FrameData *_between;            //! 中间值
 
 
-    Bone *_bone;                    //! A weak reference to the Bone
+    Bone *_bone;                    //! 弱引用 Bone
 
-    TweenType _frameTweenEasing;  //! Dedermine which tween effect current frame use
+    TweenType _frameTweenEasing;  //! 使用哪个特效
 
-    int _betweenDuration;           //! Current key frame will last _betweenDuration frames
+    int _betweenDuration;           //! 当前关键帧持续时间
     int _totalDuration;
 
 
-    int _fromIndex;				    //! The current frame index in FrameList of MovementBoneData, it's different from m_iFrameIndex
-    int _toIndex;                   //! The next frame index in FrameList of MovementBoneData, it's different from m_iFrameIndex
+    int _fromIndex;				    //! 当前帧的index值
+    int _toIndex;                   //! 当前帧的index值
 
     ArmatureAnimation *_animation;
 
-    bool _passLastFrame;            //! If current frame index is more than the last frame's index
+    bool _passLastFrame;            //! 是否当前帧的index大于上一帧的index
 };
 
 }
