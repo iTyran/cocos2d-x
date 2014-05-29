@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
 Copyright (c) 2010 ForzeField Studios S.L. http://forzefield.com
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2013-2014 Chukong Technologies
@@ -65,14 +65,14 @@ public:
     const_reverse_iterator crbegin() const { return _data.crbegin(); }
     const_reverse_iterator crend() const { return _data.crend(); }
     
-    /** Constructor */
+    /** 构造函数 */
     Vector<T>()
     : _data()
     {
         static_assert(std::is_convertible<T, Ref*>::value, "Invalid Type for cocos2d::Vector<T>!");
     }
     
-    /** Constructor with a capacity */
+    /** 带参数容量的构造函数 */
     explicit Vector<T>(ssize_t capacity)
     : _data()
     {
@@ -81,14 +81,14 @@ public:
         reserve(capacity);
     }
 
-    /** Destructor */
+    /** 析构函数 */
     ~Vector<T>()
     {
         CCLOGINFO("In the destructor of Vector.");
         clear();
     }
 
-    /** Copy constructor */
+    /** 拷贝构造函数 */
     Vector<T>(const Vector<T>& other)
     {
         static_assert(std::is_convertible<T, Ref*>::value, "Invalid Type for cocos2d::Vector<T>!");
@@ -97,7 +97,7 @@ public:
         addRefForAllObjects();
     }
     
-    /** Move constructor */
+    /** 转移构造函数 */
     Vector<T>(Vector<T>&& other)
     {
         static_assert(std::is_convertible<T, Ref*>::value, "Invalid Type for cocos2d::Vector<T>!");
@@ -105,7 +105,7 @@ public:
         _data = std::move(other._data);
     }
     
-    /** Copy assignment operator */
+    /** 拷贝赋值操作符 */
     Vector<T>& operator=(const Vector<T>& other)
     {
         if (this != &other) {
@@ -117,7 +117,7 @@ public:
         return *this;
     }
     
-    /** Move assignment operator */
+    /** 转移赋值操作符 */
     Vector<T>& operator=(Vector<T>&& other)
     {
         if (this != &other) {
@@ -139,50 +139,50 @@ public:
 //        return _data[index];
 //    }
     
-    /** @brief Request a change in capacity 
-     *  @param capacity Minimum capacity for the vector.
-     *         If n is greater than the current vector capacity, 
-     *         the function causes the container to reallocate its storage increasing its capacity to n (or greater).
+	/** @brief 请求改变向量(vector)的容量 
+     *  @param capacity 向量(vector)的最小容量.
+     *         如果n比当前向量(vector)的容量大, 
+     *         这个函数会重新分配向量(vector)的存储空间，将容量提升到n(或者更大).
      */
     void reserve(ssize_t n)
     {
         _data.reserve(n);
     }
     
-    /** @brief Returns the size of the storage space currently allocated for the vector, expressed in terms of elements.
-     *  @note This capacity is not necessarily equal to the vector size. 
-     *        It can be equal or greater, with the extra space allowing to accommodate for growth without the need to reallocate on each insertion.
-     *  @return The size of the currently allocated storage capacity in the vector, measured in terms of the number elements it can hold.
+	 /** @brief 返回当前分配给容器的存储空间的大小，按照容器中的元素个数来表示.
+     *  @note 这个容量没必要和向量(vector)的size相等. 
+     *        它可以相等或者更大。如果更大的话，就会有额外的空间来适应其增长，这样就不必要在每次插入操作时都重新分配空间
+     *  @return 当前分配给向量(vector)的存储容量的大小，这个大小是按照它能够存放的元素的个数计算的
      */
     ssize_t capacity() const
     {
         return _data.capacity();
     }
     
-    /** @brief Returns the number of elements in the vector.
-     *  @note This is the number of actual objects held in the vector, which is not necessarily equal to its storage capacity.
-     *  @return The number of elements in the container.
+	 /** @brief 返回向量(vector)中元素的数目.
+     *  @note 这是向量(vector)中存储的实际对象的数目, 不必要和它的存储容量相等.
+     *  @return 容器中元素的实际数目.
      */
     ssize_t size() const
     {
         return  _data.size();
     }
-    
-    /** @brief Returns whether the vector is empty (i.e. whether its size is 0).
-     *  @note This function does not modify the container in any way. To clear the content of a vector, see Vector<T>::clear.
+
+	 /** @brief 返回向量(vector)是否是空的 (比如，他的size是否是0).
+     *  @note 这个函数不会以任何方式改变容器。如果想清除向量(vector)的内容，请参考 Vector<T>::clear
      */
     bool empty() const
     {
         return _data.empty();
     }
     
-    /** Returns the maximum number of elements that the vector can hold. */
+    /** 返回向量(vector)可以容纳的最大元素数目. */
     ssize_t max_size() const
     {
         return _data.max_size();
     }
     
-    /** Returns index of a certain object, return UINT_MAX if doesn't contain the object */
+    /** 返回特定对象的索引, 如果向量(vector)中不包含此对象，则返回UINT_MAX */
     ssize_t getIndex(T object) const
     {
         auto iter = std::find(_data.begin(), _data.end(), object);
@@ -192,9 +192,9 @@ public:
         return -1;
     }
 
-    /** @brief Find the object in the vector.
-     *  @return Returns an iterator to the first element in the range [first,last) that compares equal to val. 
-     *          If no such element is found, the function returns last.
+	 /** @brief 在向量(vector)中查找对象.
+     *  @return 返回一个指向区间[first, last)中的第一个与要查找的值相等元素的迭代器. 
+     *          如果没有找到这个元素，函数返回迭代器last.
      */
     const_iterator find(T object) const
     {
@@ -206,26 +206,26 @@ public:
         return std::find(_data.begin(), _data.end(), object);
     }
     
-    /** Returns the element at position 'index' in the vector. */
+    /** 返回向量(vector)中位置为'index'的元素 */
     T at(ssize_t index) const
     {
         CCASSERT( index >= 0 && index < size(), "index out of range in getObjectAtIndex()");
         return _data[index];
     }
-
-    /** Returns the first element in the vector. */
+	
+    /** 返回向量(vector)中的第一个元素. */
     T front() const
     {
         return _data.front();
     }
     
-    /** Returns the last element of the vector. */
+    /** 返回向量(vector)中的最后一个元素. */
     T back() const
     {
         return _data.back();
     }
 
-    /** Returns a random element of the vector. */
+    /** 返回向量(vector)中的一个随机元素. */
     T getRandomObject() const
     {
         if (!_data.empty())
@@ -236,13 +236,13 @@ public:
         return nullptr;
     }
 
-    /** Returns a Boolean value that indicates whether object is present in vector. */
+    /** 返回一个Boolean值以指示对象object是否在向量(vector)中. */
     bool contains(T object) const
     {
         return( std::find(_data.begin(), _data.end(), object) != _data.end() );
     }
 
-    /** Returns true if the two vectors are equal */
+    /** 如果两个向量(vector)相等，则返回true */
     bool equals(const Vector<T> &other)
     {
         ssize_t s = this->size();
@@ -261,10 +261,10 @@ public:
 
     // Adds objects
     
-    /** @brief Adds a new element at the end of the vector, after its current last element.
-     *  @note This effectively increases the container size by one,
-     *        which causes an automatic reallocation of the allocated storage space 
-     *        if -and only if- the new vector size surpasses the current vector capacity.
+	/** @brief 在向量(vector)的末尾添加一个新的元素，位于当前最后一个元素之后
+     *  @note 这个函数会将容器的size增加1,
+     *        当且仅当新的向量(vector)的size超过当前的容量时
+     *        此函数会引起自动为已分配的存储空间重新分配.
      */
     void pushBack(T object)
     {
@@ -273,7 +273,7 @@ public:
         object->retain();
     }
     
-    /** Push all elements of an existing vector to the end of current vector. */
+    /** 将一个已存在的向量(vector)的所有元素加到当前向量(vector)的末尾. */
     void pushBack(const Vector<T>& other)
     {
         for(const auto &obj : other) {
@@ -281,12 +281,12 @@ public:
             obj->retain();
         }
     }
-
-    /** @brief Insert a certain object at a certain index 
-     *  @note The vector is extended by inserting new elements before the element at the specified 'index',
-     *        effectively increasing the container size by the number of elements inserted.
-     *        This causes an automatic reallocation of the allocated storage space 
-     *        if -and only if- the new vector size surpasses the current vector capacity.
+	
+	/** @brief 在特定索引位置插入一个特定元素 
+     *  @note 通过在指定索引'index'前插入一个新元素,向量(vector)会被扩展
+     *        这会使得容器的size变大,增加的数目等于插入元素的数目.
+     *        当且仅当新的向量(vector)的size超过当前的容量时 
+     *        此函数会引起自动为已分配的存储空间重新分配..
      */
     void insert(ssize_t index, T object)
     {
@@ -298,8 +298,8 @@ public:
     
     // Removes Objects
 
-    /** Removes the last element in the vector, 
-     *  effectively reducing the container size by one, decrease the referece count of the deleted object.
+	 /** 删除向量(vector)最后一个元素, 
+     *  有效地将容器的size减小1. 同时减小被删除对象的引用计数
      */
     void popBack()
     {
@@ -309,10 +309,10 @@ public:
         last->release();
     }
     
-    /** @brief Remove a certain object in Vector.
-     *  @param object The object to be removed.
-     *  @param removeAll Whether to remove all elements with the same value.
-     *                   If its value is 'false', it will just erase the first occurrence.
+	/** @brief 删除向量(vector)中的特定对象 .
+     *  @param object 要被删除的对象.
+     *  @param removeAll 是否要删除与指定对象的值相同的所有元素
+     *                   如果值为'false', 函数会删除查找到的第一个元素.
      */
     void eraseObject(T object, bool removeAll = false)
     {
@@ -343,11 +343,11 @@ public:
             }
         }
     }
-
-    /** @brief Removes from the vector with an iterator. 
-     *  @param position Iterator pointing to a single element to be removed from the vector.
-     *  @return An iterator pointing to the new location of the element that followed the last element erased by the function call.
-     *          This is the container end if the operation erased the last element in the sequence.
+	
+	/** @brief 通过迭代器在向量(vector)中删除对象. 
+     *  @param position 指向向量(vector)中要被删除的单个元素的迭代器.
+     *  @return 一个指向新位置的元素的迭代器，这个元素紧跟在由此函数调用删除的对象之后
+     *          如果这个操作删除的是序列最后一个元素，那么返回的是指向容器最后一个元素之后的迭代器.
      */
     iterator erase(iterator position)
     {
@@ -356,11 +356,11 @@ public:
         return _data.erase(position);
     }
     
-    /** @brief Removes from the vector with a range of elements (  [first, last)  ).
-     *  @param first The beginning of the range
-     *  @param last The end of the range, the 'last' will not used, it's only for indicating the end of range.
-     *  @return An iterator pointing to the new location of the element that followed the last element erased by the function call.
-     *          This is the container end if the operation erased the last element in the sequence.
+	/** @brief 删除向量(vector)中在一个区间内的元素 (  [first, last)  ).
+     *  @param first 区间的起始
+     *  @param last 区间的结束, 'last' 不会被使用, 只是用来指示区间的末尾.
+     *  @return 一个指向新位置的元素的迭代器，这个元素紧跟在由此函数调用删除的对象之后.
+     *          如果这个操作删除的是序列最后一个元素，那么返回的是指向容器最后一个元素之后的迭代器.
      */
     iterator erase(iterator first, iterator last)
     {
@@ -372,10 +372,10 @@ public:
         return _data.erase(first, last);
     }
     
-    /** @brief Removes from the vector with an index.
-     *  @param index The index of the element to be removed from the vector.
-     *  @return An iterator pointing to the new location of the element that followed the last element erased by the function call.
-     *          This is the container end if the operation erased the last element in the sequence.
+    /** @brief 删除向量(vector)中给定索引的元素.
+     *  @param index 向量(vector)中要被删除的元素的索引.
+     *  @return  一个指向新位置的元素的迭代器，这个元素紧跟在由此函数调用删除的对象之后.
+     *          如果这个操作删除的是序列最后一个元素，那么返回的是指向容器最后一个元素之后的迭代器.
      */
     iterator erase(ssize_t index)
     {
@@ -385,8 +385,8 @@ public:
         return _data.erase(it);
     }
 
-    /** @brief Removes all elements from the vector (which are destroyed), leaving the container with a size of 0.
-     *  @note All the elements in the vector will be released (referece count will be decreased).
+	/** @brief 删除向量(vector)中的所有元素 (这些元素被销毁), 只留下一个size为0的容器.
+     *  @note 在向量(vector)中的所有元素都会被释放 (减小引用计数).
      */
     void clear()
     {
@@ -398,7 +398,7 @@ public:
 
     // Rearranging Content
 
-    /** Swap two elements */
+    /** 交换两个元素 */
     void swap(T object1, T object2)
     {
         ssize_t idx1 = getIndex(object1);
@@ -408,8 +408,8 @@ public:
 
         std::swap( _data[idx1], _data[idx2] );
     }
-    
-    /** Swap two elements with certain indexes */
+
+    /** 交换两个指定索引处的元素 */
     void swap(ssize_t index1, ssize_t index2)
     {
         CCASSERT(index1 >=0 && index1 < size() && index2 >= 0 && index2 < size(), "Invalid indices");
@@ -417,7 +417,7 @@ public:
         std::swap( _data[index1], _data[index2] );
     }
 
-    /** Replace object at index with another object. */
+    /** 将指定索引处的对象替换为另一个对象. */
     void replace(ssize_t index, T object)
     {
         CCASSERT(index >= 0 && index < size(), "Invalid index!");
@@ -428,13 +428,13 @@ public:
         object->retain();
     }
 
-    /** reverses the vector */
+    /** 将向量(vector)逆序 */
     void reverse()
     {
         std::reverse( std::begin(_data), std::end(_data) );
     }
     
-    /** Shrinks the vector so the memory footprint corresponds with the number of items */
+    /** 收缩向量(vector)使得分配的内存大小与元素的数目保持一致 */
     void shrinkToFit()
     {
         _data.shrink_to_fit();
@@ -442,7 +442,7 @@ public:
     
 protected:
     
-    /** Retains all the objects in the vector */
+    /** 对向量(vector)中的所有对象增加引用 */
     void addRefForAllObjects()
     {
         for(const auto &obj : _data) {
