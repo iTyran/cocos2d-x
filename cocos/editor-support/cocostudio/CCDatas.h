@@ -64,7 +64,7 @@ public: \
 namespace cocostudio {
 
 /**
- * The base node include a lot of attributes.
+ * 包含大量属性的基础节点
  * @js NA
  * @lua NA
  */
@@ -84,13 +84,13 @@ public:
     ~BaseData(void);
 
     /*
-    * Copy data from node
-    * @param  node A BaseData to copy data
+    * 从node中拷贝数据
+    * @param  node 要拷贝的对象
     */
     virtual void copy(const BaseData *node);
 
     /*
-    * Calculate two BaseData's between value(to - from) and set to self
+    * 计算两个BaseData之间的值，并赋给自己
     *
     * @param  from   from BaseData
     * @param  to     to BaseData
@@ -100,36 +100,36 @@ public:
     virtual void setColor(const cocos2d::Color4B &color);
     virtual cocos2d::Color4B getColor();
 public:
-    float x;					//! position x attribute
-    float y;					//! position y attribute
-    int zOrder;			//! zorder attribute, used to order the Bone's depth order
+    float x;					//! x坐标属性
+    float y;					//! y坐标属性
+    int zOrder;			//! zorder属性，用于定义节点的Z顺序
 
     /**
-    * x y skewX skewY scaleX scaleY used to calculate transform matrix
-    * skewX, skewY can have rotation effect
-    * To get more matrix information, you can have a look at this pape : http://www.senocular.com/flash/tutorials/transformmatrix/
+    * x y skewX skewY scaleX scaleY 用来定义移动矩阵
+    * skewX, skewY 影响旋转因子
+    * 想要获取更多的矩阵信息, 参考 : http://www.senocular.com/flash/tutorials/transformmatrix/
     */
     float skewX;
     float skewY;
     float scaleX;
     float scaleY;
 
-    float tweenRotate;       //! SkewX, SkewY, and TweenRotate effect the rotation
+    float tweenRotate;       //! SkewX, SkewY, TweenRotate 影响旋转
 
-    bool isUseColorInfo;    //! Whether or not this frame have the color changed Info
+    bool isUseColorInfo;    //! 该帧是否具有颜色改变信息
     int a, r, g, b;
 
 };
 
 
 /**
-* DisplayType distinguish which type your display is.
+* DisplayType 使用的现实类型
 */
 enum DisplayType
 {
-    CS_DISPLAY_SPRITE,                //! display is a single Sprite
-    CS_DISPLAY_ARMATURE,         //! display is a Armature
-    CS_DISPLAY_PARTICLE,            //! display is a CCParticle.
+    CS_DISPLAY_SPRITE,                //! 显示为单独的精灵
+    CS_DISPLAY_ARMATURE,         //! 显示为骨骼动画
+    CS_DISPLAY_PARTICLE,            //! 现实为粒子效果
 
     CS_DISPLAY_MAX
 };
@@ -156,7 +156,7 @@ public:
 
     virtual void copy(DisplayData *displayData);
 
-    DisplayType displayType;	//! mark which type your display is
+    DisplayType displayType;	//! 标记使用的显示类型
     std::string displayName;
 };
 
@@ -228,9 +228,9 @@ public:
 
 
 /**
-* BoneData used to init a Bone.
-* BoneData keeps a DisplayData list, a Bone can have many display to change.
-* The display information saved in the DisplayData
+* BoneData用于初始化骨骼
+* BoneData用于保存一系列的显示数据，一个骨骼可以包含很多可以改变的现实信息
+* 显示信息保存在DsiplayData中
 * @js NA
 * @lua NA
 */
@@ -254,17 +254,18 @@ public:
     void addDisplayData(DisplayData *displayData);
     DisplayData *getDisplayData(int index);
 public:
-    std::string name;                //! the bone's name
-    std::string parentName;     //! the bone parent's name
-    cocos2d::Vector<DisplayData*> displayDataList;    //! save DisplayData informations for the Bone
+    std::string name;                //! 骨骼名称
+    std::string parentName;     //! 骨骼父节点名称
+    cocos2d::Vector<DisplayData*> displayDataList;    //! 保存DisplayData
     cocos2d::AffineTransform boneDataTransform;
 };
 
 
 /**
-* ArmatureData saved the Armature name and Bonedata needed for the CCBones in this Armature
-* When we create a Armature, we need to get each Bone's BoneData as it's init information.
-* So we can get a BoneData from the Dictionary saved in the ArmatureData.
+
+* ArmatureData保存骨骼动画需要的骨骼名称和骨骼数据
+* 创建一个骨骼，我们需要获取每个骨骼的BoneData
+* 我们可以从ArmatureData的字典中获取BoneData
 * @js NA
 * @lua NA
 */
@@ -332,17 +333,17 @@ public:
     virtual void copy(const BaseData *baseData);
 public:
     int frameID;
-    int duration;                //! The frame will last duration frames
+    int duration;                //! 该帧持续的时间
 
-    cocos2d::tweenfunc::TweenType tweenEasing;     //! Every frame's tween easing effect
+    cocos2d::tweenfunc::TweenType tweenEasing;     //! 每一帧之间的过渡动画类型
     int easingParamNumber;
     float *easingParams;
 
-    bool isTween;                //! Whether it's a tween key frame
+    bool isTween;                //! 是否是过渡关键帧
 
     /**
-    * The current display index when change to this frame.
-    * If value is -1, then display will not be shown.
+    * 改变到当前帧时当前的显示索引
+    * 如果值为-1，显示将不可见
     */
     int displayIndex;
 
@@ -350,7 +351,7 @@ public:
 
     std::string strEvent;
     /**
-    * strMovement, strEvent, strSound, strSoundEffect do not support yet
+    * strMovement, strEvent, strSound, strSoundEffect 目前尚未支持
     */
     std::string strMovement;
     std::string strSound;
@@ -381,10 +382,10 @@ public:
     void addFrameData(FrameData *frameData);
     FrameData *getFrameData(int index);
 public:
-    float delay;             //! movement delay percent, this value can produce a delay effect
-    float scale;             //! scale this movement
-    float duration;        //! this Bone in this movement will last m_iDuration frames
-    std::string name;    //! bone name
+    float delay;             //! movement 延迟比例, 该值会造成延迟效果
+    float scale;             //! 缩放当前movement
+    float duration;        //! 当前骨骼的movement将持续m_iDuration帧
+    std::string name;    //! 骨骼名称
 
     cocos2d::Vector<FrameData*> frameList;
 };
@@ -412,35 +413,34 @@ public:
     MovementBoneData *getMovementBoneData(const std::string& boneName);
 public:
     std::string name;
-    int duration;        //! the frames this movement will last
-    float scale;		  //! scale this movement
+    int duration;        //! 该movement持续的帧数
+    float scale;		  //! 缩放movement
 
     /**
     * Change to this movement will last durationTo frames. Use this effect can avoid too suddenly changing.
+    * 改变到当前movement将会持续durationTo帧。使用这个效果能避免突然的改变。
     *
-    * Example : current movement is "stand", we want to change to "run", then we fill durationTo frames before
-    * change to "run" instead of changing to "run" directly.
+    * Example : 当前movement状态为"stand",我们想要改变成"run"，我们将会在改变为"run"之前填充durationTo的帧
     */
     int durationTo;
 
     /*
-    * This is different from duration, durationTween contain tween effect.
-    * duration is the raw time that the animation will last, it's the same with the time you edit in the Action Editor.
-    * durationTween is the actual time you want this animation last.
-    * Example : If we edit 10 frames in the flash, then duration is 10. When we set durationTween to 50, the movement will last 50 frames, the extra 40 frames will auto filled with tween effect
+    * 和duration不同，durationTween包含过渡效果
+    * duration是动画持续的时间信息，同ActionEditor中设置的信息相同
+    * durationTween是真实的动画持续的时间
     */
     int durationTween;
 
-    bool loop;           //! whether the movement was looped
+    bool loop;           //! movement是否循环播放
 
     /**
-    * Which tween easing effect the movement use
-    * TWEEN_EASING_MAX : use the value from MovementData get from flash design panel
+    * movement使用哪种过渡效果
+    * TWEEN_EASING_MAX : 使用MovementData中的值
     */
     cocos2d::tweenfunc::TweenType tweenEasing;
 
     /**
-    * @brief	save movment bone data
+    * @brief	保存movement骨骼的值
     * @key	const std::string& 
     * @value	MovementBoneData *
     */
@@ -450,7 +450,8 @@ public:
 
 /**
 *  AnimationData include all movement infomation for the Armature
-*  The struct is AnimationData -> MovementData -> MovementBoneData -> FrameData
+*  动画数据包含骨骼动画中所有的movment信息
+*  结构信息： AnimationData -> MovementData -> MovementBoneData -> FrameData
 *                                              -> MovementFrameData
 *  @js NA
 *  @lua NA
@@ -482,7 +483,7 @@ public:
 
 
 /*
-* ContourData include a contour vertex information
+* ContourData 包括轮廓的顶点信息
 * @js NA
 * @lua NA
 */
@@ -504,14 +505,14 @@ public:
     virtual bool init();
     virtual void addVertex(cocos2d::Vec2 &vertex);
 public:
-    std::vector<cocos2d::Vec2> vertexList;	//! Save contour vertex info, vertex saved in a Vec2
+    std::vector<cocos2d::Vec2> vertexList;	//! 保存轮廓的顶点信息，顶点信息保存在Vec2中
 };
 
 
 
 
 /*
-* TextureData include a texture's information
+* TextureData 包含纹理的数据
 * @js NA
 * @lua NA
 */
@@ -536,13 +537,13 @@ public:
     ContourData *getContourData(int index);
 public:
 
-    float height;		//! The texture's width, height
+    float height;		//! 纹理的高度和宽度
     float width;
 
-    float pivotX;		//! The texture's anchor point
+    float pivotX;		//! 纹理的锚点
     float pivotY;
 
-    std::string name;	//! The texture's name
+    std::string name;	//! 纹理的名称
 
     cocos2d::Vector<ContourData*> contourDataList;
 };
