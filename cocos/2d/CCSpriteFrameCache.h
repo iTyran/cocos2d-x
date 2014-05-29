@@ -95,14 +95,14 @@ addSpriteFramesWithFile(const std::string& plist, const std::string& textureFile
      */
     void addSpriteFramesWithFile(const std::string& plist);
 
-    /** Adds multiple Sprite Frames from a plist file. The texture will be associated with the created sprite frames.
+    /** 通过一个.plist文件添加多个精灵帧。纹理将与被创建的精灵帧结合。
      @since v0.99.5
      * @js addSpriteFrames
      * @lua addSpriteFrames
      */
     void addSpriteFramesWithFile(const std::string& plist, const std::string& textureFileName);
 
-    /** Adds multiple Sprite Frames from a plist file. The texture will be associated with the created sprite frames. 
+    /** 通过一个.plist文件添加多个精灵帧。纹理将与被创建的精灵帧结合。
      * @js addSpriteFrames
      * @lua addSpriteFrames
      */
@@ -143,23 +143,23 @@ addSpriteFramesWithFile(const std::string& plist, const std::string& textureFile
      */
     void removeSpriteFramesFromTexture(Texture2D* texture);
 
-    /** Returns an Sprite Frame that was previously added.
-     If the name is not found it will return nil.
-     You should retain the returned copy if you are going to use it.
+    /** 返回之前所添加的精灵帧。
+        如果找不到名称则返回空值。
+        如果你想要使用它，你应该保留返回的备份。
      * @js getSpriteFrame
      * @lua getSpriteFrame
      */
     SpriteFrame* getSpriteFrameByName(const std::string& name);
 
-    /** @deprecated use getSpriteFrameByName() instead */
+    /** @deprecated 用getSpriteFrameByName() 来代替。*/
     CC_DEPRECATED_ATTRIBUTE SpriteFrame* spriteFrameByName(const std::string&name) { return getSpriteFrameByName(name); }
 
 private:
-    /*Adds multiple Sprite Frames with a dictionary. The texture will be associated with the created sprite frames.
+    /**通过一个字典添加多重精灵帧。纹理将和被创建的精灵帧结合。
      */
     void addSpriteFramesWithDictionary(ValueMap& dictionary, Texture2D *texture);
 
-    /** Removes multiple Sprite Frames from Dictionary.
+    /**从Dictionary移除多重精灵帧。
     * @since v0.99.5
     */
     void removeSpriteFramesFromDictionary(ValueMap& dictionary);
