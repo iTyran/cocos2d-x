@@ -34,7 +34,7 @@ namespace cocos2d {
  函数ccNextPOT基于与Texture2D.m相同的许可协议发布
 */
 
-/**  返回下个2的幂 returns the Next Power of Two value.
+/**  返回下个2的幂
 
 Examples:
 - 如果"value"是15，返回16 .
