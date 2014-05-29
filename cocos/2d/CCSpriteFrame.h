@@ -70,7 +70,7 @@ public:
     static SpriteFrame* createWithTexture(Texture2D* pobTexture, const Rect& rect);
 
     /** 通过纹理，矩形，旋转，偏移量和原始大小（以像素为单位）创建一个精灵帧。
-原始大小是帧在被修剪前的大小（以点为单位）。
+        原始大小是帧在被修剪前的大小（以点为单位）。
      */
     static SpriteFrame* createWithTexture(Texture2D* pobTexture, const Rect& rect, bool rotated, const Vec2& offset, const Size& originalSize);
     /**
@@ -80,22 +80,22 @@ public:
     virtual ~SpriteFrame(void);
 
     /** 通过纹理，矩形（以点为单位）初始化一个精灵帧。
-         假设帧没有被修剪。
+        假设帧没有被修剪。
      */
     bool initWithTexture(Texture2D* pobTexture, const Rect& rect);
 
     /**通过纹理文件名，矩形(以点为单位)初始化一个精灵帧。
-        假设帧没有被修剪。
+       假设帧没有被修剪。
      */
     bool initWithTextureFilename(const std::string& filename, const Rect& rect);
 
     /**通过纹理，矩形，旋转，偏移量和原始大小（以像素为单位）初始化一个精灵帧。
-     原始大小是帧在被修剪前的大小（以点为单位）。
+       原始大小是帧在被修剪前的大小（以点为单位）。
     */
     bool initWithTexture(Texture2D* pobTexture, const Rect& rect, bool rotated, const Vec2& offset, const Size& originalSize);
 
     /** 通过纹理，矩形，旋转，偏移量和原始大小（以像素为单位）来初始化一个精灵帧。
-     原始大小是帧在被修剪前的大小（以像素为单位）。
+        原始大小是帧在被修剪前的大小（以像素为单位）。
      @since v1.1
      */
     bool initWithTextureFilename(const std::string& filename, const Rect& rect, bool rotated, const Vec2& offset, const Size& originalSize);
