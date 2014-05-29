@@ -44,7 +44,7 @@ public:
     virtual ~TextFieldDelegate() {}
 
     /**
-    @brief    If the sender doesn't want to attach to the IME, return true;
+    @brief 如果sender不想附加到IME，返回true
     */
     virtual bool onTextFieldAttachWithIME(TextFieldTTF * sender)
     {
@@ -53,7 +53,7 @@ public:
     }
 
     /**
-    @brief    If the sender doesn't want to detach from the IME, return true;
+    @brief 如果sender不想解除IME，返回true
     */
     virtual bool onTextFieldDetachWithIME(TextFieldTTF * sender)
     {
@@ -62,7 +62,7 @@ public:
     }
 
     /**
-    @brief    If the sender doesn't want to insert the text, return true;
+    @brief 如果sender不想插入文本，返回true
     */
     virtual bool onTextFieldInsertText(TextFieldTTF * sender, const char * text, size_t nLen)
     {
@@ -73,7 +73,7 @@ public:
     }
 
     /**
-    @brief    If the sender doesn't want to delete the delText, return true;
+    @brief 如何sender不想删除delText，返回true
     */
     virtual bool onTextFieldDeleteBackward(TextFieldTTF * sender, const char * delText, size_t nLen)
     {
@@ -84,7 +84,7 @@ public:
     }
 
     /**
-    @brief    If the sender doesn't want to draw, return true.
+    @brief 如何sender不想绘图，返回true.
     */
     virtual bool onVisit(TextFieldTTF * sender,Renderer *renderer, const Mat4 &transform, bool transformUpdated)
     {
@@ -94,7 +94,7 @@ public:
 };
 
 /**
-@brief    A simple text input field with TTF font.
+@brief 一个简单的TTF文本输入框  A simple text input field with TTF font.
 */
 class CC_DLL TextFieldTTF : public Label, public IMEDelegate
 {
@@ -111,22 +111,22 @@ public:
 
     //char * description();
 
-    /** creates a TextFieldTTF from a fontname, alignment, dimension and font size */
+    /** 由字体名称、对齐方式、, 字体大小、尺寸创建一个TextFieldTTF */
     static TextFieldTTF * textFieldWithPlaceHolder(const std::string& placeholder, const Size& dimensions, TextHAlignment alignment, const std::string& fontName, float fontSize);
-    /** creates a TextFieldTTF from a fontname and font size */
+    /** 由字体名称和大小创建一个TextFieldTTF */
     static TextFieldTTF * textFieldWithPlaceHolder(const std::string& placeholder, const std::string& fontName, float fontSize);
-    /** initializes the TextFieldTTF with a font name, alignment, dimension and font size */
+    /** 由字体名称、对齐方式、, 字体大小、尺寸 初始化TextFieldTTF */
     bool initWithPlaceHolder(const std::string& placeholder, const Size& dimensions, TextHAlignment alignment, const std::string& fontName, float fontSize);
-    /** initializes the TextFieldTTF with a font name and font size */
+    /** 由字体名称和大小初始化TextFieldTTF */
     bool initWithPlaceHolder(const std::string& placeholder, const std::string& fontName, float fontSize);
 
     /**
-    @brief    Open keyboard and receive input text.
+    @brief 打开键盘并接收输入
     */
     virtual bool attachWithIME();
 
     /**
-    @brief    End text input and close keyboard.
+    @brief 输入技术并关闭键盘
     */
     virtual bool detachWithIME();
 
