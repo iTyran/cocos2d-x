@@ -42,13 +42,11 @@ class Texture2D;
  * @{
  */
 
-/** @brief A SpriteFrame has:
-    - texture: A Texture2D that will be used by the Sprite
-    - rectangle: A rectangle of the texture
+/** @brief 一个精灵帧包括：
+    - 纹理：一个被精灵使用的二维纹理
+    - 矩形：一个纹理矩形
 
-
- You can modify the frame of a Sprite by doing:
- 
+ 你可以通过这样做来修改一个精灵帧：
     SpriteFrame *frame = SpriteFrame::frameWithTexture(texture, rect, offset);
     sprite->setDisplayFrame(frame);
  */
@@ -56,23 +54,23 @@ class CC_DLL SpriteFrame : public Ref, public Clonable
 {
 public:
 
-    /** Create a SpriteFrame with a texture filename, rect in points.
-     It is assumed that the frame was not trimmed.
+    /** 通过纹理文件名，矩形(以点为单位)创建一个精灵帧。
+         假设帧没有被修剪。
      */
     static SpriteFrame* create(const std::string& filename, const Rect& rect);
     
-    /** Create a SpriteFrame with a texture filename, rect, rotated, offset and originalSize in pixels.
-     The originalSize is the size in pixels of the frame before being trimmed.
+    /** 通过纹理文件名，矩形，旋转，偏移量和原始大小（以像素为单位）创建一个精灵帧。
+     原始大小是帧在被修剪前的大小（以像素为单位）。
      */
     static SpriteFrame* create(const std::string& filename, const Rect& rect, bool rotated, const Vec2& offset, const Size& originalSize);
     
-    /** Create a SpriteFrame with a texture, rect in points.
-     It is assumed that the frame was not trimmed.
+    /**通过纹理，矩形（以点为单位）创建一个精灵帧。
+        假设帧没有被修剪。
      */
     static SpriteFrame* createWithTexture(Texture2D* pobTexture, const Rect& rect);
 
-    /** Create a SpriteFrame with a texture, rect, rotated, offset and originalSize in pixels.
-     The originalSize is the size in points of the frame before being trimmed.
+    /** 通过纹理，矩形，旋转，偏移量和原始大小（以像素为单位）创建一个精灵帧。
+        原始大小是帧在被修剪前的大小（以点为单位）。
      */
     static SpriteFrame* createWithTexture(Texture2D* pobTexture, const Rect& rect, bool rotated, const Vec2& offset, const Size& originalSize);
     /**
@@ -81,24 +79,23 @@ public:
      */
     virtual ~SpriteFrame(void);
 
-    /** Initializes a SpriteFrame with a texture, rect in points.
-     It is assumed that the frame was not trimmed.
+    /** 通过纹理，矩形（以点为单位）初始化一个精灵帧。
+        假设帧没有被修剪。
      */
     bool initWithTexture(Texture2D* pobTexture, const Rect& rect);
 
-    /** Initializes a SpriteFrame with a texture filename, rect in points;
-     It is assumed that the frame was not trimmed.
+    /**通过纹理文件名，矩形(以点为单位)初始化一个精灵帧。
+       假设帧没有被修剪。
      */
     bool initWithTextureFilename(const std::string& filename, const Rect& rect);
 
-    /** Initializes a SpriteFrame with a texture, rect, rotated, offset and originalSize in pixels.
-    The originalSize is the size in points of the frame before being trimmed.
+    /**通过纹理，矩形，旋转，偏移量和原始大小（以像素为单位）初始化一个精灵帧。
+       原始大小是帧在被修剪前的大小（以点为单位）。
     */
     bool initWithTexture(Texture2D* pobTexture, const Rect& rect, bool rotated, const Vec2& offset, const Size& originalSize);
 
-    /** Initializes a SpriteFrame with a texture, rect, rotated, offset and originalSize in pixels.
-     The originalSize is the size in pixels of the frame before being trimmed.
-
+    /** 通过纹理，矩形，旋转，偏移量和原始大小（以像素为单位）来初始化一个精灵帧。
+        原始大小是帧在被修剪前的大小（以像素为单位）。
      @since v1.1
      */
     bool initWithTextureFilename(const std::string& filename, const Rect& rect, bool rotated, const Vec2& offset, const Size& originalSize);
@@ -111,29 +108,29 @@ public:
     inline bool isRotated(void) const { return _rotated; }
     inline void setRotated(bool rotated) { _rotated = rotated; }
 
-    /** get rect of the frame */
+    /** 获取帧的矩形*/
     inline const Rect& getRect(void) const { return _rect; }
-    /** set rect of the frame */
+    /** 设置帧的矩形*/
     void setRect(const Rect& rect);
 
-    /** get offset of the frame */
+    /** 获取帧的偏移量*/
     const Vec2& getOffsetInPixels(void) const;
-    /** set offset of the frame */
+    /** 设置帧的偏移量*/
     void setOffsetInPixels(const Vec2& offsetInPixels);
 
-    /** get original size of the trimmed image */
+    /** 获取被修剪图片的原始尺寸*/
     inline const Size& getOriginalSizeInPixels(void) const { return _originalSizeInPixels; }
-    /** set original size of the trimmed image */
+    /** 设置被修剪图片的原始尺寸*/
     inline void setOriginalSizeInPixels(const Size& sizeInPixels) { _originalSizeInPixels = sizeInPixels; }
 
-    /** get original size of the trimmed image */
+    /** 获取被修剪图片的原始尺寸*/
     inline const Size& getOriginalSize(void) const { return _originalSize; }
-    /** set original size of the trimmed image */
+    /** 设置被修剪图片的原始尺寸*/
     inline void setOriginalSize(const Size& sizeInPixels) { _originalSize = sizeInPixels; }
 
-    /** get texture of the frame */
+    /** 获取帧的纹理*/
     Texture2D* getTexture(void);
-    /** set texture of the frame, the texture is retained */
+    /** 设置帧的纹理，纹理被保留*/
     void setTexture(Texture2D* pobTexture);
 
     const Vec2& getOffset(void) const;
