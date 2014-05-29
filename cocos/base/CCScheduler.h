@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
 Copyright (c) 2008-2010 Ricardo Quesada
 Copyright (c) 2010-2012 cocos2d-x.org
 Copyright (c) 2011      Zynga Inc.
@@ -56,9 +56,9 @@ class CC_DLL Timer : public Ref
 protected:
     Timer();
 public:
-    /** get interval in seconds */
+    /** 获得用秒计数的时间间隔 */
     inline float getInterval() const { return _interval; };
-    /** set interval in seconds */
+    /** 设置用秒计数的时间间隔 */
     inline void setInterval(float interval) { _interval = interval; };
     
     void setupTimerWithInterval(float seconds, unsigned int repeat, float delay);
@@ -66,7 +66,7 @@ public:
     virtual void trigger() = 0;
     virtual void cancel() = 0;
     
-    /** triggers the timer */
+    /** 触发计时器 */
     void update(float dt);
     
 protected:
@@ -87,7 +87,7 @@ class CC_DLL TimerTargetSelector : public Timer
 public:
     TimerTargetSelector();
 
-    /** Initializes a timer with a target, a selector and an interval in seconds, repeat in number of times to repeat, delay in seconds. */
+    /** 通过参数：一个目标，一个选择器，一个间隔秒数，重复次数以及延迟的秒数来初始化计时器 */
     bool initWithSelector(Scheduler* scheduler, SEL_SCHEDULE selector, Ref* target, float seconds, unsigned int repeat, float delay);
     
     inline SEL_SCHEDULE getSelector() const { return _selector; };
@@ -106,7 +106,7 @@ class CC_DLL TimerTargetCallback : public Timer
 public:
     TimerTargetCallback();
     
-    /** Initializes a timer with a target, a lambda and an interval in seconds, repeat in number of times to repeat, delay in seconds. */
+    /** 通过参数：一个目标，一个选择器，一个间隔秒数，重复次数以及延迟的秒数来初始化计时器. */
     bool initWithCallback(Scheduler* scheduler, const ccSchedulerFunc& callback, void *target, const std::string& key, float seconds, unsigned int repeat, float delay);
     
     /**
@@ -153,15 +153,15 @@ struct _hashUpdateEntry;
 class SchedulerScriptHandlerEntry;
 #endif
 
-/** @brief Scheduler is responsible for triggering the scheduled callbacks.
-You should not use system timer for your game logic. Instead, use this class.
+/** @brief Scheduler负责触发已被调度的回调函数
+你不应该在你的游戏逻辑中使用系统的计时器. 而是应该使用这个类.
 
-There are 2 different types of callbacks (selectors):
+有两种类型的回调函数 (selector(选择器) ):
 
-- update selector: the 'update' selector will be called every frame. You can customize the priority.
-- custom selector: A custom selector will be called every frame, or with a custom interval of time
+- update 选择器会在每帧被调用. 你能够设定其优先级.
+- custom 选择器会在每帧调用，或者在一个设定的时间间隔到来时调用
 
-The 'custom selectors' should be avoided when possible. It is faster, and consumes less memory to use the 'update selector'.
+应该尽量避免使用'custom selectors'. 使用'update selector'更加快，且消耗的内存更少.
 
 */
 class CC_DLL Scheduler : public Ref
@@ -183,17 +183,18 @@ public:
     virtual ~Scheduler();
 
     inline float getTimeScale() { return _timeScale; }
-    /** Modifies the time of all scheduled callbacks.
-    You can use this property to create a 'slow motion' or 'fast forward' effect.
-    Default is 1.0. To create a 'slow motion' effect, use values below 1.0.
-    To create a 'fast forward' effect, use values higher than 1.0.
+	
+	/** 改变所有被调度的回调函数的时间.
+    你可以使用这个属性来创建一个'慢镜头'或者'快进'的效果.
+    默认值是1.0. 使用低于1.0的值来创建一个'慢镜头'的效果.
+    要创建一个'快进'的效果, 使用大于1.0的值.
     @since v0.8
-    @warning It will affect EVERY scheduled selector / action.
+    @warning 它将影响每一个被调度的选择器(selector) / 动作(action).
     */
     inline void setTimeScale(float timeScale) { _timeScale = timeScale; }
 
-    /** 'update' the scheduler.
-     You should NEVER call this method, unless you know what you are doing.
+	/** 'update' 调度器.
+     你永远不应该调用这个方法,除非你知道自己在做什么.
      * @js NA
      * @lua NA
      */
@@ -203,40 +204,40 @@ public:
     
     // schedule
     
-    /** The scheduled method will be called every 'interval' seconds.
-     If paused is true, then it won't be called until it is resumed.
-     If 'interval' is 0, it will be called every frame, but if so, it's recommended to use 'scheduleUpdate' instead.
-     If the 'callback' is already scheduled, then only the interval parameter will be updated without re-scheduling it again.
-     repeat let the action be repeated repeat + 1 times, use kRepeatForever to let the action run continuously
-     delay is the amount of time the action will wait before it'll start
-     @param key The key to identify the callback
+	/** 被调度的方法会在每一个时间间隔'interval'指定的秒数到来时调用.
+     如果被调度的方式处于暂停状态，那么只有在它恢复之后才能被调用.
+     如果时间间隔'interval'是0, 它会在每帧被调用, 如果是这样, 推荐使用'scheduleUpdate'函数代替.
+     如果回调函数'callback'已经被调度,那么函数只会更新参数interval,不会再次重复调度.
+     repeat 让动作重复执行repeat + 1次, 如果想让动作持续执行可以使用kRepeatForever
+     delay 表示函数被调用之前等待的时间值
+     @param key 标识回调的key
      @since v3.0
      */
     void schedule(const ccSchedulerFunc& callback, void *target, float interval, unsigned int repeat, float delay, bool paused, const std::string& key);
 
-    /** Calls scheduleCallback with kRepeatForever and a 0 delay
+	/** 通过参数kRepeatForever和0时延调用scheduleCallback函数
      @since v3.0
      */
     void schedule(const ccSchedulerFunc& callback, void *target, float interval, bool paused, const std::string& key);
     
     
-    /** The scheduled method will be called every 'interval' seconds.
-     If paused is true, then it won't be called until it is resumed.
-     If 'interval' is 0, it will be called every frame, but if so, it's recommended to use 'scheduleUpdate' instead.
-     If the selector is already scheduled, then only the interval parameter will be updated without re-scheduling it again.
-     repeat let the action be repeated repeat + 1 times, use kRepeatForever to let the action run continuously
-     delay is the amount of time the action will wait before it'll start
+	/** 已被调度的方法将在每个时间间隔'interval'设定的秒数到来时调用.
+     如果被调度的方法是暂停状态, 那么直到它被恢复才能被调用.
+     如果时间间隔'interval'是0,它会在每帧调用,但是这种情况推荐使用'scheduleUpdate'替换.
+     若果selector已经被调度,那么只有参数interval会被更新,并不会再次重新调度
+     repeat 让动作重复执行 repeat + 1 次, 如果想让动作持续不停的执行，使用kRepeatForever
+     delay 表示函数被调用之前等待的时间量
      
-     @since v3.0, repeat and delay added in v1.1
+     @since v3.0, 参数repeat和delay在版本1.1加入
      */
     void schedule(SEL_SCHEDULE selector, Ref *target, float interval, unsigned int repeat, float delay, bool paused);
     
-    /** calls scheduleSelector with kRepeatForever and a 0 delay */
+    /** 通过参数kRepeatForever和0时延调用scheduleSelector */
     void schedule(SEL_SCHEDULE selector, Ref *target, float interval, bool paused);
     
-    /** Schedules the 'update' selector for a given target with a given priority.
-     The 'update' selector will be called every frame.
-     The lower the priority, the earlier it is called.
+	/** 通过给定的优先级在目标上调用'update' 选择器(selector).
+     'update' selector 会在每帧被调用.
+     优先级越低，越容易被调用.
      @since v3.0
      @lua NA
      */
@@ -250,10 +251,10 @@ public:
 
 #if CC_ENABLE_SCRIPT_BINDING
     // schedule for script bindings
-    /** The scheduled script callback will be called every 'interval' seconds.
-     If paused is true, then it won't be called until it is resumed.
-     If 'interval' is 0, it will be called every frame.
-     return schedule script entry ID, used for unscheduleScriptFunc().
+	/** 已被调度的脚本回调函数会在每个时间间隔'interval'指定的秒数到来时调用.
+     如果脚本回调被设置为暂停,那么在它被恢复之前是不会被调用的.
+     如果'interval'等于0, 它会在每帧被调用.
+     返回调度脚本条目的ID, 这个ID可以在函数unscheduleScriptFunc()中使用.
      */
     unsigned int scheduleScriptFunc(unsigned int handler, float interval, bool paused);
 #endif
@@ -261,45 +262,45 @@ public:
     
     // unschedule
 
-    /** Unschedules a callback for a key and a given target.
-     If you want to unschedule the 'callbackPerFrame', use unscheduleUpdate.
+	/** 在给定的key和target上撤销对回调函数的调度.
+     如果你想撤销调度'callbackPerFrame', 使用unscheduleUpdate函数.
      @since v3.0
      */
     void unschedule(const std::string& key, void *target);
 
-    /** Unschedule a selector for a given target.
-     If you want to unschedule the "update", use unscheudleUpdate.
+	/** 在给定目标上撤销调度selector.
+     如果你想撤销调度 "update", 使用unscheudleUpdate函数.
      @since v3.0
      */
     void unschedule(SEL_SCHEDULE selector, Ref *target);
     
-    /** Unschedules the update selector for a given target
+	/** 在给定的目标上撤销update selector调度
      @since v0.99.3
      */
     void unscheduleUpdate(void *target);
     
-    /** Unschedules all selectors for a given target.
-     This also includes the "update" selector.
+	/** 撤销给定目标上的所有selector调度.
+     包括"update" selector.
      @since v0.99.3
      @js  unscheduleCallbackForTarget
      @lua NA
      */
     void unscheduleAllForTarget(void *target);
     
-    /** Unschedules all selectors from all targets.
-     You should NEVER call this method, unless you know what you are doing.
+	/** 撤销所有目标上的所有selector(选择器).
+     你永远不应该调用这个方法,除非你知道自己在做什么.
      @since v0.99.3
      */
     void unscheduleAll(void);
     
-    /** Unschedules all selectors from all targets with a minimum priority.
-     You should only call this with kPriorityNonSystemMin or higher.
+	/** 以最低的优先级撤销所有目标上的所有selector的调度.
+     调用这个函数时你应当只使用kPriorityNonSystemMin或者更高一点的优先级.
      @since v2.0.0
      */
     void unscheduleAllWithMinPriority(int minPriority);
     
 #if CC_ENABLE_SCRIPT_BINDING
-    /** Unschedule a script entry. */
+    /** 取消对一个脚本条目的调度. */
     void unscheduleScriptEntry(unsigned int scheduleScriptEntryID);
 #endif
     
@@ -307,59 +308,60 @@ public:
     
     // isScheduled
     
-    /** Checks whether a callback associated with 'key' and 'target' is scheduled.
+	 /** 检查一个关联到'key'和'target'的回调是否被调度.
      @since v3.0.0
      */
     bool isScheduled(const std::string& key, void *target);
     
-    /** Checks whether a selector for a given taget is scheduled.
+	 /** 检查给定目标上的一个selector(选择器)是否被调度.
      @since v3.0
      */
     bool isScheduled(SEL_SCHEDULE selector, Ref *target);
     
     /////////////////////////////////////
     
-    /** Pauses the target.
-     All scheduled selectors/update for a given target won't be 'ticked' until the target is resumed.
-     If the target is not present, nothing happens.
+	 /** 暂停目标.
+     在给定目标上的所有被调度的selector/update不会被即时执行，直到这个目标被恢复
+     如果目标不存在,什么事情都不做.
      @since v0.99.3
      */
     void pauseTarget(void *target);
 
-    /** Resumes the target.
-     The 'target' will be unpaused, so all schedule selectors/update will be 'ticked' again.
-     If the target is not present, nothing happens.
+	 /** 恢复目标.
+     目标'target' 会被恢复, 这样所有调度的selector/update将会重新记时执行.
+     如果目标不存在,什么事情都不做.
      @since v0.99.3
      */
     void resumeTarget(void *target);
 
-    /** Returns whether or not the target is paused
+
+	/** 返回目标是否被暂停
     @since v1.0.0
     * In js: var isTargetPaused(var jsObject)
     * @lua NA 
     */
     bool isTargetPaused(void *target);
 
-    /** Pause all selectors from all targets.
-      You should NEVER call this method, unless you know what you are doing.
+	/** 在所有的目标上暂停所有的selector(选择器).
+       你永远不应该调用这个方法,除非你知道自己在做什么.
      @since v2.0.0
       */
     std::set<void*> pauseAllTargets();
 
-    /** Pause all selectors from all targets with a minimum priority.
-      You should only call this with kPriorityNonSystemMin or higher.
+	/** 以最低的优先级在所有的目标上暂停所有的selector(选择器).
+      你只应该用kPriorityNonSystemMin或者更高的优先级来调用此函数.
       @since v2.0.0
       */
     std::set<void*> pauseAllTargetsWithMinPriority(int minPriority);
 
-    /** Resume selectors on a set of targets.
-     This can be useful for undoing a call to pauseAllSelectors.
+	/** 在一个目标集合中恢复selector.
+     这个函数可以用来取消对pauseAllSelectors的调用.
      @since v2.0.0
       */
     void resumeTargets(const std::set<void*>& targetsToResume);
 
-    /** calls a function on the cocos2d thread. Useful when you need to call a cocos2d function from another thread.
-     This function is thread safe.
+	 /** 在cocos2d线程中调用方法. 当你需要在另外一个线程中调用一个cocos2d函数时有用.
+     这个方法是线程安全的.
      @since v3.0
      */
     void performFunctionInCocosThread( const std::function<void()> &function);
@@ -368,62 +370,62 @@ public:
     
     // Deprecated methods:
     
-    /** The scheduled method will be called every 'interval' seconds.
-     If paused is true, then it won't be called until it is resumed.
-     If 'interval' is 0, it will be called every frame, but if so, it's recommended to use 'scheduleUpdateForTarget:' instead.
-     If the selector is already scheduled, then only the interval parameter will be updated without re-scheduling it again.
-     repeat let the action be repeated repeat + 1 times, use kRepeatForever to let the action run continuously
-     delay is the amount of time the action will wait before it'll start
-     @deprecated Please use 'Scheduler::schedule' instead.
-     @since v0.99.3, repeat and delay added in v1.1
+	/** 被调度的方法将在每个时间间隔'interval'指定的秒数到来时调用.
+     如果脚本回调被设置为暂停,那么在它被恢复之前是不会被调用的.
+     如果时间间隔'interval'是0,它会在每帧调用,但是这种情况推荐使用'scheduleUpdate'替换..
+     若果selector已经被调度,那么只有参数interval会被更新,并不会再次重新调度.
+     repeat 让动作重复执行repeat + 1次, 如果想让动作持续执行可以使用kRepeatForever
+     delay 表示函数被调用之前等待的时间量
+     @deprecated 请使用'Scheduler::schedule'代替此方法.
+     @since v0.99.3, 参数repeat和delay在版本v1.1中加入
      */
     CC_DEPRECATED_ATTRIBUTE void scheduleSelector(SEL_SCHEDULE selector, Ref *target, float interval, unsigned int repeat, float delay, bool paused)
     {
         schedule(selector, target, interval, repeat, delay, paused);
     };
     
-    /** calls scheduleSelector with kRepeatForever and a 0 delay 
-     *  @deprecated Please use 'Scheduler::schedule' instead.
+	/** 通过参数kRepeatForever和0延时调用scheduleSelector
+     *  @deprecated 请使用'Scheduler::schedule'代替此方法.
      */
     CC_DEPRECATED_ATTRIBUTE void scheduleSelector(SEL_SCHEDULE selector, Ref *target, float interval, bool paused)
     {
         schedule(selector, target, interval, paused);
     };
     
-    /** Schedules the 'update' selector for a given target with a given priority.
-     The 'update' selector will be called every frame.
-     The lower the priority, the earlier it is called.
-     @deprecated Please use 'Scheduler::scheduleUpdate' instead.
+	/** 在指定的目标上以指定的优先级调度'update' selector.
+     'update' selector会在每帧调用.
+     优先级越低，越容易被调度.
+     @deprecated 请使用'Scheduler::scheduleUpdate'代替此方法.
      @since v0.99.3
      */
     template <class T>
     CC_DEPRECATED_ATTRIBUTE void scheduleUpdateForTarget(T* target, int priority, bool paused) { scheduleUpdate(target, priority, paused); };
     
-    /** Unschedule a selector for a given target.
-     If you want to unschedule the "update", use unscheudleUpdateForTarget.
-     @deprecated Please use 'Scheduler::unschedule' instead.
+	 /** 在给定目标上取消调度selector.
+     如果你想取消调度 "update", 使用 unscheudleUpdateForTarget.
+     @deprecated 请使用'Scheduler::unschedule'代替此方法.
      @since v0.99.3
      */
     CC_DEPRECATED_ATTRIBUTE void unscheduleSelector(SEL_SCHEDULE selector, Ref *target) { unschedule(selector, target); };
     
-    /** Checks whether a selector for a given taget is scheduled.
-     @deprecated Please use 'Scheduler::isScheduled' instead.
+	 /** 检查在一个selector(选择器)是否在给定的target上被调度.
+     @deprecated 请使用'Scheduler::isScheduled'代替此方法.
      @since v0.99.3
      */
     CC_DEPRECATED_ATTRIBUTE bool isScheduledForTarget(Ref *target, SEL_SCHEDULE selector) { return isScheduled(selector, target); };
     
-    /** Unschedules the update selector for a given target
-     @deprecated Please use 'Scheduler::unscheduleUpdate' instead.
+	 /** 在指定的目标上取消调度update选择器
+     @deprecated 请使用'Scheduler::unscheduleUpdate'代替此方法.
      @since v0.99.3
      */
     CC_DEPRECATED_ATTRIBUTE void unscheduleUpdateForTarget(Ref *target) { return unscheduleUpdate(target); };
     
 protected:
     
-    /** Schedules the 'callback' function for a given target with a given priority.
-     The 'callback' selector will be called every frame.
-     The lower the priority, the earlier it is called.
-     @note This method is only for internal use.
+	 /** 在给定的目标上以给定的优先级调度'callback'函数.
+     'callback' selector(选择器)会在每帧调用.
+     优先级越低,越容易被调用.
+     @note 这个方法只在内部使用.
      @since v3.0
      */
     void schedulePerFrame(const ccSchedulerFunc& callback, void *target, int priority, bool paused);
