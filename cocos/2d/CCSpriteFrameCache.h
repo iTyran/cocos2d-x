@@ -31,7 +31,7 @@ THE SOFTWARE.
 #define __SPRITE_CCSPRITE_FRAME_CACHE_H__
 
 /*
- * To create sprite frames and texture atlas, use this tool:
+ * 创建精灵帧和纹理图集，用这个工具：
  * http://zwoptex.zwopple.com/
  */
 
@@ -53,23 +53,24 @@ class Sprite;
  * @{
  */
 
-/** @brief Singleton that handles the loading of the sprite frames.
- It saves in a cache the sprite frames.
+/** @brief 
+处理精灵帧的载入的单例。
+它将精灵帧保存在缓存里。
  @since v0.9
  */
 class CC_DLL SpriteFrameCache : public Ref
 {
 public:
-    /** Returns the shared instance of the Sprite Frame cache */
+    /** 返回精灵帧缓存的共享实例*/
     static SpriteFrameCache* getInstance(void);
 
-    /** @deprecated Use getInstance() instead */
+    /** @deprecated 用getInstance()来代替 */
     CC_DEPRECATED_ATTRIBUTE static SpriteFrameCache* sharedSpriteFrameCache() { return SpriteFrameCache::getInstance(); }
 
-    /** Destroys the cache. It releases all the Sprite Frames and the retained instance. */
+    /** 清空缓存。释放所有的精灵帧并且保留实例。 */
     static void destroyInstance();
 
-    /** @deprecated Use destroyInstance() instead  */
+    /** @deprecated 用destroyInstance()来代替*/
     CC_DEPRECATED_ATTRIBUTE static void purgeSharedSpriteFrameCache() { return SpriteFrameCache::destroyInstance(); }
 
 protected:
@@ -85,79 +86,81 @@ public:
     bool init(void);
 
 public:
-    /** Adds multiple Sprite Frames from a plist file.
-     * A texture will be loaded automatically. The texture name will composed by replacing the .plist suffix with .png
-     * If you want to use another texture, you should use the addSpriteFramesWithFile(const std::string& plist, const std::string& textureFileName) method.
+    /** 
+      从一个.plist文件添加多个精灵帧。
+     * 一个纹理将被自动加载。纹理名称将把.plist后缀名替换为.png来组成。
+     * 如果你想要用另一个纹理，你应该用addSpriteFramesWithFile(const std::string& plist, const std::string& textureFileName) 方法.
      * @js addSpriteFrames
      * @lua addSpriteFrames
      */
     void addSpriteFramesWithFile(const std::string& plist);
 
-    /** Adds multiple Sprite Frames from a plist file. The texture will be associated with the created sprite frames.
+    /** 通过一个.plist文件添加多个精灵帧。纹理将与被创建的精灵帧结合。
      @since v0.99.5
      * @js addSpriteFrames
      * @lua addSpriteFrames
      */
     void addSpriteFramesWithFile(const std::string& plist, const std::string& textureFileName);
 
-    /** Adds multiple Sprite Frames from a plist file. The texture will be associated with the created sprite frames. 
+    /** 通过一个.plist文件添加多个精灵帧。纹理将与被创建的精灵帧结合。
      * @js addSpriteFrames
      * @lua addSpriteFrames
      */
     void addSpriteFramesWithFile(const std::string&plist, Texture2D *texture);
 
-    /** Adds an sprite frame with a given name.
-     If the name already exists, then the contents of the old name will be replaced with the new one.
+    /** 通过给定的名称添加一个精灵帧。
+        如果名称已经存在，那么原来名称的内容将被新的所替代。
      */
     void addSpriteFrame(SpriteFrame *frame, const std::string& frameName);
 
-    /** Purges the dictionary of loaded sprite frames.
-     * Call this method if you receive the "Memory Warning".
-     * In the short term: it will free some resources preventing your app from being killed.
-     * In the medium term: it will allocate more resources.
-     * In the long term: it will be the same.
+    /** 清除载入精灵帧的字典。
+         如果接收到“Memory Warning”,那么需要调用这个方法。
+         就眼前来说，它将释放一些资源来阻止你的应用崩溃掉。
+         从中期的角度，它将分配更多的资源。
+         从长远来说，它将变成相同的。
      */
     void removeSpriteFrames();
 
     /** Removes unused sprite frames.
-     * Sprite Frames that have a retain count of 1 will be deleted.
-     * It is convenient to call this method after when starting a new Scene.
+       移除没用的精灵帧。
+       保留数为1的精灵帧将被删除。
+       在开始一个新的场景之后调用这个方法很方便。
      */
     void removeUnusedSpriteFrames();
 
-    /** Deletes an sprite frame from the sprite frame cache. */
+    /** 从精灵帧缓存中删除一个精灵帧. */
     void removeSpriteFrameByName(const std::string& name);
 
-    /** Removes multiple Sprite Frames from a plist file.
-    * Sprite Frames stored in this file will be removed.
-    * It is convenient to call this method when a specific texture needs to be removed.
-    * @since v0.99.5
+    /** 从一个.plist文件移除多重精灵帧。
+         存储在这个文件的精灵帧将被删除。
+         当某个特定的纹理需要被删除时候调用这个方法很方便。
+         * @since v0.99.5
     */
     void removeSpriteFramesFromFile(const std::string& plist);
 
-    /** Removes all Sprite Frames associated with the specified textures.
-     * It is convenient to call this method when a specific texture needs to be removed.
+    /** 移除与特定的纹理结合的所有的精灵帧。
+         当某个特定的纹理需要被删除时候调用这个方法很方便。
      * @since v0.995.
      */
     void removeSpriteFramesFromTexture(Texture2D* texture);
 
-    /** Returns an Sprite Frame that was previously added.
-     If the name is not found it will return nil.
-     You should retain the returned copy if you are going to use it.
+    /** 返回之前所添加的精灵帧。
+        如果找不到名称则返回空值。
+        如果你想要使用它，你应该保留返回的备份。
      * @js getSpriteFrame
      * @lua getSpriteFrame
      */
     SpriteFrame* getSpriteFrameByName(const std::string& name);
 
-    /** @deprecated use getSpriteFrameByName() instead */
+    /** @deprecated 用getSpriteFrameByName() 来代替。*/
     CC_DEPRECATED_ATTRIBUTE SpriteFrame* spriteFrameByName(const std::string&name) { return getSpriteFrameByName(name); }
 
 private:
-    /*Adds multiple Sprite Frames with a dictionary. The texture will be associated with the created sprite frames.
+    /**通过一个字典添加多重精灵帧。纹理将和被创建的精灵帧结合。
      */
     void addSpriteFramesWithDictionary(ValueMap& dictionary, Texture2D *texture);
 
-    /** Removes multiple Sprite Frames from Dictionary.
+    /**从Dictionary移除多重精灵帧。
     * @since v0.99.5
     */
     void removeSpriteFramesFromDictionary(ValueMap& dictionary);
