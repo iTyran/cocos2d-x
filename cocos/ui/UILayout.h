@@ -350,14 +350,14 @@ protected:
     
     /**
      * 计算 baseWidget 和 layout 的 children 之间的最近距离.
-     *@param  base widget被用来计算layout的children和它自己（指base widget.译者注）间的距离.
+     *@param  base widget被用来计算layout的children和它自己（指base widget.注）间的距离.
      *@return  返回 baseWidget 和 layout 的 children 之间的最近距离.
      */
     float caculateNearestDistance(Widget* baseWidget);
     
     /**
      * 计算 baseWidget 和 layout 的 children 之间的最远距离.
-     *@param base widget被用来计算layout的children和它自己（指base widget.译者注）间的距离.
+     *@param base widget被用来计算layout的children和它自己（指base widget.注）间的距离.
      *@return 返回 baseWidget 和 layout 的 children 之间的最远距离.
      */
 

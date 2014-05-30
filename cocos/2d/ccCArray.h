@@ -72,7 +72,7 @@ void ccArrayFree(ccArray*& arr);
 void ccArrayDoubleCapacity(ccArray *arr);
 
 /** 如果数组当前元素数量（num）加额外空间（extra）大于数组容量（max），增加数组容量
- 译者注：增加方式为让数组容量翻倍 */
+ 注：增加方式为让数组容量翻倍 */
 void ccArrayEnsureExtraCapacity(ccArray *arr, ssize_t extra);
 
 /** 把数组的容量收缩为数组内容的数量，让内存符合数组包含的内容 */
@@ -145,7 +145,7 @@ void ccCArrayFree(ccCArray *arr);
 /** C数组容量翻倍 */
 void ccCArrayDoubleCapacity(ccCArray *arr);
 
-/** 如果数组当前元素数量（num）加额外空间（extra）大于数组容量（max），增加数组容量  译者注：增加方式为让数组容量翻倍 */
+/** 如果数组当前元素数量（num）加额外空间（extra）大于数组容量（max），增加数组容量  注：增加方式为让数组容量翻倍 */
 void ccCArrayEnsureExtraCapacity(ccCArray *arr, ssize_t extra);
 
 /** 返回第一个匹配值（value）的索引（index），如果没有找到返回NSNotFound */

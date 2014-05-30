@@ -63,7 +63,7 @@ public:
     virtual void tableCellHighlight(TableView* table, TableViewCell* cell){};
 
     /**
-     * 单元格被释放时响应此委托（译者注：可能为按下后松手，或者按下后拖动超过阈值）
+     * 单元格被释放时响应此委托（注：可能为按下后松手，或者按下后拖动超过阈值）
      *
      * @param table 包含所给单元格的TableView
      * @param cell  被释放的单元格

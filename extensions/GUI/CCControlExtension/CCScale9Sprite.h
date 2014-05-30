@@ -48,7 +48,7 @@ NS_CC_EXT_BEGIN
  *
  * 九宫格分割机制可以让你指定如何划分Sprite区域
  * 因为九宫格将Sprite分成了3x3的9个格子，所以在放大时不会变形
- * （译者注）事实上只有四个角不会拉伸变形，边缘和中心部分还是会被拉伸
+ * （注）事实上只有四个角不会拉伸变形，边缘和中心部分还是会被拉伸
  *
  * @see http://yannickloriot.com/library/ios/cccontrolextension/Classes/CCScale9Sprite.html
  */

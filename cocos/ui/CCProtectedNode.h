@@ -111,7 +111,7 @@ public:
     virtual void removeAllProtectedChildrenWithCleanup(bool cleanup);
     
     /**
-     * 重新排序(reorders)一个child依据其新z值(z vlaue)。(此z值应为localZOrder的值，原文简写为z value。译者注)
+     * 重新排序(reorders)一个child依据其新z值(z vlaue)。(此z值应为localZOrder的值，原文简写为z value。注)
      *
      * @param child     一个已经添加的子节点(child node)。必须是已经被添加的。
      * @param localZOrder  z-order决定绘制的优先级。 请参照 `setLocalZOrder(int)`
