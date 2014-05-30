@@ -57,7 +57,7 @@ glAlphaFunc( GL_GREATER, value )
 
 "value"默认值是0，也可通过添加"cc_alpha_func"属性给转换成tile的layer来进行改变。
 大多数情况是value的值是0，但如果有些tiles是半透明的，那么这值则可能会有不同，如是0.5
-进一步的信息，请查看相关说明(译者注：此链接已不可用)：
+进一步的信息，请查看相关说明(注：此链接已不可用)：
 http://www.cocos2d-iphone.org/wiki/doku.php/prog_guide:tiled_maps
 
 @since v0.8.1

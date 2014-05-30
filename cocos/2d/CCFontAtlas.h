@@ -102,14 +102,14 @@ public:
     /** 设置字体文理参数：
      - GL_TEXTURE_MIN_FILTER = GL_LINEAR
      - GL_TEXTURE_MAG_FILTER = GL_LINEAR
-     译者注：线性缩放，无锯齿但可能会有模糊感。
+     注：线性缩放，无锯齿但可能会有模糊感。
      */
      void setAntiAliasTexParameters();
 
      /** 设置字体文理参数：
       - GL_TEXTURE_MIN_FILTER = GL_NEAREST
       - GL_TEXTURE_MAG_FILTER = GL_NEAREST
-      译者注：最近像素插值缩放，可能会有锯齿感。
+      注：最近像素插值缩放，可能会有锯齿感。
       */
      void setAliasTexParameters();
 

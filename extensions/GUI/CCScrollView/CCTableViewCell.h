@@ -32,7 +32,7 @@
 NS_CC_EXT_BEGIN
 
 /**
- * 用于表示TableView中单元格的抽象类（译者注：此处没有纯虚函数，实际为普通基类，不能算抽象类）
+ * 用于表示TableView中单元格的抽象类（注：此处没有纯虚函数，实际为普通基类，不能算抽象类）
  */
 class TableViewCell: public Node
 {

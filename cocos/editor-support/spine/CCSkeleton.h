@@ -86,7 +86,7 @@ public:
 	spSlot* findSlot (const char* slotName) const;
 	
 	/* 设置皮肤（skin）用于查找在默认皮肤中的SkeletonData数据中找不到的附件（attachment），如果在新皮肤中的附件（attachment）
-	 * 在之前的皮肤中已经存在，皮肤就会被加载（译者注：换言之如果原来的皮肤里不存在的话是不会自动加载的，你需要调用setSlotsToSetupPose.
+	 * 在之前的皮肤中已经存在，皮肤就会被加载（注：换言之如果原来的皮肤里不存在的话是不会自动加载的，你需要调用setSlotsToSetupPose.
 	 * 更多详情请参考http://esotericsoftware.com/spine-using-runtimes#Skin-changes），如果皮肤找不到返回false
 	 * Sets the skin used to look up attachments not found in the SkeletonData defaultSkin. Attachments from the new skin are
 	 * attached if the corresponding attachment from the old skin was attached. Returns false if the skin was not found.
